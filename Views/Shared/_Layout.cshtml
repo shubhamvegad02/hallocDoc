@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - hallocDoc</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/hallocDoc.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="rnav">
+            <div class="nlogo"><img class="nlimg" src="~/images/halloDoc img.png" alt=""></div>
+            <img class="moon cp" src="~/images/nightmode-svgrepo-com (2).svg" alt="">
+        </nav>
+    </header>
+    
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    @*footer*@
+    <div class="mfooter"><span class="fele">Terms & Condition | Privacy Policy</span></div>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

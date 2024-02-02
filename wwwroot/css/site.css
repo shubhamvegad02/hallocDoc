@@ -1,0 +1,113 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.cp {
+    cursor: pointer;
+}
+
+.colblue {
+    color: var(--blue);
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.backbtnimg {
+    height: 25px;
+    width: 25px;
+}
+
+.rnav {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0px 7px 7px gray;
+    padding-inline: 2%;
+}
+
+.nlogo {
+    height: 100%;
+    width: 12%;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.nlimg {
+    height: 100%;
+    width: 100%;
+    scale: 1.2;
+}
+
+.moon {
+    scale: 0.8;
+    border: 2px solid var(--blue);
+}
+
+//footer.......................//
+
+.mfooter {
+    color: red;
+    height: 80px;
+    width: 100%;
+    background-color: #313131;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding-inline: 2%;
+    justify-content: flex-end;
+    margin-top: 30px;
+}
+
+
+
+
+@media screen and (max-width : 1200px) {
+    .nlogo
+
+{
+    width: 18%;
+}
+
+.moon {
+    scale: 0.7;
+}
+
+
+}
+
+
+
+@media screen and (max-width : 768px) {
+    .nlogo {
+        height: 85%;
+        width: 33%;
+    }
+
+    mfooter {
+        justify-content: center;
+    }
+
+    
+}
