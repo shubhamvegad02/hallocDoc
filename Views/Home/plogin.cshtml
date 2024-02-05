@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Patient Login";
+}
+namespace hallocDoc.Views.Home
+{
+    public class plogin
+    {
+<div class="bgimgform"></div>
+<div class="main">
+    <button class="moonbtn">
+        <img class="moon cp" src="/images/nightmode-svgrepo-com (2).svg" alt="">
+    </button>
+    <div class="mrfake"></div>
+    <div class="mright">
+        <div class="back">
+            <div class="cp" onclick="window.location.href = '/patient html/first.html';">
+                <img class="bimg" src="/images/up-arrow-svgrepo-com.svg" alt=""><span class="ntext">back</span>
+            </div>
+        </div>
+        <img src="/images/halloDoc img.png" class="mrimg" alt="">
+        <div class="mrcon">
+            <div class="mrhead">Login To Your Account</div>
+            <form class="mrcform">
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control mrcfin" id="floatingInput"
+                           placeholder="name@example.com">
+                    <label class="inlab" for="floatingInput">Email address</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control mrcpass" id="floatingPassword"
+                           placeholder="Password">
+                    <label class="inlab" for="floatingPassword">Password</label>
+                </div>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary mb-3 loginbtn" type="button">Login</button>
+                </div>
+            </form>
+            <div class="forpw ntext cp" onclick="window.location.href = '/patient html/presetpass.html';">Forgot Password?</div>
+        </div>
+        <div class="terms ntext cp">Terms & condition | Privacy policy</div>
+
+    </div>
+</div>
+    }
+}

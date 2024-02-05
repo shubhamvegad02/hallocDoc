@@ -1,6 +1,24 @@
 ﻿@{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Reset password";
 }
-<h1>@ViewData["Title"]</h1>
+<div class="back">
+    <a class="tdn" asp-asp-area="" asp-asp-controller="Home" asp-action="Index">
+    <div class="cp backbtn" asp-asp-area="" asp-asp-controller="Home" asp-action="Index">
+        <img class="bimg" src="/images/up-arrow-svgrepo-com.svg" alt=""><span class="ntext">back</span>
+    </div>
+    </a>
+</div>
+<div class="mrcon">
+<div class="mrhead">Reset Password</div>
+<form class="mrcform">
+    <div class="form-floating mb-3">
+        <input type="email" class="form-control mrcfin" id="floatingInput" placeholder="name@example.com">
+        <label for="floatingInput">Username</label>
+    </div>
 
-<p>Use this page to detail your site's privacy policy.</p>
+    <div class="d-grid gap-2">
+        <button class="btn btn-primary mb-3 loginbtn" type="button" onclick="window.location.href = '/patient html/plogin.html';">Reset Password</button>
+    </div>
+</form>
+<a class="forpw cp back" asp-asp-area="" asp-asp-controller="Home" asp-action="Index"><img class="bimg" src="/images/up-arrow-svgrepo-com.svg" alt=""><span class="ntext">back to login</span></a>
+</div>

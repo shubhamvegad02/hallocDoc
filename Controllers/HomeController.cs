@@ -12,7 +12,10 @@ namespace hallocDoc.Controllers
         {
             _logger = logger;
         }
-
+        public IActionResult first()
+        {
+            return View();
+        }
         public IActionResult Index()
         {
             return View();

@@ -9,21 +9,40 @@
     <link rel="stylesheet" href="~/hallocDoc.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="rnav">
-            <div class="nlogo"><img class="nlimg" src="~/images/halloDoc img.png" alt=""></div>
-            <img class="moon cp" src="~/images/nightmode-svgrepo-com (2).svg" alt="">
-        </nav>
-    </header>
     
-    <div class="container">
+
+    @*<div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
+    </div>*@
+    
+
+
+    <div class="bgimgform"></div>
+    <div class="main">
+        <button class="moonbtn">
+            <img class="moon cp" src="/images/nightmode-svgrepo-com (2).svg" alt="">
+        </button>
+        <div class="mrfake"></div>
+        <div class="mright">
+            
+            <img src="/images/halloDoc img.png" class="mrimg" alt="">
+            
+            
+                @RenderBody()
+            
+            <div class="terms ntext cp">Terms & condition | Privacy policy</div>
+
+        </div>
     </div>
 
-    @*footer*@
-    <div class="mfooter"><span class="fele">Terms & Condition | Privacy Policy</span></div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
 
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -32,3 +51,4 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
