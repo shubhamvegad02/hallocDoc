@@ -1,0 +1,343 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* border: 1px solid #89ddcb; */
+}
+
+:root {
+    --blue: #68cbe1;
+    --nblue: #55b2bc;
+    --white: #ffffff;
+}
+.tdn{
+    text-decoration:none;
+}
+
+
+/*css form patient submit request
+*/
+.maincon {
+    /*height: calc(100vh-290px);*/
+    height: 64vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 5%;
+}
+
+.mcbox {
+    font-size: 1.5rem;
+    font-weight: 600;
+    padding: 13px I !important;
+    cursor: pointer;
+    width: 26%;
+}
+
+
+
+
+
+.form-control:focus {
+    box-shadow: 2px 2px 10px var(--blue) !important;
+    border: 1px solid var(--blue) !important;
+}
+
+.infocon {
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 50;
+    background-color: #313131d4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.info {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    border: 2px solid black;
+    height: 50%;
+    width: 40%;
+    opacity: 1;
+    padding: 2%;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    /* z-index: 55; */
+    text-align: center;
+}
+
+.rnav {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0px 7px 7px gray;
+    padding-inline: 2%;
+}
+
+.nlogo {
+    height: 100%;
+    width: 12%;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.nlimg {
+    height: 100%;
+    width: 100%;
+    scale: 1.2;
+}
+
+.moon {
+    scale: 1;
+    /* border: 2px solid var(--blue); */
+    /* border-radius: 8px; */
+}
+
+.moonbtn {
+    border: 2px solid var(--blue);
+    border-radius: 8px;
+    height: fit-content;
+    width: fit-content;
+}
+
+footer {
+    height: 80px;
+    width: 100%;
+    background-color: #313131;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding-inline: 2%;
+    justify-content: flex-end;
+    margin-top: 30px;
+}
+
+.backbtn {
+    height: 50px;
+    width: 91.5%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    margin: 1%;
+}
+
+.backbtnimg {
+    height: 25px;
+    width: 25px;
+}
+
+.btn {
+    color: var(--blue) !important;
+    border: 2px solid var(--blue) !important;
+}
+
+    .btn:hover {
+        background-color: white !important;
+        /* color: white !important; */
+    }
+
+
+.main {
+    height: fit-content;
+    width: 85%;
+    margin-inline: auto;
+    box-shadow: 0px 0px 10px gray;
+    border-radius: 10px;
+    padding: 1%;
+    background-color: #fafafa;
+}
+
+.formhead {
+    font-size: 1.5rem;
+    font-weight: 500;
+    /* margin-bottom: 10px; */
+    margin-top: 30px;
+}
+
+.btnline {
+    height: 55px;
+    width: 96%;
+    margin-inline: auto;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 3%;
+}
+
+.blbtn {
+    margin-inline: 10px;
+    width: 8%;
+}
+
+    .blbtn:focus {
+        background-color: var(--blue) !important;
+        color: #ffffff !important;
+    }
+
+/* .btn-outline-primary {
+    --bs-btn-color: --blue;
+} */
+/* .blbtn:active{
+    background-color: var(--blue) !important;
+    color: #ffffff !important;
+} */
+.btn-check:checked + .btn,
+.btn.active,
+.btn.show,
+.btn:first-child:active,
+:not(.btn-check) + .btn:active {
+    color: white !important;
+    background-color: var(--blue) !important;
+}
+
+.upbtncon {
+    /* border: 1px solid red; */
+    width: 95%;
+    height: 55px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+}
+
+.uploadbtn {
+    border: 2px solid var(--blue);
+    height: 100%;
+    width: 125px !important;
+    color: white !important;
+    border: 1px solid var(--blue) !important;
+    background-color: var(--blue) !important;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 0px 5px 5px 0px;
+}
+
+.upbtntext {
+    border: 1px solid #c8c8c8;
+    width: calc(100% - 125px);
+    text-align: left;
+    padding-inline: 1%;
+    border-radius: 5px 0px 0px 5px;
+    background-color: #e8e7e7;
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding-top: auto;
+    align-items: center;
+    display: flex;
+}
+
+.cloudimg {
+    scale: 1.4;
+}
+
+.numselect {
+    border: 1px solid #e3dfdf !important;
+    color: gray !important;
+    background-color: white !important;
+}
+
+    .numselect:focus {
+        color: gray !important;
+        background-color: white !important;
+        box-shadow: none !important;
+    }
+
+
+
+
+
+
+
+
+@media screen and (max-width : 1200px) {
+
+    .mcbox {
+        width: 55%;
+    }
+
+    .nlogo {
+        width: 18%;
+    }
+
+    .moon {
+        scale: 0.7;
+    }
+
+    .info {
+        height: 55%;
+        width: 65%;
+    }
+}
+
+
+
+@media screen and (max-width : 768px) {
+
+    .mcbox {
+        width: 70%;
+        font-size: 1.2rem;
+    }
+    .nlogo {
+        height: 85%;
+        width: 33%;
+    }
+
+    footer {
+        justify-content: center;
+    }
+
+    btn {
+        height: 40px !important;
+        padding: 0 !important;
+        width: 80px !important;
+    }
+
+    .main {
+        width: 96%;
+        padding-bottom: 4%;
+    }
+
+    .backbtn {
+        width: 96%;
+        height: 50px;
+        margin-top: 13px;
+        margin-bottom: 13px;
+    }
+
+    .btnline {
+        height: 45px;
+    }
+
+    .blbtn {
+        margin-inline: 5px;
+        width: 24%;
+    }
+
+    .upbtncon {
+        width: 93%;
+        height: 45px;
+    }
+
+    .upbtntext {
+        padding-inline: 3%;
+        font-size: 1rem;
+        font-weight: 400;
+    }
+
+    .info {
+        width: 90%;
+        padding: 1%;
+        font-size: 1rem;
+    }
+}
