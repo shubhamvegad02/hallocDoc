@@ -33,6 +33,10 @@ html {
     --blue: #68cbe1;
     --nblue: #55b2bc;
     --white: #ffffff;
+    --pdark: #272233f0;
+    --sdark: #2A2438;
+    --darkpur: #310A5D;
+    --lightpur: #411E8F;
 }
 
 .ntext {
@@ -59,7 +63,7 @@ html {
     border-radius: 10px;
     height: 50px;
     width: 50px;
-    background-color: white;
+    background-color: transparent;
 }
 
 .moon {
@@ -100,6 +104,7 @@ html {
     display: flex;
     flex-direction: row;
 }
+
 
 .mleft {
     height: 100%;
@@ -204,7 +209,7 @@ html {
 }
 
     .form-control:focus {
-        background-color: white !important;
+        background-color: #d3d2d2 !important;
         border: 2px solid var(--blue) !important;
         box-shadow: 1px 1px 8px var(--blue) !important;
     }
@@ -232,7 +237,11 @@ html {
     background-position: 98% 50%;
     background-size: 35px;
 }
+.inlab{
+    font-size:1.1rem;
+    font-weight:600;
 
+}
 .mrcpass {
     background-image: url("/images/eye-svgrepo-com.svg");
     background-repeat: no-repeat;
@@ -292,6 +301,23 @@ html {
         background-color: #1f3e91;
         box-shadow: 0px 0px 4px #1f3e91;
     }
+
+
+
+/*dark mode
+*/
+
+.dark {
+    background-color: var(--pdark);
+}
+
+.dark-font {
+    color: var(--blue);
+}
+.white-font {
+    color: #d3d2d2 !important;
+}
+
 
 @media screen and (max-width : 1200px) {
 

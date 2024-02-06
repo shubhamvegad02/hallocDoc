@@ -22,6 +22,9 @@ namespace hallocDoc.Controllers
         }
         public IActionResult SubmitReq()
         {
+            
+            const bool V = true;
+            ViewBag.hidebackbtn = V;
             return View();
         }
     }
