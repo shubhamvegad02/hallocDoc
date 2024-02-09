@@ -1,0 +1,156 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+     /*border: 1px solid red; */
+}
+
+:root {
+    --blue: #68cbe1;
+    --nblue: #55b2bc;
+    --white: #ffffff;
+    --pdark: #272233f0;
+    --sdark: #2A2438;
+    --darkpur: #310A5D;
+    --lightpur: #411E8F;
+    --clasicwhite: #d3d2d2;
+}
+
+.tdn {
+    text-decoration: none;
+}
+
+/*---------layout design---------*/
+
+.navchild {
+    height:46%;
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.navchild > *{
+    margin-inline:1%;
+}
+.logout {
+    border: 2px solid var(--blue);
+    color: var(--blue);
+    border-radius: 8px;
+    height: 100%;
+    width: fit-content;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    justify-content: center;
+    padding-inline: 10px;
+}
+.loglg {
+    display: flex;
+}
+
+.logsm {
+    display: none;
+    height:44px !important;
+    width:44px !important;
+}
+.smimg{
+    width:100%
+    height:100%
+}
+.logout:hover{
+    color:white;
+    background-color:var(--blue);
+}
+.navwelcome{
+    display:flex;
+    align-items:center;
+    height:100%;
+    width:fit-content;
+    padding-inline:5px;
+}
+
+
+/*---------dashboard-----------*/
+
+.dashnav {
+    height: 60px;
+    width: 96%;
+    display: flex;
+    align-items: center;
+    margin-inline: auto;
+    border-bottom:1px solid gray;
+    margin-top:7px;
+}
+.dnchild {
+    color:black;
+    font-weight:500;
+    width: 100px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.dncactive{
+    border-bottom:3px solid var(--blue);
+}
+
+.dmain {
+    height:fit-content;
+    min-height:63vh;
+    width: 96%;
+    margin-inline: auto;
+    background-color: #f1f1f1a3;
+    padding: 1%;
+    border-radius: 10px;
+}
+.dmtable {
+    height: 100%;
+    width: 100%;
+    margin-inline: auto;
+    margin-top:50px;
+}
+.dmnewreq{
+    float:right;
+    height:50px !important;
+}
+.accordion{
+    display:none;
+}
+
+
+@media screen and (max-width : 768px) {
+    .navwelcome{
+        display:none;
+    }
+    .navchild{
+        width:50%;
+    }
+    .logout {
+        
+        height: 100%;
+        width: fit-content;
+        background: transparent;
+        display: flex;
+        align-items: center;
+        font-size: 1rem;
+        justify-content: center;
+        padding-inline: 5px;
+    }
+    .loglg{
+        display:none;
+    }
+    .logsm{
+        display:flex;
+    }
+    .dmnewreq {
+        height: 42px !important;
+        margin-right: 11px;
+    }
+    .table{
+        display:none;
+    }
+    .accordion{
+        display:block;
+    }
+}

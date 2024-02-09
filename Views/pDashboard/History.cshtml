@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "History";
+    Layout = "~/Views/Shared/pDashboard.cshtml";
+
+}
+<div class="dashnav">
+    <a class="dnchild  tdn cp dncactive">Dashboard</a>
+    <a class="dnchild tdn cp ">Profile</a>
+</div>
+<h3 class=" m-4">Medical History</h3>
+<div class="dmain">
+    <a asp-area="" asp-controller="Home" asp-action="first" class="logout loglg tdn dmnewreq">Create New Request</a>
+
+    <a asp-area="" asp-controller="Home" asp-action="first" class="logout logsm tdn dmnewreq">
+        <img class="smimg" src="/images/add-svgrepo-com.svg" alt="">
+    </a>
+
+    <div class="dmtable">
+        <table class="table w-100">
+            <thead>
+                <tr>
+                    <th scope="col">Created Date</th>
+                    <th scope="col">Current Status</th>
+                    <th scope="col">Document</th>
+                </tr>
+            </thead>
+            <tbody class="lh-lg">
+
+                <tr class="lh-3">
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>
+                        <a asp-area="" asp-controller="Home" asp-action="first" class="logout tdn">Logout</a>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        Accordion Item #1
+                    </button>
+                </h2>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                        Accordion Item #2
+                    </button>
+                </h2>
+                <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being filled with some actual content.</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

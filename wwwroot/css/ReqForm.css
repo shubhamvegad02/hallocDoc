@@ -108,6 +108,8 @@
 
 .moon {
     scale: 1;
+    height: 100%;
+    width: 100%;
     /* border: 2px solid var(--blue); */
     /* border-radius: 8px; */
 }
@@ -115,8 +117,10 @@
 .moonbtn {
     border: 2px solid var(--blue);
     border-radius: 8px;
-    height: fit-content;
-    width: fit-content;
+    /*height: fit-content;
+    width: fit-content;*/
+    height:44px;
+    width:44px;
     background: transparent;
 }
 
@@ -287,7 +291,7 @@ footer {
     }
 
     .moon {
-        scale: 0.7;
+        /*scale: 0.7;*/
     }
 
     .info {
