@@ -1,4 +1,4 @@
-﻿
+﻿@model hallocDoc.ViewDataModels.patientReq;
 @{
     ViewData["Title"] = "Patient";
     Layout = "~/Views/Shared/_reqFormLayout.cshtml";
@@ -21,33 +21,42 @@
 </div>
 
 <div class="main">
-    <form action="/" class="row g-2 g-md-3" >
+    <form asp-controller="ReqForm" asp-action="patientReq" class="row g-2 g-md-3" >
         <div class="formhead">Patient Information</div>
+        @* <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
+
 
 
         <div class=" form-floating col-12">
             <textarea class="form-control h-100" id="floatingInput1" rows="3"
                       placeholder="Enter symptoms details in detail(optional)"></textarea>
             <label class="mylable" for="floatingInput1">Enter symptoms details in detail(optional)</label>
+
         </div>
 
         <div class="form-floating col-12 col-md-6">
-            <input type="text" class="form-control" id="floatingInput2" placeholder="name@example.com">
+            <input asp-for="FirstName" type="text" class="form-control" id="floatingInput2" placeholder="name@example.com">
             <label class="mylable" for="floatingInput2">First Name</label>
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+
         </div>
         <div class="form-floating col-12 col-md-6">
-            <input type="text" class="form-control" id="floatingPassword" placeholder="Password">
+            <input asp-for="LastName" type="text" class="form-control" id="floatingPassword" placeholder="Password">
             <label class="mylable" for="floatingPassword">Last Name</label>
+            <span asp-validation-for="LastName" class="text-danger"></span>
+
         </div>
         <div class="form-floating col-12 col-md-6">
-            <input type="date" class="form-control" id="fdate" placeholder="Password">
+            <input asp-for="CreatedDate" type="date" class="form-control" id="fdate" placeholder="Password">
             <label class="mylable" for="fdate">Date of birth</label>
+            <span asp-validation-for="CreatedDate" class="text-danger"></span>
+
         </div>
 
         <div class="formhead">Patient Contact Information</div>
 
         <div class="form-floating col-12 col-md-6">
-            <input type="email" class="form-control" id="floatingInput5" placeholder="name@example.com">
+            <input asp-for="Email" type="email" class="form-control" id="floatingInput5" placeholder="name@example.com">
             <label class="mylable" for="floatingInput5">Email address</label>
         </div>
         <!-- <div class="form-floating col-12 col-md-6">
@@ -74,7 +83,7 @@
                     <option value="2">+1</option>
                     <option value="3">+216</option>
                 </select>
-                <input type="tel" class="form-control" id="phone" name="phone" placeholder="8155973839"
+                <input asp-for="Mobile" type="tel" class="form-control" id="phone" name="phone" placeholder="8155973839"
                        pattern="[0-9]{10}">
             </div>
         </div>
@@ -83,19 +92,19 @@
         <div class="formhead">Patient Location</div>
 
         <div class="form-floating col-12 col-md-6">
-            <input type="text" class="form-control" id="4" placeholder="name@example.com">
+            <input asp-for="Street" type="text" class="form-control" id="4" placeholder="name@example.com">
             <label class="mylable" for="4">Street</label>
         </div>
         <div class="form-floating col-12 col-md-6">
-            <input type="text" class="form-control" id="5" placeholder="Password">
+            <input type="text" asp-for="City" class="form-control" id="5" placeholder="Password">
             <label class="mylable" for="5">City</label>
         </div>
         <div class="form-floating col-12 col-md-6">
-            <input type="text" class="form-control" id="6" placeholder="name@example.com">
+            <input asp-for="State" type="text" class="form-control" id="6" placeholder="name@example.com">
             <label class="mylable" for="6">State</label>
         </div>
         <div class="form-floating col-12 col-md-6">
-            <input type="number" class="form-control" id="7" placeholder="Password">
+            <input asp-for="ZipCode" type="number" class="form-control" id="7" placeholder="Password">
             <label class="mylable" for="7">Zip Code</label>
         </div>
         <div class="form-floating col-12 col-md-6">
@@ -121,7 +130,7 @@
         </div>
 
         <div class="btnline">
-            <button type="button" class="btn btn-outline-primary active blbtn">Submit</button>
+            <button type="submit" class="btn btn-outline-primary active blbtn">Submit</button>
             <button type="button" class="btn btn-outline-primary blbtn">Cancel</button>
         </div>
 
