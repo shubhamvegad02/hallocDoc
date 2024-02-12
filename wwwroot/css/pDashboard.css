@@ -118,6 +118,78 @@
     display:none;
 }
 
+/*-------------ViewData--------------*/
+
+.docMain{
+    
+    width:70%;
+    margin-inline:auto;
+    height:fit-content;
+    
+}
+.dmbox {
+    height: fit-content;
+    min-height: 70vh;
+    padding: 1%;
+    background-color: #dcdcdcd4;
+    border-radius: 10px;
+}
+.dmboxbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.upbtncon {
+    /* border: 1px solid red; */
+    width: 95%;
+    height: 55px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+}
+
+.uploadbtn {
+    border: 2px solid var(--blue);
+    height: 100%;
+    width: 125px !important;
+    color: white !important;
+    border: 1px solid var(--blue) !important;
+    background-color: var(--blue) !important;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 0px 5px 5px 0px;
+}
+
+.upbtntext {
+    border: 1px solid #c8c8c8;
+    width: calc(100% - 125px);
+    text-align: left;
+    padding-inline: 1%;
+    border-radius: 5px 0px 0px 5px;
+    background-color: #e8e7e7;
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding-top: auto;
+    align-items: center;
+    display: flex;
+}
+
+#countrybtn {
+    width: 30%;
+}
+
+#phone {
+    width: 70%;
+}
+
+.cloudimg {
+    scale: 1.4;
+}
+
+
+
 
 @media screen and (max-width : 768px) {
     .navwelcome{

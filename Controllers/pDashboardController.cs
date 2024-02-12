@@ -8,5 +8,9 @@ namespace hallocDoc.Controllers
         {
             return View();
         }
+        public IActionResult viewDoc()
+        {
+            return View();
+        }
     }
 }

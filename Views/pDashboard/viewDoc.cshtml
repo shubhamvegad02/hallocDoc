@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = "viewData";
+    Layout = "~/Views/Shared/pDashboard.cshtml";
+
+}
+<div class="dashnav">
+    <a class="dnchild  tdn cp dncactive">Dashboard</a>
+    <a class="dnchild tdn cp ">Profile</a>
+</div>
+<div class="docMain mt-3">
+    <div class="dmboxbar">
+        <h2 >Document</h2>
+        <a asp-area="" asp-controller="pDashboard" asp-action="History" class="logout tdn dmnewreq mb-3">Back</a>
+    </div>
+
+    <div class="dmbox">
+        <span>Patient Name</span>
+        <h5>shubham</h5>
+        <span>Check here any files that you or your doctor attached for review.</span>
+        <div class="upbtncon mt-3 w-100">
+            <input type="file" id="actual-btn" hidden />
+
+            <!-- our custom upload button -->
+            <label class="mylable uploadbtn d-flex align-items-center justify-content-evenly" for="actual-btn">
+                <span>
+                    <img class="cloudimg" src="/images/cloud-upload-icon.svg"
+                         alt="">
+                </span><span>Upload</span>
+            </label>
+
+            <!-- name of file chosen -->
+            <span id="file-chosen" class="upbtntext">No file selected</span>
+        </div>
+        <div class="dmboxbar mt-4">
+            <h3>Documents</h3>
+            <a asp-area="" asp-controller="pDashboard" asp-action="viewDoc" class="logout tdn dmnewreq ">Donwlod All</a>
+        </div>
+        <table class="table w-100 mt-3">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Uploader</th>
+                    <th scope="col">Upload Date</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody class="lh-lg">
+                <tr class="lh-3">
+                    <th>2</th>
+                    <td>Shubham</td>
+                    <td>Jan 10,2024</td>
+                    <td>
+                        <a asp-area="" asp-controller="pDashboard" asp-action="viewDoc" class="logout tdn">det</a>
+                    </td>
+                </tr>
+                <tr class="lh-3">
+                    <th>2</th>
+                    <td>Shubham</td>
+                    <td>Jan 10,2024</td>
+                    <td>
+                        <a asp-area="" asp-controller="pDashboard" asp-action="viewDoc" class="logout tdn">det</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
