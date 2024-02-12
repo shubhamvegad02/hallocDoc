@@ -248,6 +248,12 @@ footer {
     align-items: center;
     display: flex;
 }
+#countrybtn{
+    width:30%;
+}
+#phone{
+    width:70%;
+}
 
 .cloudimg {
     scale: 1.4;

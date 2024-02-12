@@ -1,4 +1,4 @@
-﻿
+﻿@model hallocDoc.ViewDataModels.businessReq;
 @{
     ViewData["Title"] = "Business";
     Layout = "~/Views/Shared/_reqFormLayout.cshtml";
@@ -23,39 +23,39 @@
 
 
 <div class="main">
-    <form action="/" class="row g-2 g-md-3">
+    <form asp-controller="ReqForm" asp-action="Business" class="row g-2 g-md-3">
 
         <div class="formhead">Business Information</div>
         <div class="form-floating col-12 col-md-6">
-            <input type="text" class="form-control" id="floatingInput1" placeholder="name@example.com">
+            <input asp-for="BFirstName" type="text" class="form-control" id="floatingInput1" placeholder="name@example.com">
             <label class="mylable" for="floatingInput1">Your First Name</label>
         </div>
         <div class="form-floating col-12 col-md-6">
-            <input type="text" class="form-control" id="floatingPassword2" placeholder="Password">
+            <input asp-for="BLastName" type="text" class="form-control" id="floatingPassword2" placeholder="Password">
             <label class="mylable" for="floatingPassword2">Your Last Name</label>
         </div>
-        <div class="col-md-6">
-            <div class="input-group mb-3 h-100">
-                <select class=" btn btn-outline-secondary numselect" aria-label="Default select example">
+        <div class="form-floating col-12 col-md-6">
+            <div class="input-group h-100">
+                <select class=" btn btn-outline-secondary numselect form-control" id="countrybtn" aria-label="Default select example">
                     <option selected>Country</option>
                     <option value="1">+91</option>
                     <option value="2">+1</option>
                     <option value="3">+216</option>
                 </select>
-                <input type="tel" class="form-control" id="phone3" name="phone" placeholder="8155973839"
-                       pattern="[0-9]{10}">
+                <input type="tel" asp-for="BMobile" id="phone" class="form-control" placeholder="Mobile Number" />
+                <span asp-validation-for="BMobile" class="text-danger"></span>
             </div>
         </div>
         <div class="form-floating col-12 col-md-6">
-            <input type="email" class="form-control" id="floatingInput4" placeholder="name@example.com">
+            <input asp-for="BEmail" type="email" class="form-control" id="floatingInput4" placeholder="name@example.com">
             <label class="mylable" for="floatingInput4">Your Email address</label>
         </div>
         <div class="form-floating col-12 col-md-6">
-            <input type="text" class="form-control" id="floatingInput5" placeholder="name@example.com">
+            <input asp-for="BusinessName" type="text" class="form-control" id="floatingInput5" placeholder="name@example.com">
             <label class="mylable" for="floatingInput5">Business/Property name</label>
         </div>
         <div class="form-floating col-12 col-md-6">
-            <input type="text" class="form-control" id="floatingInput6" placeholder="name@example.com">
+            <input asp-for="CaseNumber" type="text" class="form-control" id="floatingInput6" placeholder="name@example.com">
             <label class="mylable" for="floatingInput6">Case Number(optional)</label>
         </div>
 
@@ -67,56 +67,42 @@
 
 
         <div class=" form-floating col-12">
-            <textarea class="form-control h-100" id="floatingInput7" rows="3"
+            <textarea asp-for="Notes" class="form-control h-100" id="floatingInput7" rows="3"
                       placeholder="Enter symptoms details in detail(optional)"></textarea>
             <label class="mylable" for="floatingInput7">Enter brief details of symptoms(optional)</label>
         </div>
 
         <div class="form-floating col-12 col-md-6">
-            <input type="text" class="form-control" id="floatingInput8" placeholder="name@example.com">
+            <input asp-for="FirstName" type="text" class="form-control" id="floatingInput8" placeholder="name@example.com">
             <label class="mylable" for="floatingInput8">First Name</label>
         </div>
         <div class="form-floating col-12 col-md-6">
-            <input type="text" class="form-control" id="floatingPassword8" placeholder="Password">
+            <input asp-for="LastName" type="text" class="form-control" id="floatingPassword8" placeholder="Password">
             <label class="mylable" for="floatingPassword8">Last Name</label>
         </div>
         <div class="form-floating col-12 col-md-6">
-            <input type="date" class="form-control" id="fdate" placeholder="Password">
+            <input asp-for="CreatedDate" type="date" class="form-control" id="fdate" placeholder="Password">
             <label class="mylable" for="fdate">Date of birth</label>
         </div>
 
         <div class="formhead">Patient Contact Information</div>
 
         <div class="form-floating col-12 col-md-6">
-            <input type="email" class="form-control" id="floatingInput9" placeholder="name@example.com">
+            <input asp-for="Email" type="email" class="form-control" id="floatingInput9" placeholder="name@example.com">
             <label class="mylable" for="floatingInput9">Email address</label>
         </div>
-        <!-- <div class="form-floating col-12 col-md-6">
-            <input type="number" class="form-control" id="floatingPassword" placeholder="Password">
-            <label class="mylable" for="floatingPassword">Number</label>
-        </div> -->
-        <!-- <div class="input-group col-12 col-md-6 "> -->
-        <!-- <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                aria-expanded="false">+91</button> -->
-        <!-- <select class=" dropdown-toggle btn-outline-secondary  border-1" aria-label="Default select example">
-                    <option selected>+91</option>
-                    <option value="1">+44</option>
-                    <option value="2">+56</option>
-                    <option value="3">+41</option>
-                  </select>
-            <input type="tel" class="form-control" id="mobilenum" aria-label="Text input with dropdown button" placeholder="8155973839">
-        </div> -->
+        
 
-        <div class="col-md-6">
-            <div class="input-group mb-3 h-100">
-                <select class=" btn btn-outline-secondary numselect" aria-label="Default select example">
+        <div class="form-floating col-12 col-md-6">
+            <div class="input-group h-100">
+                <select class=" btn btn-outline-secondary numselect form-control" id="countrybtn" aria-label="Default select example">
                     <option selected>Country</option>
                     <option value="1">+91</option>
                     <option value="2">+1</option>
                     <option value="3">+216</option>
                 </select>
-                <input type="tel" class="form-control" id="phone10" name="phone" placeholder="8155973839"
-                       pattern="[0-9]{10}">
+                <input type="tel" asp-for="Mobile" id="phone" class="form-control" placeholder="Mobile Number" />
+                <span asp-validation-for="Mobile" class="text-danger"></span>
             </div>
         </div>
 
@@ -124,23 +110,23 @@
         <div class="formhead">Patient Location</div>
 
         <div class="form-floating col-12 col-md-6">
-            <input type="text" class="form-control" id="4" placeholder="name@example.com">
+            <input asp-for="Street" type="text" class="form-control" id="4" placeholder="name@example.com">
             <label class="mylable" for="4">Street</label>
         </div>
         <div class="form-floating col-12 col-md-6">
-            <input type="text" class="form-control" id="5" placeholder="Password">
+            <input asp-for="City" type="text" class="form-control" id="5" placeholder="Password">
             <label class="mylable" for="5">City</label>
         </div>
         <div class="form-floating col-12 col-md-6">
-            <input type="text" class="form-control" id="6" placeholder="name@example.com">
+            <input asp-for="State" type="text" class="form-control" id="6" placeholder="name@example.com">
             <label class="mylable" for="6">State</label>
         </div>
         <div class="form-floating col-12 col-md-6">
-            <input type="number" class="form-control" id="7" placeholder="Password">
+            <input asp-for="ZipCode" type="number" class="form-control" id="7" placeholder="Password">
             <label class="mylable" for="7">Zip Code</label>
         </div>
         <div class="form-floating col-12 col-md-6">
-            <input type="text" class="form-control" id="8" placeholder="Password">
+            <input asp-for="Address" type="text" class="form-control" id="8" placeholder="Password">
             <label class="mylable" for="8">Room #/Suite (Optional)</label>
         </div>
 
@@ -148,12 +134,17 @@
 
 
         <div class="btnline">
-            <button type="button" class="btn btn-outline-primary active blbtn">Submit</button>
-            <button type="button" class="btn btn-outline-primary blbtn">Cancel</button>
+            <button type="submit" class="btn btn-outline-primary active blbtn">Submit</button>
+            <button type="button" asp-area="" asp-controller="ReqForm" asp-action="Business" class="btn btn-outline-primary blbtn">Cancel</button>
         </div>
 
     </form>
 
 </div>
+@section scripts{
+
+    <script type="text/javascript" src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}
 
 

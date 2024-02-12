@@ -32,4 +32,5 @@ app.MapControllerRoute(
 app.Run();
 
 
-/*Scaffold - DbContext "User ID = postgres;Password=Tatva@123;Server=localhost;Port=5432;Database=EFCoreTestDB1;Integrated Security=true;Pooling=true;" Npgsql.EntityFrameworkCore.PostgreSQL - OutputDir "DataModels" –context "ApplicationDbContext" –contextDir "DataContext"*/
+/*Scaffold - DbContext "User ID = postgres;Password=Vegad@12;Server=localhost;Port=5432;Database=halloDoc;Integrated Security=true;Pooling=true;" Npgsql.EntityFrameworkCore.PostgreSQL - OutputDir "DataModels" –context "ApplicationDbContext" –contextDir "DataContext" -f -DataAnnotations;
+*/

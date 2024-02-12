@@ -1,16 +1,24 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using hallocDoc.DataModels;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace hallocDoc.ViewDataModels
 {
-    public class patientReq
+    public class familyReq
     {
+        [StringLength(100)]
+        public string? FFirstName { get; set; }
+
+        [StringLength(100)]
+        public string? FLastName { get; set; }
+
+        [StringLength(23)]
+        public string? FPhoneNumber { get; set; }
+
+        [StringLength(50)]
+        public string? FEmail { get; set; }
+
+        [StringLength(100)]
+        public string? RelationName { get; set; }
+
         [StringLength(500)]
         [Required]
         public string? Notes { get; set; }
@@ -31,10 +39,10 @@ namespace hallocDoc.ViewDataModels
         [Phone]
         [Required]
         public string? Mobile { get; set; }
-/*
-        [Column(TypeName = "character varying")]
-        [Required]
-        public string? PasswordHash { get; set; }*/
+        /*
+                [Column(TypeName = "character varying")]
+                [Required]
+                public string? PasswordHash { get; set; }*/
 
         public string? Street { get; set; }
 
@@ -44,5 +52,7 @@ namespace hallocDoc.ViewDataModels
 
         public string? ZipCode { get; set; }
 
+        [StringLength(500)]
+        public string? Address { get; set; }
     }
 }

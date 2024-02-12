@@ -1,4 +1,5 @@
-﻿@{
+﻿@model hallocDoc.ViewDataModels.patientLogin;
+@{
     ViewData["Title"] = "Home Page";
 }
 <div class="back">
@@ -10,20 +11,37 @@
 </div>
 <div class="mrcon">
     <div class="mrhead" id="mrhead">Login To Your Account</div>
-    <form class="mrcform">
+    <form asp-action="Index" class="mrcform">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
         <div class="form-floating mb-3">
-            <input type="email" class="form-control mrcfin" id="floatingInput"
+            <input asp-for="Email" type="email" class="form-control mrcfin" id="floatingInput"
                    placeholder="name@example.com">
             <label class="inlab" for="floatingInput">Email address</label>
+            <span asp-validation-for="Email" class="text-danger"></span>
         </div>
+
         <div class="form-floating mb-3">
-            <input type="password" class="form-control mrcpass" id="floatingPassword"
+            <input asp-for="Password" type="password" class="form-control mrcpass" id="floatingPassword"
                    placeholder="Password">
             <label class="inlab" for="floatingPassword">Password</label>
+            <span asp-validation-for="Password" class="text-danger"></span>
         </div>
+
         <div class="d-grid gap-2">
-            <a asp-area="" asp-controller="pDashboard" asp-action="History" class="btn btn-primary mb-3 loginbtn" type="button">Login</a>
+            <button class="btn btn-primary mb-3 loginbtn" type="submit">Login</button>
         </div>
+
+        @Html.ValidationMessage("wrong", null, new { @class= "text-danger fw-bold"})
+        @Html.ValidationMessage("NotFound", null, new { @class= "text-danger fw-bold"})
+
+
     </form>
     <a class="forpw ntext cp" asp-area="" asp-controller="Home" asp-action="Privacy">Forgot Password?</a>
 </div>
+
+@section scripts{
+
+    <script type="text/javascript" src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}

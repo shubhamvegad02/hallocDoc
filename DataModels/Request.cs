@@ -94,6 +94,9 @@ public partial class Request
     public virtual Physician? Physician { get; set; }
 
     [InverseProperty("Request")]
+    public virtual ICollection<Requestbusiness> Requestbusinesses { get; set; } = new List<Requestbusiness>();
+
+    [InverseProperty("Request")]
     public virtual ICollection<Requestclient> Requestclients { get; set; } = new List<Requestclient>();
 
     [ForeignKey("UserId")]
