@@ -5,15 +5,21 @@ namespace hallocDoc.ViewDataModels
     public class businessReq
     {
         [StringLength(100)]
+        [Required(ErrorMessage = "First Name is Required")]
         public string? BFirstName { get; set; }
+
 
         [StringLength(100)]
         public string? BLastName { get; set; }
 
-        [StringLength(23)]
+        [Phone]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phone number")]
+        [StringLength(10)]
+        [Required(ErrorMessage = "Mobile Number is Required")]
         public string? BMobile { get; set; }
 
-        [StringLength(50)]
+        [EmailAddress(ErrorMessage = "Not a valid Email Address")]
+        [Required(ErrorMessage = "Email is Required")]
         public string? BEmail { get; set; }
 
         [StringLength(50)]
@@ -30,7 +36,7 @@ namespace hallocDoc.ViewDataModels
         public string FirstName { get; set; } = "";
 
 
-        [Required]
+        
         public string? LastName { get; set; }
 
         public DateTime CreatedDate { get; set; }
@@ -40,7 +46,9 @@ namespace hallocDoc.ViewDataModels
         public string Email { get; set; } = null!;
 
         [Phone]
-        [Required]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phone number")]
+        [StringLength(10)]
+        [Required(ErrorMessage = "Mobile Number is Required")]
         public string? Mobile { get; set; }
         /*
                 [Column(TypeName = "character varying")]

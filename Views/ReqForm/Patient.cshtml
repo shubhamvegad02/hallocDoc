@@ -140,18 +140,26 @@
             <!-- name of file chosen -->
             <span id="file-chosen" class="upbtntext">No file selected</span>
         </div>
+        
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="password" type="password" class="form-control" id="Password1" placeholder="Password">
+                <label class="mylable" for="Password1">Password</label>
+                <span asp-validation-for="password" class="text-danger"></span>
+            </div>
+        
 
         <div class="btnline">
             <button type="submit" class="btn btn-outline-primary active blbtn">Submit</button>
             <button type="button" asp-area="" asp-controller="ReqForm" asp-action="Patient" class="btn btn-outline-primary blbtn">Cancel</button>
         </div>
-        @Html.ValidationMessage("wrong", null, new { @class= "text-danger fw-bold"})
+        @Html.ValidationMessage("enterPass", null, new { @class= "text-danger fw-bold"})
+        
 
     </form>
 
 </div>
-@section scripts{
+@*@section scripts{
 
     <script type="text/javascript" src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-}
+}*@

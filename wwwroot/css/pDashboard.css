@@ -55,8 +55,8 @@
     width:44px !important;
 }
 .smimg{
-    width:100%
-    height:100%
+    width:100%;
+    height:100%;
 }
 .logout:hover{
     color:white;
@@ -131,7 +131,7 @@
     height: fit-content;
     min-height: 70vh;
     padding: 1%;
-    background-color: #dcdcdcd4;
+    background-color: #f1f1f1a3;
     border-radius: 10px;
 }
 .dmboxbar {
@@ -171,7 +171,6 @@
     background-color: #e8e7e7;
     font-size: 1.1rem;
     font-weight: 500;
-    padding-top: auto;
     align-items: center;
     display: flex;
 }
@@ -185,7 +184,7 @@
 }
 
 .cloudimg {
-    scale: 1.4;
+    /*scale: 1.4;*/
 }
 
 

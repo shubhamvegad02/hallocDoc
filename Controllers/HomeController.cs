@@ -44,7 +44,7 @@ namespace hallocDoc.Controllers
                 }
                 else
                 {
-                    if (dbdata.PasswordHash == pl.Password)
+                    if (password.decry(dbdata.PasswordHash) == pl.Password)
                     {
                         return RedirectToAction("History", "pDashboard");
                     }

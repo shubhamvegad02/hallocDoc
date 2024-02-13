@@ -4,15 +4,21 @@ namespace hallocDoc.ViewDataModels
 {
     public class familyReq
     {
+        [Required(ErrorMessage = "First Name is Required")]
         [StringLength(100)]
         public string? FFirstName { get; set; }
 
         [StringLength(100)]
         public string? FLastName { get; set; }
 
-        [StringLength(23)]
+        [Phone]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phone number")]
+        [StringLength(10)]
+        [Required(ErrorMessage = "Mobile Number is Required")]
         public string? FPhoneNumber { get; set; }
 
+        [EmailAddress(ErrorMessage = "Not a valid Email Address")]
+        [Required(ErrorMessage = "Email is Required")]
         [StringLength(50)]
         public string? FEmail { get; set; }
 
@@ -27,7 +33,7 @@ namespace hallocDoc.ViewDataModels
         public string FirstName { get; set; } = "";
 
 
-        [Required]
+        
         public string? LastName { get; set; }
 
         public DateTime CreatedDate { get; set; }
@@ -37,7 +43,9 @@ namespace hallocDoc.ViewDataModels
         public string Email { get; set; } = null!;
 
         [Phone]
-        [Required]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phone number")]
+        [StringLength(10)]
+        [Required(ErrorMessage = "Mobile Number is Required")]
         public string? Mobile { get; set; }
         /*
                 [Column(TypeName = "character varying")]

@@ -11,15 +11,21 @@ namespace hallocDoc.ViewDataModels
 {
     public class patientReq
     {
+
+        [Required]
+        [StringLength(8)]
+        [DataType(DataType.Password)]
+        public string password { get; set; }
+
         [StringLength(500)]
         [Required]
         public string? Notes { get; set; }
 
         [Required]
-        public string FirstName { get; set; } = "";
+        public string FirstName { get; set; }
 
 
-        [Required]
+        
         public string? LastName { get; set; }
 
         public DateTime CreatedDate { get; set; }
@@ -29,7 +35,9 @@ namespace hallocDoc.ViewDataModels
         public string Email { get; set; } = null!;
 
         [Phone]
-        [Required]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phone number")]
+        [StringLength(10)]
+        [Required(ErrorMessage = "Mobile Number is Required")]
         public string? Mobile { get; set; }
 /*
         [Column(TypeName = "character varying")]
@@ -42,6 +50,7 @@ namespace hallocDoc.ViewDataModels
 
         public string? State { get; set; }
 
+        
         public string? ZipCode { get; set; }
 
     }

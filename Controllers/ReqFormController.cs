@@ -10,6 +10,7 @@ namespace hallocDoc.Controllers
 {
     public class ReqFormController : Controller
     {
+        public Boolean V = false;
 
         private readonly ApplicationDbContext _context;
 
@@ -74,12 +75,12 @@ namespace hallocDoc.Controllers
                     _context.SaveChanges();
                     bid = b.BusinessId;
                 }
-                
+
                 else
                 {
                     bid = dbdata.BusinessId;
                 }
-                
+
 
                 var rb = new Requestbusiness();
                 rb.BusinessId = bid;
@@ -93,15 +94,72 @@ namespace hallocDoc.Controllers
 
                 return RedirectToAction("first", "Home");
             }
-                return View(br);
+            return View(br);
         }
 
         public IActionResult Concierge()
         {
             return View();
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Concierge(conciergeReq cr)
+        {
+            if (ModelState.IsValid && cr != null)
+            {
+                var request = new Request();
+
+                request.RequestTypeId = 1;
+                request.FirstName = cr.CFN;
+                request.LastName = cr.CLN;
+                request.CreatedDate = DateTime.Now;
+                request.PhoneNumber = cr.CMobile;
+                request.Email = cr.CMail;
+                request.CreatedDate = DateTime.Now;
+                request.RelationName = "Concierge";
+
+                await _context.Requests.AddAsync(request);
+                await _context.SaveChangesAsync();
+
+                var rc = new Requestclient();
+
+                rc.RequestId = request.RequestId;
+                rc.FirstName = cr.FirstName;
+                rc.LastName = cr.LastName;
+                rc.PhoneNumber = cr.Mobile;
+                rc.Notes = cr.Notes;
+                rc.Street = cr.Street;
+                rc.City = cr.City;
+                rc.State = cr.State;
+                rc.ZipCode = cr.ZipCode;
+                rc.Email = cr.Email;
+                rc.Address = cr.Address;
+                _context.Requestclients.Add(rc);
+                _context.SaveChanges();
+
+                var c = new Concierge();
+                c.ConciergeName = cr.CFN;
+                c.Address = cr.property;
+                c.State = cr.State;
+                c.City = cr.City;
+                c.Street = cr.Street;
+                c.ZipCode = cr.ZipCode;
+                c.CreatedDate = cr.CreatedDate;
+                await _context.Concierges.AddAsync(c);
+                await _context.SaveChangesAsync();
+
+
+
+                return RedirectToAction("first", "Home");
+            }
+            return View(cr);
+        }
+
+
         public IActionResult family()
         {
+
             return View();
         }
 
@@ -122,8 +180,8 @@ namespace hallocDoc.Controllers
                 request.CreatedDate = DateTime.Now;
                 request.RelationName = fr.RelationName;
 
-                _context.Requests.Add(request);
-                _context.SaveChanges();
+                await _context.Requests.AddAsync(request);
+                await _context.SaveChangesAsync();
 
                 var rc = new Requestclient();
 
@@ -146,7 +204,7 @@ namespace hallocDoc.Controllers
                 return RedirectToAction("first", "Home");
             }
 
-                return View(fr);
+            return View(fr);
         }
 
         public IActionResult Patient()
@@ -160,68 +218,17 @@ namespace hallocDoc.Controllers
         {
             if (ModelState.IsValid && pr != null)
             {
-                /*var dbdata = await _context.Aspnetusers.FirstOrDefaultAsync(m => m.Email == pr.Email);
-                if (dbdata != null)
-                {
-                    const int V = 1;
-                    ViewBag.hidebackbtn = V;
-
-                    if (dbdata.PasswordHash == pr.PasswordHash)
-                    {
-                        var nrequest = new Request();
-                        var nuser = _context.Users.FirstOrDefault(m => m.AspNetUserId == dbdata.Id);
-                        nrequest.RequestTypeId = 1;
-                        nrequest.UserId = nuser.UserId;
-                        nrequest.FirstName = pr.FirstName;
-                        nrequest.LastName = pr.LastName;
-                        nrequest.CreatedDate = DateTime.Now;
-                        nrequest.PhoneNumber = pr.Mobile;
-                        nrequest.Email = pr.Email;
-                        nrequest.PhoneNumber = pr.Mobile;
-                        nrequest.CreatedDate = DateTime.Now;
-
-                        _context.Requests.Add(nrequest);
-                        _context.SaveChanges();
-
-                        var nrc = new Requestclient();
-
-                        nrc.RequestId = nrequest.RequestId;
-                        nrc.FirstName = pr.FirstName;
-                        nrc.LastName = pr.LastName;
-                        nrc.PhoneNumber = pr.Mobile;
-                        nrc.Notes = pr.Notes;
-                        nrc.Street = pr.Street;
-                        nrc.City = pr.City;
-                        nrc.State = pr.State;
-                        nrc.ZipCode = pr.ZipCode;
-                        nrc.Email = pr.Email;
-                        _context.Requestclients.Add(nrc);
-                        _context.SaveChanges();
-
-                        return RedirectToAction("first", "Home");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("wrong", "wrong password");
-                        return View(pr);
-
-                    }
-                }*/
-
-
 
                 var aspnetuser = new Aspnetuser();
-
                 aspnetuser.Id = Guid.NewGuid().ToString();
+                aspnetuser.PasswordHash = password.encry(pr.password);
                 aspnetuser.Email = pr.Email;
                 aspnetuser.CreatedDate = DateTime.Now;
                 aspnetuser.UserName = pr.Email;
                 aspnetuser.PhoneNumber = pr.Mobile;
 
-
-                 await _context.Aspnetusers.AddAsync(aspnetuser);
-                 _context.SaveChanges();
-
+                await _context.Aspnetusers.AddAsync(aspnetuser);
+                _context.SaveChanges();
 
                 var user = new User();
 
@@ -246,7 +253,7 @@ namespace hallocDoc.Controllers
 
                 request.RequestTypeId = 1;
                 request.UserId = user.UserId;
-                request.FirstName = pr.FirstName;   
+                request.FirstName = pr.FirstName;
                 request.LastName = pr.LastName;
                 request.CreatedDate = DateTime.Now;
                 request.PhoneNumber = pr.Mobile;
@@ -264,7 +271,7 @@ namespace hallocDoc.Controllers
                 rc.LastName = request.LastName;
                 rc.PhoneNumber = request.PhoneNumber;
                 rc.Notes = pr.Notes;
-                rc.Street = pr.Street; 
+                rc.Street = pr.Street;
                 rc.City = pr.City;
                 rc.State = pr.State;
                 rc.ZipCode = pr.ZipCode;
@@ -272,7 +279,7 @@ namespace hallocDoc.Controllers
                 _context.Requestclients.Add(rc);
                 _context.SaveChanges();
 
-                
+
 
                 return RedirectToAction("first", "Home");
 
@@ -282,7 +289,7 @@ namespace hallocDoc.Controllers
 
         }
 
-        
+
         public IActionResult SubmitReq()
         {
 
