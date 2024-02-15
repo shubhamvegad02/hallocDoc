@@ -5,6 +5,7 @@ using hallocDoc.ViewDataModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Session;
 
 
 namespace hallocDoc.Controllers
@@ -47,8 +48,8 @@ namespace hallocDoc.Controllers
                 {
                     if (password.decry(dbdata.PasswordHash) == pl.Password)
                     {
-                        HttpContext.Session.SetString("aspid", dbdata.Id.ToString());
-                        return RedirectToAction("History", "pDashboard", dbdata.Id);
+                        HttpContext.Session.SetString("aspid", dbdata.Id);
+                        return RedirectToAction("History", "pDashboard");
                     }
                     ModelState.AddModelError("wrong", "wrong password");
                     return View(pl);

@@ -4,6 +4,7 @@ using hallocDoc.Models;
 using hallocDoc.ViewDataModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Session;
 
 namespace hallocDoc.Controllers
 {
@@ -15,9 +16,21 @@ namespace hallocDoc.Controllers
             _context = context;
         }
 
-        public IActionResult History(string s)
+        public async Task<IActionResult> History()
         {
-            /*var dbdata =  _context.Aspnetusers.FirstOrDefaultAsync(m => m.Id == s);*/
+            if(HttpContext.Session.GetString("aspid").ToString() == null)
+            {
+                return RedirectToAction("Home", "Index");
+            }
+            
+            var userid = HttpContext.Session.GetString("aspid").ToString();
+            var userdb = await _context.Aspnetusers.FirstOrDefaultAsync(m => m.Id == userid);
+            var username = _context.Users.FirstOrDefaultAsync(m => m.AspNetUserId == userid);
+            
+            /*if (userdb != null)
+            {
+
+            }*/
             return View();
         }
         public IActionResult viewDoc()
