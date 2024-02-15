@@ -4,10 +4,14 @@
 
 }
 <div class="dashnav">
-    <a class="dnchild  tdn cp dncactive">Dashboard</a>
+    <a asp-area="" asp-controller="pDashboard" asp-action="History" class="dnchild tdn cp dncactive">Dashboard</a>
     <a class="dnchild tdn cp ">Profile</a>
 </div>
-<h3 class=" m-4">Medical history</h3>
+<div class="dashsidebar hideside" id="dashsidebar">
+    <a asp-area="" asp-controller="pDashboard" asp-action="History" class="dschild   tdn cp ">Dashboard</a>
+    <a class="dschild dschildactive tdn cp ">Profile</a>
+</div>
+<h3 class="historyhead mt-4">Medical history</h3>
 <div class="dmain">
     <a asp-area="" asp-controller="Home" asp-action="first" class="logout loglg tdn dmnewreq">Create New Request</a>
 
@@ -25,36 +29,42 @@
                 </tr>
             </thead>
             <tbody class="lh-lg">
-
                 <tr class="lh-3">
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
+                    <th>@DateTime.Now</th>
+                    <td>Active</td>
                     <td>
-                        <a asp-area="" asp-controller="pDashboard" asp-action="viewDoc" class="logout tdn">Logout</a>
+                        <a asp-area="" asp-controller="pDashboard" asp-action="viewDoc" class="logout tdn h-100">View Document</a>
                     </td>
                 </tr>
-
+                <tr class="lh-3">
+                    <th>@DateTime.Now</th>
+                    <td>Active</td>
+                    <td>
+                        @*                        <a asp-area="" asp-controller="pDashboard" asp-action="viewDoc" class="logout tdn h-100">View Document</a>
+*@                    </td>
+                </tr>
             </tbody>
         </table>
         <div class="accordion accordion-flush" id="accordionFlushExample">
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                        Accordion Item #1
+                        Created at @DateTime.Now
                     </button>
                 </h2>
-                <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+                <div id="flush-collapseOne" class="accordion-collapse collapse p-3" data-bs-parent="#accordionFlushExample">
+                    <div>Active</div>
+                    <a asp-area="" asp-controller="pDashboard" asp-action="viewDoc" class="logout tdn w-100">View Document</a>
                 </div>
             </div>
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                        Accordion Item #2
+                        Created at @DateTime.Now
                     </button>
                 </h2>
                 <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being filled with some actual content.</div>
+                    <div>Active</div>
                 </div>
             </div>
 

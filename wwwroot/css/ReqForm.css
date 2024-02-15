@@ -316,11 +316,12 @@ footer {
     }
     .nlogo {
         height: 85%;
-        width: 33%;
+        width: 40%;
     }
 
     footer {
         justify-content: center;
+        
     }
 
     btn {

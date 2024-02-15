@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
+
 namespace hallocDoc.Controllers
 {
     public class HomeController : Controller
@@ -46,7 +47,8 @@ namespace hallocDoc.Controllers
                 {
                     if (password.decry(dbdata.PasswordHash) == pl.Password)
                     {
-                        return RedirectToAction("History", "pDashboard");
+                        HttpContext.Session.SetString("aspid", dbdata.Id.ToString());
+                        return RedirectToAction("History", "pDashboard", dbdata.Id);
                     }
                     ModelState.AddModelError("wrong", "wrong password");
                     return View(pl);
