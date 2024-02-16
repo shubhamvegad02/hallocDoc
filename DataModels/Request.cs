@@ -29,7 +29,7 @@ public partial class Request
     [StringLength(50)]
     public string? Email { get; set; }
 
-    public short? Status { get; set; }
+    public int? Status { get; set; }
 
     public int? PhysicianId { get; set; }
 
@@ -98,6 +98,9 @@ public partial class Request
 
     [InverseProperty("Request")]
     public virtual ICollection<Requestclient> Requestclients { get; set; } = new List<Requestclient>();
+
+    [InverseProperty("Request")]
+    public virtual ICollection<Requestwisefile> Requestwisefiles { get; set; } = new List<Requestwisefile>();
 
     [ForeignKey("UserId")]
     [InverseProperty("Requests")]

@@ -3,6 +3,7 @@ using hallocDoc.DataModels;
 using hallocDoc.ViewDataModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Nest;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
 
 
@@ -13,10 +14,13 @@ namespace hallocDoc.Controllers
         public Boolean V = false;
 
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        
 
-        public ReqFormController(ApplicationDbContext context)
+        public ReqFormController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
 
@@ -168,6 +172,20 @@ namespace hallocDoc.Controllers
         {
             if (ModelState.IsValid && fr != null)
             {
+                string filename = null;
+
+                if (fr.myfile != null)
+                {
+                    string folder = "uplodedItems/";
+                    var key = Guid.NewGuid().ToString();
+                    folder += key + "_" + fr.myfile.FileName;
+                    filename = key + "_" + fr.myfile.FileName;
+                    string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
+
+                    await fr.myfile.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+
+                }
+
                 var request = new Request();
 
                 request.RequestTypeId = 1;
@@ -199,6 +217,13 @@ namespace hallocDoc.Controllers
                 _context.Requestclients.Add(rc);
                 _context.SaveChanges();
 
+                var rf = new Requestwisefile();
+                rf.RequestId = request.RequestId;
+                rf.CreatedDate = DateTime.Now;
+                rf.FileName = filename;
+                _context.Requestwisefiles.Add(rf);
+                _context.SaveChanges();
+
 
 
                 return RedirectToAction("first", "Home");
@@ -216,73 +241,141 @@ namespace hallocDoc.Controllers
         [HttpPost]
         public async Task<IActionResult> Patient(patientReq pr)
         {
+            string filename = null;
             if (ModelState.IsValid && pr != null)
             {
+                if(pr.myfile != null)
+                {
+                    string folder = "uplodedItems/";
+                    var key = Guid.NewGuid().ToString();
+                    folder += key + "_" + pr.myfile.FileName;
+                    filename = key + "_" + pr.myfile.FileName;
+                    string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
 
-                var aspnetuser = new Aspnetuser();
-                aspnetuser.Id = Guid.NewGuid().ToString();
-                aspnetuser.PasswordHash = password.encry(pr.password);
-                aspnetuser.Email = pr.Email;
-                aspnetuser.CreatedDate = DateTime.Now;
-                aspnetuser.UserName = pr.Email;
-                aspnetuser.PhoneNumber = pr.Mobile;
+                    await pr.myfile.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+                    
+                }
+            
 
-                await _context.Aspnetusers.AddAsync(aspnetuser);
-                _context.SaveChanges();
+            var dbasp = await _context.Aspnetusers.FirstOrDefaultAsync(m => m.Email == pr.Email);
+                var aspid = dbasp?.Id;
+                var dbuser = await _context.Users.FirstOrDefaultAsync(m => m.AspNetUserId == aspid);
+                if (dbasp != null)
+                {
+                    var request2 = new Request();
+                    request2.RequestTypeId = 1;
+                    request2.UserId = dbuser.UserId;
+                    request2.FirstName = pr.FirstName;
+                    request2.LastName = pr.LastName;
+                    request2.CreatedDate = DateTime.Now;
+                    request2.PhoneNumber = pr.Mobile;
+                    request2.Email = pr.Email;
+                    request2.Status = 2;
 
-                var user = new User();
+                    _context.Requests.Add(request2);
+                    _context.SaveChanges();
 
-                user.AspNetUserId = aspnetuser.Id;
-                user.FirstName = pr.FirstName;
-                user.LastName = pr.LastName;
-                user.Mobile = pr.Mobile;
-                user.Email = pr.Email;
-                user.Street = pr.Street;
-                user.City = pr.City;
-                user.State = pr.State;
-                user.ZipCode = pr.ZipCode;
-                user.CreatedBy = pr.FirstName;
-                user.Mobile = pr.Mobile;
-                user.CreatedDate = DateTime.Now;
+                    var rc2 = new Requestclient();
 
+                    rc2.RequestId = request2.RequestId;
+                    rc2.FirstName = request2.FirstName;
+                    rc2.LastName = request2.LastName;
+                    rc2.PhoneNumber = request2.PhoneNumber;
+                    rc2.Notes = pr.Notes;
+                    rc2.Street = pr.Street;
+                    rc2.City = pr.City;
+                    rc2.State = pr.State;
+                    rc2.ZipCode = pr.ZipCode;
+                    rc2.Email = pr.Email;
+                    _context.Requestclients.Add(rc2);
+                    _context.SaveChanges();
 
-                _context.Users.Add(user);
-                _context.SaveChanges();
+                    var rf = new Requestwisefile();
+                    rf.RequestId = request2.RequestId;
+                    rf.CreatedDate = DateTime.Now;
+                    rf.FileName = filename;
+                    _context.Requestwisefiles.Add(rf);
+                    _context.SaveChanges();
 
-                var request = new Request();
-
-                request.RequestTypeId = 1;
-                request.UserId = user.UserId;
-                request.FirstName = pr.FirstName;
-                request.LastName = pr.LastName;
-                request.CreatedDate = DateTime.Now;
-                request.PhoneNumber = pr.Mobile;
-                request.Email = pr.Email;
-                request.PhoneNumber = pr.Mobile;
-                request.CreatedDate = DateTime.Now;
-
-                _context.Requests.Add(request);
-                _context.SaveChanges();
-
-                var rc = new Requestclient();
-
-                rc.RequestId = request.RequestId;
-                rc.FirstName = request.FirstName;
-                rc.LastName = request.LastName;
-                rc.PhoneNumber = request.PhoneNumber;
-                rc.Notes = pr.Notes;
-                rc.Street = pr.Street;
-                rc.City = pr.City;
-                rc.State = pr.State;
-                rc.ZipCode = pr.ZipCode;
-                rc.Email = pr.Email;
-                _context.Requestclients.Add(rc);
-                _context.SaveChanges();
+                    return RedirectToAction("first", "Home");
+                }
+                else
+                {
 
 
 
-                return RedirectToAction("first", "Home");
+                    var aspnetuser = new Aspnetuser();
+                    aspnetuser.Id = Guid.NewGuid().ToString();
+                    aspnetuser.PasswordHash = password.encry(pr.password);
+                    aspnetuser.Email = pr.Email;
+                    aspnetuser.CreatedDate = DateTime.Now;
+                    aspnetuser.UserName = pr.Email;
+                    aspnetuser.PhoneNumber = pr.Mobile;
 
+                    await _context.Aspnetusers.AddAsync(aspnetuser);
+                    _context.SaveChanges();
+
+                    var user = new User();
+
+                    user.AspNetUserId = aspnetuser.Id;
+                    user.FirstName = pr.FirstName;
+                    user.LastName = pr.LastName;
+                    user.Mobile = pr.Mobile;
+                    user.Email = pr.Email;
+                    user.Street = pr.Street;
+                    user.City = pr.City;
+                    user.State = pr.State;
+                    user.ZipCode = pr.ZipCode;
+                    user.CreatedBy = pr.FirstName;
+                    user.Mobile = pr.Mobile;
+                    user.CreatedDate = DateTime.Now;
+
+
+                    _context.Users.Add(user);
+                    _context.SaveChanges();
+
+                    var request = new Request();
+
+                    request.RequestTypeId = 1;
+                    request.UserId = user.UserId;
+                    request.FirstName = pr.FirstName;
+                    request.LastName = pr.LastName;
+                    request.CreatedDate = DateTime.Now;
+                    request.PhoneNumber = pr.Mobile;
+                    request.Email = pr.Email;
+                    request.PhoneNumber = pr.Mobile;
+                    request.CreatedDate = DateTime.Now;
+                    request.Status = 2;
+
+                    _context.Requests.Add(request);
+                    _context.SaveChanges();
+
+                    var rc = new Requestclient();
+
+                    rc.RequestId = request.RequestId;
+                    rc.FirstName = request.FirstName;
+                    rc.LastName = request.LastName;
+                    rc.PhoneNumber = request.PhoneNumber;
+                    rc.Notes = pr.Notes;
+                    rc.Street = pr.Street;
+                    rc.City = pr.City;
+                    rc.State = pr.State;
+                    rc.ZipCode = pr.ZipCode;
+                    rc.Email = pr.Email;
+                    _context.Requestclients.Add(rc);
+                    _context.SaveChanges();
+
+                    var rf = new Requestwisefile();
+                    rf.RequestId = request.RequestId;
+                    rf.CreatedDate = DateTime.Now;
+                    rf.FileName = filename;
+                    _context.Requestwisefiles.Add(rf);
+                    _context.SaveChanges();
+
+
+
+                    return RedirectToAction("first", "Home");
+                }
             }
             /*return RedirectToAction("Privacy", "Home");*/
             return View(pr);

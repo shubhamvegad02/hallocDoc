@@ -62,5 +62,7 @@ namespace hallocDoc.ViewDataModels
 
         [StringLength(500)]
         public string? Address { get; set; }
+
+        public IFormFile myfile { get; set; }
     }
 }

@@ -53,5 +53,7 @@ namespace hallocDoc.ViewDataModels
         
         public string? ZipCode { get; set; }
 
+        public IFormFile myfile { get; set; }
+
     }
 }

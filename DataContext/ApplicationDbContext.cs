@@ -16,6 +16,8 @@ public partial class ApplicationDbContext : DbContext
     {
     }
 
+    public virtual DbSet<Admin> Admins { get; set; }
+
     public virtual DbSet<Aspnetuser> Aspnetusers { get; set; }
 
     public virtual DbSet<Business> Businesses { get; set; }
@@ -32,17 +34,31 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Requestclient> Requestclients { get; set; }
 
+    public virtual DbSet<Requestwisefile> Requestwisefiles { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-
-    }
-    
-        
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseNpgsql("User ID = postgres;Password=Vegad@12;Server=localhost;Port=5432;Database=halloDoc;Integrated Security=true;Pooling=true;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Admin>(entity =>
+        {
+            entity.HasKey(e => e.AdminId).HasName("admin_pkey");
+
+            entity.HasOne(d => d.AspNetUser).WithMany(p => p.AdminAspNetUsers)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("admin_AspNetUserId_fkey");
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.AdminCreatedByNavigations)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("admin_CreatedBy_fkey");
+
+            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.AdminModifiedByNavigations).HasConstraintName("admin_ModifiedBy_fkey");
+        });
+
         modelBuilder.Entity<Aspnetuser>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("aspnetusers_pkey");
@@ -115,6 +131,19 @@ public partial class ApplicationDbContext : DbContext
             entity.HasOne(d => d.Request).WithMany(p => p.Requestclients)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("requestclient_RequestId_fkey");
+        });
+
+        modelBuilder.Entity<Requestwisefile>(entity =>
+        {
+            entity.HasKey(e => e.RequestWiseFileId).HasName("requestwisefile_pkey");
+
+            entity.HasOne(d => d.Admin).WithMany(p => p.Requestwisefiles).HasConstraintName("requestwisefile_AdminId_fkey");
+
+            entity.HasOne(d => d.Physician).WithMany(p => p.Requestwisefiles).HasConstraintName("requestwisefile_PhysicianId_fkey");
+
+            entity.HasOne(d => d.Request).WithMany(p => p.Requestwisefiles)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("requestwisefile_RequestId_fkey");
         });
 
         modelBuilder.Entity<User>(entity =>

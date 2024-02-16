@@ -124,4 +124,7 @@ public partial class Physician
 
     [InverseProperty("Physician")]
     public virtual ICollection<Request> Requests { get; set; } = new List<Request>();
+
+    [InverseProperty("Physician")]
+    public virtual ICollection<Requestwisefile> Requestwisefiles { get; set; } = new List<Requestwisefile>();
 }

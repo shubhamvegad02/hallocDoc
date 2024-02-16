@@ -35,6 +35,15 @@ public partial class Aspnetuser
     [Column(TypeName = "timestamp without time zone")]
     public DateTime? EndDate { get; set; }
 
+    [InverseProperty("AspNetUser")]
+    public virtual ICollection<Admin> AdminAspNetUsers { get; set; } = new List<Admin>();
+
+    [InverseProperty("CreatedByNavigation")]
+    public virtual ICollection<Admin> AdminCreatedByNavigations { get; set; } = new List<Admin>();
+
+    [InverseProperty("ModifiedByNavigation")]
+    public virtual ICollection<Admin> AdminModifiedByNavigations { get; set; } = new List<Admin>();
+
     [InverseProperty("CreatedByNavigation")]
     public virtual ICollection<Business> BusinessCreatedByNavigations { get; set; } = new List<Business>();
 

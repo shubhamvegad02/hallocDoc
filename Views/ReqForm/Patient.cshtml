@@ -21,7 +21,7 @@
 </div>
 
 <div class="main">
-    <form asp-controller="ReqForm" asp-action="Patient" class="row g-2 g-md-3" >
+    <form asp-controller="ReqForm" asp-action="Patient" enctype="multipart/form-data" class="row g-2 g-md-3" >
         <div class="formhead">Patient Information</div>
          <div asp-validation-summary="ModelOnly" class="text-danger"></div> 
 
@@ -30,7 +30,7 @@
         <div class=" form-floating col-12 mb-2">
             <textarea asp-for="Notes" class="form-control h-100" id="floatingInput1" rows="3"
                       placeholder="Enter symptoms details in detail(optional)"></textarea>
-            <label class="mylable" for="floatingInput1">Enter symptoms details in detail(optional)</label>
+            <label class="mylable" for="floatingInput1">Enter symptoms in detail(optional)</label>
             <span asp-validation-for="Notes" class="text-danger"></span>
         </div>
 
@@ -127,7 +127,7 @@
 
         <div class="formhead">(Optional) Upload Photo or Document</div>
         <div class="upbtncon">
-            <input type="file" id="actual-btn" hidden />
+            <input asp-for="myfile" id="actual-btn" hidden />
 
             <!-- our custom upload button -->
             <label  class="mylable uploadbtn d-flex align-items-center justify-content-evenly" for="actual-btn">
