@@ -7,11 +7,11 @@
 }
 <div class="dashnav">
     <a asp-area="" asp-controller="pDashboard" asp-action="History" class="dnchild tdn cp dncactive">Dashboard</a>
-    <a class="dnchild tdn cp ">Profile</a>
+    <a asp-area="" asp-controller="pDashboard" asp-action="profile" class="dnchild tdn cp ">Profile</a>
 </div>
 <div class="dashsidebar hideside" id="dashsidebar">
     <a asp-area="" asp-controller="pDashboard" asp-action="History" class="dschild   tdn cp ">Dashboard</a>
-    <a class="dschild dschildactive tdn cp ">Profile</a>
+    <a asp-area="" asp-controller="pDashboard" asp-action="profile" class="dschild dschildactive tdn cp ">Profile</a>
 </div>
 <h3 class="historyhead mt-4">Medical history</h3>
 <div class="dmain">
@@ -59,16 +59,7 @@
                 </div>
             </div>
             }
-            @*<div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                        Created at @DateTime.Now
-                    </button>
-                </h2>
-                <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                    <div>Active</div>
-                </div>
-            </div>*@
+            
 
         </div>
     </div>

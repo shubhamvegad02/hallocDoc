@@ -302,11 +302,10 @@ html {
         box-shadow: 0px 0px 4px #1f3e91;
     }
 
-
+/*------------------agreement--------------*/
 
 /*dark mode
 */
-
 .dark {
     background-color: var(--pdark);
 }

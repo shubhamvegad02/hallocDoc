@@ -22,8 +22,6 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Business> Businesses { get; set; }
 
-    public virtual DbSet<Concierge> Concierges { get; set; }
-
     public virtual DbSet<Physician> Physicians { get; set; }
 
     public virtual DbSet<Region> Regions { get; set; }
@@ -40,7 +38,7 @@ public partial class ApplicationDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("User ID = postgres;Password=Vegad@12;Server=localhost;Port=5432;Database=halloDoc;Integrated Security=true;Pooling=true;");
+        => optionsBuilder.UseNpgsql("User ID = postgres;Password=Vivek@12;Server=localhost;Port=5432;Database=halloDoc;Integrated Security=true;Pooling=true;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -75,24 +73,15 @@ public partial class ApplicationDbContext : DbContext
             entity.HasOne(d => d.Region).WithMany(p => p.Businesses).HasConstraintName("business_RegionId_fkey");
         });
 
-        modelBuilder.Entity<Concierge>(entity =>
-        {
-            entity.HasKey(e => e.ConciergeId).HasName("concierge_pkey");
-
-            entity.HasOne(d => d.Region).WithMany(p => p.Concierges).HasConstraintName("concierge_RegionId_fkey");
-        });
-
         modelBuilder.Entity<Physician>(entity =>
         {
-            entity.HasKey(e => e.PhysicianId).HasName("Physician_pkey");
+            entity.HasKey(e => e.PhysicianId).HasName("physician_pkey");
 
-            entity.Property(e => e.PhysicianId).HasDefaultValueSql("nextval('\"Physician_PhysicianId_seq\"'::regclass)");
+            entity.HasOne(d => d.AspNetUser).WithMany(p => p.PhysicianAspNetUsers).HasConstraintName("physician_AspNetUserId_fkey");
 
-            entity.HasOne(d => d.AspNetUser).WithMany(p => p.PhysicianAspNetUsers).HasConstraintName("Physician_AspNetUserId_fkey");
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.PhysicianCreatedByNavigations).HasConstraintName("physician_CreatedBy_fkey");
 
-            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.PhysicianCreatedByNavigations).HasConstraintName("Physician_CreatedBy_fkey");
-
-            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.PhysicianModifiedByNavigations).HasConstraintName("Physician_ModifiedBy_fkey");
+            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.PhysicianModifiedByNavigations).HasConstraintName("physician_ModifiedBy_fkey");
         });
 
         modelBuilder.Entity<Region>(entity =>

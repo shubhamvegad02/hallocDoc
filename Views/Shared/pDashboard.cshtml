@@ -14,7 +14,7 @@
             <button class="hambtn" onclick="hambtn()">
                 <img class="w-75 h-75" src="~/images/hamburger-svgrepo-com.svg" />
             </button>
-            
+
             <a asp-area="" asp-controller="Home" asp-action="first" class="nlogo tdn"><img class="nlimg" src="/images/halloDoc img.png" alt=""></a>
             <div class="navchild">
                 <div class="navwelcome">Welcome @ViewBag.username</div>
@@ -29,8 +29,14 @@
 
 
         </nav>
-        
+
         @RenderBody()
+
+        @if (ViewBag.success != null)
+        {
+            @ViewBag.success;
+        }
+
         <footer class="myfooter">
             <span class="fele">Terms & Condition | Privacy Policy</span>
         </footer>
@@ -47,7 +53,7 @@
                 });
             }
 
-            function hambtn(){
+            function hambtn() {
                 var x = document.querySelector(".dashsidebar")
                 x.classList.toggle("hideside");
                 console.log("hiden");

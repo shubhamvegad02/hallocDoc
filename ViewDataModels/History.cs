@@ -11,6 +11,8 @@ namespace hallocDoc.ViewDataModels
 
         public string name { get; set; }
 
+        public string uploder { get; set; }
+
 
     }
 }

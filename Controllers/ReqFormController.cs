@@ -150,7 +150,7 @@ namespace hallocDoc.Controllers
                 c.Street = cr.Street;
                 c.ZipCode = cr.ZipCode;
                 c.CreatedDate = cr.CreatedDate;
-                await _context.Concierges.AddAsync(c);
+                /*await _context.Concierge.AddAsync(c);*/
                 await _context.SaveChangesAsync();
 
 

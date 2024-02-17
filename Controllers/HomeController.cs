@@ -21,6 +21,8 @@ namespace hallocDoc.Controllers
             _logger = logger;
             _context = context;
         }
+
+        
         public IActionResult first()
         {
             return View();
@@ -68,6 +70,34 @@ namespace hallocDoc.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        public IActionResult createPatient()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> createPatient(createPatient cp)
+        {
+            var dbasp = await _context.Aspnetusers.FirstOrDefaultAsync(m => m.Email == cp.Email);
+            if (dbasp == null)
+            {
+                ModelState.AddModelError("NotFound", "User not found, Submit request first..");
+                return View(cp);
+            }
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    dbasp.PasswordHash = password.encry(cp.Password);
+                    _context.Aspnetusers.Update(dbasp);
+                    _context.SaveChanges();
+                    return RedirectToAction("Index", "Home");
+                }
+                return View(cp);
+            }
+            
         }
     }
 }
