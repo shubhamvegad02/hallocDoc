@@ -13,7 +13,7 @@ namespace hallocDoc.ViewDataModels
     {
 
         [Required]
-        [StringLength(8)]
+        /*[StringLength(8)]*/
         [DataType(DataType.Password)]
         public string password { get; set; }
 

@@ -22,26 +22,30 @@
         <span>Patient Name</span>
         <h5>@ViewBag.username</h5>
         <span class="lh-sm">Check here any files that you or your doctor attached for review.</span>
-        <div class="upbtncon mt-3 w-100">
-            <input type="file" id="actual-btn" hidden />
+        <form asp-area="" asp-controller="pDashboard" asp-action="uploadbtn" asp-route-reqid="@ViewBag.reqid" enctype="multipart/form-data">
+            <div class="upbtncon mt-3 w-100">
+                <input asp-for="myfile" type="file" id="actual-btn" hidden />
 
-            <!-- our custom upload button -->
-            <label class="mylable uploadbtn d-flex align-items-center justify-content-evenly" for="actual-btn">
-                <span>
-                    <img class="cloudimg" src="/images/cloud-upload-icon.svg"
-                         alt="">
-                </span><span>Upload</span>
-            </label>
+                <!-- our custom upload button -->
+                <label class="mylable uploadbtn d-flex align-items-center justify-content-evenly" for="actual-btn">
+                    <span>
+                        <img class="cloudimg" src="/images/cloud-upload-icon.svg"
+                             alt="">
+                    </span><span>Upload</span>
+                </label>
 
-            <!-- name of file chosen -->
-            <span id="file-chosen" class="upbtntext">No file selected</span>
-        </div>
+                <!-- name of file chosen -->
+                <span id="file-chosen" class="upbtntext">No file selected</span>
+            </div>
+            <button type="submit">submit</button>
+        </form>
+
         <div class="dmboxbar mt-4">
             <h3 class="mb-0">Documents</h3>
             @* <a asp-area="" asp-controller="pDashboard" asp-action="viewDoc" class="logout tdn dmnewreq ">Donwlod All</a> *@
 
             <a class="logout tdn dmnewreq" href="@Url.Action("DonwlodFileAll", "pDashboard")">
-                Donwlod All ok
+                Donwlod All
             </a>
 
         </div>

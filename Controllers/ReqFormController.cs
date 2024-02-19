@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Nest;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
+using System.IO;
 
 
 namespace hallocDoc.Controllers
@@ -251,9 +252,17 @@ namespace hallocDoc.Controllers
                     folder += key + "_" + pr.myfile.FileName;
                     filename = key + "_" + pr.myfile.FileName;
                     string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
-
-                    await pr.myfile.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
                     
+
+                    /*await pr.myfile.CopyToAsync(new FileStream(serverFolder, FileMode.Create));*/
+
+                    using (var fileStream = new FileStream(serverFolder, FileMode.Create))
+                    {
+                        fileStream.Position = 0;
+                        await pr.myfile.CopyToAsync(fileStream);
+                        fileStream.Flush();
+
+                    }
                 }
             
 

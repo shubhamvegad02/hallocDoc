@@ -37,7 +37,8 @@
                         <th>@item.date</th>
                         <td>@item.status</td>
                         <td>
-                            <a asp-area="" asp-controller="pDashboard" asp-action="viewDoc" class="logout tdn h-100">@item.name</a>
+                            
+                            <a asp-area="" asp-controller="pDashboard" asp-action="viewDoc" asp-route-reqid="@item.guid" class="logout tdn h-100">@item.name</a>
                         </td>
                     </tr>
                 }
@@ -55,7 +56,7 @@
                 </h2>
                     <div id="default-@item.guid" class="accordion-collapse collapse p-3" data-bs-parent="#accordionFlushExample">
                     <div>@item.status</div>
-                    <a asp-area="" asp-controller="pDashboard" asp-action="viewDoc" class="logout tdn w-100">@item.name</a>
+                        <a asp-area="" asp-controller="pDashboard" asp-action="viewDoc" asp-route-reqid="@item.guid" class="logout tdn w-100">@item.name</a>
                 </div>
             </div>
             }

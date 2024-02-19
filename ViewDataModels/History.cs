@@ -13,6 +13,9 @@ namespace hallocDoc.ViewDataModels
 
         public string uploder { get; set; }
 
+        public IFormFile myfile { get; set; }
+
+
 
     }
 }
