@@ -224,12 +224,50 @@
     /*scale: 1.4;*/
 }
 
+/*--------------agreement------------*/
+.flex {
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    justify-content: center;
+    align-items: center;
+    height:73vh;
+}
+
+.Discription {
+    margin: 0.5rem;
+    width: 80%;
+    padding: 3rem 2.5rem;
+}
+
+    .Discription p {
+        font-size: 1.15rem;
+    }
+
+.button {
+    margin: 0.5rem;
+    padding: 0.5rem;
+    width: 80%;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.agreebtn{
+    border:none !important;
+    color:white !important;
+}
+.agreebtn:hover{
+    border: 1px solid var(--blue) !important;
+    color:var(--blue) !important;
+}
 
 
 
 
-@media screen and (max-width : 768px) {
-    .hambtn{
+    @media screen and (max-width : 768px) {
+        .hambtn{
         display:block;
     }
     .navwelcome {

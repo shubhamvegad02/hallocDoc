@@ -23,6 +23,15 @@ namespace hallocDoc.Controllers
             Environment = _environment;
         }
 
+
+        public IActionResult agreement()
+        {
+            /*var aspid = HttpContext.Session?.GetString("aspid").ToString();
+            var userdb = _context.Users.FirstOrDefault(m => m.AspNetUserId == aspid);
+
+            ViewBag.username = userdb?.FirstName;*/
+            return View();
+        }
         public async Task<IActionResult> History()
         {
             if (HttpContext.Session?.GetString("aspid").ToString() == null)
