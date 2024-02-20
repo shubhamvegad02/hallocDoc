@@ -10,6 +10,8 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using System.IO.Compression;
 using NuGet.Protocol.Plugins;
+using Microsoft.CodeAnalysis.Elfie.Serialization;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace hallocDoc.Controllers
 {
@@ -28,13 +30,14 @@ namespace hallocDoc.Controllers
 
 
 
-        public async Task<IActionResult> uploadbtn(History h, int reqid) {
+        public async Task<IActionResult> uploadbtn(History h, int reqid)
+        {
             string filename1 = null;
             if (h.myfile != null)
             {
                 string folder = "uplodedItems/";
                 var key = Guid.NewGuid().ToString();
-                folder += key + "_" +h.myfile.FileName;
+                folder += key + "_" + h.myfile.FileName;
                 filename1 = key + "_" + h.myfile.FileName;
                 string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
 
@@ -47,14 +50,14 @@ namespace hallocDoc.Controllers
                 }
             }
             var rid = reqid;
-            
+
             var rf = new Requestwisefile();
             rf.RequestId = rid;
             rf.CreatedDate = DateTime.Now;
             rf.FileName = filename1;
             _context.Requestwisefiles.Add(rf);
             _context.SaveChanges();
-            return RedirectToAction("viewDoc", "pDashboard");
+            return RedirectToAction("History", "pDashboard");
         }
 
         public IActionResult logout()
@@ -74,7 +77,7 @@ namespace hallocDoc.Controllers
         }
         public async Task<IActionResult> History()
         {
-            if (HttpContext.Session?.GetString("aspid").ToString() == null)
+            if (HttpContext.Session?.GetString("aspid")?.ToString() == null)
             {
                 return RedirectToAction("Home", "Index");
             }
@@ -86,14 +89,8 @@ namespace hallocDoc.Controllers
             var aspid = HttpContext.Session?.GetString("aspid").ToString();
             var userdb = await _context.Users.FirstOrDefaultAsync(m => m.AspNetUserId == aspid);
             var userid = userdb?.UserId;
-            ViewBag.username = userdb?.FirstName;
+            ViewBag.username = string.Concat(userdb.FirstName, " ", userdb.LastName);
 
-            /*var dbreq2 = from x in _context.Requests where x.UserId == userid select x;*/
-            /*var dbreq2 = from r in _context.Requests
-                         join rf in _context.Requestwisefiles on r.RequestId equals rf.RequestId
-                         where r.UserId == userid
-                         group r by r.UserId into g
-                         select new { r=g.key, rf };*/
             var dbreq3 = from r in _context.Requests where r.UserId == userid select new { r };
 
 
@@ -101,52 +98,40 @@ namespace hallocDoc.Controllers
             List<History> Calc = new List<History>();
             foreach (var item in dbreq3)
             {
+                /*var count = _context.Requestwisefiles.Where(rf => rf.RequestId == item.r.RequestId).Select(rf => rf).Count();*/
+
                 var nh = new History();
                 nh.guid = item.r.RequestId;
                 nh.status = (int)item.r.Status;
                 nh.date = item.r.CreatedDate;
-                /*var temp = item.rf.FileName;
-                temp = temp.Substring(temp.IndexOf("_") + 1);
-                nh.name = temp;*/
                 nh.name = item.r.RequestId.ToString();
 
                 Calc.Add(nh);
 
             }
+
+
             ViewBag.history = Calc;
 
             return View();
         }
         public async Task<IActionResult> viewDoc(int reqid)
         {
-            int b = reqid;
-            ViewBag.reqid = b;
+
+            var aspid = HttpContext.Session?.GetString("aspid").ToString();
+            var userdb = await _context.Users.FirstOrDefaultAsync(m => m.AspNetUserId == aspid);
+            var userid = userdb?.UserId;
+            ViewBag.username = string.Concat(userdb.FirstName, " ", userdb.LastName);
+            ViewBag.reqid = reqid;
             if (HttpContext.Session?.GetString("aspid").ToString() == "")
             {
                 return RedirectToAction("Home", "Index");
             }
-            /*var sessionValue = HttpContext.Session.GetString("aspId");
-            if (sessionValue is null)
-            {
-                return RedirectToAction("Index", "Home");
-            }*/
 
-            /*var aspid = HttpContext.Session?.GetString("aspid").ToString();
-            var userdb = await _context.Users.FirstOrDefaultAsync(m => m.AspNetUserId == aspid);
-            var userid = userdb?.UserId;
-            ViewBag.username = string.Concat(userdb.FirstName, " ", userdb.LastName);
-
-            var dbreq2 = from r in _context.Requests
-                         join rf in _context.Requestwisefiles on r.RequestId equals rf.RequestId
-                         where r.UserId == userid
-                         select new { r, rf };*/
-
-            /*var reqfiledb = from r in _context.Requestwisefiles where r.RequestId == reqid select r;*/
             var dbreq2 = from r in _context.Requests
                          join rf in _context.Requestwisefiles on r.RequestId equals rf.RequestId
                          where rf.RequestId == reqid
                          select new { r, rf };
-
 
             List<History> data = new List<History>();
             foreach (var item in dbreq2)
@@ -161,12 +146,9 @@ namespace hallocDoc.Controllers
 
             }
             ViewBag.history = data;
-
-
-
             return View();
         }
-        
+
 
 
         public FileResult DonwlodFile(string filename)
@@ -187,53 +169,40 @@ namespace hallocDoc.Controllers
                          join rf in _context.Requestwisefiles on r.RequestId equals rf.RequestId
                          where r.UserId == userid
                          select new { r, rf };
-            /*foreach (var item in dbreq2)
-            {
-                string path = Path.Combine(this.Environment.WebRootPath, "uplodedItems/") + item.rf.FileName;
-                byte[] bytes = System.IO.File.ReadAllBytes(path);
-                return File(bytes, "application/octet-stream");
-            }
-            return null;*/
+
             string baseFilePath = Path.Combine(this.Environment.WebRootPath, "uplodedItems");
 
-            using (ZipArchive zip = new ZipArchive(new MemoryStream(), ZipArchiveMode.Update, true))
+            MemoryStream zipStream = new MemoryStream();
+            using (var zipArchive = new ZipArchive(zipStream, ZipArchiveMode.Create, leaveOpen: true))
             {
-                foreach (var filename in dbreq2)
+                foreach (var document in dbreq2)
                 {
-                    // Construct the full file path
-                    string fullFilePath = Path.Combine(baseFilePath, filename.rf.FileName);
+                    string fullFilePath = Path.Combine(baseFilePath, document.rf.FileName);
 
-                    // Ensure the file exists before adding to the zip
-                    if (!System.IO.File.Exists(fullFilePath))
-                    {
-                        return NotFound("File not found: "); // Or handle differently
-                    }
-
-                    // Add the file to the zip archive, preserving directory structure
-                    ZipArchiveEntry zipEntry = zip.CreateEntry(Path.GetFileName(filename.rf.FileName));
-                    using (Stream entryStream = zipEntry.Open())
-                    using (FileStream fileStream = System.IO.File.OpenRead(fullFilePath))
-                    {
-                        fileStream.CopyTo(entryStream);
-                    }
+                    string fileName = document.rf.FileName;
+                    int index = fileName.LastIndexOf("/");
+                    if (index != -1)
+                        fileName = fileName.Substring(index + 1);
+                    zipArchive.CreateEntryFromFile(fullFilePath, fileName);
                 }
-
-                // Access the first entry after adding all files
-                ZipArchiveEntry entry = zip.Entries.First();
-                return File(entry.Open(), "application/zip", "all_files.zip");
-            }
-
+            } // disposal of archive will force data to be written to memory stream.
+            zipStream.Position = 0; //reset memory stream position.
+            return File(zipStream, "application/zip", "MyDocuments.zip");
         }
+
 
         [HttpGet]
         public async Task<IActionResult> profile(profile p)
         {
-            var sessionValue = HttpContext.Session.GetString("aspId");
+            /*var sessionValue = HttpContext.Session.GetString("aspId");
             if (sessionValue is null)
             {
                 return RedirectToAction("Index", "Home");
+            }*/
+            if (HttpContext.Session?.GetString("aspid").ToString() == "")
+            {
+                return RedirectToAction("Home", "Index");
             }
-
             var aspid = HttpContext.Session?.GetString("aspid").ToString();
             var userdb = await _context.Users.FirstOrDefaultAsync(m => m.AspNetUserId == aspid);
             var userid = userdb?.UserId;
@@ -259,7 +228,7 @@ namespace hallocDoc.Controllers
             var userdb = await _context.Users.FirstOrDefaultAsync(m => m.AspNetUserId == aspid);
             var userid = userdb?.UserId;
 
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 userdb.FirstName = p?.FirstName;
                 userdb.LastName = p?.LastName;
@@ -274,15 +243,6 @@ namespace hallocDoc.Controllers
                 _context.SaveChanges();
             }
 
-
-
-            /*var currentUser =  _context.Users.FirstOrDefaultAsync(p => p.UserId == userid);
-            if(currentUser != null)
-            {
-                currentUser.firstName
-            }*/
-
-            /*ModelState.AddModelError("success", "Data Updated successfully..");*/
             ViewBag.success = "Data updated Successfully..";
             return RedirectToAction("profile", "pDashboard");
 

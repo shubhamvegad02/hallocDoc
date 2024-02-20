@@ -1,23 +1,38 @@
-﻿@{
-    ViewData["Title"] = "Reset password";
+﻿@model hallocDoc.ViewDataModels.forgotpass;
+@{
+    ViewData["Title"] = "forgot password";
 }
 <div class="back">
-   
-     <a class="tdn cp backbtn" asp-asp-area="" asp-asp-controller="Home" asp-action="Index">
+
+    <a class="tdn cp backbtn" asp-asp-area="" asp-asp-controller="Home" asp-action="Index">
         <img class="bimg" src="/images/up-arrow-svgrepo-com.svg" alt=""><span class="ntext">back</span>
     </a>
 </div>
 <div class="mrcon">
-<div class="mrhead">Reset Password</div>
-<form class="mrcform">
-    <div class="form-floating mb-3">
-        <input type="email" class="form-control mrcfin" id="floatingInput" placeholder="name@example.com">
-        <label class="inlab" for="floatingInput">Username</label>
+    <div class="mrhead">Reset Password</div>
+    
+    @*@if (Model.emailSent is true)
+    {
+    <div class="alert alert-success" role="alert">
+    <p>link has been sent successfully</p>
     </div>
+    }
+    else*@
 
-    <div class="d-grid gap-2">
-        <button class="btn btn-primary mb-3 loginbtn" type="button" onclick="window.location.href = '/patient html/plogin.html';">Reset Password</button>
-    </div>
-</form>
-<a class="forpw cp back" asp-asp-area="" asp-asp-controller="Home" asp-action="Index"><img class="bimg" src="/images/up-arrow-svgrepo-com.svg" alt=""><span class="ntext">back to login</span></a>
+    <form method="post" class="mrcform" asp-area="" asp-controller="Home" asp-action="Privacy" asp-route-id="@ViewBag.userdata">
+        <div class="form-floating mb-3">
+            <input asp-for="Email" type="email" class="form-control mrcfin" id="floatingInput" placeholder="name@example.com">
+            <label class="inlab" for="floatingInput">Username</label>
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="d-grid gap-2">
+            <button class="btn btn-primary mb-3 loginbtn" type="submit">Reset Password</button>
+        </div>
+    </form>
+    @Html.ValidationMessage("success", null, new { @class= "text-success fw-bold"})
+
+
+
+    <a class="forpw cp back" asp-asp-area="" asp-asp-controller="Home" asp-action="Index"><img class="bimg" src="/images/up-arrow-svgrepo-com.svg" alt=""><span class="ntext">back to login</span></a>
 </div>

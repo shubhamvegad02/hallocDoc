@@ -189,7 +189,7 @@ footer {
 
 .blbtn {
     margin-inline: 10px;
-    width: 8%;
+    /*width: 8%;*/
 }
 
     .blbtn:focus {
@@ -256,7 +256,9 @@ footer {
 }
 
 .cloudimg {
-    scale: 1.4;
+    /*scale: 1.4;*/
+    height: 100%;
+    width: 80%;
 }
 
 .numselect {

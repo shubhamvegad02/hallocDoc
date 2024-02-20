@@ -28,8 +28,8 @@
 
                 <!-- our custom upload button -->
                 <label class="mylable uploadbtn d-flex align-items-center justify-content-evenly" for="actual-btn">
-                    <span>
-                        <img class="cloudimg" src="/images/cloud-upload-icon.svg"
+                    <span class="w-25">
+                        <img class="cloudimg" src="~/images/cloud-up-arrow-svgrepo-com.svg"
                              alt="">
                     </span><span>Upload</span>
                 </label>
@@ -37,7 +37,7 @@
                 <!-- name of file chosen -->
                 <span id="file-chosen" class="upbtntext">No file selected</span>
             </div>
-            <button type="submit">submit</button>
+            <button class="logout tdn h-100 mt-2 " type="submit">submit</button>
         </form>
 
         <div class="dmboxbar mt-4">
@@ -45,7 +45,7 @@
             @* <a asp-area="" asp-controller="pDashboard" asp-action="viewDoc" class="logout tdn dmnewreq ">Donwlod All</a> *@
 
             <a class="logout tdn dmnewreq" href="@Url.Action("DonwlodFileAll", "pDashboard")">
-                Donwlod All
+                Download All
             </a>
 
         </div>
@@ -91,10 +91,13 @@
         <div class="accordion accordion-flush mt-3" id="accordionFlushExample">
             @foreach (var item in ViewBag.history)
             {
+                var temp = item.name;
+                temp = temp.Substring(temp.IndexOf("_") + 1);
+
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.guid" aria-expanded="false" aria-controls="flush-@item.guid">
-                            @item.name
+                            @temp
                         </button>
                     </h2>
                     <div id="flush-@item.guid" class="accordion-collapse collapse p-3" data-bs-parent="#accordionFlushExample">

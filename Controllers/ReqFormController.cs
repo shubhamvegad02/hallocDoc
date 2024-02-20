@@ -315,7 +315,7 @@ namespace hallocDoc.Controllers
 
                     var aspnetuser = new Aspnetuser();
                     aspnetuser.Id = Guid.NewGuid().ToString();
-                    aspnetuser.PasswordHash = password.encry(pr.password);
+                    /*aspnetuser.PasswordHash = password.encry(pr.password);*/
                     aspnetuser.Email = pr.Email;
                     aspnetuser.CreatedDate = DateTime.Now;
                     aspnetuser.UserName = pr.Email;
@@ -383,7 +383,7 @@ namespace hallocDoc.Controllers
 
 
 
-                    return RedirectToAction("first", "Home");
+                    return RedirectToAction("createPatient", "Home", new {aspid=aspnetuser.Id});
                 }
             }
             /*return RedirectToAction("Privacy", "Home");*/

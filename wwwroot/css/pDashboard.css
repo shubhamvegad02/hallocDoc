@@ -222,6 +222,8 @@
 
 .cloudimg {
     /*scale: 1.4;*/
+    height:100%;
+    width:80%;
 }
 
 /*--------------agreement------------*/

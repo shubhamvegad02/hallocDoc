@@ -12,10 +12,10 @@ namespace hallocDoc.ViewDataModels
     public class patientReq
     {
 
-        [Required]
-        /*[StringLength(8)]*/
+        /*[Required]
+        *//*[StringLength(8)]*//*
         [DataType(DataType.Password)]
-        public string password { get; set; }
+        public string password { get; set; }*/
 
         [StringLength(500)]
         [Required]
