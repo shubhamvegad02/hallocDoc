@@ -1,4 +1,4 @@
-﻿using hallocDoc.DataModels;
+﻿using halloDocEntities.DataModels;
 using System.ComponentModel.DataAnnotations;
 
 namespace hallocDoc.ViewDataModels

@@ -1,5 +1,5 @@
-﻿using hallocDoc.DataContext;
-using hallocDoc.DataModels;
+﻿using halloDocEntities.DataContext;
+using halloDocEntities.DataModels;
 using hallocDoc.Models;
 using hallocDoc.ViewDataModels;
 using Microsoft.AspNetCore.Mvc;

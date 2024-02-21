@@ -1,4 +1,6 @@
-using hallocDoc.DataContext;
+using halloDocEntities.DataContext;
+using halloDocLogic.Interfaces;
+using halloDocLogic.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,10 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
+builder.Services.AddScoped<IHome, Home>();
+builder.Services.AddScoped<IRequest, FormRequest>();
 
-var provider = builder.Services.BuildServiceProvider();
-var config = provider.GetService<IConfiguration>();
-builder.Services.AddDbContext<ApplicationDbContext>(item => item.UseNpgsql(config.GetConnectionString("dbcs")));
+
+/*var provider = builder.Services.BuildServiceProvider();*/
+/*var config = provider.GetService<IConfiguration>();*/
+builder.Services.AddDbContext<ApplicationDbContext>(item => item.UseNpgsql(builder.Configuration.GetConnectionString("dbcs")));
 
 
 

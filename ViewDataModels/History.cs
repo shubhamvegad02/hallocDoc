@@ -1,4 +1,4 @@
-﻿using hallocDoc.DataModels;
+﻿using halloDocEntities.DataModels;
 namespace hallocDoc.ViewDataModels
 {
     public class History

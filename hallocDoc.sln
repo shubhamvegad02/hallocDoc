@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hallocDoc", "hallocDoc.csproj", "{C5EB789E-4F39-4B17-BE02-ABF89A401A92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "hallocDoc", "hallocDoc.csproj", "{C5EB789E-4F39-4B17-BE02-ABF89A401A92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "halloDocLogic", "..\halloDocLogic\halloDocLogic.csproj", "{78F3D774-4493-4E57-B696-480DA51809A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "halloDocEntities", "..\halloDocEntities\halloDocEntities.csproj", "{6DAC15A1-D577-40F9-B3E7-8A353F2754CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{C5EB789E-4F39-4B17-BE02-ABF89A401A92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5EB789E-4F39-4B17-BE02-ABF89A401A92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5EB789E-4F39-4B17-BE02-ABF89A401A92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78F3D774-4493-4E57-B696-480DA51809A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78F3D774-4493-4E57-B696-480DA51809A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78F3D774-4493-4E57-B696-480DA51809A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78F3D774-4493-4E57-B696-480DA51809A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DAC15A1-D577-40F9-B3E7-8A353F2754CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DAC15A1-D577-40F9-B3E7-8A353F2754CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DAC15A1-D577-40F9-B3E7-8A353F2754CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DAC15A1-D577-40F9-B3E7-8A353F2754CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,11 +1,13 @@
-﻿using hallocDoc.DataContext;
-using hallocDoc.DataModels;
-using hallocDoc.ViewDataModels;
+﻿using halloDocEntities.DataContext;
+using halloDocEntities.DataModels;
+using halloDocEntities.ViewDataModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Nest;
+
+/*using Nest;*/
 using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
 using System.IO;
+using halloDocLogic.Interfaces;
 
 
 namespace hallocDoc.Controllers
@@ -16,12 +18,14 @@ namespace hallocDoc.Controllers
 
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        
+        private readonly IRequest _req;
 
-        public ReqFormController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
+
+        public ReqFormController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment, IRequest req)
         {
             _context = context;
             _webHostEnvironment = webHostEnvironment;
+            _req = req;
         }
 
 
@@ -33,71 +37,13 @@ namespace hallocDoc.Controllers
         [HttpPost]
         public async Task<IActionResult> Business(businessReq br)
         {
-            if (ModelState.IsValid && br != null)
+            if (ModelState.IsValid/* && br != null*/)
             {
-                var request = new Request();
-
-                request.RequestTypeId = 1;
-                /*request.UserId = user.UserId;*/
-                request.FirstName = br.BFirstName;
-                request.LastName = br.BLastName;
-                request.CreatedDate = DateTime.Now;
-                request.PhoneNumber = br.BMobile;
-                request.Email = br.BEmail;
-                request.CaseNumber = br.CaseNumber;
-                request.RelationName = "Business Person";
-
-                await _context.Requests.AddAsync(request);
-                await _context.SaveChangesAsync();
-
-                var rc = new Requestclient();
-
-                rc.RequestId = request.RequestId;
-                rc.FirstName = br.FirstName;
-                rc.LastName = br.LastName;
-                rc.PhoneNumber = br.Mobile;
-                rc.Notes = br.Notes;
-                rc.Street = br.Street;
-                rc.City = br.City;
-                rc.State = br.State;
-                rc.ZipCode = br.ZipCode;
-                rc.Email = br.Email;
-                rc.Address = br.Address;
-                _context.Requestclients.Add(rc);
-                _context.SaveChanges();
-
-                var dbdata = await _context.Businesses.FirstOrDefaultAsync(m => m.Name == br.BusinessName);
-                var bid = 0;
-                if (dbdata == null)
+                var result = _req.business(br); 
+                if(await result)
                 {
-                    var b = new Business();
-
-                    b.Name = br.BusinessName;
-                    b.Address1 = br.Address;
-                    b.City = br.City;
-                    b.PhoneNumber = br.BMobile;
-                    _context.Businesses.Add(b);
-                    _context.SaveChanges();
-                    bid = b.BusinessId;
-                }
-
-                else
-                {
-                    bid = dbdata.BusinessId;
-                }
-
-
-                var rb = new Requestbusiness();
-                rb.BusinessId = bid;
-                rb.RequestId = request.RequestId;
-                _context.Requestbusinesses.Add(rb);
-                _context.SaveChanges();
-
-
-
-
-
-                return RedirectToAction("first", "Home");
+                    return RedirectToAction("first", "Home");
+                }   
             }
             return View(br);
         }
@@ -243,16 +189,16 @@ namespace hallocDoc.Controllers
         public async Task<IActionResult> Patient(patientReq pr)
         {
             string filename = null;
-            if (ModelState.IsValid && pr != null)
+            if (ModelState.IsValid)
             {
-                if(pr.myfile != null)
+                if (pr.myfile != null)
                 {
                     string folder = "uplodedItems/";
                     var key = Guid.NewGuid().ToString();
                     folder += key + "_" + pr.myfile.FileName;
                     filename = key + "_" + pr.myfile.FileName;
                     string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
-                    
+
 
                     /*await pr.myfile.CopyToAsync(new FileStream(serverFolder, FileMode.Create));*/
 
@@ -264,9 +210,9 @@ namespace hallocDoc.Controllers
 
                     }
                 }
-            
 
-            var dbasp = await _context.Aspnetusers.FirstOrDefaultAsync(m => m.Email == pr.Email);
+
+                var dbasp = await _context.Aspnetusers.FirstOrDefaultAsync(m => m.Email == pr.Email);
                 var aspid = dbasp?.Id;
                 var dbuser = await _context.Users.FirstOrDefaultAsync(m => m.AspNetUserId == aspid);
                 if (dbasp != null)
@@ -381,9 +327,7 @@ namespace hallocDoc.Controllers
                     _context.Requestwisefiles.Add(rf);
                     _context.SaveChanges();
 
-
-
-                    return RedirectToAction("createPatient", "Home", new {aspid=aspnetuser.Id});
+                    return RedirectToAction("createPatient", "Home", new { aspid = aspnetuser.Id });
                 }
             }
             /*return RedirectToAction("Privacy", "Home");*/

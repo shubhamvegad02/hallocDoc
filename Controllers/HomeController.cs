@@ -1,7 +1,7 @@
-﻿using hallocDoc.DataContext;
-using hallocDoc.DataModels;
+﻿    using halloDocEntities.DataContext;
+using halloDocEntities.DataModels;
 using hallocDoc.Models;
-using hallocDoc.ViewDataModels;
+using halloDocEntities.ViewDataModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -12,6 +12,7 @@ using System.Net;
 using NuGet.Protocol;
 using Nest;
 using System.Xml.Linq;
+using halloDocLogic.Interfaces;
 
 namespace hallocDoc.Controllers
 {
@@ -21,10 +22,13 @@ namespace hallocDoc.Controllers
 
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+        private readonly IHome _home;
+
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, IHome home)
         {
             _logger = logger;
             _context = context;
+            _home = home;
         }
         [HttpGet]
         public IActionResult resetPass(string email, string token)
@@ -42,27 +46,17 @@ namespace hallocDoc.Controllers
             var cemail = TempData["Email"];
             var ctoken = TempData["Token"];
 
-            var dbasp = await _context.Aspnetusers.FirstOrDefaultAsync(m => m.Email == cemail);
-            if (dbasp != null)
+            var result = _home.setPassWithToken(cemail?.ToString(), ctoken?.ToString(), rp.Password);
+
+            if(await result)
             {
-                /*if (dbasp.Token == ctoken)*/
-                if (String.Equals(dbasp.Token, ctoken.ToString()))
-                {
-                    dbasp.PasswordHash = password.encry(rp.Password);
-                    _context.Aspnetusers.Update(dbasp);
-                    _context.SaveChanges();
-                    return RedirectToAction("Index", "Home");
-                }
+                return RedirectToAction("Index", "Home");
             }
-
-
-            ModelState.AddModelError("wrong", "Something went wrong...");
-            return View();
-
-
-
-
-
+            else
+            {
+                ModelState.AddModelError("wrong", "Something went wrong...");
+                return View();
+            }
 
         }
         public IActionResult first()
@@ -80,6 +74,27 @@ namespace hallocDoc.Controllers
         public async Task<IActionResult> Index(patientLogin pl)
         {
             if (ModelState.IsValid)
+            {
+                var result = _home.login(pl);
+                if (result.ToString() == "notfound")
+                {
+                    ModelState.AddModelError("NotFound", "User not found, please register first..");
+                    return View(pl);
+                }
+
+                if (result.ToString() == "success")
+                {
+                    var dbasp = _context.Aspnetusers.FirstOrDefault(m => m.Email == pl.Email);
+                    HttpContext.Session.SetString("aspid", dbasp.Id);
+                    return RedirectToAction("History", "pDashboard");
+                }
+                if(result.ToString() == "fail")
+                {
+                    ModelState.AddModelError("wrong", "wrong password");
+                    return View(pl);
+                }
+            }
+            /*if (ModelState.IsValid)
             {
                 var dbdata = await _context.Aspnetusers.FirstOrDefaultAsync(m => m.Email == pl.Email);
                 if (dbdata == null)
@@ -99,7 +114,7 @@ namespace hallocDoc.Controllers
                     return View(pl);
 
                 }
-            }
+            }*/
             return View();
         }
 
@@ -112,8 +127,6 @@ namespace hallocDoc.Controllers
         [HttpPost]
         public async Task<IActionResult> Privacy(forgotpass fp)
         {
-
-
             var dbasp = await _context.Aspnetusers.FirstOrDefaultAsync(m => m.Email == fp.Email);
             if (dbasp == null)
             {
@@ -130,38 +143,19 @@ namespace hallocDoc.Controllers
 
                 var passwordResetLink = Url.Action("resetPass", "Home", new { Email = email, Token = token }, protocol: HttpContext.Request.Scheme);
 
+                var result = _home.sendmail(email, passwordResetLink);
 
-                var smtpClient = new SmtpClient("smtp.office365.com")
+                if(result == true)
                 {
-                    Port = 587,
-                    Credentials = new NetworkCredential("tatva.dotnet.shubhamvegad@outlook.com", "Vegad@12"),
-                    EnableSsl = true,
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    UseDefaultCredentials = false
-                };
-
-                var mailMessage = new MailMessage
-                {
-                    From = new MailAddress("tatva.dotnet.shubhamvegad@outlook.com"),
-                    Subject = "Reset Your Password for halloDoc",
-                    
-                    Body = "<div> Hello " + email + "</div><p>We received a request to reset your password for your account on halloDoc. If you initiated this request, please click the link below to choose a new password:</p><p>" + passwordResetLink + "</p>",
-                    IsBodyHtml = true,
-                };
-                mailMessage.To.Add(email);
-
-                smtpClient.Send(mailMessage);
+                    ModelState.AddModelError("success", "Email sent successfully, please check your Email..");
+                    return View();
+                }
             }
 
-            ModelState.AddModelError("success", "Email sent successfully, please check your Email..");
+            ModelState.AddModelError("fail", "Something went wrong please try again..");
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
         public async Task<IActionResult> createPatient(createPatient cp, string aspid)
         {
             var dbasp = await _context.Aspnetusers.FirstOrDefaultAsync(m => m.Id == aspid.ToString());
@@ -175,24 +169,21 @@ namespace hallocDoc.Controllers
         [HttpPost]
         public async Task<IActionResult> createPatient(createPatient cp)
         {
-            var dbasp = await _context.Aspnetusers.FirstOrDefaultAsync(m => m.Email == cp.Email);
-            if (dbasp == null)
+            if(ModelState.IsValid)
             {
-                ModelState.AddModelError("NotFound", "User not found, Submit request first..");
-                return View(cp);
-            }
-            else
-            {
-                if (ModelState.IsValid)
+                var result = _home.setPass(cp.Email, cp.Password);
+                if(await result)
                 {
-                    dbasp.PasswordHash = password.encry(cp.Password);
-                    _context.Aspnetusers.Update(dbasp);
-                    _context.SaveChanges();
                     return RedirectToAction("Index", "Home");
                 }
-                return View(cp);
+                else
+                {
+                    ModelState.AddModelError("NotFound", "User not found, Submit request first..");
+                    return View(cp);
+                }
             }
-
+            return View(cp);
+            
         }
     }
 }
