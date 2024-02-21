@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Identity;
 using System.Net.Mail;
 using System.Net;
 using NuGet.Protocol;
+using Nest;
+using System.Xml.Linq;
 
 namespace hallocDoc.Controllers
 {
@@ -27,35 +29,41 @@ namespace hallocDoc.Controllers
         [HttpGet]
         public IActionResult resetPass(string email, string token)
         {
-            ViewBag.userdata=email;
+            /*ViewBag.userdata=email;*/
+            TempData["Email"] = email;
+            TempData["Token"] = token;
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> resetPass( string email, resetPass rp)
+        public async Task<IActionResult> resetPass(resetPass rp)
         {
-            var cemail = email;
-            /*var ctoken = token;*/
-            /*if(ModelState.IsValid)
-            {*/
-                var dbasp = await _context.Aspnetusers.FirstOrDefaultAsync(m => m.Email == cemail);
-                if (dbasp != null)
-                {
 
-                dbasp.PasswordHash = rp.Password;
-                _context.Aspnetusers.Update(dbasp);
-                    _context.SaveChanges();
-                }
-                else
+            var cemail = TempData["Email"];
+            var ctoken = TempData["Token"];
+
+            var dbasp = await _context.Aspnetusers.FirstOrDefaultAsync(m => m.Email == cemail);
+            if (dbasp != null)
+            {
+                /*if (dbasp.Token == ctoken)*/
+                if (String.Equals(dbasp.Token, ctoken.ToString()))
                 {
-                    /*Error message*/
+                    dbasp.PasswordHash = password.encry(rp.Password);
+                    _context.Aspnetusers.Update(dbasp);
+                    _context.SaveChanges();
                     return RedirectToAction("Index", "Home");
                 }
-            /*}*/
+            }
+
+
+            ModelState.AddModelError("wrong", "Something went wrong...");
+            return View();
 
 
 
-            return RedirectToAction("Index", "Home");
+
+
+
         }
         public IActionResult first()
         {
@@ -104,41 +112,49 @@ namespace hallocDoc.Controllers
         [HttpPost]
         public async Task<IActionResult> Privacy(forgotpass fp)
         {
-            
-            /*var dbasp = await _context.Aspnetusers.FirstOrDefaultAsync(m => m.Email == fp.Email);*/
-            /*if (dbasp == null)
+
+
+            var dbasp = await _context.Aspnetusers.FirstOrDefaultAsync(m => m.Email == fp.Email);
+            if (dbasp == null)
             {
-                error message
+                ModelState.AddModelError("Notfound", "User Not Found..");
                 return View();
-            }*/
-            var email = fp.Email;
-            var token = Guid.NewGuid().ToString();
-            var passwordResetLink = Url.Action("resetPass", "Home",new { Email = email, Token = token }, protocol: HttpContext.Request.Scheme);
-
-
-            var smtpClient = new SmtpClient("smtp.office365.com")
+            }
+            else
             {
-                Port = 587,
-                Credentials = new NetworkCredential("tatva.dotnet.shubhamvegad@outlook.com", "Vegad@12"),
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false
-            };
+                var email = fp.Email;
+                var token = Guid.NewGuid().ToString();
+                dbasp.Token = token;
+                _context.Aspnetusers.Update(dbasp);
+                _context.SaveChanges();
 
-            var mailMessage = new MailMessage
-            {
-                From = new MailAddress("tatva.dotnet.shubhamvegad@outlook.com"),
-                Subject = "reset password",
-                Body = passwordResetLink,
-                IsBodyHtml = true,
-            };
-            mailMessage.To.Add(email);
-
-            smtpClient.Send(mailMessage);
+                var passwordResetLink = Url.Action("resetPass", "Home", new { Email = email, Token = token }, protocol: HttpContext.Request.Scheme);
 
 
-            /*ModelState.AddModelError("success", "Email sent successfully, please check your Email..");*/
-            return RedirectToAction("Index", "Home");
+                var smtpClient = new SmtpClient("smtp.office365.com")
+                {
+                    Port = 587,
+                    Credentials = new NetworkCredential("tatva.dotnet.shubhamvegad@outlook.com", "Vegad@12"),
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false
+                };
+
+                var mailMessage = new MailMessage
+                {
+                    From = new MailAddress("tatva.dotnet.shubhamvegad@outlook.com"),
+                    Subject = "Reset Your Password for halloDoc",
+                    
+                    Body = "<div> Hello " + email + "</div><p>We received a request to reset your password for your account on halloDoc. If you initiated this request, please click the link below to choose a new password:</p><p>" + passwordResetLink + "</p>",
+                    IsBodyHtml = true,
+                };
+                mailMessage.To.Add(email);
+
+                smtpClient.Send(mailMessage);
+            }
+
+            ModelState.AddModelError("success", "Email sent successfully, please check your Email..");
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

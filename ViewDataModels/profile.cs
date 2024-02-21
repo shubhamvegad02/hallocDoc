@@ -6,8 +6,10 @@ namespace hallocDoc.ViewDataModels
     public class profile
     {
         [Required]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         public string FirstName { get; set; }
 
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         public string? LastName { get; set; }
 
         [Column(TypeName = "timestamp without time zone")]
@@ -22,11 +24,14 @@ namespace hallocDoc.ViewDataModels
         [StringLength(10)]
         [Required(ErrorMessage = "Mobile Number is Required")]
         public string? Mobile { get; set; }
-       
+
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         public string? Street { get; set; }
 
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         public string? City { get; set; }
 
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         public string? State { get; set; }
 
 

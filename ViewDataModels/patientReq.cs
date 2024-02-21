@@ -22,10 +22,12 @@ namespace hallocDoc.ViewDataModels
         public string? Notes { get; set; }
 
         [Required]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         public string FirstName { get; set; }
 
 
-        
+
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         public string? LastName { get; set; }
 
         public DateTime CreatedDate { get; set; }
@@ -39,15 +41,18 @@ namespace hallocDoc.ViewDataModels
         [StringLength(10)]
         [Required(ErrorMessage = "Mobile Number is Required")]
         public string? Mobile { get; set; }
-/*
-        [Column(TypeName = "character varying")]
-        [Required]
-        public string? PasswordHash { get; set; }*/
+        /*
+                [Column(TypeName = "character varying")]
+                [Required]
+                public string? PasswordHash { get; set; }*/
 
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         public string? Street { get; set; }
 
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         public string? City { get; set; }
 
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         public string? State { get; set; }
 
         

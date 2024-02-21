@@ -6,10 +6,12 @@ namespace hallocDoc.ViewDataModels
     {
         [StringLength(100)]
         [Required(ErrorMessage = "First Name is Required")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         public string? BFirstName { get; set; }
 
 
         [StringLength(100)]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         public string? BLastName { get; set; }
 
         [Phone]
@@ -33,16 +35,18 @@ namespace hallocDoc.ViewDataModels
         public string? Notes { get; set; }
 
         [Required]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         public string FirstName { get; set; } = "";
 
 
-        
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         public string? LastName { get; set; }
 
         public DateTime CreatedDate { get; set; }
 
-        [EmailAddress]
+        /*[EmailAddress]*/
         [Required]
+        [RegularExpression(@"/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{3}$/", ErrorMessage = "not valid")]
         public string Email { get; set; } = null!;
 
         [Phone]
@@ -54,11 +58,11 @@ namespace hallocDoc.ViewDataModels
                 [Column(TypeName = "character varying")]
                 [Required]
                 public string? PasswordHash { get; set; }*/
-
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         public string? Street { get; set; }
-
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         public string? City { get; set; }
-
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         public string? State { get; set; }
 
         public string? ZipCode { get; set; }

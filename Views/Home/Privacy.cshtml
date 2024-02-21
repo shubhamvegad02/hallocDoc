@@ -30,7 +30,9 @@
             <button class="btn btn-primary mb-3 loginbtn" type="submit">Reset Password</button>
         </div>
     </form>
+
     @Html.ValidationMessage("success", null, new { @class= "text-success fw-bold"})
+    @Html.ValidationMessage("Notfound", null, new { @class= "text-danger fw-bold"})
 
 
 

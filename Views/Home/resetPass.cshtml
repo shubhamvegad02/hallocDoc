@@ -2,29 +2,29 @@
 @{
     ViewData["Title"] = "Reset Password";
 }
-<form asp-controller="Home" asp-action="resetPass" class="mrcform">
+<form asp-controller="Home" asp-action="resetPass" class="mrcform d-flex align-items-center justify-content-center flex-column">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 
-    <div class="form-floating mb-3">
+    <div class="form-floating mb-3 col-6">
         <input asp-for="Password" type="password" class="form-control mrcpass" id="floatingPassword"
                placeholder="Password">
         <label class="inlab" for="floatingPassword">Password</label>
         <span asp-validation-for="Password" class="text-danger"></span>
     </div>
 
-    <div class="form-floating mb-3">
+    <div class="form-floating mb-3 col-6">
         <input asp-for="cpassword" type="password" class="form-control mrcpass" id="floatingPassword2"
                placeholder="Password">
         <label class="inlab" for="floatingPassword2">Confirm Password</label>
         <span asp-validation-for="cpassword" class="text-danger"></span>
     </div>
 
-    <div class="d-grid gap-2">
-        <button class="btn btn-primary mb-3 loginbtn" type="submit">Create Account</button>
+    <div class="d-grid gap-2 col-6">
+        <button class="btn btn-primary mb-3 loginbtn" type="submit">Reset Password</button>
     </div>
 
-    
+    @Html.ValidationMessage("wrong", null, new { @class= "text-danger fw-bold"})
 
 
 </form>

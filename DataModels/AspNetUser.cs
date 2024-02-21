@@ -35,6 +35,10 @@ public partial class Aspnetuser
     [Column(TypeName = "timestamp without time zone")]
     public DateTime? EndDate { get; set; }
 
+    [Column("token")]
+    [StringLength(100)]
+    public string? Token { get; set; }
+
     [InverseProperty("AspNetUser")]
     public virtual ICollection<Admin> AdminAspNetUsers { get; set; } = new List<Admin>();
 
