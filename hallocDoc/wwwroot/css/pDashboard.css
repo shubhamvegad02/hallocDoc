@@ -1,0 +1,346 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+     /*border: 1px solid red; */
+}
+
+:root {
+    --blue: #68cbe1;
+    --nblue: #55b2bc;
+    --white: #ffffff;
+    --pdark: #272233f0;
+    --sdark: #2A2438;
+    --darkpur: #310A5D;
+    --lightpur: #411E8F;
+    --clasicwhite: #d3d2d2;
+}
+
+.tdn {
+    text-decoration: none;
+}
+.tdn:hover{
+    text-decoration:none;
+}
+
+/*---------layout design---------*/
+
+.hambtn {
+    display:none;
+    height: 44px;
+    width: 44px;
+    background-color: transparent;
+    border: 2px solid var(--blue);
+    border-radius: 5px;
+}
+.navchild {
+    height:46%;
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.navchild > *{
+    margin-inline:1%;
+}
+.logout {
+    border: 2px solid var(--blue);
+    color: var(--blue);
+    border-radius: 8px;
+    height: 100%;
+    width: fit-content;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    justify-content: center;
+    padding-inline: 10px;
+}
+.loglg {
+    display: flex;
+}
+
+.logsm {
+    display: none;
+    height:44px !important;
+    width:44px !important;
+}
+.smimg{
+    /*width:100%;
+    height:100%;*/
+}
+.logout:hover{
+    color:white;
+    background-color:var(--blue);
+}
+.navwelcome{
+    display:flex;
+    align-items:center;
+    height:100%;
+    width:fit-content;
+    padding-inline:5px;
+}
+
+
+/*---------dashboard-----------*/
+
+
+.historyhead{
+    width:96%;
+    margin-inline:auto;
+
+}
+.dashsidebar {
+    display: none;
+    transition-duration: 1s !important;
+}
+.hideside {
+    transform: translateX(-100%);
+    transition-duration: 1s !important;
+}
+.dashnav {
+    height: 60px;
+    width: 96%;
+    display: flex;
+    align-items: center;
+    margin-inline: auto;
+    border-bottom: 1px solid gray;
+    margin-top: 7px;
+}
+.dnchild {
+    color:black;
+    font-weight:500;
+    width: 100px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+    .dnchild:focus-visible{
+        color:red;
+    }
+    .dncactive {
+        border-bottom: 3px solid var(--blue);
+    }
+
+.dmain {
+    height:fit-content;
+    min-height:63vh;
+    width: 96%;
+    margin-inline: auto;
+    background-color: #f1f1f1a3;
+    padding: 1%;
+    border-radius: 10px;
+}
+.dmtable {
+    height: 100%;
+    width: 100%;
+    margin-inline: auto;
+    margin-top:50px;
+}
+.dmnewreq{
+    float:right;
+    height:50px !important;
+}
+.accordion{
+    display:none;
+}
+
+/*-------------ViewData--------------*/
+
+.docMain{
+    
+    width:70%;
+    margin-inline:auto;
+    height:fit-content;
+    
+}
+.dmbox {
+    height: fit-content;
+    min-height: 70vh;
+    padding: 1%;
+    background-color: #f1f1f1a3;
+    border-radius: 10px;
+}
+.dmboxbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.upbtncon {
+    /* border: 1px solid red; */
+    width: 95%;
+    height: 55px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+}
+
+.uploadbtn {
+    border: 2px solid var(--blue);
+    height: 100%;
+    width: 125px !important;
+    color: white !important;
+    border: 1px solid var(--blue) !important;
+    background-color: var(--blue) !important;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 0px 5px 5px 0px;
+}
+
+.upbtntext {
+    border: 1px solid #c8c8c8;
+    width: calc(100% - 125px);
+    text-align: left;
+    padding-inline: 1%;
+    border-radius: 5px 0px 0px 5px;
+    background-color: #e8e7e7;
+    font-size: 1.1rem;
+    font-weight: 500;
+    align-items: center;
+    display: flex;
+}
+.btnnohovor{
+    width:50px;
+    height:50px;
+    
+}
+.btnnohovor:hover {
+    background-color: white !important;
+    border-color: var(--blue) !important;
+}
+
+#countrybtn {
+    width: 30%;
+}
+
+#phone {
+    width: 70%;
+}
+
+.cloudimg {
+    /*scale: 1.4;*/
+    height:100%;
+    width:80%;
+}
+
+/*--------------agreement------------*/
+.flex {
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    justify-content: center;
+    align-items: center;
+    height:73vh;
+}
+
+.Discription {
+    margin: 0.5rem;
+    width: 80%;
+    padding: 3rem 2.5rem;
+}
+
+    .Discription p {
+        font-size: 1.15rem;
+    }
+
+.button {
+    margin: 0.5rem;
+    padding: 0.5rem;
+    width: 80%;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.agreebtn{
+    border:none !important;
+    color:white !important;
+}
+.agreebtn:hover{
+    border: 1px solid var(--blue) !important;
+    color:var(--blue) !important;
+}
+
+
+
+
+    @media screen and (max-width : 768px) {
+        .hambtn{
+        display:block;
+    }
+    .navwelcome {
+        display: none;
+    }
+    .navchild{
+        width:37%;
+    }
+    .logout {
+        
+        height: 100%;
+        width: fit-content;
+        background: transparent;
+        display: flex;
+        align-items: center;
+        font-size: 1rem;
+        justify-content: center;
+        padding-inline: 5px;
+    }
+    .loglg{
+        display:none;
+    }
+    .logsm{
+        display:flex;
+    }
+    .dmnewreq {
+        height: 42px !important;
+        margin-right: 11px;
+    }
+    .table{
+        display:none;
+    }
+    .accordion{
+        display:block;
+    }
+    .docMain{
+        width:96%;
+    }
+    .dashnav{
+        display:none;
+    }
+    .dashsidebar {
+        background-color: #e2e2e2;
+        position: absolute;
+        z-index: 100;
+        /*border: 1px solid red;*/
+        height: 83vh;
+        width: 45%;
+        padding: 1%;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-content: center;
+        display: flex
+    }
+    .dschild{
+        border:1px solid var(--blue);
+        margin-top:5px;
+        height:70px;
+        width:90%;
+        margin-inline:auto;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        color:var(--blue);
+        border-radius:5px;
+    }
+    .dschildactive{
+        color:white;
+        border-color:var(--blue);
+        background-color:var(--blue);
+
+
+    }
+}

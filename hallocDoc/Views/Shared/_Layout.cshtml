@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - hallocDoc</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/hallocDoc.styles.css" asp-append-version="true" />
+</head>
+<body>
+
+
+
+
+
+
+    <div class="bgimgform"></div>
+    <div class="main">
+        <button class="moonbtn" id="moonbtn" onclick="darkf()">
+            <img class="moon cp" src="/images/nightmode-svgrepo-com (2).svg" alt="">
+        </button>
+        <div class="mrfake"></div>
+        <div class="mright">
+
+            <img src="/images/halloDoc img.png" class="mrimg" alt="" id="mrimg">
+
+
+            @RenderBody()
+
+            <div class="terms ntext cp">Terms & condition | Privacy policy</div>
+
+        </div>
+    </div>
+
+
+
+
+    <script>
+        function darkf(){
+            const mrimg = document.getElementById("mrimg");
+            const mrhead = document.getElementById("mrhead");
+            const inlab = document.querySelectorAll(".inlab");
+            mrimg.classList.toggle("dark");
+            document.body.classList.toggle("dark");
+            mrhead.classList.toggle("white-font");
+            
+           
+            
+
+        }
+        
+    </script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/jquery-validate/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+    <script type="text/javascript" src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    
+</body>
+</html>
+

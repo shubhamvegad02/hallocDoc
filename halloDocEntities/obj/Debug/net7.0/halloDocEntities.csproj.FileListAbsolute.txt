@@ -1,0 +1,14 @@
+G:\Projects\halloDocEntities\bin\Debug\net7.0\halloDocEntities.deps.json
+G:\Projects\halloDocEntities\bin\Debug\net7.0\halloDocEntities.runtimeconfig.json
+G:\Projects\halloDocEntities\bin\Debug\net7.0\halloDocEntities.dll
+G:\Projects\halloDocEntities\bin\Debug\net7.0\halloDocEntities.pdb
+G:\Projects\halloDocEntities\obj\Debug\net7.0\halloDocEntities.csproj.AssemblyReference.cache
+G:\Projects\halloDocEntities\obj\Debug\net7.0\halloDocEntities.GeneratedMSBuildEditorConfig.editorconfig
+G:\Projects\halloDocEntities\obj\Debug\net7.0\halloDocEntities.AssemblyInfoInputs.cache
+G:\Projects\halloDocEntities\obj\Debug\net7.0\halloDocEntities.AssemblyInfo.cs
+G:\Projects\halloDocEntities\obj\Debug\net7.0\halloDocEntities.csproj.CoreCompileInputs.cache
+G:\Projects\halloDocEntities\obj\Debug\net7.0\halloDocEntities.dll
+G:\Projects\halloDocEntities\obj\Debug\net7.0\refint\halloDocEntities.dll
+G:\Projects\halloDocEntities\obj\Debug\net7.0\halloDocEntities.pdb
+G:\Projects\halloDocEntities\obj\Debug\net7.0\halloDocEntities.genruntimeconfig.cache
+G:\Projects\halloDocEntities\obj\Debug\net7.0\ref\halloDocEntities.dll

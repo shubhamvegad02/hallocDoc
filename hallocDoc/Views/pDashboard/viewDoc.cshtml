@@ -1,0 +1,121 @@
+﻿@model halloDocEntities.ViewDataModels.History;
+@{
+    ViewData["Title"] = "viewData";
+    Layout = "~/Views/Shared/pDashboard.cshtml";
+
+}
+<div class="dashnav">
+    <a asp-area="" asp-controller="pDashboard" asp-action="viewDoc" class="dnchild tdn cp dncactive">Dashboard</a>
+    <a asp-area="" asp-controller="pDashboard" asp-action="profile" class="dnchild tdn cp ">Profile</a>
+</div>
+<div class="dashsidebar hideside" id="dashsidebar">
+    <a asp-area="" asp-controller="pDashboard" asp-action="viewDoc" class="dschild   tdn cp ">Dashboard</a>
+    <a asp-area="" asp-controller="pDashboard" asp-action="profile" class="dschild dschildactive tdn cp ">Profile</a>
+</div>
+<div class="docMain mt-3">
+    <div class="dmboxbar">
+        <h2 m-0>Document</h2>
+        <a asp-area="" asp-controller="pDashboard" asp-action="History" class="logout tdn dmnewreq mb-3">Back</a>
+    </div>
+
+    <div class="dmbox">
+        <span>Patient Name</span>
+        <h5>@ViewBag.username</h5>
+        <span class="lh-sm">Check here any files that you or your doctor attached for review.</span>
+        <form asp-area="" asp-controller="pDashboard" asp-action="uploadbtn" asp-route-reqid="@ViewBag.reqid" enctype="multipart/form-data">
+            <div class="upbtncon mt-3 w-100">
+                <input asp-for="myfile" type="file" id="actual-btn" hidden />
+
+                <!-- our custom upload button -->
+                <label class="mylable uploadbtn d-flex align-items-center justify-content-evenly" for="actual-btn">
+                    <span class="w-25">
+                        <img class="cloudimg" src="~/images/cloud-up-arrow-svgrepo-com.svg"
+                             alt="">
+                    </span><span>Upload</span>
+                </label>
+
+                <!-- name of file chosen -->
+                <span id="file-chosen" class="upbtntext">No file selected</span>
+            </div>
+            <button class="logout tdn h-100 mt-2 " type="submit">submit</button>
+        </form>
+
+        <div class="dmboxbar mt-4">
+            <h3 class="mb-0">Documents</h3>
+            @* <a asp-area="" asp-controller="pDashboard" asp-action="viewDoc" class="logout tdn dmnewreq ">Donwlod All</a> *@
+
+            <a class="logout tdn dmnewreq" href="@Url.Action("DonwlodFileAll", "pDashboard")">
+                Download All
+            </a>
+
+        </div>
+        <table class="table w-100 mt-3">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Document</th>
+                    <th scope="col">Uploader</th>
+                    <th scope="col">Upload Date</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody class="lh-lg">
+                @foreach (var item in ViewBag.history)
+                {
+                    var temp = item.name;
+                    temp = temp.Substring(temp.IndexOf("_") + 1);
+
+                    <tr class="lh-3">
+                        <th><input type="checkbox" /></th>
+                        @* <td>@item.name</td> *@
+                        <td>@temp</td>
+                        <td>@item.uploder</td>
+                        <td>@item.date</td>
+                        <td>
+                            @* <a asp-area="" asp-controller="pDashboard" asp-action="viewDoc" class="logout btnnohovor tdn p-0">
+                        <img class="h-100 w-100" src="~/images/cloud-arrow-down-alt-svgrepo-com.svg"
+                        alt="">
+                        </a> *@
+                            @* @Html.ActionLink("Donwlod", "DonwlodFile", new { fileName=item.name}) *@
+                            <a class="logout btnnohovor tdn p-0" href="@Url.Action("DonwlodFile", "pDashboard", new { fileName = item.name })">
+                                <img class="h-100 w-100" src="~/images/cloud-arrow-down-alt-svgrepo-com.svg"
+                                     alt="">
+                            </a>
+
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+        <div class="accordion accordion-flush mt-3" id="accordionFlushExample">
+            @foreach (var item in ViewBag.history)
+            {
+                var temp = item.name;
+                temp = temp.Substring(temp.IndexOf("_") + 1);
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.guid" aria-expanded="false" aria-controls="flush-@item.guid">
+                            @temp
+                        </button>
+                    </h2>
+                    <div id="flush-@item.guid" class="accordion-collapse collapse p-3" data-bs-parent="#accordionFlushExample">
+
+                        @* <div>report.pdf</div> *@
+                        <div>@item.uploder</div>
+                        <div>@item.date</div>
+                        <div>
+                            <a href="~/uplodedItems/21379940-69d2-4e3c-ad8b-acbf7d60a064_hamburger-svgrepo-com.svg" class="logout logsm btnnohovor tdn p-0">
+                                <img class="h-100 w-100" src="~/images/cloud-arrow-down-alt-svgrepo-com.svg"
+                                     alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+        </div>
+    </div>
+</div>

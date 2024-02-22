@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - hallocDoc</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/ReqForm.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/hallocDoc.styles.css" asp-append-version="true" />
+</head>
+<body>
+
+
+
+    <nav class="rnav">
+        <a asp-area="" asp-controller="Home" asp-action="first" class="nlogo tdn"><img class="nlimg" src="/images/halloDoc img.png" alt=""></a>
+        <button class="moonbtn" id="moonbtn" onclick="darkfunction()">
+            <img class="moon cp" src="/images/nightmode-svgrepo-com (2).svg" alt="">
+        </button>
+    </nav>
+    @if (ViewBag.hidebackbtn == null)
+    {
+        <div class="backbtn">
+            <a class="btn btn-outline-primary" asp-area="" asp-controller="ReqForm" asp-action="SubmitReq">
+                <img class="backbtnimg"
+                     src="/images/up-arrow-svgrepo-com.svg" alt=""><span class="ntext colblue">Back</span>
+            </a>
+        </div>
+    }
+
+    @RenderBody()
+    <footer class="myfooter">
+        <span class="fele">Terms & Condition | Privacy Policy</span>
+    </footer>
+
+
+
+    <script>
+        function hideinfo() {
+            document.getElementById('infocon').style.display = "none";
+        }
+    </script>
+    <script>
+        function darkfunction() {
+            document.body.classList.toggle("pdark");
+            const rnav = document.querySelector("nav");
+            rnav.classList.toggle("sdark");
+            const fter = document.querySelector(".myfooter");
+            fter.classList.toggle("sdark");
+            const main = document.querySelector(".main");
+            main.classList.toggle("pdark");
+            const fc = document.querySelectorAll(".form-control");
+            fc.forEach(el => {
+                el.classList.toggle('bg-dark');
+            });
+
+
+
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
+
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/jquery-validate/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+ 
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

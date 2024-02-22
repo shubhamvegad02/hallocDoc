@@ -1,0 +1,90 @@
+﻿@*@model IList<hallocDoc.ViewDataModels.History>;*@
+@model IEnumerable<halloDocEntities.ViewDataModels.History>;
+@{
+    ViewData["Title"] = "History";
+    Layout = "~/Views/Shared/pDashboard.cshtml";
+
+}
+<div class="dashnav">
+    <a asp-area="" asp-controller="pDashboard" asp-action="History" class="dnchild tdn cp dncactive">Dashboard</a>
+    <a asp-area="" asp-controller="pDashboard" asp-action="profile" class="dnchild tdn cp ">Profile</a>
+</div>
+<div class="dashsidebar hideside" id="dashsidebar">
+    <a asp-area="" asp-controller="pDashboard" asp-action="History" class="dschild   tdn cp ">Dashboard</a>
+    <a asp-area="" asp-controller="pDashboard" asp-action="profile" class="dschild dschildactive tdn cp ">Profile</a>
+</div>
+<h3 class="historyhead mt-4">Medical history</h3>
+<div class="dmain">
+    <Button data-bs-toggle="modal" data-bs-target="#exampleModal" class="logout loglg tdn dmnewreq ">Create New Request</Button>
+
+
+
+    @* -------------popup------------- *@
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title fs-5" id="exampleModalLabel">Create New Request</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>Here, I wanted to create new request for..</h6>
+                    <div class="d-flex align-items-center justify-content-center">
+                    <a asp-area="" asp-controller="ReqForm" asp-action="Patient" class="logout loglg tdn dmnewreq me-2">Me</a>
+                    <a asp-area="" asp-controller="ReqForm" asp-action="family" class="logout loglg tdn dmnewreq me-2">Someone Else</a>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <a asp-area="" asp-controller="Home" asp-action="first" class="logout logsm tdn dmnewreq">
+        <img class="smimg" src="/images/add-svgrepo-com.svg" alt="">
+    </a>
+
+    <div class="dmtable">
+        <table class="table w-100">
+            <thead>
+                <tr>
+                    <th scope="col">Created Date </th>
+                    <th scope="col">Current Status</th>
+                    <th scope="col">Document</th>
+                </tr>
+            </thead>
+            <tbody class="lh-lg">
+                @foreach (var item in ViewBag.history)
+                {
+                    <tr class="lh-3">
+                        <th>@item.date</th>
+                        <td>@item.status</td>
+                        <td>
+                            
+                            <a asp-area="" asp-controller="pDashboard" asp-action="viewDoc" asp-route-reqid="@item.guid" class="logout tdn h-100">Documents</a>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+            @foreach (var item in ViewBag.history)
+                {
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#default-@item.guid" aria-expanded="false" aria-controls="default-@item.guid">
+                        Created at @item.date
+                    </button>
+                </h2>
+                    <div id="default-@item.guid" class="accordion-collapse collapse p-3" data-bs-parent="#accordionFlushExample">
+                    <div>@item.status</div>
+                        <a asp-area="" asp-controller="pDashboard" asp-action="viewDoc" asp-route-reqid="@item.guid" class="logout tdn w-100">Documents</a>
+                </div>
+            </div>
+            }
+            
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+﻿@model halloDocEntities.ViewDataModels.createPatient;
+@{
+    ViewData["Title"] = "createPatient";
+}
+<div class="mrcon">
+    <div class="mrhead" id="mrhead">Create Account</div>
+    <form asp-action="createPatient" class="mrcform">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-floating mb-3">
+            <input asp-for="Email" type="email" class="form-control mrcfin" id="floatingInput"
+                   placeholder="name@example.com">
+            <label class="inlab" for="floatingInput">Email address</label>
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input asp-for="Password" type="password" class="form-control mrcpass" id="floatingPassword"
+                   placeholder="Password">
+            <label class="inlab" for="floatingPassword">Password</label>
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input asp-for="cpassword" type="password" class="form-control mrcpass" id="floatingPassword2"
+                   placeholder="Password">
+            <label class="inlab" for="floatingPassword2">Confirm Password</label>
+            <span asp-validation-for="cpassword" class="text-danger"></span>
+        </div>
+
+        <div class="d-grid gap-2">
+            <button class="btn btn-primary mb-3 loginbtn" type="submit">Create Account</button>
+        </div>
+
+        @Html.ValidationMessage("NotFound", null, new { @class = "text-danger fw-bold" })
+
+
+    </form>
+</div>

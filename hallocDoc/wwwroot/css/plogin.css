@@ -1,0 +1,257 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* border: 1px solid red; */
+}
+
+html {
+    font-size: 18px;
+}
+
+:root {
+    --blue: #68cbe1;
+    --nblue: #55b2bc;
+
+    --white: #ffffff;
+}
+
+.ntext {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.cp {
+    cursor: pointer;
+}
+
+
+
+.moonbtn{
+    position: fixed;
+    z-index: 50;
+    right: 10px;
+    top: 10px;
+    border: 2px solid var(--blue);
+    border-radius: 10px;
+    height: fit-content;
+    width: fit-content;
+}
+.moon {
+   
+}
+.bgimgform{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 25%;
+    height: 100vh;
+    width: 50%;
+    z-index: 1;
+    background-image: url("/images/11116016_415.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    filter: blur(10px);
+    -webkit-filter: blur(10px);
+    opacity: 0.5;
+
+}
+.main {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+
+}
+
+.mleft {
+    height: 100%;
+    width: 50%;
+}
+
+.mlimg {
+    height: 100%;
+    width: 100%;
+}
+
+.mright {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-inline: auto;
+    z-index: 2;
+    position: relative;
+    left: -25%;
+
+
+}
+
+.mrfake {
+    display: block;
+    left: 25%;
+    height: 100%;
+    width: 50%;
+    position: relative;
+    z-index: 1;
+    background-image: url("/images/11116016_415.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    filter: blur(10px);
+    -webkit-filter: blur(10px);
+    opacity: 0.5;
+}
+
+.back {
+    height: 3%;
+    width: 100%;
+    color: var(--blue);
+
+}
+
+.bimg {
+    height: 25px;
+    width: 25px;
+}
+
+.mrcon {
+    height: 52%;
+    width: 70%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5%;
+
+}
+
+.mrhead {
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 500;
+    width: 88%;
+    margin-bottom: 8%;
+
+}
+.mrimg{
+    background-color: #fffffff0;
+    border-radius: 10px;
+}
+.mrcform {
+    width: 88%;
+}
+
+.forpw {
+    text-align: center;
+    color: #37aec8;
+}
+
+.form-control{
+    
+    color: #ffffff;
+   
+    background-color: #00000038 !important;
+    border: var(--bs-border-width) solid #4a4b4c !important;
+    
+   
+}
+.form-control:focus {
+    background-color: white !important;
+    border: 2px solid var(--blue) !important;
+    box-shadow: 1px 1px 8px var(--blue) !important;
+}
+
+.loginbtn {
+    /* background-color: var(--blue) !important; */
+    border: 1px solid var(--blue) !important;
+}
+
+.loginbtn:hover {
+    background-color: var(--nblue) !important;
+    border: 1px solid var(--nblue) !important;
+}
+
+.terms {
+    text-align: center;
+}
+
+.mrcfin {
+    background-image: url("/images/person-svgrepo-com.svg");
+    background-repeat: no-repeat;
+    background-position: 98% 50%;
+    background-size: 35px;
+}
+
+.mrcpass {
+    background-image: url("/images/eye-svgrepo-com.svg");
+    background-repeat: no-repeat;
+    background-position: 98% 50%;
+    background-size: 35px;
+}
+.loginbtn{
+    background-color: #37aec8 !important;
+}
+
+@media screen and (max-width : 1200px) {
+    
+    .bgimgform{
+        display: block;
+        left: 0;
+        width: 100%;
+    }
+    .mleft {
+        display: none;
+        left: 0;
+        width: 100%;
+    }
+
+    .mright {
+        width: 80%;
+        margin: auto;
+        left: 0;
+    }
+
+    .mrfake {
+        display: none;
+    }
+
+    .mrcon {
+        height: 52%;
+        width: 80%;
+        max-width: 600px;
+    }
+
+}
+
+@media screen and (max-width : 768px) {
+    .mright {
+        width: 100%;
+    }
+
+
+    .mrcon {
+        width: 100%;
+    }
+
+    .mrimg {
+        scale: 0.8;
+        display: none;
+    }
+
+    .mrhead {
+        font-size: 1.7rem;
+    }
+
+    .moon {
+        position: fixed;
+        z-index: 50;
+        right: 5px;
+        top: 5px;
+        border: 2px solid var(--blue);
+        scale: 0.6;
+        border-radius: 13px;
+    }
+}

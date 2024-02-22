@@ -1,0 +1,384 @@
+html {
+  font-size: 14px;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+/*    border: 1px solid red;
+*/}
+/*body{
+    height:100vh;
+    width:100vw;
+}*/
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+
+
+:root {
+    --blue: #68cbe1;
+    --nblue: #55b2bc;
+    --white: #ffffff;
+    --pdark: #272233f0;
+    --sdark: #2A2438;
+    --darkpur: #310A5D;
+    --lightpur: #411E8F;
+}
+
+.ntext {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.cp {
+    cursor: pointer;
+}
+.tdn{
+    color: var(--blue);
+    text-decoration:none;
+}
+
+
+
+.moonbtn {
+    position: fixed;
+    z-index: 50;
+    right: 10px;
+    top: 10px;
+    border: 2px solid var(--blue);
+    border-radius: 10px;
+    height: 50px;
+    width: 50px;
+    background-color: transparent;
+}
+
+.moon {
+    height: 100%;
+    width: 100%;
+}
+
+.backbtn {
+    height: 100%;
+    width: fit-content;
+    border: 2px solid var(--blue);
+    border-radius: 6px;
+    padding-inline: 5px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.bgimgform {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 25%;
+    height: 100vh;
+    width: 50%;
+    z-index: 1;
+    background-image: url("/images/11116016_415.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    filter: blur(10px);
+    -webkit-filter: blur(10px);
+    opacity: 0.5;
+}
+
+.main {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+
+.mleft {
+    height: 100%;
+    width: 50%;
+}
+
+.mlimg {
+    height: 100%;
+    width: 100%;
+}
+
+.mright {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-inline: auto;
+    z-index: 2;
+    position: relative;
+    left: -25%;
+}
+
+.mrfake {
+    display: block;
+    left: 25%;
+    height: 100%;
+    width: 50%;
+    position: relative;
+    z-index: 1;
+    background-image: url("/images/11116016_415.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    filter: blur(10px);
+    -webkit-filter: blur(10px);
+    opacity: 0.5;
+}
+
+.back {
+    height: 4.5%;
+    width: 96%;
+    color: var(--blue);
+}
+
+.bimg {
+    height: 25px;
+    width: 25px;
+}
+
+.mrcon {
+    height: 48%;
+    width: 70%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+/*    margin-top: 5%;
+*/}
+.mrconfirst {
+    
+    height: 48%;
+    width: 70%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   
+}
+
+.mrhead {
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 500;
+    width: 88%;
+    margin-bottom: 8%;
+}
+
+.mrimg {
+    background-color: #fffffff0;
+    border-radius: 10px;
+}
+
+.mrcform {
+    width: 88%;
+}
+
+.forpw {
+    text-align: center;
+    color: #37aec8;
+    text-decoration:none;
+    width:fit-content;
+    height:fit-content;
+}
+
+.form-control {
+    color: #ffffff;
+    background-color: #00000038 !important;
+    border: var(--bs-border-width) solid #4a4b4c !important;
+}
+
+    .form-control:focus {
+        background-color: #d3d2d2 !important;
+        border: 2px solid var(--blue) !important;
+        box-shadow: 1px 1px 8px var(--blue) !important;
+    }
+
+.loginbtn {
+    /* background-color: var(--blue) !important; */
+    border: 1px solid var(--blue) !important;
+    padding:0 !important;
+    line-height:2.2 !important;
+    font-size:1.5rem !important;
+}
+
+    .loginbtn:hover {
+        background-color: var(--nblue) !important;
+        border: 1px solid var(--nblue) !important;
+    }
+
+.terms {
+    text-align: center;
+}
+
+.mrcfin {
+    background-image: url("/images/person-svgrepo-com.svg");
+    background-repeat: no-repeat;
+    background-position: 98% 50%;
+    background-size: 35px;
+}
+.inlab{
+    font-size:1.1rem;
+    font-weight:600;
+
+}
+.mrcpass {
+    background-image: url("/images/eye-svgrepo-com.svg");
+    background-repeat: no-repeat;
+    background-position: 98% 50%;
+    background-size: 35px;
+}
+
+.loginbtn {
+    background-color: #37aec8 !important;
+}
+/*.mrcon {
+    height: 52%;
+    width: 70%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 5%;
+}*/
+
+.mrccon {
+    height: 35%;
+    width: 100%;
+}
+
+#btn1 {
+    background-color: var(--blue);
+    color: white;
+    font-size: 1.6rem;
+    font-weight: 500;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+    #btn1:hover {
+        background-color: #3aadc6;
+        box-shadow: 0px 0px 4px #3aadc6;
+    }
+
+#btn2 {
+    background-color: #426ad3;
+    color: white;
+    font-size: 1.6rem;
+    font-weight: 500;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+    #btn2:hover {
+        background-color: #1f3e91;
+        box-shadow: 0px 0px 4px #1f3e91;
+    }
+
+/*------------------agreement--------------*/
+
+/*dark mode
+*/
+.dark {
+    background-color: var(--pdark);
+}
+
+.dark-font {
+    color: var(--blue);
+}
+.white-font {
+    color: #d3d2d2 !important;
+}
+
+
+@media screen and (max-width : 1200px) {
+
+    .bgimgform {
+        display: block;
+        left: 0;
+        width: 100%;
+    }
+
+    .mleft {
+        display: none;
+        left: 0;
+        width: 100%;
+    }
+
+    .mright {
+        width: 80%;
+        margin: auto;
+        left: 0;
+    }
+
+    .mrfake {
+        display: none;
+    }
+
+    .mrcon {
+        height: 52%;
+        width: 80%;
+        max-width: 600px;
+    }
+    .mrconfirst {
+        height: 52%;
+        width: 80%;
+        max-width: 600px;
+    }
+}
+
+@media screen and (max-width : 768px) {
+    .mright {
+        width: 100%;
+    }
+
+
+    .mrcon {
+        width: 100%;
+        justify-content:center;
+    }
+    .mrconfirst{
+        width:100%;
+    }
+
+    .mrccon {
+        width: 90%;
+    }
+
+    .mrimg {
+        scale: 0.8;
+        display: none;
+    }
+
+    .mrhead {
+        font-size: 1.7rem;
+    }
+
+}
