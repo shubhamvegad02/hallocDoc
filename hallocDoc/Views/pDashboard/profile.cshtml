@@ -26,19 +26,19 @@
             <div class="form-floating col-12 col-md-6">
                 <input asp-for="FirstName" type="text" class="form-control" id="floatingInput2" placeholder="name@example.com">
                 <label class="mylable" for="floatingInput2">First Name</label>
-                
+                <span asp-validation-for="FirstName" class="text-danger"></span>
 
             </div>
             <div class="form-floating col-12 col-md-6">
                 <input asp-for="LastName" type="text" class="form-control" id="floatingPassword" placeholder="Password">
                 <label class="mylable" for="floatingPassword">Last Name</label>
-                
+                <span asp-validation-for="LastName" class="text-danger"></span>
 
             </div>
             <div class="form-floating col-12 col-md-6">
                 <input asp-for="CreatedDate" type="date" class="form-control" id="fdate" placeholder="Password">
                 <label class="mylable" for="fdate">Date of birth</label>
-                
+                <span asp-validation-for="CreatedDate" class="text-danger"></span>
 
             </div>
 
@@ -55,13 +55,13 @@
                     @*<input asp-for="Mobile" type="tel" class="form-control" id="phone" name="phone" placeholder="8155973839"
                     pattern="[0-9]{10}">*@
                     <input type="tel" asp-for="Mobile" id="phone" class="form-control" placeholder="Mobile Number" />
-                    
+                    <span asp-validation-for="Mobile" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-floating col-12 col-md-6">
                 <input asp-for="Email" type="email" class="form-control" id="floatingInput5" placeholder="name@example.com">
                 <label class="mylable" for="floatingInput5">Email address</label>
-                
+                <span asp-validation-for="Email" class="text-danger"></span>
             </div>
 
             <h4>Location Information</h4>
@@ -70,24 +70,32 @@
             <div class="form-floating col-12 col-md-6">
                 <input asp-for="Street" type="text" class="form-control" id="4" placeholder="name@example.com">
                 <label class="mylable" for="4">Street</label>
+                <span asp-validation-for="Street" class="text-danger"></span>
             </div>
             <div class="form-floating col-12 col-md-6">
                 <input type="text" asp-for="City" class="form-control" id="5" placeholder="Password">
                 <label class="mylable" for="5">City</label>
+                <span asp-validation-for="City" class="text-danger"></span>
             </div>
             <div class="form-floating col-12 col-md-6">
                 <input asp-for="State" type="text" class="form-control" id="6" placeholder="name@example.com">
                 <label class="mylable" for="6">State</label>
+                <span asp-validation-for="State" class="text-danger"></span>
             </div>
             <div class="form-floating col-12 col-md-6">
                 <input asp-for="ZipCode" type="number" class="form-control" id="7" placeholder="Password">
                 <label class="mylable" for="7">Zip Code</label>
+                <span asp-validation-for="ZipCode" class="text-danger"></span>
             </div>
             <div class="btnline">
                 <button type="submit" class="btn btn-outline-primary active blbtn">Save</button>
             </div>
         </form>
-        @Html.ValidationMessage("success", null, new { @class = "text-danger fw-bold" })
+        @*@Html.ValidationMessage("success", null, new { @class = "text-danger fw-bold" })*@
+        @if (ViewBag.toast == true)
+        {
+            <h2> Data updated Successfully..</h2>
+        }
 
     </div>
 </div>

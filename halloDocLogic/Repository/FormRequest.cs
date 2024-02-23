@@ -10,6 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
+using System.Net.Mail;
+using System.Net;
 
 namespace halloDocLogic.Repository
 {
@@ -24,6 +26,31 @@ namespace halloDocLogic.Repository
             _hostEnvironment = environment;
         }
 
+
+        public bool sendmailtoNew(string email, string link)
+        {
+            var smtpClient = new SmtpClient("smtp.office365.com")
+            {
+                Port = 587,
+                Credentials = new NetworkCredential("tatva.dotnet.shubhamvegad@outlook.com", "Vegad@12"),
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false
+            };
+
+            var mailMessage = new MailMessage
+            {
+                From = new MailAddress("tatva.dotnet.shubhamvegad@outlook.com"),
+                Subject = "Reset Your Password for halloDoc",
+
+                Body = "<div> Hello " + email + "</div><p>We received a request to reset your password for your account on halloDoc. If you initiated this request, please click the link below to choose a new password:</p><p>" + link + "</p>",
+                IsBodyHtml = true,
+            };
+            mailMessage.To.Add(email);
+
+            smtpClient.Send(mailMessage);
+            return true;
+        }
         public string uploadfile(IFormFile myfile)
         {
             string filename = null;
@@ -101,6 +128,7 @@ namespace halloDocLogic.Repository
             rb.RequestId = request.RequestId;
             _context.Requestbusinesses.Add(rb);
             _context.SaveChanges();
+
             return true;
         }
 

@@ -11,6 +11,7 @@ using halloDocEntities.DataModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.IO.Compression;
 /*using Microsoft.Extensions.Hosting;*/
 
 namespace halloDocLogic.Repository
@@ -153,6 +154,35 @@ namespace halloDocLogic.Repository
             _context.SaveChanges();
 
             return true;
+        }
+        public Stream downloadAll(string aspid)
+        {
+            var userdb = _context.Users.FirstOrDefault(m => m.AspNetUserId == aspid);
+            var userid = userdb?.UserId;
+
+            var dbreq2 = from r in _context.Requests
+                         join rf in _context.Requestwisefiles on r.RequestId equals rf.RequestId
+                         where r.UserId == userid
+                         select new { r, rf };
+
+            string baseFilePath = Path.Combine(_hostEnvironment.ContentRootPath, "wwwroot/uplodedItems");
+
+            MemoryStream zipStream = new MemoryStream();
+            using (var zipArchive = new ZipArchive(zipStream, ZipArchiveMode.Create, leaveOpen: true))
+            {
+                foreach (var document in dbreq2)
+                {
+                    string fullFilePath = Path.Combine(baseFilePath, document.rf.FileName);
+
+                    string fileName = document.rf.FileName;
+                    int index = fileName.LastIndexOf("/");
+                    if (index != -1)
+                        fileName = fileName.Substring(index + 1);
+                    zipArchive.CreateEntryFromFile(fullFilePath, fileName);
+                }
+            } // disposal of archive will force data to be written to memory stream.
+            zipStream.Position = 0; //reset memory stream position.
+            return zipStream;
         }
 
     }

@@ -20,5 +20,8 @@ namespace halloDocLogic.Interfaces
         Task<string> Patient(string filename, patientReq pr);
 
         public string uploadfile(IFormFile myfile);
+
+        public bool sendmailtoNew(string email, string link);
+
     }
 }

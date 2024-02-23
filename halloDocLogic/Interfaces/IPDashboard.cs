@@ -20,5 +20,7 @@ namespace halloDocLogic.Interfaces
         public profile ProfileData(string aspid, profile pr);
 
         public bool ProfileSubmit(string aspid, profile pr);
+
+        public Stream downloadAll(string aspid);
     }
 }

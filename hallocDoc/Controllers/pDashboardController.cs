@@ -18,16 +18,16 @@ namespace hallocDoc.Controllers
 {
     public class pDashboardController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        /*private readonly ApplicationDbContext _context;*/
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment Environment;
-        private readonly IWebHostEnvironment _webHostEnvironment;
+        /* private readonly IWebHostEnvironment _webHostEnvironment;*/
         private readonly IPDashboard _pDashboard;
 
-        public pDashboardController(ApplicationDbContext context, Microsoft.AspNetCore.Hosting.IHostingEnvironment _environment, IWebHostEnvironment webHostEnvironment, IPDashboard pDashboard)
+        public pDashboardController(ApplicationDbContext context, Microsoft.AspNetCore.Hosting.IHostingEnvironment _environment, /*IWebHostEnvironment webHostEnvironment,*/ IPDashboard pDashboard)
         {
-            _context = context;
+            /*_context = context;*/
             Environment = _environment;
-            _webHostEnvironment = webHostEnvironment;
+            /*_webHostEnvironment = webHostEnvironment;*/
             _pDashboard = pDashboard;
         }
 
@@ -103,9 +103,10 @@ namespace hallocDoc.Controllers
         public IActionResult DonwlodFileAll()
         {
             var aspid = HttpContext.Session?.GetString("aspid").ToString();
-            var userdb = _context.Users.FirstOrDefault(m => m.AspNetUserId == aspid);
+            var zipstream = _pDashboard.downloadAll(aspid);
+            /*var userdb = _context.Users.FirstOrDefault(m => m.AspNetUserId == aspid);
             var userid = userdb?.UserId;
-
+            
             var dbreq2 = from r in _context.Requests
                          join rf in _context.Requestwisefiles on r.RequestId equals rf.RequestId
                          where r.UserId == userid
@@ -127,8 +128,8 @@ namespace hallocDoc.Controllers
                     zipArchive.CreateEntryFromFile(fullFilePath, fileName);
                 }
             } // disposal of archive will force data to be written to memory stream.
-            zipStream.Position = 0; //reset memory stream position.
-            return File(zipStream, "application/zip", "MyDocuments.zip");
+            zipStream.Position = 0; //reset memory stream position.*/
+            return File(zipstream, "application/zip", "MyDocuments.zip");
         }
 
 
@@ -141,20 +142,6 @@ namespace hallocDoc.Controllers
             }
             var aspid = HttpContext.Session?.GetString("aspid").ToString();
             ViewBag.username = _pDashboard.UserNameFromId(aspid);
-
-            /*var userdb = await _context.Users.FirstOrDefaultAsync(m => m.AspNetUserId == aspid);
-            var userid = userdb?.UserId;
-            ViewBag.username = string.Concat(userdb.FirstName, " ", userdb.LastName);
-
-            p.FirstName = userdb.FirstName;
-            p.LastName = userdb.LastName;
-            p.CreatedDate = userdb.CreatedDate;
-            p.Mobile = userdb.Mobile;
-            p.Email = userdb.Email;
-            p.Street = userdb.Street;
-            p.City = userdb.City;
-            p.State = userdb.State;
-            p.ZipCode = userdb.ZipCode;*/
 
             var pr = _pDashboard.ProfileData(aspid, p);
             return View(p);
@@ -170,12 +157,14 @@ namespace hallocDoc.Controllers
                 if (_pDashboard.ProfileSubmit(aspid, p))
                 {
                     ViewBag.success = "Data updated Successfully..";
-                    return RedirectToAction("profile", "pDashboard");
+                    ViewBag.toast = true;
+                    return RedirectToAction("History", "pDashboard");
+
                 }
-                return View(p);
+
             }
 
-            return View(p);
+            return RedirectToAction("profile", "pDashboard");
         }
     }
 }
