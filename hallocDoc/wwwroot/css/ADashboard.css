@@ -1,0 +1,150 @@
+﻿
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /*border: 0.5px solid red;*/
+}
+
+:root {
+    --blue: #68cbe1;
+    --nblue: #55b2bc;
+    --white: #ffffff;
+    --pdark: #272233f0;
+    --sdark: #2A2438;
+    --darkpur: #310A5D;
+    --lightpur: #411E8F;
+    --clasicwhite: #d3d2d2;
+}
+
+.tdn {
+    text-decoration: none;
+}
+
+    .tdn:hover {
+        text-decoration: none;
+    }
+
+.anav {
+    margin-inline: auto;
+    width: 98%;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    /*border-bottom: 1px solid gray;*/
+}
+
+.anavchild {
+    height: 100%;
+    width: fit-content;
+    margin-inline: 1%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ncactive {
+    color: var(--blue);
+    border-bottom: 2px solid var(--blue);
+}
+
+.admain {
+    width: 100%;
+    min-height: 73vh;
+    height: fit-content;
+    background-color: #e9e9e9a3;
+}
+
+.container1 {
+    width: 100%;
+    height: fit-content;
+    padding: 1%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.card {
+    width: 16%;
+    font-weight: 700;
+    border-radius: 10px;
+    font-size: 1.2rem;
+}
+
+.btn1 {
+    border-radius: 3px;
+    background-color: #04b9e9;
+    border: none;
+    color: white;
+}
+
+    .btn1 a {
+        color: white;
+        text-decoration: none;
+    }
+
+.d-card1 {
+    color: white;
+    background-color: #1515c9ed;
+}
+
+.d-card2 {
+    color: rgb(1, 177, 247);
+    background-color: #00b6ff47;
+}
+
+.d-card3 {
+    color: green;
+    background-color: rgb(178 255 178 / 44%);
+}
+
+.d-card4 {
+    color: rgb(243 55 227 / 91%);
+    background-color: rgba(251, 200, 245, 0.506);
+}
+
+.d-card5 {
+    color: #096c8bb5;
+    background-color: #02a4ff29;
+}
+
+.d-card6 {
+    color: purple;
+    background-color: #a78ed975;
+}
+
+
+@media screen and (max-width : 1200px) {
+    .card-body {
+        padding: 0;
+    }
+
+    .card {
+        font-weight: 600;
+        border-radius: 10px;
+        font-size: 1rem;
+        padding: 1%;
+    }
+}
+
+@media screen and (max-width : 768px) {
+    .container1{
+        flex-wrap:wrap;
+    }
+    .anav {
+        display: none;
+    }
+
+    .card {
+        width: 30% !important;
+        font-weight: 600;
+        border-radius: 10px;
+        font-size: 1rem;
+        margin:1%;
+        padding:2%;
+    }
+}
