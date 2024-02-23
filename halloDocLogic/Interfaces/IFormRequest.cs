@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using halloDocEntities.DataModels;
 
 namespace halloDocLogic.Interfaces
 {
@@ -23,5 +24,6 @@ namespace halloDocLogic.Interfaces
 
         public bool sendmailtoNew(string email, string link);
 
+        void createNewUser(Requestclient rc);
     }
 }

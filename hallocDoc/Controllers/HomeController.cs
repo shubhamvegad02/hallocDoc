@@ -30,6 +30,31 @@ namespace hallocDoc.Controllers
             _context = context;
             _home = home;
         }
+        public IActionResult CreateuserfromLink(string email, string token, createPatient cp)
+        {
+            TempData["Email"] = email;
+            TempData["Token"] = token;
+            cp.Email = email;
+            return View(cp);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateuserfromLink(createPatient cp)
+        {
+            var cemail = TempData["Email"];
+            var ctoken = TempData["Token"];
+            var result = _home.setPassWithToken(cemail?.ToString(), ctoken?.ToString(), cp.Password);
+
+            if (await result)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ModelState.AddModelError("wrong", "Something went wrong...");
+                return View();
+            }
+        }
+
         [HttpGet]
         public IActionResult resetPass(string email, string token)
         {

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using System.Net.Mail;
 using System.Net;
+using static System.Net.WebRequestMethods;
 
 namespace halloDocLogic.Repository
 {
@@ -27,6 +28,45 @@ namespace halloDocLogic.Repository
         }
 
 
+        public async void createNewUser(Requestclient rc)
+        {
+            var aspnetuser = new Aspnetuser();
+            aspnetuser.Id = Guid.NewGuid().ToString();
+            /*aspnetuser.PasswordHash = password.encry(pr.password);*/
+            aspnetuser.Email = rc.Email;
+            aspnetuser.CreatedDate = DateTime.Now;
+            aspnetuser.UserName = rc.Email;
+            aspnetuser.PhoneNumber = rc.PhoneNumber;
+            aspnetuser.Token = Guid.NewGuid().ToString();
+
+            await _context.Aspnetusers.AddAsync(aspnetuser);
+            _context.SaveChanges();
+
+            var user = new User();
+
+            user.AspNetUserId = aspnetuser.Id;
+            user.FirstName = rc.FirstName;
+            user.LastName = rc.LastName;
+            user.Email = rc.Email;
+            user.Street = rc.Street;
+            user.City = rc.City;
+            user.State = rc.State;
+            user.ZipCode = rc.ZipCode;
+            var relation =  _context.Requests.FirstOrDefault(x => x.RequestId == rc.RequestId)?.RelationName;
+            user.CreatedBy = relation;
+            user.Mobile = rc.PhoneNumber;
+            user.CreatedDate = DateTime.Now;
+
+
+            _context.Users.Add(user);
+            _context.SaveChanges();
+            var dbreq = _context.Requests.FirstOrDefault(m => m.RequestId == rc.RequestId);
+            dbreq.UserId = user.UserId;
+            var link = "http://localhost:5011/Home/CreateuserfromLink?Email="+user.Email+"&Token="+aspnetuser.Token;
+            sendmailtoNew(user?.Email, link);
+
+            
+        }
         public bool sendmailtoNew(string email, string link)
         {
             var smtpClient = new SmtpClient("smtp.office365.com")
@@ -74,7 +114,12 @@ namespace halloDocLogic.Repository
             var request = new Request();
 
             request.RequestTypeId = 1;
-            /*request.UserId = user.UserId;*/
+            var dbuser = await _context.Users.FirstOrDefaultAsync(m => m.Email == br.Email);
+            if (dbuser != null)
+            {
+                request.UserId = dbuser.UserId;
+            }
+
             request.FirstName = br.BFirstName;
             request.LastName = br.BLastName;
             request.CreatedDate = DateTime.Now;
@@ -128,7 +173,12 @@ namespace halloDocLogic.Repository
             rb.RequestId = request.RequestId;
             _context.Requestbusinesses.Add(rb);
             _context.SaveChanges();
-
+            var dbasp = await _context.Aspnetusers.FirstOrDefaultAsync(m => m.Email == rc.Email);
+            if (dbasp == null)
+            {
+                createNewUser(rc);
+            }
+            
             return true;
         }
 
@@ -137,6 +187,11 @@ namespace halloDocLogic.Repository
             var request = new Request();
 
             request.RequestTypeId = 1;
+            var dbuser = await _context.Users.FirstOrDefaultAsync(m => m.Email == cr.Email);
+            if (dbuser != null)
+            {
+                request.UserId = dbuser.UserId;
+            }
             request.FirstName = cr.CFN;
             request.LastName = cr.CLN;
             request.CreatedDate = DateTime.Now;
@@ -174,6 +229,13 @@ namespace halloDocLogic.Repository
             c.CreatedDate = cr.CreatedDate;
             await _context.Concierges.AddAsync(c);
             await _context.SaveChangesAsync();
+
+            var dbasp = await _context.Aspnetusers.FirstOrDefaultAsync(m => m.Email == rc.Email);
+            if (dbasp == null)
+            {
+                createNewUser(rc);
+            }
+           
             return true;
         }
 
@@ -183,6 +245,11 @@ namespace halloDocLogic.Repository
             var request = new Request();
 
             request.RequestTypeId = 1;
+            var dbuser = await _context.Users.FirstOrDefaultAsync(m => m.Email == fr.Email);
+            if (dbuser != null)
+            {
+                request.UserId = dbuser.UserId;
+            }
             /*request.UserId = user.UserId;*/
             request.FirstName = fr.FFirstName;
             request.LastName = fr.FLastName;
@@ -217,6 +284,12 @@ namespace halloDocLogic.Repository
             rf.FileName = filename;
             _context.Requestwisefiles.Add(rf);
             _context.SaveChanges();
+
+            var dbasp = await _context.Aspnetusers.FirstOrDefaultAsync(m => m.Email == rc.Email);
+            if (dbasp == null)
+            {
+                createNewUser(rc);
+            }
             return true;
         }
 
