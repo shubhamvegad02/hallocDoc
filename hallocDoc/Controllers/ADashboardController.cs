@@ -15,8 +15,9 @@ namespace hallocDoc.Controllers
         {
             _context = dbContext;
         }
-        public async Task<IActionResult> Dmain(int n, ADashTable d)
+        public async Task<IActionResult> Dmain(int id, ADashTable d)
         {
+            var n = id;
             if (n == 0)
             {
                 n = 1;
@@ -55,6 +56,8 @@ namespace hallocDoc.Controllers
                 dtable.Add(dt);
             }
             ViewBag.tableData = dtable;
+            string name = "c"+n.ToString();
+            ViewBag.cardid = name;
 
             return View();
         }

@@ -25,11 +25,13 @@
     .tdn:hover {
         text-decoration: none;
     }
-
+.cp{
+    cursor:pointer;
+}
 .anav {
     margin-inline: auto;
     width: 98%;
-    height: 50px;
+    height: 40px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -44,11 +46,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    font-weight:500;
+    color:black;
 }
 
 .ncactive {
     color: var(--blue);
-    border-bottom: 2px solid var(--blue);
+    border-bottom: 3px solid var(--blue);
 }
 
 .admain {
@@ -75,12 +79,19 @@
     font-size: 1.2rem;
     opacity: 0.7;
 }
+.cactive {
+    filter: contrast(5);
+    opacity: 1;
+    border: 2px solid red;
+}
 
-    .card:active {
+    /*.card:active {
         filter: contrast(5);
         opacity: 1;
-    }
-
+    }*/
+#2{
+    border:2px solid blue;
+}
 .btn1 {
     border-radius: 3px;
     background-color: #04b9e9;
