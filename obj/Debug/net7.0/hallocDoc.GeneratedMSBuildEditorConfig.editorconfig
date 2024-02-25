@@ -1,0 +1,103 @@
+is_global = true
+build_property.TargetFramework = net7.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = hallocDoc
+build_property.RootNamespace = hallocDoc
+build_property.ProjectDir = C:\Users\vivsa\OneDrive\Desktop\_halloDoc\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 7.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\vivsa\OneDrive\Desktop\_halloDoc
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/vivsa/OneDrive/Desktop/_halloDoc/Views/Home/createPatient.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxjcmVhdGVQYXRpZW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vivsa/OneDrive/Desktop/_halloDoc/Views/Home/first.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxmaXJzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vivsa/OneDrive/Desktop/_halloDoc/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vivsa/OneDrive/Desktop/_halloDoc/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vivsa/OneDrive/Desktop/_halloDoc/Views/Home/resetPass.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxyZXNldFBhc3MuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vivsa/OneDrive/Desktop/_halloDoc/Views/pDashboard/agreement.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NccERhc2hib2FyZFxhZ3JlZW1lbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vivsa/OneDrive/Desktop/_halloDoc/Views/pDashboard/History.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NccERhc2hib2FyZFxIaXN0b3J5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vivsa/OneDrive/Desktop/_halloDoc/Views/pDashboard/profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NccERhc2hib2FyZFxwcm9maWxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vivsa/OneDrive/Desktop/_halloDoc/Views/pDashboard/viewDoc.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NccERhc2hib2FyZFx2aWV3RG9jLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vivsa/OneDrive/Desktop/_halloDoc/Views/ReqForm/Business.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVxRm9ybVxCdXNpbmVzcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vivsa/OneDrive/Desktop/_halloDoc/Views/ReqForm/Concierge.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVxRm9ybVxDb25jaWVyZ2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vivsa/OneDrive/Desktop/_halloDoc/Views/ReqForm/family.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVxRm9ybVxmYW1pbHkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vivsa/OneDrive/Desktop/_halloDoc/Views/ReqForm/Patient.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVxRm9ybVxQYXRpZW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vivsa/OneDrive/Desktop/_halloDoc/Views/ReqForm/SubmitReq.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVxRm9ybVxTdWJtaXRSZXEuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vivsa/OneDrive/Desktop/_halloDoc/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vivsa/OneDrive/Desktop/_halloDoc/Views/Shared/pDashboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXHBEYXNoYm9hcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vivsa/OneDrive/Desktop/_halloDoc/Views/Shared/_reqFormLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9yZXFGb3JtTGF5b3V0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vivsa/OneDrive/Desktop/_halloDoc/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vivsa/OneDrive/Desktop/_halloDoc/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vivsa/OneDrive/Desktop/_halloDoc/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vivsa/OneDrive/Desktop/_halloDoc/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-0u3vf05kwy

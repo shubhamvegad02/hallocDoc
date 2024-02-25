@@ -219,7 +219,7 @@ namespace halloDocLogic.Repository
             _context.Requestclients.Add(rc);
             _context.SaveChanges();
 
-            var c = new Concierge();
+            /*var c = new Concierge();
             c.ConciergeName = cr.CFN;
             c.Address = cr.property;
             c.State = cr.State;
@@ -228,7 +228,7 @@ namespace halloDocLogic.Repository
             c.ZipCode = cr.ZipCode;
             c.CreatedDate = cr.CreatedDate;
             await _context.Concierges.AddAsync(c);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();*/
 
             var dbasp = await _context.Aspnetusers.FirstOrDefaultAsync(m => m.Email == rc.Email);
             if (dbasp == null)

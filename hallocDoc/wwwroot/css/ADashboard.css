@@ -73,7 +73,13 @@
     font-weight: 700;
     border-radius: 10px;
     font-size: 1.2rem;
+    opacity: 0.7;
 }
+
+    .card:active {
+        filter: contrast(5);
+        opacity: 1;
+    }
 
 .btn1 {
     border-radius: 3px;
@@ -88,12 +94,12 @@
     }
 
 .d-card1 {
-    color: white;
-    background-color: #1515c9ed;
+    color: blue;
+    background-color: #5555e19e;
 }
 
 .d-card2 {
-    color: rgb(1, 177, 247);
+    color: #005fae;
     background-color: #00b6ff47;
 }
 
@@ -117,6 +123,121 @@
     background-color: #a78ed975;
 }
 
+.adcardimg {
+    fill: green;
+}
+
+
+
+.middleSearch {
+    justify-content: space-between;
+}
+
+.circle {
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+    align-items: baseline;
+}
+
+.blue {
+    background-color: #7ba7ed;
+}
+
+.purple {
+    background-color: #e3e33c;
+}
+
+.red {
+    background-color: #e08995;
+}
+
+.orange {
+    background-color: #d454d6e0;
+}
+
+.pink {
+    background-color: lawngreen;
+}
+
+table {
+    font-size: 0.9rem;
+    font-weight: 500;
+    min-width: 93.52vw;
+}
+
+thead th {
+    padding: 1rem !important;
+}
+
+thead .th-name {
+    width: 19rem;
+    min-width: 9rem;
+}
+
+thead .th-date {
+    min-width: 8rem;
+}
+
+thead .th-request {
+    width: 11rem;
+}
+
+thead .th-requestDate {
+    width: 14.5rem;
+}
+
+thead .th-phone {
+    width: 14.5rem;
+    /* min-width: 12.5rem; */
+    min-width: fit-content;
+}
+
+thead .th-address {
+    width: 12rem;
+    /* min-width: 9.5rem; */
+    min-width: fit-content;
+}
+
+thead .th-notes {
+    width: 12rem;
+    /* min-width: 10rem; */
+    min-width: fit-content;
+}
+
+thead .th-chat {
+    width: 8rem;
+    /* min-width: fit-content; */
+    min-width: 7rem;
+}
+
+thead .th-action {
+    width: 5.5rem;
+}
+
+tbody .icon-phone,
+.icon-Ehome,
+.icone-Chome,
+.action {
+    border-radius: 5px;
+    padding: 2px 8px;
+    border: 1px solid;
+}
+
+tbody tr td {
+    /*background-color: aquamarine !important;*/
+}
+
+.dropdown-menu .d-item:hover {
+    background-color: #d4d0d0cb !important;
+}
+
+.dropdown-menu {
+    background-color: #f1efef;
+}
+
 
 @media screen and (max-width : 1200px) {
     .card-body {
@@ -128,13 +249,19 @@
         border-radius: 10px;
         font-size: 1rem;
         padding: 1%;
+        padding-inline: 0;
     }
 }
 
+
+
+
+
 @media screen and (max-width : 768px) {
-    .container1{
-        flex-wrap:wrap;
+    .container1 {
+        flex-wrap: wrap;
     }
+
     .anav {
         display: none;
     }
@@ -143,8 +270,51 @@
         width: 30% !important;
         font-weight: 600;
         border-radius: 10px;
-        font-size: 1rem;
-        margin:1%;
-        padding:2%;
+        font-size: 0.9rem;
+        margin: 1%;
+        padding-top: 2%;
+        padding-bottom: 2%;
+        padding-inline: 1%;
     }
+
+    .adcardimg {
+        scale: 0.8;
+    }
+
+    .btn1 a {
+        display: none;
+    }
+
+    table {
+        display: none;
+    }
+
+    .middleSearch {
+        flex-direction: column;
+    }
+
+    .MS-left {
+        width: 100% !important;
+        flex-direction: column !important;
+    }
+
+    .d-searchbar {
+        width: 95% !important;
+    }
+
+    .btn-group {
+        gap: 0.5rem;
+    }
+
+    .pbox {
+        flex-direction: column;
+        gap: 0 !important;
+        font-size: small;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .pbox:nth-child(1) {
+            display: none !important;
+        }
 }

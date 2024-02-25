@@ -1,0 +1,169 @@
+﻿@model halloDocEntities.ViewDataModels.ADashTable;
+
+
+<section class="" style="min-width:min-content;">
+    <div class="d-flex justify-content-between p-2">
+        <div class="d-left">
+            <div class="me-auto p-1">
+                <h2 class="dh2">Patient</h2><span>@ViewBag.heading</span>
+            </div>
+        </div>
+        <div class="d-flex align-items-center d-right">
+            <div class="p-1 ">
+                <button class="btn1 px-2 py-1">
+                    <i class="fa-solid fa-share "></i>
+                    <a href="#">Send Link</a>
+                </button>
+            </div>
+            <div class="p-1 ">
+                <button class="btn1 px-2 py-1">
+                    <i class="fa-solid fa-share "></i>
+                    <a href="#">Create Request</a>
+                </button>
+            </div>
+            <div class="p-1 ">
+                <button class="btn1 px-2 py-1">
+                    <i class="fa-solid fa-share "></i>
+                    <a href="#">Export</a>
+                </button>
+            </div>
+            <div class="p-1 ">
+                <button class="btn1 px-2 py-1">
+                    <i class="fa-solid fa-share "></i>
+                    <a href="#">Exportall</a>
+                </button>
+            </div>
+            <div class="p-1 ">
+                <button class="btn1 px-2 py-1">
+                    <i class="fa-solid fa-share "></i>
+                    <a href="#">Request DTYSupport</a>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="dasboardcontainer">
+        <div class="middleSearch d-flex align-items-center">
+            <div class="MS-left py-2 d-flex flex-row" style="width: 33%;margin-inline: 0;">
+                <input id="txtSearch" type="text" class="d-searchbar form-control m-2 " placeholder="&#128269; Search Patients">
+                @* <select id="regiondrop" class="form-select d-searchbar form-control m-2" data-bs-toggle="dropdown">
+                <option value="sds" selected>&#128269; All Regions</option>p
+                <option value="south gujarat">South</option>
+                <option value="saurashtra">Saurashtra</option>
+                <option value="kutch">Kutch</option>
+                </select> *@
+                <select id="regiondrop" class="form-select d-searchbar form-control m-2" aria-label="Default select example">
+                    <option value="" selected>&#128269; All Regions</option>
+                    <option value="1">Saurashtra</option>
+                    <option value="2">South</option>
+                    <option value="3">Kutchh</option>
+                </select>
+            </div>
+            <div class="MS-right p-2">
+                <div class="btn-group align-items-center justify-content-between flex-wrap gap-3" role="group" aria-label="Button group">
+                    <div class="pbox filterButton d-flex" data-requestor="all">
+                        <span class="circle green my-2"></span><span>All</span>
+                    </div>
+                    <div class="pbox d-flex filterButton" data-requestor="patient">
+                        <span class="circle blue my-2"></span><span>Patient</span>
+                    </div>
+                    <div class="pbox d-flex filterButton" data-requestor="family">
+                        <span class="circle purple my-2"></span><span>Family/Friend</span>
+                    </div>
+                    <div class="pbox d-flex filterButton" data-requestor="business">
+                        <span class="circle red my-2"></span>Business<span></span>
+                    </div>
+                    <div class="pbox d-flex filterButton" data-requestor="concierge">
+                        <span class="circle orange my-2"></span><span>Concierge</span>
+                    </div>
+                    <div class="pbox d-flex filterButton">
+                        <span class="circle pink my-2"></span><span>VIP</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table" style="border: 1px solid rgba(201, 201, 201, 0.878);">
+        <thead>
+            <tr>
+                <th scope="col" class="px-2 py-1.5 th-name">Name</th>
+                <th scope="col" class="px-2 py-1.5 th-date">Date of Birth</th>
+                <th scope="col" class="px-2 py-1.5 th-request">Requestor</th>
+                <th scope="col" class="px-2 py-1.5 th-requestDate">Requested Date</th>
+                <th scope="col" class="px-2 py-1.5 th-phone">Phone</th>
+                <th scope="col" class="px-2 py-1.5 th-address">Address</th>
+                <th scope="col" class="px-2 py-1.5 th-notes">Notes</th>
+                <th scope="col" class="px-2 py-1.5 th-chat">Chat With</th>
+                <th scope="col" class="px-2 py-1.5 th-action">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (ViewBag.tableData != null)
+            {
+                @foreach (var item in ViewBag.tableData)
+                {
+                    var bgcolor = @GetBackgroundColor(@item.relation);
+                    <tr>
+                        <td id="region" class="d-none">@item.region</td>
+                        <td style="background-color: @bgcolor" class="px-2 py-1.5">
+                            <span class="d-flex  d-flex justify-content-between align-items-center">
+                                <span>@item.name</span><span class="icon-Ehome"><i class="fa-solid fa-envelope"></i></span>
+                            </span>
+                        </td>
+                        <td style="background-color: @bgcolor" class="px-2 py-1.5">@item.dob</td>
+                        <td style="background-color: @bgcolor" class="px-2 py-1.5">@item.requstor</td>
+                        <td style="background-color: @bgcolor" class="px-2 py-1.5">@item.reqDate</td>
+                        <td style="background-color: @bgcolor" class="px-2 py-1.5">
+                            <span class="tb-phone d-flex flex-column">
+                                <span class="icon-phone d-flex justify-content-center gap-2">
+                                    <i class="fa-solid fa-phone mx-1"></i><span>+91 @item.mobile</span>
+                                </span>
+                                <span>(Patient)</span>
+                            </span>
+                        </td>
+                        <td style="background-color: @bgcolor" class="px-2 py-1.5">@item.address</td>
+                        <td style="background-color: @bgcolor" class="px-2 py-1.5">Admin Transferred to Dr. AGOLA on 17/10/2023 at 3:07:19 AM:trse</td>
+                        <td style="background-color: @bgcolor" class="px-2 py-1.5">
+                            <span class="icone-Chome"><i class="fa-solid fa-user"></i>Provider</span>
+                        </td>
+                        <td style="background-color: @bgcolor" class="px-2 py-1.5">
+                            <span class="action dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">Action</span>
+                            <ul class="dropdown-menu">
+                                <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-suitcase" style="margin-right: 0.5rem;"></i><span>Assign Patient</span></a></li>
+                                <li class="d-item">
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-regular fa-rectangle-xmark" style="margin-right: 0.5rem;"></i>
+                                        <span>Cancle Case</span>
+                                    </a>
+                                </li>
+                                <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>View Case</span></a></li>
+                                <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-notes-medical" style="margin-right: 0.5rem;"></i><span>View  Notes</span></a></li>
+                                <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-ban" style="margin-right: 0.5rem;"></i><span>Block Patient</span></a></li>
+                            </ul>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</section>
+
+@functions {
+    string GetBackgroundColor(string relation)
+    {
+        switch (relation.ToLower())
+        {
+            case "patient":
+                return "#b1c9ef";
+            case "business":
+                return "#f5d7db";
+            case "family":
+                return "#f2f254b8";
+            case "concierge":
+                return "#d454d6a6";
+            // Add more cases if needed
+            default:
+                return "white"; // Default background color
+        }
+    }
+}
+

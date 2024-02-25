@@ -1,85 +1,87 @@
-﻿@*@model halloDocEntities.ViewDataModels.patientLogin;*@
+﻿@model halloDocEntities.ViewDataModels.ADashTable;
 @{
     ViewData["Title"] = "Dmain";
     Layout = "~/Views/Shared/_ADashboard.cshtml";
 }
 <div class="anav mt-2">
-    <div class="anavchild ncactive">Dashboard</div>
-    <div class="anavchild">Provider Location</div>
-    <div class="anavchild">My Profile</div>
-    <div class="anavchild">Provider</div>
-    <div class="anavchild">Partners</div>
-    <div class="anavchild">Access</div>
-    <div class="anavchild">Records</div>
+    <a class="anavchild ncactive">Dashboard</a>
+    <a class="anavchild">Provider Location</a>
+    <a class="anavchild">My Profile</a>
+    <a class="anavchild">Provider</a>
+    <a class="anavchild">Partners</a>
+    <a class="anavchild">Access</a>
+    <a class="anavchild">Records</a>
 </div>
 <div class="admain">
-    <section class="container1">
-        <div class="card d-card1 ">
+
+    <section class="container1 mt-2">
+        <a asp-area="" asp-controller="ADashboard" asp-action="DmainReq" asp-route-n="1" class="card d-card1 ">
             <div class="card-body">
                 <div class="card-p1  d-flex justify-content-start align-items-center">
-                    <img class="adcardimg me-sm-2" src="~/images/new-5-svgrepo-com.svg" />
+                    <img class="adcardimg me-md-2" src="~/images/new-5-svgrepo-com.svg" />
                     <p class="card-text">NEW</p>
                 </div>
                 <div class="card-p2 mt-2">
                     <p class="card-text">1452</p>
                 </div>
             </div>
-        </div>
-        <div class="card d-card2 ">
+        </a>
+        <a asp-area="" asp-controller="ADashboard" asp-action="DmainReq" asp-route-n="2" class="card d-card2 ">
             <div class="card-body">
                 <div class="card-p1  d-flex justify-content-start align-items-center">
-                    <img class="adcardimg me-sm-2" src="~/images/chat-pending-svgrepo-com.svg" />
+                    <img class="adcardimg me-md-2" src="~/images/chat-pending-svgrepo-com.svg" />
                     <p class="card-text">PENDING</p>
                 </div>
                 <div class="card-p2 mt-2">
                     <p class="card-text">266</p>
                 </div>
             </div>
-        </div>
-        <div class="card d-card3 ">
+        </a>
+        <a asp-area="" asp-controller="ADashboard" asp-action="DmainReq" asp-route-n="1" class="card d-card3 ">
             <div class="card-body">
                 <div class="card-p1  d-flex justify-content-start align-items-center">
-                    <img class="adcardimg me-sm-2" src="~/images/checkbox-active-svgrepo-com.svg" />
+                    <img class="adcardimg me-md-2" src="~/images/checkbox-active-svgrepo-com.svg" />
                     <p class="card-text">ACTIVE</p>
                 </div>
                 <div class="card-p2 mt-2">
                     <p class="card-text">26</p>
                 </div>
             </div>
-        </div>
-        <div class="card d-card4 ">
+        </a>
+        <a asp-area="" asp-controller="ADashboard" asp-action="DmainReq" asp-route-n="1" class="card d-card4 ">
             <div class="card-body">
                 <div class="card-p1  d-flex justify-content-start align-items-center">
-                    <img class="adcardimg me-sm-2" src="~/images/time-past-svgrepo-com.svg" />
+                    <img class="adcardimg me-md-2" src="~/images/time-past-svgrepo-com.svg" />
                     <p class="card-text">CONCLUDE</p>
                 </div>
                 <div class="card-p2 mt-2">
                     <p class="card-text">1078</p>
                 </div>
             </div>
-        </div>
-        <div class="card d-card5 ">
+        </a>
+        <a asp-area="" asp-controller="ADashboard" asp-action="DmainReq" asp-route-n="1" class="card d-card5 ">
             <div class="card-body">
                 <div class="card-p1  d-flex justify-content-start align-items-center justify-content-start align-items-center">
-                    <img class="adcardimg me-sm-2 me-sm-2" src="~/images/close-ellipse-svgrepo-com.svg" />
+                    <img class="adcardimg me-md-2" src="~/images/close-ellipse-svgrepo-com.svg" />
                     <p class="card-text">TO CLOSE</p>
                 </div>
                 <div class="card-p2 mt-2">
                     <p class="card-text">519</p>
                 </div>
             </div>
-        </div>
-        <div class="card d-card6 ">
+        </a>
+        <a asp-area="" asp-controller="ADashboard" asp-action="DmainReq" asp-route-n="1" class="card d-card6 ">
             <div class="card-body">
                 <div class="card-p1  d-flex justify-content-start align-items-center">
-                    <img class="adcardimg me-sm-2" src="~/images/dollar-minimalistic-svgrepo-com.svg" />
+                    <img class="adcardimg me-md-2" src="~/images/dollar-minimalistic-svgrepo-com.svg" />
                     <p class="card-text">UNPAID</p>
                 </div>
                 <div class="card-p2 mt-2">
                     <p class="card-text">16</p>
                 </div>
             </div>
-        </div>
+        </a>
     </section>
+    <partial name="_ADashboardPartial" model="Model" />
 </div>
 
