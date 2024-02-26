@@ -3,6 +3,7 @@ using halloDocEntities.ViewDataModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Nest;
+using System;
 using System.Collections;
 using System.Xml.Linq;
 
@@ -39,10 +40,11 @@ namespace hallocDoc.Controllers
                 var dt = new ADashTable();
                 dt.name = string.Concat(item.rc.FirstName, " ", item.rc.LastName);
                 dt.email = item.rc.Email;
+                /*dt.dob = new DateTime(item.rc.IntYear.Value, int.Parse(item.rc.StrMonth), item.rc.IntDate.Value);*/
                 dt.dob = item.r.CreatedDate;
                 dt.requstor = item.r?.RelationName;
                 dt.reqDate = item.r.CreatedDate.Date;
-                dt.mobile = item.rc.PhoneNumber;
+                dt.mobile = item.r.PhoneNumber;
                 dt.address = string.Concat(item.rc.Street, " ", item.rc.City, " ", item.rc.State);
                 dt.notes = "";
                 dt.region = item.rc.RegionId.ToString();

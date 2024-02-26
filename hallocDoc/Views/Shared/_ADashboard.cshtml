@@ -101,8 +101,55 @@
                 }
             });
         });
+        window.addEventListener("load", (event) => {
+            debugger
+            console.log("page is fully loaded");
+            
+            var idname = @ViewBag.cardid;
 
-        function setActive() {
+            switch (idname) {
+                case c1:
+                    var clickedDiv = document.getElementById('c1');
+                    clickedDiv.classList.add('cactive');
+                    break;
+
+                case c2:
+                    var clickedDiv = document.getElementById('c2');
+                    clickedDiv.classList.add('cactive');
+                    break;
+
+                case c3:
+                    var clickedDiv = document.getElementById('c3');
+                    clickedDiv.classList.add('cactive');
+                    break;
+
+                case c4:
+                    var clickedDiv = document.getElementById('c4');
+                    clickedDiv.classList.add('cactive');
+                    break;
+
+                case c5:
+                    var clickedDiv = document.getElementById('c5');
+                    clickedDiv.classList.add('cactive');
+                    break;
+
+                case c6:
+                    var clickedDiv = document.getElementById('c6');
+                    clickedDiv.classList.add('cactive');
+                    break;
+
+                default:
+                    // Handle cases where idname doesn't match any of the above
+                    console.warn("Unknown card ID:", idname);
+            }
+            
+            
+            
+        });
+        
+        window.addEventListener("load", (event) => {
+            function setActive() {
+
             console.log("hii");
             // Remove 'active' class from all divs
             var divs = document.querySelectorAll('.card'); // Replace 'your-div-class' with the class name of your divs
@@ -111,11 +158,17 @@
             });
 
             // Add 'active' class to the clicked div
-            var clickedDiv = document.getElementById(@ViewBag.cardid);
-            if (clickedDiv) {
-                clickedDiv.classList.add('cactive');
+            var id = @ViewBag.cardid;
+            if(id != null){
+                    var clickedDiv = document.getElementById('id');
+                    if (clickedDiv) {
+                        clickedDiv.classList.add('cactive');
+                    }
             }
+            
         }
+        });
+        
 
     </script>
     @await RenderSectionAsync("Scripts", required: false)

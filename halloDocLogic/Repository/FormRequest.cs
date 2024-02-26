@@ -126,7 +126,7 @@ namespace halloDocLogic.Repository
             request.PhoneNumber = br.BMobile;
             request.Email = br.BEmail;
             request.CaseNumber = br.CaseNumber;
-            request.RelationName = "Business Person";
+            request.RelationName = "Business";
 
             await _context.Requests.AddAsync(request);
             await _context.SaveChangesAsync();
@@ -144,6 +144,9 @@ namespace halloDocLogic.Repository
             rc.ZipCode = br.ZipCode;
             rc.Email = br.Email;
             rc.Address = br.Address;
+            rc.IntDate = br.CreatedDate.Day;
+            rc.StrMonth = br.CreatedDate.Month.ToString();
+            rc.IntYear = br.CreatedDate.Year;
             _context.Requestclients.Add(rc);
             _context.SaveChanges();
 
@@ -197,7 +200,7 @@ namespace halloDocLogic.Repository
             request.CreatedDate = DateTime.Now;
             request.PhoneNumber = cr.CMobile;
             request.Email = cr.CMail;
-            request.CreatedDate = DateTime.Now;
+            /*request.CreatedDate = DateTime.Now;*/
             request.RelationName = "Concierge";
 
             await _context.Requests.AddAsync(request);
@@ -216,10 +219,13 @@ namespace halloDocLogic.Repository
             rc.ZipCode = cr.ZipCode;
             rc.Email = cr.Email;
             rc.Address = cr.Address;
+            rc.IntDate = cr.CreatedDate.Day;
+            rc.StrMonth = cr.CreatedDate.Month.ToString();
+            rc.IntYear = cr.CreatedDate.Year;
             _context.Requestclients.Add(rc);
             _context.SaveChanges();
 
-            /*var c = new Concierge();
+            var c = new Concierge();
             c.ConciergeName = cr.CFN;
             c.Address = cr.property;
             c.State = cr.State;
@@ -228,7 +234,7 @@ namespace halloDocLogic.Repository
             c.ZipCode = cr.ZipCode;
             c.CreatedDate = cr.CreatedDate;
             await _context.Concierges.AddAsync(c);
-            await _context.SaveChangesAsync();*/
+            await _context.SaveChangesAsync();
 
             var dbasp = await _context.Aspnetusers.FirstOrDefaultAsync(m => m.Email == rc.Email);
             if (dbasp == null)
@@ -256,7 +262,7 @@ namespace halloDocLogic.Repository
             request.CreatedDate = DateTime.Now;
             request.PhoneNumber = fr.FPhoneNumber;
             request.Email = fr.FEmail;
-            request.CreatedDate = DateTime.Now;
+            /*request.CreatedDate = DateTime.Now;*/
             request.RelationName = fr.RelationName;
 
             await _context.Requests.AddAsync(request);
@@ -275,6 +281,9 @@ namespace halloDocLogic.Repository
             rc.ZipCode = fr.ZipCode;
             rc.Email = fr.Email;
             rc.Address = fr.Address;
+            rc.IntDate = fr.CreatedDate.Day;
+            rc.StrMonth = fr.CreatedDate.Month.ToString();
+            rc.IntYear = fr.CreatedDate.Year;
             _context.Requestclients.Add(rc);
             _context.SaveChanges();
 
@@ -338,7 +347,7 @@ namespace halloDocLogic.Repository
                 request.PhoneNumber = pr.Mobile;
                 request.Email = pr.Email;
                 request.PhoneNumber = pr.Mobile;
-                request.CreatedDate = DateTime.Now;
+                /*request.CreatedDate = DateTime.Now;*/
                 request.Status = 2;
 
                 _context.Requests.Add(request);
@@ -356,6 +365,9 @@ namespace halloDocLogic.Repository
                 rc.State = pr.State;
                 rc.ZipCode = pr.ZipCode;
                 rc.Email = pr.Email;
+                rc.IntDate = pr.CreatedDate.Day;
+                rc.StrMonth = pr.CreatedDate.Month.ToString();
+                rc.IntYear = pr.CreatedDate.Year;
                 _context.Requestclients.Add(rc);
                 _context.SaveChanges();
 

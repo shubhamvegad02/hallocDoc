@@ -25,9 +25,11 @@
     .tdn:hover {
         text-decoration: none;
     }
-.cp{
-    cursor:pointer;
+
+.cp {
+    cursor: pointer;
 }
+
 .anav {
     margin-inline: auto;
     width: 98%;
@@ -46,8 +48,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight:500;
-    color:black;
+    font-weight: 500;
+    color: black;
 }
 
 .ncactive {
@@ -78,20 +80,36 @@
     border-radius: 10px;
     font-size: 1.2rem;
     opacity: 0.7;
+    transition-duration:0.2s;
+    text-decoration:none;
 }
-.cactive {
-    filter: contrast(5);
-    opacity: 1;
-    border: 2px solid red;
+.card:hover{
+    text-decoration:none;
 }
 
-    /*.card:active {
+.cactive {
+    scale: 1.02;
+    filter: contrast(0.9);
+    opacity: 1;
+    text-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 5px 9px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid;
+}
+    /*border: 2px solid red;*/
+}
+
+/*.card:active {
         filter: contrast(5);
         opacity: 1;
     }*/
-#2{
-    border:2px solid blue;
+#2 {
+    border: 2px solid blue;
 }
+
+.partialv {
+    width: 100%;
+}
+
 .btn1 {
     border-radius: 3px;
     background-color: #04b9e9;
@@ -105,7 +123,7 @@
     }
 
 .d-card1 {
-    color: blue;
+    color: #2727ede8;
     background-color: #5555e19e;
 }
 
@@ -176,15 +194,39 @@
 table {
     font-size: 0.9rem;
     font-weight: 500;
-    min-width: 93.52vw;
+    /*min-width: 93.52vw;*/
+    width: 100% !important;
 }
+
+.tableparent {
+    width: 99%;
+    margin-inline: 0.5%;
+}
+
 
 thead th {
     padding: 1rem !important;
 }
-
+th, td {
+    white-space: wrap;
+}
+thead .th-phone {
+    min-width:11rem;
+}
+thead .th-chat {
+    min-width: 7rem;
+}
+thead .th-action {
+    width: 6rem;
+}
 thead .th-name {
-    width: 19rem;
+    min-width: 9rem;
+}
+thead .th-address {
+    min-width:10rem;
+}
+/*thead .th-name {
+    width: 14rem;
     min-width: 9rem;
 }
 
@@ -201,42 +243,40 @@ thead .th-requestDate {
 }
 
 thead .th-phone {
-    width: 14.5rem;
+    width: 12.5rem;*/
     /* min-width: 12.5rem; */
-    min-width: fit-content;
+    /*min-width: fit-content;
 }
 
 thead .th-address {
-    width: 12rem;
+    width: 14rem;*/
     /* min-width: 9.5rem; */
-    min-width: fit-content;
+    /*min-width: fit-content;
 }
 
 thead .th-notes {
-    width: 12rem;
+    width: 15rem;*/
     /* min-width: 10rem; */
-    min-width: fit-content;
+    /*min-width: fit-content;
 }
 
 thead .th-chat {
-    width: 8rem;
+    width: 8rem;*/
     /* min-width: fit-content; */
-    min-width: 7rem;
+    /*min-width: 7rem;
 }
 
 thead .th-action {
     width: 5.5rem;
-}
-
-tbody .icon-phone,
-.icon-Ehome,
-.icone-Chome,
-.action {
+}*/
+    tbody .icon-phone, .icon-Ehome, .icone-Chome, .action {
     border-radius: 5px;
     padding: 2px 8px;
     border: 1px solid;
 }
-
+tbody tr{
+    min-height:70px;
+}
 tbody tr td {
     /*background-color: aquamarine !important;*/
 }
@@ -251,16 +291,37 @@ tbody tr td {
 
 
 @media screen and (max-width : 1200px) {
+    .tableparent {
+        overflow: scroll;
+    }
+
+    th, td {
+        white-space: nowrap;
+        word-break: keep-all;
+    }
+
     .card-body {
         padding: 0;
     }
 
-    .card {
+    /*.card {
         font-weight: 600;
         border-radius: 10px;
         font-size: 1rem;
         padding: 1%;
         padding-inline: 0;
+    }*/
+    .container1 {
+        flex-wrap: wrap;
+    }
+    .card {
+        width: 30% !important;
+        font-weight: 600;
+        border-radius: 10px;
+        margin: 1%;
+        padding-top: 2%;
+        padding-bottom: 2%;
+        padding-inline: 2%;
     }
 }
 

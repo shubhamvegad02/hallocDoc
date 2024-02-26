@@ -10763,24 +10763,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\vivsa\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\pci214\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\vivsa\\OneDrive\\Desktop\\_halloDoc\\halloDocEntities\\halloDocEntities.csproj",
+      "projectUniqueName": "G:\\Projects\\halloDocEntities\\halloDocEntities.csproj",
       "projectName": "halloDocEntities",
-      "projectPath": "C:\\Users\\vivsa\\OneDrive\\Desktop\\_halloDoc\\halloDocEntities\\halloDocEntities.csproj",
-      "packagesPath": "C:\\Users\\vivsa\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\vivsa\\OneDrive\\Desktop\\_halloDoc\\halloDocEntities\\obj\\",
+      "projectPath": "G:\\Projects\\halloDocEntities\\halloDocEntities.csproj",
+      "packagesPath": "C:\\Users\\pci214\\.nuget\\packages\\",
+      "outputPath": "G:\\Projects\\halloDocEntities\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\vivsa\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\pci214\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -10859,7 +10854,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   }

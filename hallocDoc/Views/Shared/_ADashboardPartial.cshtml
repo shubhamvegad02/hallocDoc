@@ -1,7 +1,7 @@
 ﻿@model halloDocEntities.ViewDataModels.ADashTable;
 
 
-<section class="" style="min-width:min-content;">
+<section class="partialv" @*style="min-width:min-content;"*@>
     <div class="d-flex justify-content-between p-2">
         <div class="d-left">
             <div class="me-auto p-1">
@@ -45,12 +45,7 @@
         <div class="middleSearch d-flex align-items-center">
             <div class="MS-left py-2 d-flex flex-row" style="width: 33%;margin-inline: 0;">
                 <input id="txtSearch" type="text" class="d-searchbar form-control m-2 " placeholder="&#128269; Search Patients">
-                @* <select id="regiondrop" class="form-select d-searchbar form-control m-2" data-bs-toggle="dropdown">
-                <option value="sds" selected>&#128269; All Regions</option>p
-                <option value="south gujarat">South</option>
-                <option value="saurashtra">Saurashtra</option>
-                <option value="kutch">Kutch</option>
-                </select> *@
+                
                 <select id="regiondrop" class="form-select d-searchbar form-control m-2" aria-label="Default select example">
                     <option value="" selected>&#128269; All Regions</option>
                     <option value="1">Saurashtra</option>
@@ -60,29 +55,30 @@
             </div>
             <div class="MS-right p-2">
                 <div class="btn-group align-items-center justify-content-between flex-wrap gap-3" role="group" aria-label="Button group">
-                    <div class="pbox filterButton d-flex" data-requestor="all">
+                    <div class="pbox filterButton cp d-flex" data-requestor="all">
                         <span class="circle green my-2"></span><span>All</span>
                     </div>
-                    <div class="pbox d-flex filterButton" data-requestor="patient">
+                    <div class="pbox d-flex filterButton cp" data-requestor="patient">
                         <span class="circle blue my-2"></span><span>Patient</span>
                     </div>
-                    <div class="pbox d-flex filterButton" data-requestor="family">
+                    <div class="pbox d-flex filterButton cp" data-requestor="family">
                         <span class="circle purple my-2"></span><span>Family/Friend</span>
                     </div>
-                    <div class="pbox d-flex filterButton" data-requestor="business">
+                    <div class="pbox d-flex filterButton cp" data-requestor="business">
                         <span class="circle red my-2"></span>Business<span></span>
                     </div>
-                    <div class="pbox d-flex filterButton" data-requestor="concierge">
+                    <div class="pbox d-flex filterButton cp" data-requestor="concierge">
                         <span class="circle orange my-2"></span><span>Concierge</span>
                     </div>
-                    <div class="pbox d-flex filterButton">
+                    <div class="pbox d-flex filterButton cp">
                         <span class="circle pink my-2"></span><span>VIP</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <table class="table" style="border: 1px solid rgba(201, 201, 201, 0.878);">
+    <div class="tableparent">
+        <table class="table table-hover" style="border: 1px solid rgba(201, 201, 201, 0.878);">
         <thead>
             <tr>
                 <th scope="col" class="px-2 py-1.5 th-name">Name</th>
@@ -114,10 +110,10 @@
                         <td style="background-color: @bgcolor" class="px-2 py-1.5">@item.reqDate</td>
                         <td style="background-color: @bgcolor" class="px-2 py-1.5">
                             <span class="tb-phone d-flex flex-column">
-                                <span class="icon-phone d-flex justify-content-center gap-2">
+                                <span class="icon-phone d-flex align-items-center justify-content-center gap-1 p-1">
                                     <i class="fa-solid fa-phone mx-1"></i><span>+91 @item.mobile</span>
                                 </span>
-                                <span>(Patient)</span>
+                                <span>@item.requstor</span>
                             </span>
                         </td>
                         <td style="background-color: @bgcolor" class="px-2 py-1.5">@item.address</td>
@@ -145,12 +141,13 @@
             }
         </tbody>
     </table>
+    </div>
 </section>
 
 @functions {
     string GetBackgroundColor(string relation)
     {
-        switch (relation.ToLower())
+        switch (relation?.ToLower())
         {
             case "patient":
                 return "#b1c9ef";
