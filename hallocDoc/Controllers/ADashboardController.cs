@@ -6,6 +6,7 @@ using Nest;
 using System;
 using System.Collections;
 using System.Xml.Linq;
+using System.Text;
 
 namespace hallocDoc.Controllers
 {
@@ -16,6 +17,14 @@ namespace hallocDoc.Controllers
         {
             _context = dbContext;
         }
+
+        [HttpPost]
+        public FileResult Export(string GridHtml)
+        {
+            return File(Encoding.ASCII.GetBytes(GridHtml), "application/vnd.ms-excel", "Grid.xls");
+        }
+
+
         public async Task<IActionResult> Dmain(int id, ADashTable d)
         {
             var n = id;
@@ -88,6 +97,37 @@ namespace hallocDoc.Controllers
             }
 
             return RedirectToAction("Dmain", "ADashboard", new { id = n });
+        }
+
+        public async Task<IActionResult> DownloadExcel()
+        {
+            // Replace these with your actual data retrieval logic
+            
+            var data = await (from r in _context.Requests
+                              join rc in _context.Requestclients on r.RequestId equals rc.RequestId
+                              select new { r, rc }).ToListAsync();
+            if (data.Count == 0)
+            {
+                return NotFound(); // Handle empty data case
+            }
+
+            using (var memoryStream = new MemoryStream())
+            {
+                using (var writer = new StreamWriter(memoryStream, Encoding.UTF8))
+                {
+                    // Create headers based on your data properties
+                    writer.WriteLine(string.Join(",", typeof(ADashTable).GetProperties().Select(p => p.Name)));
+
+                    // Populate data rows
+                    foreach (var item in data)
+                    {
+                        writer.WriteLine(string.Join(",", typeof(ADashTable).GetProperties().Select(p => p.GetValue(item))));
+                    }
+                }
+
+                memoryStream.Position = 0;
+                return File(memoryStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "TableData.xlsx");
+            }
         }
     }
 }
