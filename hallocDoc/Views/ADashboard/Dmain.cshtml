@@ -12,73 +12,82 @@
     <a class="anavchild cp tdn">Access</a>
     <a class="anavchild cp tdn">Records</a>
 </div>
+<div class="dashsidebar hideside" id="dashsidebar">
+    <a class="dschild cp tdn dschildactive">Dashboard</a>
+    <a class="dschild cp tdn">Provider Location</a>
+    <a class="dschild cp tdn">My Profile</a>
+    <a class="dschild cp tdn">Provider</a>
+    <a class="dschild cp tdn">Partners</a>
+    <a class="dschild cp tdn">Access</a>
+    <a class="dschild cp tdn">Records</a>
+</div>
 <div class="admain">
 
     <section class="container1 mt-2">
         
         <a id="c1" asp-area="" asp-controller="ADashboard" asp-action="DmainReq" asp-route-n="1" class=" card tdn cp d-card1">
             <div class="card-body">
-                <div class="card-p1  d-flex justify-content-start align-items-center">
+                <div class="card-p1 flex-column flex-md-row  flex-md-row   d-flex justify-content-start align-items-center">
                     <img class="adcardimg me-md-2" src="~/images/new-5-svgrepo-com.svg" />
                     <p class="card-text">NEW</p>
                 </div>
                 <div class="card-p2 mt-2">
-                    <p class="card-text">1452</p>
+                    <p class="card-text">@ViewBag.newc</p>
                 </div>
             </div>
         </a>
         <a id="c2" asp-area="" asp-controller="ADashboard" asp-action="DmainReq" asp-route-n="2" class=" card tdn cp d-card2 ">
             <div class="card-body">
-                <div class="card-p1  d-flex justify-content-start align-items-center">
+                <div class="card-p1 flex-column flex-md-row    d-flex justify-content-start align-items-center flex-column">
                     <img class="adcardimg me-md-2" src="~/images/chat-pending-svgrepo-com.svg" />
                     <p class="card-text">PENDING</p>
                 </div>
                 <div class="card-p2 mt-2">
-                    <p class="card-text">266</p>
+                    <p class="card-text">@ViewBag.penc</p>
                 </div>
             </div>
         </a>
         <a id="c3" asp-area="" asp-controller="ADashboard" asp-action="DmainReq" asp-route-n="3" class=" card tdn cp d-card3 ">
             <div class="card-body">
-                <div class="card-p1  d-flex justify-content-start align-items-center">
+                <div class="card-p1 flex-column flex-md-row    d-flex justify-content-start align-items-center">
                     <img class="adcardimg me-md-2" src="~/images/checkbox-active-svgrepo-com.svg" />
                     <p class="card-text">ACTIVE</p>
                 </div>
                 <div class="card-p2 mt-2">
-                    <p class="card-text">26</p>
+                    <p class="card-text">@ViewBag.actc</p>
                 </div>
             </div>
         </a>
         <a id="c4" asp-area="" asp-controller="ADashboard" asp-action="DmainReq" asp-route-n="4" class=" card tdn cp d-card4 ">
             <div class="card-body">
-                <div class="card-p1  d-flex justify-content-start align-items-center">
+                <div class="card-p1 flex-column flex-md-row    d-flex justify-content-start align-items-center">
                     <img class="adcardimg me-md-2" src="~/images/time-past-svgrepo-com.svg" />
                     <p class="card-text">CONCLUDE</p>
                 </div>
                 <div class="card-p2 mt-2">
-                    <p class="card-text">1078</p>
+                    <p class="card-text">@ViewBag.conc</p>
                 </div>
             </div>
         </a>
         <a id="c5" asp-area="" asp-controller="ADashboard" asp-action="DmainReq" asp-route-n="5" class=" card tdn cp d-card5 ">
             <div class="card-body">
-                <div class="card-p1  d-flex justify-content-start align-items-center justify-content-start align-items-center">
+                <div class="card-p1 flex-column flex-md-row    d-flex justify-content-start align-items-center justify-content-start align-items-center">
                     <img class="adcardimg me-md-2" src="~/images/close-ellipse-svgrepo-com.svg" />
                     <p class="card-text">TO CLOSE</p>
                 </div>
                 <div class="card-p2 mt-2">
-                    <p class="card-text">519</p>
+                    <p class="card-text">@ViewBag.closec</p>
                 </div>
             </div>
         </a>
         <a id="c6" asp-area="" asp-controller="ADashboard" asp-action="DmainReq" asp-route-n="6" class=" card tdn cp d-card6 ">
             <div class="card-body">
-                <div class="card-p1  d-flex justify-content-start align-items-center">
+                <div class="card-p1 flex-column flex-md-row    d-flex justify-content-start align-items-center">
                     <img class="adcardimg me-md-2" src="~/images/dollar-minimalistic-svgrepo-com.svg" />
                     <p class="card-text">UNPAID</p>
                 </div>
                 <div class="card-p2 mt-2">
-                    <p class="card-text">16</p>
+                    <p class="card-text">@ViewBag.unpaidc</p>
                 </div>
             </div>
         </a>

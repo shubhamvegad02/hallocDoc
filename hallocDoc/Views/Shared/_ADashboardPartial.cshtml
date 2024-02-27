@@ -23,18 +23,18 @@
             </div>
             <div class="p-1 ">
                 <form asp-action="Export" asp-controller="ADashboard" method="post">
-                    <button type="submit" id="btnSubmit" class="btn1 px-2 py-1">
+                    <button type="submit" id="btnSubmit" class="btn1 d-flex align-items-center justify-content-evenly px-2 py-1">
                         <i class="bi bi-file-earmark-arrow-down"></i>
-                        Export
                         <input type="hidden" name="GridHtml" />
+                        <span class="d-none d-md-block">Export</span>
                         @*<input type="submit" id="btnSubmit" value="Export" />*@
                     </button>
                 </form>
             </div>
             <div class="p-1 ">
-                <a asp-asp-controller="ADashboard" asp-action="DownloadExcel" class="tdn btn1 px-2 py-1">
+                <a asp-asp-controller="ADashboard" asp-action="DownloadExcel" class="tdn btn1 d-flex align-items-center justify-content-evenly px-2 py-1">
                     <i class="bi bi-file-earmark-arrow-down-fill"></i>
-                    <span>Exportall</span>
+                    <span class="d-none d-md-block">Exportall</span>
                 </a>
             </div>
             <div class="p-1 ">
@@ -52,35 +52,38 @@
 
                 <select id="regiondrop" class="form-select d-searchbar form-control m-2" aria-label="Default select example">
                     <option value="" selected>&#128269; All Regions</option>
-                    <option value="1">Saurashtra</option>
-                    <option value="2">South</option>
-                    <option value="3">Kutchh</option>
+                    <option value="1">Gujarat</option>
+                    <option value="2">Maharashtra</option>
+                    <option value="3">Punjab</option>
                 </select>
             </div>
-            <div class="MS-right p-2">
-                <div class="btn-group align-items-center justify-content-between flex-wrap gap-3" role="group" aria-label="Button group">
-                    <div class="pbox filterButton cp d-flex" data-requestor="all">
-                        <span class="circle green my-2"></span><span>All</span>
+            <div class="MS-right p-1 mb-2 mb-md-0">
+
+                
+                <div class="btn-group align-items-center justify-content-between flex-wrap gap-md-3" role="group" aria-label="Button group">
+                    <div class="pbox filterButton cp d-flex ps-md-2" data-requestor="all">
+                        <span class="circle green my-1"></span><span>All</span>
                     </div>
-                    <div class="pbox d-flex filterButton cp" data-requestor="patient">
-                        <span class="circle blue my-2"></span><span>Patient</span>
+                    <div class="pbox d-flex filterButton cp ms-md-2" data-requestor="patient">
+                        <span class="circle blue my-1"></span><span>Patient</span>
                     </div>
-                    <div class="pbox d-flex filterButton cp" data-requestor="family">
-                        <span class="circle purple my-2"></span><span>Family/Friend</span>
+                    <div class="pbox d-flex filterButton cp ms-2" data-requestor="family">
+                        <span class="circle purple my-1"></span><span>Family/Friend</span>
                     </div>
                     <div class="pbox d-flex filterButton cp" data-requestor="business">
-                        <span class="circle red my-2"></span>Business<span></span>
+                        <span class="circle red my-1"></span>Business<span></span>
                     </div>
                     <div class="pbox d-flex filterButton cp" data-requestor="concierge">
-                        <span class="circle orange my-2"></span><span>Concierge</span>
+                        <span class="circle orange my-1"></span><span>Concierge</span>
                     </div>
                     <div class="pbox d-flex filterButton cp">
-                        <span class="circle pink my-2"></span><span>VIP</span>
+                        <span class="circle pink my-1"></span><span>VIP</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="tableparent" id="dvCustomers">
         <table class="table table-hover" style="border: 1px solid rgba(201, 201, 201, 0.878);">
             <thead>
@@ -106,7 +109,7 @@
                             <td id="region" class="d-none">@item.region</td>
                             <td style="background-color: @bgcolor" class="px-2 py-1.5">
                                 <span class="d-flex  d-flex justify-content-between align-items-center">
-                                    <span>@item.name</span><span class="icon-Ehome"><i class="fa-solid fa-envelope"></i></span>
+                                    <span>@item.name</span><span class="icon-Ehome"><a class="tdn" href='mailto:@item.email?subject=subject&body=Hello!'><i class="fa-solid fa-envelope"></i></a></span>
                                 </span>
                             </td>
                             <td style="background-color: @bgcolor" class="px-2 py-1.5">@item.dob</td>
@@ -126,7 +129,205 @@
                                 <span class="icone-Chome"><i class="fa-solid fa-user"></i>Provider</span>
                             </td>
                             <td style="background-color: @bgcolor" class="px-2 py-1.5">
-                                <span class="action dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">Action</span>
+                                @*<span class="action dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">Action</span>
+                                <ul class="dropdown-menu">
+                                    <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-suitcase" style="margin-right: 0.5rem;"></i><span>Assign Patient</span></a></li>
+                                    <li class="d-item">
+                                        <a class="dropdown-item" href="#">
+                                            <i class="fa-regular fa-rectangle-xmark" style="margin-right: 0.5rem;"></i>
+                                            <span>Cancle Case</span>
+                                        </a>
+                                    </li>
+                                    <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>View Case</span></a></li>
+                                    <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-notes-medical" style="margin-right: 0.5rem;"></i><span>View  Notes</span></a></li>
+                                    <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-ban" style="margin-right: 0.5rem;"></i><span>Block Patient</span></a></li>
+                                </ul>*@
+                                <label class="dropdown">
+                                    <div class="dd-button">
+                                        Action
+                                    </div>
+                                    <input type="checkbox" class="dd-input" id="test">
+                                    <ul class="dd-menu">
+                                        <li><a data-bs-toggle="modal" data-bs-target="#assignreq" class="dropdown-item" href="#"><i class="fa-solid fa-suitcase" style="margin-right: 0.5rem;"></i><span>Assign Patient</span></a></li>
+                                        <li>
+
+                                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#cancelcase">
+                                                <i class="fa-regular fa-rectangle-xmark" style="margin-right: 0.5rem;"></i>
+                                                <span>Cancle Case</span>
+                                            </a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>View Case</span></a></li>
+                                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-notes-medical" style="margin-right: 0.5rem;"></i><span>View  Notes</span></a></li>
+                                        <li><a data-bs-toggle="modal" data-bs-target="#confirmblock" class="dropdown-item" href="#"><i class="fa-solid fa-ban" style="margin-right: 0.5rem;"></i><span>Block Patient</span></a></li>
+                                    </ul>
+                                </label>
+                            </td>
+                        </tr>
+
+
+                        @*assign request*@
+                        <div class="modal fade" id="assignreq" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm Cancellation</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div>
+                                            <span class="fw-bold">Patient Name : </span><span>@item.name</span>
+                                        </div>
+                                        <form class="row g-2 mt-3">
+                                            <select class="form-select d-searchbar form-control mb-2" aria-label="Default select example">
+                                                <option value="" selected>Select Region</option>
+                                                <option value="">Gujarat</option>
+                                                <option value="">Maharashtra</option>
+                                                <option value="">Punjab</option>
+                                            </select>
+                                            <select class="form-select d-searchbar form-control mb-2" aria-label="Default select example">
+                                                <option value="" selected>select physician</option>
+                                                <option value="">System maintenance</option>
+                                                <option value="">Scheduling conflicts</option>
+                                                <option value="">Resource limitations</option>
+                                            </select>
+                                            <div class="form-floating col-12 mb-2">
+                                                <input type="text" class="form-control" id="floatingInput1" placeholder="Provide additional notes..">
+                                                <label class="mylable" for="floatingInput1">Description</label>
+                                                @*<span asp-validation-for="FFirstName" class="text-danger"></span>*@
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn " data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn ">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*cancel case*@
+                        <div class="modal fade" id="cancelcase" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm Cancellation</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div>
+                                            <span class="fw-bold">Patient Name : </span><span>@item.name</span>
+                                        </div>
+                                        <form class="row g-2 mt-3">
+                                            <select class="form-select d-searchbar form-control mb-2" aria-label="Default select example">
+                                                <option value="" selected>Reason for cancellation..</option>
+                                                <option value="System maintenance">System maintenance</option>
+                                                <option value="Scheduling conflicts">Scheduling conflicts</option>
+                                                <option value="Resource limitations">Resource limitations</option>
+                                            </select>
+                                            <div class="form-floating col-12 mb-2">
+                                                <input type="text" class="form-control" id="floatingInput1" placeholder="Provide additional notes..">
+                                                <label class="mylable" for="floatingInput1">Provide additional notes..</label>
+                                                @*<span asp-validation-for="FFirstName" class="text-danger"></span>*@
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn " data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn ">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        @*confirm block*@
+                        <div class="modal fade" id="confirmblock" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm Block</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div>
+                                            <span class="fw-bold">Patient Name : </span><span>@item.name</span>
+                                        </div>
+                                        <form class="row g-2 mt-3">
+                                            <div class="form-floating col-12 mb-2">
+                                                <input type="text" class="form-control" id="floatingInput1" placeholder="Provide additional notes..">
+                                                <label class="mylable" for="floatingInput1">Reason for block request..</label>
+                                                @*<span asp-validation-for="FFirstName" class="text-danger"></span>*@
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn " data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn ">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="accordion d-block d-md-none" id="accordionExample">
+        @if (ViewBag.tableData != null)
+        {
+            @foreach (var item in ViewBag.tableData)
+            {
+                var bgcolor = @GetBackgroundColor(@item.relation);
+                <div class="accordion-item mb-1">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button border-dark border-2 mb-1" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.guid" aria-expanded="true" aria-controls="flush-@item.guid">
+                            <div class="d-flex flex-row justify-content-between w-100 pe-2 align-items-center">
+                                <div class="abchild1">
+                                    <h4>@item.name</h4>
+                                    <h6>@item.address</h6>
+                                </div>
+                                <div class="abchild2 d-flex flex-row justify-content-evenly align-items-center">
+                                    <span class="circle me-2" style="background-color:@bgcolor"></span>
+                                    <span>@item.requstor</span>
+                                </div>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="flush-@item.guid" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div class="accordion-body" style="background-color:#cbe5faa3">
+                            <div class="p-1 d-flex align-items-start flex-column">
+                                <div class="d-none" id="acrregion">@item.region</div>
+                                <div class="mb-1"><i class="bi bi-cake2 border border-2 border-info rounded-circle pe-1 ps-1 m-1"></i><span class="fw-bold">Date Of Birth : </span><span>@item.dob</span></div>
+                                <div class="mb-1"><i class="bi bi-envelope border border-2 border-info rounded-circle pe-1 ps-1 m-1"></i> <span class="fw-bold">Email : </span><span>@item.email</span></div>
+                                <div class="mb-1"><i class="bi bi-telephone border border-2 border-info rounded-circle pe-1 ps-1 m-1"></i> <span class="fw-bold">Mobile : </span><span>@item.mobile</span></div>
+                                <div class="mb-1"><i class="bi bi-folder2-open border border-2 border-info rounded-circle pe-1 ps-1 m-1"></i> <span class="fw-bold">Notes : </span><span>@item.notes</span></div>
+                                <div class="mb-1"><i class="bi bi-calendar-date border border-2 border-info rounded-circle pe-1 ps-1 m-1"></i> <span class="fw-bold">Date Of service : </span><span>@item.reqDate</span></div>
+                                <div class="mb-1"><i class="bi bi-heart-pulse border border-2 border-info rounded-circle pe-1 ps-1 m-1"></i> <span class="fw-bold">Physician : </span><span>@item?.provider</span></div>
+                                <div class="mb-1"><i class="bi bi-person border border-2 border-info rounded-circle pe-1 ps-1 m-1"></i> <span class="fw-bold">Requestor : </span><span> @item.requstor</span></div>
+                            </div>
+                            <div class="p-1">
+                                <div class="row d-flex justify-content-evenly mb-2">
+                                    <button class="badge rounded-pill bg-success col-5">View Notes</button>
+                                    <button class="badge rounded-pill bg-success col-5">Doctor Notes</button>
+                                </div>
+                                <div class="row d-flex justify-content-evenly mb-2">
+                                    <button class="badge rounded-pill bg-success col-5">View Uploads</button>
+                                    <button class="badge rounded-pill bg-success col-5">Encounter</button>
+                                </div>
+                                <div class="row d-flex justify-content-evenly mb-2">
+                                    <button class="badge rounded-pill bg-success col-5">orders</button>
+                                    <button class="badge rounded-pill bg-success col-5" onclick="location.href='mailto:@item.email?subject=subject&body=Hello!'" class="badge rounded-pill bg-success col-5">Email</button>
+                                    @*<a class="tdn col-5" href='mailto:@item.email?subject=subject&body=Hello!'><div class="badge rounded-pill bg-success col-5">Email</div></a>*@
+                                </div>
+                            </div>
+                            <div class="p-1 d-flex justify-content-end">
+                                <span>Chat with : </span>
+                                <span class="icone-Chome ms-1"><i class="fa-solid fa-user"></i>Provider</span>
+                                <span class="action dropdown-toggle ms-1" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">Action</span>
                                 <ul class="dropdown-menu">
                                     <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-suitcase" style="margin-right: 0.5rem;"></i><span>Assign Patient</span></a></li>
                                     <li class="d-item">
@@ -139,12 +340,16 @@
                                     <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-notes-medical" style="margin-right: 0.5rem;"></i><span>View  Notes</span></a></li>
                                     <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-ban" style="margin-right: 0.5rem;"></i><span>Block Patient</span></a></li>
                                 </ul>
-                            </td>
-                        </tr>
-                    }
-                }
-            </tbody>
-        </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+
+            }
+        }
     </div>
 
 </section>

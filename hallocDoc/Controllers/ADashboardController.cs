@@ -7,15 +7,18 @@ using System;
 using System.Collections;
 using System.Xml.Linq;
 using System.Text;
+using halloDocLogic.Interfaces;
 
 namespace hallocDoc.Controllers
 {
     public class ADashboardController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public ADashboardController(ApplicationDbContext dbContext)
+        private readonly IADashboard _iadash;
+        public ADashboardController(ApplicationDbContext dbContext, IADashboard dashboard)
         {
             _context = dbContext;
+            _iadash = dashboard;
         }
 
         [HttpPost]
@@ -32,12 +35,20 @@ namespace hallocDoc.Controllers
             {
                 n = 1;
             }
+            ARequestCount arc = _iadash.ReqCount();
+            ViewBag.newc = arc.newc;
+            ViewBag.penc = arc.pendingc;
+            ViewBag.actc = arc.activec;
+            ViewBag.conc = arc.concludec;
+            ViewBag.closec = arc.closec;
+            ViewBag.unpaidc = arc.unpaidc;
+
             /*var dbdata = from r in _context.Requests
                          join rc in _context.Requestclients on r.RequestId equals rc.RequestId
                          where r.Status == 1
                          select new { r, rc };*/
             ViewBag.heading = TempData["heading"];
-            var dbdata = await (from r in _context.Requests
+            /*var dbdata = await (from r in _context.Requests
                                 join rc in _context.Requestclients on r.RequestId equals rc.RequestId
                                 where r.Status == n
                                 select new { r, rc }).ToListAsync();
@@ -47,10 +58,11 @@ namespace hallocDoc.Controllers
             foreach (var item in dbdata)
             {
                 var dt = new ADashTable();
+                dt.guid = Guid.NewGuid().ToString();
                 dt.name = string.Concat(item.rc.FirstName, " ", item.rc.LastName);
                 dt.email = item.rc.Email;
-                /*dt.dob = new DateTime(item.rc.IntYear.Value, int.Parse(item.rc.StrMonth), item.rc.IntDate.Value);*/
-                dt.dob = item.r.CreatedDate;
+                *//*dt.dob = new DateTime(item.rc.IntYear.Value, int.Parse(item.rc.StrMonth), item.rc.IntDate.Value);*//*
+                dt.dob = item.r.CreatedDate.Date;
                 dt.requstor = item.r?.RelationName;
                 dt.reqDate = item.r.CreatedDate.Date;
                 dt.mobile = item.r.PhoneNumber;
@@ -65,7 +77,8 @@ namespace hallocDoc.Controllers
                 dt.relation = item.r.RelationName;
 
                 dtable.Add(dt);
-            }
+            }*/
+            var dtable = await _iadash.ADashTableData(n);
             ViewBag.tableData = dtable;
             string name = "c"+n.ToString();
             ViewBag.cardid = name;
@@ -102,11 +115,9 @@ namespace hallocDoc.Controllers
         public async Task<IActionResult> DownloadExcel()
         {
             // Replace these with your actual data retrieval logic
-            
-            var data = await (from r in _context.Requests
-                              join rc in _context.Requestclients on r.RequestId equals rc.RequestId
-                              select new { r, rc }).ToListAsync();
-            if (data.Count == 0)
+            var n = 1;
+            var dtable = await _iadash.ADashTableData(n);
+            if (dtable.Count == 0)
             {
                 return NotFound(); // Handle empty data case
             }
@@ -119,7 +130,7 @@ namespace hallocDoc.Controllers
                     writer.WriteLine(string.Join(",", typeof(ADashTable).GetProperties().Select(p => p.Name)));
 
                     // Populate data rows
-                    foreach (var item in data)
+                    foreach (var item in dtable)
                     {
                         writer.WriteLine(string.Join(",", typeof(ADashTable).GetProperties().Select(p => p.GetValue(item))));
                     }

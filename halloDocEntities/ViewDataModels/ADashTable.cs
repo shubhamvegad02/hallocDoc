@@ -4,6 +4,7 @@ namespace halloDocEntities.ViewDataModels
 {
     public class ADashTable
     {
+        public string guid { get; set; }
         public string name { get; set; }
 
         public string email { get; set; }

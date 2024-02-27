@@ -311,7 +311,13 @@ footer {
 
 
 @media screen and (max-width : 768px) {
-
+    .rnav{
+        display:flex;
+        top:0;
+        position:sticky;
+        z-index:500;
+        background-color:white;
+    }
     .mcbox {
         width: 70%;
         font-size: 1.2rem;
@@ -369,4 +375,5 @@ footer {
         padding: 1%;
         font-size: 1rem;
     }
+
 }
