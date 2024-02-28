@@ -8,6 +8,7 @@ using System.Collections;
 using System.Xml.Linq;
 using System.Text;
 using halloDocLogic.Interfaces;
+using System.Data.Common;
 
 namespace hallocDoc.Controllers
 {
@@ -19,6 +20,20 @@ namespace hallocDoc.Controllers
         {
             _context = dbContext;
             _iadash = dashboard;
+        }
+
+        public async Task<IActionResult> ViewNote(int rid)
+        {
+            var vnc = _iadash.VNData(rid);
+
+            
+            return View(vnc);
+        }
+        
+        public async Task<IActionResult> ViewCase(int rid)
+        {
+            var vnc = _iadash.VCData(rid);
+            return View(vnc);
         }
 
         [HttpPost]

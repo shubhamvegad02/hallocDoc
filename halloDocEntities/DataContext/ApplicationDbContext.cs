@@ -34,6 +34,8 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Requestclient> Requestclients { get; set; }
 
+    public virtual DbSet<Requestnote> Requestnotes { get; set; }
+
     public virtual DbSet<Requestwisefile> Requestwisefiles { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
@@ -131,6 +133,15 @@ public partial class ApplicationDbContext : DbContext
             entity.HasOne(d => d.Request).WithMany(p => p.Requestclients)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("requestclient_RequestId_fkey");
+        });
+
+        modelBuilder.Entity<Requestnote>(entity =>
+        {
+            entity.HasKey(e => e.RequestNotesId).HasName("requestnotes_pkey");
+
+            entity.HasOne(d => d.Request).WithMany(p => p.Requestnotes)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("requestnotes_RequestId_fkey");
         });
 
         modelBuilder.Entity<Requestwisefile>(entity =>

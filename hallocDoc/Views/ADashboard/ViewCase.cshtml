@@ -1,0 +1,100 @@
+﻿@model halloDocEntities.ViewDataModels.AViewNoteCase;
+@{
+    ViewData["Title"] = "View Case";
+    Layout = "~/Views/Shared/_ADashboard.cshtml";
+}
+<div class="casemain mt-4">
+    <div class="cmhead d-flex flex-row justify-content-between align-items-center p-2 px-4">
+        <div> 
+            <h3>New Request</h3>
+            @if (Model.relation == "patient")
+            {
+                <button class="badge rounded-pill bg-success col-5 w-auto" disabled>Patient</button>
+            }
+            else if (Model.relation == "business")
+            {
+                <button class="badge rounded-pill bg-primary col-5 w-auto" disabled>Business</button>
+            }
+            else if (Model.relation == "Concierge")
+            {
+                <button class="badge rounded-pill bg-warning col-5 w-auto" disabled>Concierge</button>
+            }
+            else if (Model.relation == "family")
+            {
+                <button class="badge rounded-pill bg-info col-5 w-auto" disabled>Family/Friend</button>
+            }
+            
+        </div>
+        <button onclick="window.history.back()" class="logout tdn dmnewreq mb-3">Back</button>
+    </div>
+    <div class="container h-auto mt-3">
+        <span><h5>Confirmation Number : </h5></span><span>@Model.guid</span>
+        <form asp-controller="pDashboard" asp-action="profilesubmit" enctype="multipart/form-data" class="row g-2 g-md-3 mt-2">
+
+            <h4>Patient information</h4>
+            <div class=" form-floating col-12">
+                <textarea asp-for="symptoms" typeof="text" class="form-control h-100" id="floatingInput4" rows="3"
+                          placeholder="Enter symptoms details in detail(optional)" disabled readonly></textarea>
+                <label class="mylable" for="floatingInput4">Patient Notes</label>
+            </div>
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="fname" type="text" class="form-control" id="floatingInput2" placeholder="" disabled readonly>
+                <label class="mylable" for="floatingInput2">First Name</label>
+
+
+            </div>
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="lname" type="text" class="form-control" id="floatingPassword" placeholder="Password" disabled readonly>
+                <label class="mylable" for="floatingPassword">Last Name</label>
+
+
+            </div>
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="dob" type="date" class="form-control" id="fdate" placeholder="Password" disabled readonly>
+                <label class="mylable" for="fdate">Date of birth</label>
+
+
+            </div>
+
+
+
+            <div class="form-floating col-12 col-md-6 d-flex flex-row justify-content-between">
+
+                <input style="width:80%;" type="tel" asp-for="mobile" id="phone" class="form-control" placeholder="Mobile Number" disabled readonly />
+                <label class="mylable" for="phone">Mobile No.</label>
+                <div class="border-2 border rounded border-info d-flex justify-content-center align-items-center cp" style="width:15%; height:100%;">
+                    <h3><i class="bi bi-telephone" style="color: #00c4ff;"></i></h3>
+                </div>
+            </div>
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="email" type="email" class="form-control" id="floatingInput5" placeholder="name@example.com" disabled readonly>
+                <label class="mylable" for="floatingInput5">Email address</label>
+
+            </div>
+
+            <h4>Location Information</h4>
+
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="region" type="text" class="form-control" id="6" placeholder="name@example.com" disabled readonly>
+                <label class="mylable" for="6">State</label>
+
+            </div>
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="address" type="text" class="form-control" id="4" placeholder="name@example.com" disabled readonly>
+                <label class="mylable" for="4">Address</label>
+
+            </div>
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="room" type="text" class="form-control" id="4SDSD" placeholder="name@example.com" disabled readonly>
+                <label class="mylable" for="4SDSD">#Room</label>
+
+            </div>
+
+            <div class="d-flex justify-content-end mb-2">
+                <button type="submit" class="btn btn-outline-primary active blbtn ms-2">Assign</button>
+                <button type="submit" class="btn btn-outline-primary active blbtn ms-2">View Notes</button>
+                <button type="submit" class="btn btn-danger ms-2" style="border:none; color:white;">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>

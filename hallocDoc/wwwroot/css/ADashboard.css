@@ -362,6 +362,9 @@ a {
 .dd-input:checked + .dd-menu {
     display: block;
 }
+.hidden {
+    display: none;
+}
 
 .dd-menu li {
     padding: 10px 20px;
@@ -387,6 +390,28 @@ a {
     background-color:var(--blue);
     color:white;
 }
+
+/*-------------view case-------------*/
+
+.casemain {
+    width: 60%;
+    margin-inline: auto;
+    min-height: 70vh;
+    height: fit-content;
+    background-color: #ebebeb91;
+    border-radius: 10px;
+}
+.notedata{
+    background-color:white;
+    /*border:0.5px solid gray;*/
+    box-shadow:2px 2px 4px gray;
+    min-height:100px;
+    height:fit-content;
+    border-radius:5px;
+    width:48%;
+    
+}
+
 
 @media screen and (max-width : 1200px) {
     .tableparent {

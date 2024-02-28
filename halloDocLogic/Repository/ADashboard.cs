@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using halloDocEntities.DataContext;
 using Microsoft.Extensions.Hosting;
+using System.Data.Common;
+using Microsoft.EntityFrameworkCore;
 
 namespace halloDocLogic.Repository
 {
@@ -18,6 +20,65 @@ namespace halloDocLogic.Repository
         public ADashboard(ApplicationDbContext context)
         {
             _context = context;
+        }
+
+        public AViewNoteCase VNData(int rid)
+        {
+            var dbdata = from r in _context.Requests
+                         join rn in _context.Requestnotes on r.RequestId equals rn.RequestId
+                         where r.RequestId == rid
+                         select new { r, rn };
+            /*var dbdata = from r in _context.Requests
+                         join rc in _context.Requestclients on r.RequestId equals rc.RequestId
+                         from rn in _context.Requestnotes.DefaultIfEmpty()
+                         where (rn == null || rn.RequestId == rid) && r.RequestId == rid
+                         select new { r, rc, rn };*/
+
+
+            AViewNoteCase vnc = new AViewNoteCase();
+            foreach (var item in dbdata)
+            {
+                vnc.Tnotes = item.rn.AdministrativeNotes;
+                vnc.Pnotes = item.rn.PhysicianNotes;
+                vnc.Anotes = item.rn.AdminNotes;
+            }
+                return vnc;
+        }
+        public AViewNoteCase VCData(int rid)
+        {
+
+            var dbdata = from r in _context.Requests
+                         join rc in _context.Requestclients on r.RequestId equals rc.RequestId
+                         where r.RequestId == rid
+                         select new { r, rc };
+            /*var dbdata = from r in _context.Requests
+                         join rc in _context.Requestclients on r.RequestId equals rc.RequestId
+                         from rn in _context.Requestnotes.DefaultIfEmpty()
+                         where (rn == null || rn.RequestId == rid) && r.RequestId == rid
+                         select new { r, rc, rn };*/
+
+
+            AViewNoteCase vnc = new AViewNoteCase();
+            foreach (var item in dbdata)
+            {
+                vnc.relation = item.r.RelationName;
+                vnc.status = item.r.Status;
+                vnc.guid = Guid.NewGuid().ToString();
+                vnc.fname = item.rc?.FirstName;
+                vnc.lname = item?.rc?.LastName;
+                vnc.email = item?.rc?.Email;
+                vnc.mobile = item?.r.PhoneNumber;
+                vnc.symptoms = item?.rc?.Notes;
+                /*var dates = string.Concat(item?.rc?.IntDate.ToString() + item.rc.StrMonth?.Substring(0, 3) + item.rc.IntYear);
+                DateTime fdate = DateTime.Parse(dates);
+                vnc.dob = fdate;*/
+                /*var region =  _context.Regions.FirstOrDefault(r => r.RegionId == item.rc.RegionId)?.Name;*/
+                /*vnc.region = item.rc.State;
+                vnc.Tnotes = item.rn.AdministrativeNotes;
+                vnc.Pnotes = item.rn.PhysicianNotes;
+                vnc.Anotes = item.rn.AdminNotes;*/
+            }
+                return (vnc);
         }
 
         public async Task<List<ADashTable>>ADashTableData(int n)
@@ -33,6 +94,7 @@ namespace halloDocLogic.Repository
             {
                 var dt = new ADashTable();
                 dt.guid = Guid.NewGuid().ToString();
+                dt.rid = item.r.RequestId.ToString();
                 dt.name = string.Concat(item.rc.FirstName, " ", item.rc.LastName);
                 dt.email = item.rc.Email;
                 /*dt.dob = new DateTime(item.rc.IntYear.Value, int.Parse(item.rc.StrMonth), item.rc.IntDate.Value);*/

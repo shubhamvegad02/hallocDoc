@@ -100,6 +100,9 @@ public partial class Request
     public virtual ICollection<Requestclient> Requestclients { get; set; } = new List<Requestclient>();
 
     [InverseProperty("Request")]
+    public virtual ICollection<Requestnote> Requestnotes { get; set; } = new List<Requestnote>();
+
+    [InverseProperty("Request")]
     public virtual ICollection<Requestwisefile> Requestwisefiles { get; set; } = new List<Requestwisefile>();
 
     [ForeignKey("UserId")]

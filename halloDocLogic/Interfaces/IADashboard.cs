@@ -12,5 +12,9 @@ namespace halloDocLogic.Interfaces
         Task<List<ADashTable>> ADashTableData(int n);
 
         public ARequestCount ReqCount();
+
+        public AViewNoteCase VCData(int rid);
+
+        public AViewNoteCase VNData(int rid);
     }
 }

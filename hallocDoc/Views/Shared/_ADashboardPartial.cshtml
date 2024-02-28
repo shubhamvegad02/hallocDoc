@@ -59,7 +59,7 @@
             </div>
             <div class="MS-right p-1 mb-2 mb-md-0">
 
-                
+
                 <div class="btn-group align-items-center justify-content-between flex-wrap gap-md-3" role="group" aria-label="Button group">
                     <div class="pbox filterButton cp d-flex ps-md-2" data-requestor="all">
                         <span class="circle green my-1"></span><span>All</span>
@@ -130,35 +130,35 @@
                             </td>
                             <td style="background-color: @bgcolor" class="px-2 py-1.5">
                                 @*<span class="action dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">Action</span>
-                                <ul class="dropdown-menu">
-                                    <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-suitcase" style="margin-right: 0.5rem;"></i><span>Assign Patient</span></a></li>
-                                    <li class="d-item">
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fa-regular fa-rectangle-xmark" style="margin-right: 0.5rem;"></i>
-                                            <span>Cancle Case</span>
-                                        </a>
-                                    </li>
-                                    <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>View Case</span></a></li>
-                                    <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-notes-medical" style="margin-right: 0.5rem;"></i><span>View  Notes</span></a></li>
-                                    <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-ban" style="margin-right: 0.5rem;"></i><span>Block Patient</span></a></li>
-                                </ul>*@
+                        <ul class="dropdown-menu">
+                        <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-suitcase" style="margin-right: 0.5rem;"></i><span>Assign Patient</span></a></li>
+                        <li class="d-item">
+                        <a class="dropdown-item" href="#">
+                        <i class="fa-regular fa-rectangle-xmark" style="margin-right: 0.5rem;"></i>
+                        <span>Cancle Case</span>
+                        </a>
+                        </li>
+                        <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>View Case</span></a></li>
+                        <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-notes-medical" style="margin-right: 0.5rem;"></i><span>View  Notes</span></a></li>
+                        <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-ban" style="margin-right: 0.5rem;"></i><span>Block Patient</span></a></li>
+                        </ul>*@
                                 <label class="dropdown">
                                     <div class="dd-button">
                                         Action
                                     </div>
                                     <input type="checkbox" class="dd-input" id="test">
                                     <ul class="dd-menu">
-                                        <li><a data-bs-toggle="modal" data-bs-target="#assignreq" class="dropdown-item" href="#"><i class="fa-solid fa-suitcase" style="margin-right: 0.5rem;"></i><span>Assign Patient</span></a></li>
+                                        <li><a data-bs-toggle="modal" data-bs-target="#assignreq-@item.rid" class="dropdown-item"><i class="fa-solid fa-suitcase" style="margin-right: 0.5rem;"></i><span>Assign Patient</span></a></li>
                                         <li>
 
-                                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#cancelcase">
+                                            <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#cancelcase-@item.rid">
                                                 <i class="fa-regular fa-rectangle-xmark" style="margin-right: 0.5rem;"></i>
                                                 <span>Cancle Case</span>
                                             </a>
                                         </li>
-                                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>View Case</span></a></li>
-                                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-notes-medical" style="margin-right: 0.5rem;"></i><span>View  Notes</span></a></li>
-                                        <li><a data-bs-toggle="modal" data-bs-target="#confirmblock" class="dropdown-item" href="#"><i class="fa-solid fa-ban" style="margin-right: 0.5rem;"></i><span>Block Patient</span></a></li>
+                                        <li><a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="dropdown-item" ><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>View Case</span></a></li>
+                                        <li><a asp-area="" asp-controller="ADashboard" asp-action="ViewNote" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-notes-medical" style="margin-right: 0.5rem;"></i><span>View  Notes</span></a></li>
+                                        <li><a data-bs-toggle="modal" data-bs-target="#confirmblock-@item.rid" class="dropdown-item"><i class="fa-solid fa-ban" style="margin-right: 0.5rem;"></i><span>Block Patient</span></a></li>
                                     </ul>
                                 </label>
                             </td>
@@ -166,7 +166,7 @@
 
 
                         @*assign request*@
-                        <div class="modal fade" id="assignreq" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="assignreq-@item.rid" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -205,8 +205,9 @@
                             </div>
                         </div>
 
+
                         @*cancel case*@
-                        <div class="modal fade" id="cancelcase" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="cancelcase-@item.rid" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -241,7 +242,7 @@
 
 
                         @*confirm block*@
-                        <div class="modal fade" id="confirmblock" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="confirmblock-@item.rid" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -345,7 +346,7 @@
                     </div>
                 </div>
 
-                
+
 
 
             }
