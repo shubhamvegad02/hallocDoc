@@ -36,6 +36,8 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Requestnote> Requestnotes { get; set; }
 
+    public virtual DbSet<Requeststatuslog> Requeststatuslogs { get; set; }
+
     public virtual DbSet<Requestwisefile> Requestwisefiles { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
@@ -142,6 +144,21 @@ public partial class ApplicationDbContext : DbContext
             entity.HasOne(d => d.Request).WithMany(p => p.Requestnotes)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("requestnotes_RequestId_fkey");
+        });
+
+        modelBuilder.Entity<Requeststatuslog>(entity =>
+        {
+            entity.HasKey(e => e.RequestStatusLogId).HasName("requeststatuslog_pkey");
+
+            entity.HasOne(d => d.Admin).WithMany(p => p.Requeststatuslogs).HasConstraintName("requeststatuslog_AdminId_fkey");
+
+            entity.HasOne(d => d.Physician).WithMany(p => p.RequeststatuslogPhysicians).HasConstraintName("requeststatuslog_PhysicianId_fkey");
+
+            entity.HasOne(d => d.Request).WithMany(p => p.Requeststatuslogs)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("requeststatuslog_RequestId_fkey");
+
+            entity.HasOne(d => d.TransToPhysician).WithMany(p => p.RequeststatuslogTransToPhysicians).HasConstraintName("requeststatuslog_TransToPhysicianId_fkey");
         });
 
         modelBuilder.Entity<Requestwisefile>(entity =>

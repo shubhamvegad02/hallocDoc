@@ -103,6 +103,9 @@ public partial class Request
     public virtual ICollection<Requestnote> Requestnotes { get; set; } = new List<Requestnote>();
 
     [InverseProperty("Request")]
+    public virtual ICollection<Requeststatuslog> Requeststatuslogs { get; set; } = new List<Requeststatuslog>();
+
+    [InverseProperty("Request")]
     public virtual ICollection<Requestwisefile> Requestwisefiles { get; set; } = new List<Requestwisefile>();
 
     [ForeignKey("UserId")]

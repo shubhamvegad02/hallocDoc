@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using halloDocEntities.DataModels;
+using System.ComponentModel.DataAnnotations;
 
 namespace halloDocEntities.ViewDataModels
 {
     public class ADashTable
     {
-        public string rid { get; set; }
+        public int rid { get; set; }
         public string guid { get; set; }
         public string name { get; set; }
 
@@ -27,5 +28,15 @@ namespace halloDocEntities.ViewDataModels
         public string relation { get; set; }
 
         public string region { get; set; }
+
+        public int regionId { get; set; }
+
+        public int phyId { get; set; }
+
+        public int status { get; set; }
+
+        public int caseTag { get; set; }
+
+
     }
 }

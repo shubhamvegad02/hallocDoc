@@ -75,5 +75,8 @@ public partial class Admin
     public virtual Aspnetuser? ModifiedByNavigation { get; set; }
 
     [InverseProperty("Admin")]
+    public virtual ICollection<Requeststatuslog> Requeststatuslogs { get; set; } = new List<Requeststatuslog>();
+
+    [InverseProperty("Admin")]
     public virtual ICollection<Requestwisefile> Requestwisefiles { get; set; } = new List<Requestwisefile>();
 }

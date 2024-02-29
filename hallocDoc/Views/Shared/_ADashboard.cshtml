@@ -56,11 +56,11 @@
             integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
             crossorigin="anonymous"></script>
 
-   
 
-     @*<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+
+    @*<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
     integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-    crossorigin="anonymous"></script>*@ 
+    crossorigin="anonymous"></script>*@
     @* <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
     integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
     crossorigin="anonymous"></script> *@
@@ -71,7 +71,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script>
-        
+
 
         function hambtn() {
             var x = document.querySelector(".dashsidebar")
@@ -96,6 +96,26 @@
                     $(this).fadeOut();
                 } else {
                     $(this).fadeIn();
+                }
+            });
+        });
+
+
+
+
+        $('#ACregiondrop').change(function () {
+            debugger
+            console.log("new");
+            var selectedRegionId = $(this).val(); // Get the selected region ID
+
+            $('.ACRoption').each(function () {
+                var physicianRegionId = $(this).attr('data-region-id'); // Get the physician's region ID
+
+                // Check if selected region ID is empty or matches the physician's region ID
+                if (selectedRegionId === '' || physicianRegionId === selectedRegionId) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
                 }
             });
         });
@@ -134,9 +154,9 @@
             });
         });
         window.addEventListener("load", (event) => {
-            
+
             console.log("page is fully loaded");
-            
+
             var idname = @ViewBag.cardid;
 
             switch (idname) {
@@ -174,33 +194,33 @@
                     // Handle cases where idname doesn't match any of the above
                     console.warn("Unknown card ID:", idname);
             }
-            
-            
-            
+
+
+
         });
-        
+
         window.addEventListener("load", (event) => {
             function setActive() {
 
-            console.log("hii");
-            // Remove 'active' class from all divs
-            var divs = document.querySelectorAll('.card'); // Replace 'your-div-class' with the class name of your divs
-            divs.forEach(function (div) {
-                div.classList.remove('cactive');
-            });
+                console.log("hii");
+                // Remove 'active' class from all divs
+                var divs = document.querySelectorAll('.card'); // Replace 'your-div-class' with the class name of your divs
+                divs.forEach(function (div) {
+                    div.classList.remove('cactive');
+                });
 
-            // Add 'active' class to the clicked div
-            var id = @ViewBag.cardid;
-            if(id != null){
+                // Add 'active' class to the clicked div
+                var id = @ViewBag.cardid;
+                if (id != null) {
                     var clickedDiv = document.getElementById('id');
                     if (clickedDiv) {
                         clickedDiv.classList.add('cactive');
                     }
+                }
+
             }
-            
-        }
         });
-        
+
 
     </script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>

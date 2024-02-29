@@ -22,6 +22,88 @@ namespace halloDocLogic.Repository
             _context = context;
         }
 
+
+        public async Task AssignCase(int rid, ADashTable dt)
+        {
+            var dbreq = _context.Requests.FirstOrDefault(m => m.RequestId == rid);
+            if (dbreq != null)
+            {
+                dbreq.PhysicianId = dt.phyId;
+                dbreq.Status = 2;
+                _context.Requests.Update(dbreq);
+                _context.SaveChanges();
+            }
+            var dbrnote = await _context.Requestnotes.FirstOrDefaultAsync(m => m.RequestId == rid);
+            if (dbrnote != null)
+            {
+                dbrnote.AdminNotes = dt.notes;
+                dbrnote.CreatedBy = "Admin";
+                dbrnote.CreatedDate = DateTime.Today;
+                _context.Requestnotes.Update(dbrnote);
+                _context.SaveChanges();
+            }
+            else
+            {
+                Requestnote rn = new Requestnote();
+                rn.RequestId = rid;
+                rn.AdminNotes = dt.notes;
+                rn.CreatedBy = "Admin";
+                rn.CreatedDate = DateTime.Today;
+                _context.Requestnotes.Add(rn);
+                _context.SaveChanges();
+            }
+            var reqsnote = await _context.Requeststatuslogs.FirstOrDefaultAsync(m => m.RequestId == rid);
+
+            Requeststatuslog rsl = new Requeststatuslog();
+            rsl.RequestId = rid;
+            /*rsl.AdminId = 1;*/
+            rsl.Status = 2;
+            rsl.TransToPhysicianId = dt.phyId;
+            _context.Requeststatuslogs.Add(rsl);
+            _context.SaveChanges();
+        }
+        public async Task<int> CancelCase(int rid, ADashTable dt)
+        {
+            var dbreq = _context.Requests.FirstOrDefault(m => m.RequestId == rid);
+            int status1 = dbreq?.Status ?? 0;
+            if (dbreq != null)
+            {
+                dbreq.Status = 5;
+                dbreq.CaseTag = dt.caseTag.ToString();
+                _context.Requests.Update(dbreq);
+                _context.SaveChanges();
+            }
+            var dbrnote = await _context.Requestnotes.FirstOrDefaultAsync(m => m.RequestId == rid);
+            if (dbrnote != null)
+            {
+                dbrnote.AdminNotes = dt.notes;
+                dbrnote.CreatedBy = "Admin";
+                dbrnote.CreatedDate = DateTime.Today;
+                _context.Requestnotes.Update(dbrnote);
+                _context.SaveChanges();
+            }
+            else
+            {
+                Requestnote rn = new Requestnote();
+                rn.RequestId = rid;
+                rn.AdminNotes = dt.notes;
+                rn.CreatedBy = "Admin";
+                rn.CreatedDate = DateTime.Today;
+                _context.Requestnotes.Add(rn);
+                _context.SaveChanges();
+            }
+
+
+            Requeststatuslog rsl = new Requeststatuslog();
+            rsl.RequestId = rid;
+            /*rsl.AdminId = 1;*/
+            rsl.Status = 5;
+            rsl.Notes = dt.notes;
+            _context.Requeststatuslogs.Add(rsl);
+            _context.SaveChanges();
+
+            return status1;
+        }
         public AViewNoteCase VNData(int rid)
         {
             var dbdata = from r in _context.Requests
@@ -93,8 +175,9 @@ namespace halloDocLogic.Repository
             foreach (var item in dbdata)
             {
                 var dt = new ADashTable();
+                dt.status = n;
                 dt.guid = Guid.NewGuid().ToString();
-                dt.rid = item.r.RequestId.ToString();
+                dt.rid = item.r.RequestId;
                 dt.name = string.Concat(item.rc.FirstName, " ", item.rc.LastName);
                 dt.email = item.rc.Email;
                 /*dt.dob = new DateTime(item.rc.IntYear.Value, int.Parse(item.rc.StrMonth), item.rc.IntDate.Value);*/

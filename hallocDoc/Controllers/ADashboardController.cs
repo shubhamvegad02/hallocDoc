@@ -9,6 +9,9 @@ using System.Xml.Linq;
 using System.Text;
 using halloDocLogic.Interfaces;
 using System.Data.Common;
+using halloDocEntities.DataModels;
+using System.Security.Cryptography;
+using Org.BouncyCastle.Ocsp;
 
 namespace hallocDoc.Controllers
 {
@@ -22,14 +25,103 @@ namespace hallocDoc.Controllers
             _iadash = dashboard;
         }
 
+        public async Task<IActionResult> CancelCase(int rid, ADashTable dt)
+        {
+            /*int status = dt.status;*/
+
+
+            /*var dbreq = _context.Requests.FirstOrDefault(m => m.RequestId == rid);
+            int status1 = dbreq?.Status ?? 0;
+            if (dbreq != null)
+            {
+                dbreq.Status = 5;
+                dbreq.CaseTag = dt.caseTag.ToString();
+                _context.Requests.Update(dbreq);
+                _context.SaveChanges();
+            }
+            var dbrnote = await _context.Requestnotes.FirstOrDefaultAsync(m => m.RequestId == rid);
+            if (dbrnote != null)
+            {
+                dbrnote.AdminNotes = dt.notes;
+                dbrnote.CreatedBy = "Admin";
+                dbrnote.CreatedDate = DateTime.Today;
+                _context.Requestnotes.Update(dbrnote);
+                _context.SaveChanges();
+            }
+            else
+            {
+                Requestnote rn = new Requestnote();
+                rn.RequestId = rid;
+                rn.AdminNotes = dt.notes;
+                rn.CreatedBy = "Admin";
+                rn.CreatedDate = DateTime.Today;
+                _context.Requestnotes.Add(rn);
+                _context.SaveChanges();
+            }
+
+
+            Requeststatuslog rsl = new Requeststatuslog();
+            rsl.RequestId = rid;
+            *//*rsl.AdminId = 1;*//*
+            rsl.Status = 5;
+            rsl.Notes = dt.notes;
+            _context.Requeststatuslogs.Add(rsl);
+            _context.SaveChanges();*/
+
+            int status1 = await _iadash.CancelCase(rid, dt);
+
+            return RedirectToAction("Dmain", "ADashboard", new { id = status1 });
+        }
+        public async Task<IActionResult> AssignCase(int rid, ADashTable dt)
+        {
+            /*var dbreq = _context.Requests.FirstOrDefault(m => m.RequestId == rid);
+            if (dbreq != null)
+            {
+                dbreq.PhysicianId = dt.phyId;
+                dbreq.Status = 2;
+                _context.Requests.Update(dbreq);
+                _context.SaveChanges();
+            }
+            var dbrnote = await _context.Requestnotes.FirstOrDefaultAsync(m => m.RequestId == rid);
+            if (dbrnote != null)
+            {
+                dbrnote.AdminNotes = dt.notes;
+                dbrnote.CreatedBy = "Admin";
+                dbrnote.CreatedDate = DateTime.Today;
+                _context.Requestnotes.Update(dbrnote);
+                _context.SaveChanges();
+            }
+            else
+            {
+                Requestnote rn = new Requestnote();
+                rn.RequestId = rid;
+                rn.AdminNotes = dt.notes;
+                rn.CreatedBy = "Admin";
+                rn.CreatedDate = DateTime.Today;
+                _context.Requestnotes.Add(rn);
+                _context.SaveChanges();
+            }
+            var reqsnote = await _context.Requeststatuslogs.FirstOrDefaultAsync(m => m.RequestId == rid);
+
+            Requeststatuslog rsl = new Requeststatuslog();
+            rsl.RequestId = rid;
+            *//*rsl.AdminId = 1;*//*
+            rsl.Status = 2;
+            rsl.TransToPhysicianId = dt.phyId;
+            _context.Requeststatuslogs.Add(rsl);
+            _context.SaveChanges();*/
+
+            return RedirectToAction("Dmain");
+            /*return JavaScript("alert('No more images');");*/
+        }
         public async Task<IActionResult> ViewNote(int rid)
         {
             var vnc = _iadash.VNData(rid);
 
-            
+
             return View(vnc);
         }
-        
+
         public async Task<IActionResult> ViewCase(int rid)
         {
             var vnc = _iadash.VCData(rid);
@@ -57,6 +149,29 @@ namespace hallocDoc.Controllers
             ViewBag.conc = arc.concludec;
             ViewBag.closec = arc.closec;
             ViewBag.unpaidc = arc.unpaidc;
+
+            List<Region> rlist = new List<Region>();
+            var dbregion = _context.Regions;
+            foreach (var item in dbregion)
+            {
+                Region r = new Region();
+                r.RegionId = item.RegionId;
+                r.Name = item.Name;
+                rlist.Add(r);
+            }
+            ViewBag.rlist = rlist;
+
+            List<Physician> plist = new List<Physician>();
+            var dbphysician = _context.Physicians;
+            foreach (var item in dbphysician)
+            {
+                Physician p = new Physician();
+                p.FirstName = item.FirstName;
+                p.RegionId = item.RegionId;
+                p.PhysicianId = item.PhysicianId;
+                plist.Add(p);
+            }
+            ViewBag.plist = plist;
 
             /*var dbdata = from r in _context.Requests
                          join rc in _context.Requestclients on r.RequestId equals rc.RequestId
@@ -95,7 +210,7 @@ namespace hallocDoc.Controllers
             }*/
             var dtable = await _iadash.ADashTableData(n);
             ViewBag.tableData = dtable;
-            string name = "c"+n.ToString();
+            string name = "c" + n.ToString();
             ViewBag.cardid = name;
 
             return View();

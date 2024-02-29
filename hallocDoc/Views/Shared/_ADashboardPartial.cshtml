@@ -177,30 +177,40 @@
                                         <div>
                                             <span class="fw-bold">Patient Name : </span><span>@item.name</span>
                                         </div>
-                                        <form class="row g-2 mt-3">
-                                            <select class="form-select d-searchbar form-control mb-2" aria-label="Default select example">
+                                        <form asp-area="" asp-controller="ADashboard" asp-action="AssignCase" asp-route-rid="@item.rid" class="row g-2 mt-3">
+                                            <select asp-for="region" id="ACregiondrop" class="form-select d-searchbar form-control mb-2" aria-label="Default select example">
                                                 <option value="" selected>Select Region</option>
-                                                <option value="">Gujarat</option>
-                                                <option value="">Maharashtra</option>
-                                                <option value="">Punjab</option>
+                                                @foreach (var ritem in ViewBag.rlist)
+                                                {
+                                                    <option value="@ritem.RegionId">@ritem.Name</option>
+
+                                                }
                                             </select>
-                                            <select class="form-select d-searchbar form-control mb-2" aria-label="Default select example">
+                                            <select asp-for="phyId" id="physicianDropdown" class="form-select d-searchbar form-control mb-2" aria-label="Default select example">
                                                 <option value="" selected>select physician</option>
-                                                <option value="">System maintenance</option>
-                                                <option value="">Scheduling conflicts</option>
-                                                <option value="">Resource limitations</option>
+                                                @foreach (var pitem in ViewBag.plist)
+                                                {
+                                                    <option class="ACRoption" data-region-id="@pitem.RegionId" value="@pitem.PhysicianId">@pitem.FirstName</option>
+
+                                                }
+                                                
                                             </select>
+
                                             <div class="form-floating col-12 mb-2">
-                                                <input type="text" class="form-control" id="floatingInput1" placeholder="Provide additional notes..">
+                                                <input asp-for="notes" type="text" class="form-control" id="floatingInput1" placeholder="Provide additional notes..">
                                                 <label class="mylable" for="floatingInput1">Description</label>
                                                 @*<span asp-validation-for="FFirstName" class="text-danger"></span>*@
                                             </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn " data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn ">Save changes</button>
+                                            </div>
                                         </form>
                                     </div>
-                                    <div class="modal-footer">
+                                    @*<div class="modal-footer">
                                         <button type="button" class="btn " data-bs-dismiss="modal">Close</button>
                                         <button type="button" class="btn ">Save changes</button>
-                                    </div>
+                                    </div>*@
                                 </div>
                             </div>
                         </div>
@@ -218,24 +228,28 @@
                                         <div>
                                             <span class="fw-bold">Patient Name : </span><span>@item.name</span>
                                         </div>
-                                        <form class="row g-2 mt-3">
-                                            <select class="form-select d-searchbar form-control mb-2" aria-label="Default select example">
+                                        <form asp-area="" asp-controller="ADashboard" asp-action="CancelCase" asp-route-rid="@item.rid" class="row g-2 mt-3">
+                                            <select asp-for="caseTag" class="form-select d-searchbar form-control mb-2" aria-label="Default select example">
                                                 <option value="" selected>Reason for cancellation..</option>
-                                                <option value="System maintenance">System maintenance</option>
-                                                <option value="Scheduling conflicts">Scheduling conflicts</option>
-                                                <option value="Resource limitations">Resource limitations</option>
+                                                <option value="8">No Respone to call or text, left message </option>
+                                                <option value="9">Cost Issue </option>
+                                                <option value="10">Insurance Issue </option>
+                                                <option value="11">Out of Service Area </option>
+                                                <option value="12">Not appropriate for service </option>
+                                                <option value="13">Referral to Clinic or Hospital </option> 
                                             </select>
                                             <div class="form-floating col-12 mb-2">
-                                                <input type="text" class="form-control" id="floatingInput1" placeholder="Provide additional notes..">
+                                                <input asp-for="notes" type="text" class="form-control" id="floatingInput1" placeholder="Provide additional notes..">
                                                 <label class="mylable" for="floatingInput1">Provide additional notes..</label>
                                                 @*<span asp-validation-for="FFirstName" class="text-danger"></span>*@
                                             </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn " data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn ">Save changes</button>
+                                            </div>
                                         </form>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn " data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn ">Save changes</button>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
