@@ -89,6 +89,9 @@ public partial class Request
 
     public int? CreatedUserId { get; set; }
 
+    [InverseProperty("Request")]
+    public virtual ICollection<Blockrequest> Blockrequests { get; set; } = new List<Blockrequest>();
+
     [ForeignKey("PhysicianId")]
     [InverseProperty("Requests")]
     public virtual Physician? Physician { get; set; }

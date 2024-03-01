@@ -20,7 +20,11 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Aspnetuser> Aspnetusers { get; set; }
 
+    public virtual DbSet<Blockrequest> Blockrequests { get; set; }
+
     public virtual DbSet<Business> Businesses { get; set; }
+
+    public virtual DbSet<Casetag> Casetags { get; set; }
 
     public virtual DbSet<Concierge> Concierges { get; set; }
 
@@ -68,6 +72,15 @@ public partial class ApplicationDbContext : DbContext
             entity.HasKey(e => e.Id).HasName("aspnetusers_pkey");
         });
 
+        modelBuilder.Entity<Blockrequest>(entity =>
+        {
+            entity.HasKey(e => e.BlockRequestId).HasName("blockrequests_pkey");
+
+            entity.HasOne(d => d.Request).WithMany(p => p.Blockrequests)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("blockrequests_RequestId_fkey");
+        });
+
         modelBuilder.Entity<Business>(entity =>
         {
             entity.HasKey(e => e.BusinessId).HasName("business_pkey");
@@ -77,6 +90,11 @@ public partial class ApplicationDbContext : DbContext
             entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.BusinessModifiedByNavigations).HasConstraintName("business_ModifiedBy_fkey");
 
             entity.HasOne(d => d.Region).WithMany(p => p.Businesses).HasConstraintName("business_RegionId_fkey");
+        });
+
+        modelBuilder.Entity<Casetag>(entity =>
+        {
+            entity.HasKey(e => e.CaseTagId).HasName("casetag_pkey");
         });
 
         modelBuilder.Entity<Concierge>(entity =>

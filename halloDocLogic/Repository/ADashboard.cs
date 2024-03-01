@@ -23,6 +23,43 @@ namespace halloDocLogic.Repository
         }
 
 
+
+
+
+        public async Task<int> BlockCase(int rid, ADashTable dt)
+        {
+            var dbreq = _context.Requests.FirstOrDefault(m => m.RequestId == rid);
+            int status1 = dbreq?.Status ?? 0;
+            if (dbreq != null)
+            {
+                dbreq.Status = 7;
+
+                _context.Requests.Update(dbreq);
+                _context.SaveChanges();
+            }
+
+            Blockrequest br = new Blockrequest();
+            br.PhoneNumber = dt.mobile;
+            br.Email = dt.email;
+            br.Reason = dt.notes;
+            br.RequestId = rid;
+            br.CreatedDate = DateTime.Today;
+            _context.Blockrequests.Add(br);
+            _context.SaveChanges();
+
+            Requeststatuslog rsl = new Requeststatuslog();
+            rsl.RequestId = rid;
+            /*rsl.AdminId = 1;*/
+            rsl.Status = 7;
+            rsl.Notes = dt.notes;
+            rsl.CreatedDate = DateTime.Now.Date;
+            _context.Requeststatuslogs.Add(rsl);
+            _context.SaveChanges();
+
+            return status1;
+        }
+
+
         public async Task AssignCase(int rid, ADashTable dt)
         {
             var dbreq = _context.Requests.FirstOrDefault(m => m.RequestId == rid);
@@ -104,27 +141,46 @@ namespace halloDocLogic.Repository
 
             return status1;
         }
-        public AViewNoteCase VNData(int rid)
+        public AViewNoteCase VNData(int rid, AViewNoteCase vnc)
         {
-            var dbdata = from r in _context.Requests
+            /*var dbdata = from r in _context.Requests
                          join rn in _context.Requestnotes on r.RequestId equals rn.RequestId
                          where r.RequestId == rid
-                         select new { r, rn };
-            /*var dbdata = from r in _context.Requests
-                         join rc in _context.Requestclients on r.RequestId equals rc.RequestId
-                         from rn in _context.Requestnotes.DefaultIfEmpty()
-                         where (rn == null || rn.RequestId == rid) && r.RequestId == rid
-                         select new { r, rc, rn };*/
-
-
-            AViewNoteCase vnc = new AViewNoteCase();
-            foreach (var item in dbdata)
+                         select new { r, rn };*/
+            var dbnotedata = from rl in _context.Requeststatuslogs
+                             join rn in _context.Requestnotes on rl.RequestId equals rn.RequestId
+                             where rn.RequestId == rid
+                             select new { rl, rn };
+            var dbreq = _context.Requests.FirstOrDefault(m => m.RequestId == rid);
+            if (dbreq != null)
             {
-                vnc.Tnotes = item.rn.AdministrativeNotes;
+                vnc.status = dbreq.Status;
+            }
+            else
+            {
+                vnc.status = 1;
+            }
+            
+            foreach (var item in dbnotedata)
+            {
+                vnc.Tnotes = item.rl.Notes;
                 vnc.Pnotes = item.rn.PhysicianNotes;
                 vnc.Anotes = item.rn.AdminNotes;
+                vnc.rid = rid;
             }
-                return vnc;
+            return vnc;
+        }
+        public async Task<bool> VNDatapost(AViewNoteCase vnc)
+        {
+            int rid = vnc.rid;
+            vnc.Anotes = vnc.TempAnotes;
+            var dbreqnotes = await _context.Requestnotes.FirstOrDefaultAsync(m => m.RequestId == rid);
+            dbreqnotes.AdminNotes = vnc?.Anotes;
+            _context.Requestnotes.Update(dbreqnotes);
+            _context.SaveChanges();
+            vnc.TempAnotes = null;
+
+            return true;
         }
         public AViewNoteCase VCData(int rid)
         {
@@ -133,24 +189,21 @@ namespace halloDocLogic.Repository
                          join rc in _context.Requestclients on r.RequestId equals rc.RequestId
                          where r.RequestId == rid
                          select new { r, rc };
-            /*var dbdata = from r in _context.Requests
-                         join rc in _context.Requestclients on r.RequestId equals rc.RequestId
-                         from rn in _context.Requestnotes.DefaultIfEmpty()
-                         where (rn == null || rn.RequestId == rid) && r.RequestId == rid
-                         select new { r, rc, rn };*/
-
-
+            
             AViewNoteCase vnc = new AViewNoteCase();
+            vnc.rid = rid;
             foreach (var item in dbdata)
             {
+                
                 vnc.relation = item.r.RelationName;
                 vnc.status = item.r.Status;
                 vnc.guid = Guid.NewGuid().ToString();
                 vnc.fname = item.rc?.FirstName;
                 vnc.lname = item?.rc?.LastName;
                 vnc.email = item?.rc?.Email;
-                vnc.mobile = item?.r.PhoneNumber;
+                vnc.mobile = item?.rc.PhoneNumber;
                 vnc.symptoms = item?.rc?.Notes;
+                vnc.status = item?.r.Status;
                 /*var dates = string.Concat(item?.rc?.IntDate.ToString() + item.rc.StrMonth?.Substring(0, 3) + item.rc.IntYear);
                 DateTime fdate = DateTime.Parse(dates);
                 vnc.dob = fdate;*/
@@ -160,10 +213,23 @@ namespace halloDocLogic.Repository
                 vnc.Pnotes = item.rn.PhysicianNotes;
                 vnc.Anotes = item.rn.AdminNotes;*/
             }
-                return (vnc);
+            return (vnc);
+        }
+        public async Task<bool> VCDataPost(AViewNoteCase vnc)
+        {
+            int rid = vnc.rid;
+            var dbreqClient = await _context.Requestclients.FirstOrDefaultAsync(m => m.RequestId == rid);
+            dbreqClient.PhoneNumber = vnc.mobile;
+            dbreqClient.Email = vnc.email;
+            _context.Requestclients.Update(dbreqClient);
+            _context.SaveChanges();
+
+            return true;
         }
 
-        public async Task<List<ADashTable>>ADashTableData(int n)
+
+        public async Task<List<ADashTable>> ADashTableData(int n)
+
         {
             var dbdata = from r in _context.Requests
                          join rc in _context.Requestclients on r.RequestId equals rc.RequestId
@@ -197,7 +263,7 @@ namespace halloDocLogic.Repository
 
                 dtable.Add(dt);
 
-                
+
             }
             return dtable;
         }

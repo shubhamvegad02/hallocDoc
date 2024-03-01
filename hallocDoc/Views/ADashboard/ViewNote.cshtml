@@ -6,7 +6,7 @@
 <div class="casemain mt-4">
     <div class="cmhead d-flex flex-row justify-content-between align-items-center p-2 px-4">
         <h2>Notes</h2>
-        <button onclick="window.history.back()" class="logout tdn dmnewreq mb-3">Back</button>
+        <a asp-area="" asp-controller="ADashboard" asp-action="Dmain" asp-route-id="@Model.status" class="logout tdn dmnewreq mb-3">Back</a>
     </div>
     <div class="container mt-3">
         <div class="d-flex flex-wrap justify-content-between">
@@ -14,38 +14,36 @@
                 <h4>
                     <i class="bi bi-arrow-left-right"></i> Transfer Notes
                 </h4>
-                <p>@Model.Tnotes</p>
+                <p>@Model?.Tnotes</p>
             </div>
             <div class="notedata p-2 m-2 ">
                 <h4>
                     <i class="bi bi-clipboard2-pulse-fill"></i> Physician Notes
                 </h4>
-                <p>@Model.Pnotes</p>
+                <p>@Model?.Pnotes</p>
             </div>
             <div class="notedata p-2 m-2">
                 <h4>
                     <i class="bi bi-file-earmark-person"></i> Admin Notes
                 </h4>
-                <p>@Model.Anotes</p>
+                <p>@Model?.Anotes</p>
             </div>
         </div>
-        <form class="row g-2 mt-3">
-            @*<div class="col-md-12 mb-2">
-                <div class="form-floating">
-                    <input type="textarea" class="form-control" id="floatingInput1" rows="3" placeholder="Provide additional notes..">
-                    <label for="floatingInput1">Reason for block request..</label>
-                </div>
-            </div>*@
+        <form asp-area="" asp-controller="ADashboard" asp-action="ViewNote" asp-route-rid="@Model?.rid" class="row g-2 mt-3">
+            
             <div class=" form-floating col-12">
-                <textarea asp-for="Anotes" class="border border-info border-1 form-control h-100" id="floatingInput4" rows="3"
+                <textarea asp-for="TempAnotes" class="border border-info border-1 form-control h-100" id="floatingInput4" rows="3"
                           placeholder="Enter symptoms details in detail(optional)"></textarea>
                 <label class="mylable" for="floatingInput4">Admin Notes</label>
                 @*<span asp-validation-for="Notes" class="text-danger"></span>*@
             </div>
+            <input type="hidden" asp-for="Pnotes" value="@Model?.Pnotes" />
+            <input type="hidden" asp-for="Tnotes" value="@Model?.Tnotes" />
             <div>
                 <button type="submit" class="float-end mt-2 btn btn-outline-primary active blbtn">Save</button>
             </div>
         </form>
+        @Html.ValidationMessage("success", null, new { @class= "text-success fw-bold"})
     </div>
 
 

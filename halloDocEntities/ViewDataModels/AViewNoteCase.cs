@@ -36,5 +36,9 @@ namespace halloDocEntities.ViewDataModels
         public string? Pnotes { get; set; }
 
         public string? Anotes { get; set; }
+
+        public string? TempAnotes { get; set; }
+
+        public int rid { get; set; }
     }
 }

@@ -25,106 +25,59 @@ namespace hallocDoc.Controllers
             _iadash = dashboard;
         }
 
+
+
+        public async Task<IActionResult> BlockCase(int rid, ADashTable dt)
+        {
+
+            int status1 = await _iadash.BlockCase(rid, dt);
+            return RedirectToAction("Dmain", "ADashboard", new { id = status1 });
+        }
         public async Task<IActionResult> CancelCase(int rid, ADashTable dt)
         {
-            /*int status = dt.status;*/
-
-
-            /*var dbreq = _context.Requests.FirstOrDefault(m => m.RequestId == rid);
-            int status1 = dbreq?.Status ?? 0;
-            if (dbreq != null)
-            {
-                dbreq.Status = 5;
-                dbreq.CaseTag = dt.caseTag.ToString();
-                _context.Requests.Update(dbreq);
-                _context.SaveChanges();
-            }
-            var dbrnote = await _context.Requestnotes.FirstOrDefaultAsync(m => m.RequestId == rid);
-            if (dbrnote != null)
-            {
-                dbrnote.AdminNotes = dt.notes;
-                dbrnote.CreatedBy = "Admin";
-                dbrnote.CreatedDate = DateTime.Today;
-                _context.Requestnotes.Update(dbrnote);
-                _context.SaveChanges();
-            }
-            else
-            {
-                Requestnote rn = new Requestnote();
-                rn.RequestId = rid;
-                rn.AdminNotes = dt.notes;
-                rn.CreatedBy = "Admin";
-                rn.CreatedDate = DateTime.Today;
-                _context.Requestnotes.Add(rn);
-                _context.SaveChanges();
-            }
-
-
-            Requeststatuslog rsl = new Requeststatuslog();
-            rsl.RequestId = rid;
-            *//*rsl.AdminId = 1;*//*
-            rsl.Status = 5;
-            rsl.Notes = dt.notes;
-            _context.Requeststatuslogs.Add(rsl);
-            _context.SaveChanges();*/
-
             int status1 = await _iadash.CancelCase(rid, dt);
 
             return RedirectToAction("Dmain", "ADashboard", new { id = status1 });
         }
         public async Task<IActionResult> AssignCase(int rid, ADashTable dt)
         {
-            /*var dbreq = _context.Requests.FirstOrDefault(m => m.RequestId == rid);
-            if (dbreq != null)
-            {
-                dbreq.PhysicianId = dt.phyId;
-                dbreq.Status = 2;
-                _context.Requests.Update(dbreq);
-                _context.SaveChanges();
-            }
-            var dbrnote = await _context.Requestnotes.FirstOrDefaultAsync(m => m.RequestId == rid);
-            if (dbrnote != null)
-            {
-                dbrnote.AdminNotes = dt.notes;
-                dbrnote.CreatedBy = "Admin";
-                dbrnote.CreatedDate = DateTime.Today;
-                _context.Requestnotes.Update(dbrnote);
-                _context.SaveChanges();
-            }
-            else
-            {
-                Requestnote rn = new Requestnote();
-                rn.RequestId = rid;
-                rn.AdminNotes = dt.notes;
-                rn.CreatedBy = "Admin";
-                rn.CreatedDate = DateTime.Today;
-                _context.Requestnotes.Add(rn);
-                _context.SaveChanges();
-            }
-            var reqsnote = await _context.Requeststatuslogs.FirstOrDefaultAsync(m => m.RequestId == rid);
-
-            Requeststatuslog rsl = new Requeststatuslog();
-            rsl.RequestId = rid;
-            *//*rsl.AdminId = 1;*//*
-            rsl.Status = 2;
-            rsl.TransToPhysicianId = dt.phyId;
-            _context.Requeststatuslogs.Add(rsl);
-            _context.SaveChanges();*/
-
             return RedirectToAction("Dmain");
-            /*return JavaScript("alert('No more images');");*/
         }
-        public async Task<IActionResult> ViewNote(int rid)
+        [HttpGet]
+        public async Task<IActionResult> ViewNote(int rid, AViewNoteCase vnc)
         {
-            var vnc = _iadash.VNData(rid);
+            var result = _iadash.VNData(rid, vnc);
+            
 
-
+            return View(result);
+        }
+        [HttpPost]
+        public async Task<IActionResult> ViewNote(AViewNoteCase vnc)
+        {
+           
+            var check = await _iadash.VNDatapost(vnc);
+            /*if(check)
+            {
+                ModelState.AddModelError("success", "Note Updated Successfully...");
+            }*/
+            ModelState.AddModelError("success", "Note Updated Successfully...");
             return View(vnc);
         }
 
         public async Task<IActionResult> ViewCase(int rid)
         {
             var vnc = _iadash.VCData(rid);
+            return View(vnc);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ViewCase(AViewNoteCase vnc)
+        {
+            var result = _iadash.VCDataPost(vnc);
+            if (await result)
+            {
+                ModelState.AddModelError("success", "Data Updated Successfully...");
+            }
             return View(vnc);
         }
 

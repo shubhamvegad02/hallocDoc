@@ -255,7 +255,7 @@
                         </div>
 
 
-                        @*confirm block*@
+                        @* block case*@
                         <div class="modal fade" id="confirmblock-@item.rid" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -267,18 +267,19 @@
                                         <div>
                                             <span class="fw-bold">Patient Name : </span><span>@item.name</span>
                                         </div>
-                                        <form class="row g-2 mt-3">
+                                        <form asp-area="" asp-controller="ADashboard" asp-action="BlockCase" asp-route-rid="@item.rid" class="row g-2 mt-3">
                                             <div class="form-floating col-12 mb-2">
-                                                <input type="text" class="form-control" id="floatingInput1" placeholder="Provide additional notes..">
+                                                <input asp-for="notes" type="text" class="form-control" id="floatingInput1" placeholder="Provide additional notes..">
                                                 <label class="mylable" for="floatingInput1">Reason for block request..</label>
                                                 @*<span asp-validation-for="FFirstName" class="text-danger"></span>*@
                                             </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn " data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn ">Save changes</button>
+                                            </div>
                                         </form>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn " data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn ">Save changes</button>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>

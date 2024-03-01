@@ -15,10 +15,16 @@ namespace halloDocLogic.Interfaces
 
         public AViewNoteCase VCData(int rid);
 
-        public AViewNoteCase VNData(int rid);
+        AViewNoteCase VNData(int rid, AViewNoteCase vnc);
 
         Task<int> CancelCase(int rid, ADashTable dt);
 
         Task AssignCase(int rid, ADashTable dt);
+
+        Task<int> BlockCase(int rid, ADashTable dt);
+
+        Task<bool> VNDatapost(AViewNoteCase vnc);
+
+        Task<bool> VCDataPost(AViewNoteCase vnc);
     }
 }
