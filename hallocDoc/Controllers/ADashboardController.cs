@@ -12,6 +12,7 @@ using System.Data.Common;
 using halloDocEntities.DataModels;
 using System.Security.Cryptography;
 using Org.BouncyCastle.Ocsp;
+using Microsoft.CodeAnalysis.Elfie.Serialization;
 
 namespace hallocDoc.Controllers
 {
@@ -27,6 +28,31 @@ namespace hallocDoc.Controllers
 
 
 
+
+        public async Task<IActionResult> ViewUpload(int rid)
+        {
+            var dbreq = from r in _context.Requests
+                         join rf in _context.Requestwisefiles on r.RequestId equals rf.RequestId
+                         where rf.RequestId == rid
+                         select new { r, rf };
+
+            var dbReqClient = await _context.Requestclients.FirstOrDefaultAsync(m => m.RequestId == rid);
+            string pName = string.Concat(dbReqClient.FirstName, " ", dbReqClient.LastName);
+            List<ViewUploadedDoc> data = new List<ViewUploadedDoc>();
+            foreach (var item in dbreq)
+            {
+                var vu = new ViewUploadedDoc();
+
+                vu.patientName = pName;
+                vu.confirmation = item?.r?.ConfirmationNumber;
+                vu.uploadDate = item.r.CreatedDate;
+                vu.fileName = item.rf.FileName;
+
+                data.Add(vu);
+            }
+            ViewBag.FileData = data;
+            return View();
+        }
         public async Task<IActionResult> BlockCase(int rid, ADashTable dt)
         {
 
@@ -165,6 +191,7 @@ namespace hallocDoc.Controllers
             ViewBag.tableData = dtable;
             string name = "c" + n.ToString();
             ViewBag.cardid = name;
+            ViewBag.n = n;
 
             return View();
         }

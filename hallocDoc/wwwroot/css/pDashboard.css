@@ -95,7 +95,7 @@
     transition-duration: 1s !important;
 }
 .hideside {
-    transform: translateX(-100%);
+    transform: translateX(-105%);
     transition-duration: 1s !important;
 }
 .dashnav {

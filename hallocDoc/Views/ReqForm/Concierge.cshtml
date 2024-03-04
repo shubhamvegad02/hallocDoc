@@ -147,7 +147,7 @@
             <button type="submit" class="btn btn-outline-primary active blbtn">Submit</button>
             <button type="button" asp-area="" asp-controller="ReqForm" asp-action="Concierge" class="btn btn-outline-primary blbtn">Cancel</button>
         </div>
-
+        @Html.ValidationMessage("fail", null, new { @class= "text-danger fw-bold"})
     </form>
 
 </div>

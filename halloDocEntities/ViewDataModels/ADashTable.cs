@@ -37,6 +37,8 @@ namespace halloDocEntities.ViewDataModels
 
         public int caseTag { get; set; }
 
+        public string PhysicianName { get; set; }
+
 
     }
 }

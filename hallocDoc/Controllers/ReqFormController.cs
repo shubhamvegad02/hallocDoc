@@ -45,6 +45,7 @@ namespace hallocDoc.Controllers
                     return RedirectToAction("first", "Home");
                 }
             }
+            ModelState.AddModelError("fail", "Either data is inappropriate or Request is blocked");
             return View(br);
         }
 
@@ -67,6 +68,7 @@ namespace hallocDoc.Controllers
                 }
 
             }
+            ModelState.AddModelError("fail", "Either data is inappropriate or Request is blocked");
             return View(cr);
         }
 
@@ -91,7 +93,7 @@ namespace hallocDoc.Controllers
                     return RedirectToAction("first", "Home");
                 }
             }
-
+            ModelState.AddModelError("fail", "Either data is inappropriate or Request is blocked");
             return View(fr);
         }
 
@@ -113,6 +115,11 @@ namespace hallocDoc.Controllers
                 if (await result == "first")
                 {
                     return RedirectToAction("first", "Home");
+                }
+                else if(await result == "block")
+                {
+                    ModelState.AddModelError("block", "Opps..Your Request is blocked!");
+                    return View();
                 }
                 else if (await result == "")
                 {

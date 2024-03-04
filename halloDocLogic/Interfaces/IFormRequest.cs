@@ -25,5 +25,7 @@ namespace halloDocLogic.Interfaces
         public bool sendmailtoNew(string email, string link);
 
         void createNewUser(Requestclient rc);
+
+        string confirmationNumber(string abr, string FirstName, string LastName);
     }
 }

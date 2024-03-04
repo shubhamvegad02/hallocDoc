@@ -13,6 +13,8 @@ using Microsoft.Extensions.Hosting;
 using System.Net.Mail;
 using System.Net;
 using static System.Net.WebRequestMethods;
+using System.Security.Cryptography.X509Certificates;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace halloDocLogic.Repository
 {
@@ -52,7 +54,7 @@ namespace halloDocLogic.Repository
             user.City = rc.City;
             user.State = rc.State;
             user.ZipCode = rc.ZipCode;
-            var relation =  _context.Requests.FirstOrDefault(x => x.RequestId == rc.RequestId)?.RelationName;
+            var relation = _context.Requests.FirstOrDefault(x => x.RequestId == rc.RequestId)?.RelationName;
             user.CreatedBy = relation;
             user.Mobile = rc.PhoneNumber;
             user.CreatedDate = DateTime.Now;
@@ -62,10 +64,10 @@ namespace halloDocLogic.Repository
             _context.SaveChanges();
             var dbreq = _context.Requests.FirstOrDefault(m => m.RequestId == rc.RequestId);
             dbreq.UserId = user.UserId;
-            var link = "http://localhost:5011/Home/CreateuserfromLink?Email="+user.Email+"&Token="+aspnetuser.Token;
+            var link = "http://localhost:5011/Home/CreateuserfromLink?Email=" + user.Email + "&Token=" + aspnetuser.Token;
             sendmailtoNew(user?.Email, link);
 
-            
+
         }
         public bool sendmailtoNew(string email, string link)
         {
@@ -111,6 +113,17 @@ namespace halloDocLogic.Repository
 
         public async Task<bool> business(businessReq br)
         {
+            var IsblockMail = await _context.Blockrequests.FirstOrDefaultAsync(m => m.Email == br.Email);
+            if (IsblockMail != null)
+            {
+                return false;
+            }
+            var stateName = br?.State?.ToLower();
+            var region = _context.Regions.FirstOrDefault(r => r.Name.ToLower().Contains(stateName));
+            int? regionId = region?.RegionId;
+            string regionAbr = region?.Abbreviation ?? "";
+            string conNum = confirmationNumber(regionAbr, br?.FirstName, br?.LastName);
+
             var request = new Request();
 
             request.RequestTypeId = 1;
@@ -127,6 +140,7 @@ namespace halloDocLogic.Repository
             request.Email = br.BEmail;
             request.CaseNumber = br.CaseNumber;
             request.RelationName = "Business";
+            request.ConfirmationNumber = conNum;
 
             await _context.Requests.AddAsync(request);
             await _context.SaveChangesAsync();
@@ -142,6 +156,7 @@ namespace halloDocLogic.Repository
             rc.City = br.City;
             rc.State = br.State;
             rc.ZipCode = br.ZipCode;
+            rc.RegionId = regionId;
             rc.Email = br.Email;
             rc.Address = br.Address;
             rc.IntDate = br.CreatedDate.Day;
@@ -181,12 +196,24 @@ namespace halloDocLogic.Repository
             {
                 createNewUser(rc);
             }
-            
+
             return true;
         }
 
         public async Task<bool> concierge(conciergeReq cr)
         {
+            var IsblockMail = await _context.Blockrequests.FirstOrDefaultAsync(m => m.Email == cr.Email);
+            if (IsblockMail != null)
+            {
+                return false;
+            }
+
+            var stateName = cr?.State?.ToLower();
+            var region = _context.Regions.FirstOrDefault(r => r.Name.ToLower().Contains(stateName));
+            int? regionId = region?.RegionId;
+            string regionAbr = region?.Abbreviation ?? "";
+            string conNum = confirmationNumber(regionAbr, cr?.FirstName, cr?.LastName);
+
             var request = new Request();
 
             request.RequestTypeId = 1;
@@ -200,7 +227,7 @@ namespace halloDocLogic.Repository
             request.CreatedDate = DateTime.Now;
             request.PhoneNumber = cr.CMobile;
             request.Email = cr.CMail;
-            /*request.CreatedDate = DateTime.Now;*/
+            request.ConfirmationNumber = conNum;
             request.RelationName = "Concierge";
 
             await _context.Requests.AddAsync(request);
@@ -217,6 +244,7 @@ namespace halloDocLogic.Repository
             rc.City = cr.City;
             rc.State = cr.State;
             rc.ZipCode = cr.ZipCode;
+            rc.RegionId = regionId;
             rc.Email = cr.Email;
             rc.Address = cr.Address;
             rc.IntDate = cr.CreatedDate.Day;
@@ -241,12 +269,23 @@ namespace halloDocLogic.Repository
             {
                 createNewUser(rc);
             }
-           
+
             return true;
         }
 
         public async Task<bool> family(string filename, familyReq fr)
         {
+            var IsblockMail = await _context.Blockrequests.FirstOrDefaultAsync(m => m.Email == fr.Email);
+            if (IsblockMail != null)
+            {
+                return false;
+            }
+
+            var stateName = fr?.State?.ToLower();
+            var region = _context.Regions.FirstOrDefault(r => r.Name.ToLower().Contains(stateName));
+            int? regionId = region?.RegionId;
+            string regionAbr = region?.Abbreviation ?? "";
+            string conNum = confirmationNumber(regionAbr, fr?.FirstName, fr?.LastName);
 
             var request = new Request();
 
@@ -262,7 +301,7 @@ namespace halloDocLogic.Repository
             request.CreatedDate = DateTime.Now;
             request.PhoneNumber = fr.FPhoneNumber;
             request.Email = fr.FEmail;
-            /*request.CreatedDate = DateTime.Now;*/
+            request.ConfirmationNumber = conNum;
             request.RelationName = fr.RelationName;
 
             await _context.Requests.AddAsync(request);
@@ -278,6 +317,7 @@ namespace halloDocLogic.Repository
             rc.Street = fr.Street;
             rc.City = fr.City;
             rc.State = fr.State;
+            rc.RegionId = regionId;
             rc.ZipCode = fr.ZipCode;
             rc.Email = fr.Email;
             rc.Address = fr.Address;
@@ -304,6 +344,19 @@ namespace halloDocLogic.Repository
 
         public async Task<string> Patient(string filename, patientReq pr)
         {
+            var IsblockMail = await _context.Blockrequests.FirstOrDefaultAsync(m => m.Email == pr.Email);
+            if (IsblockMail != null)
+            {
+                return "block";
+            }
+
+            var stateName = pr.State.ToLower(); 
+            var region = _context.Regions.FirstOrDefault(r => r.Name.ToLower().Contains(stateName));
+            int? regionId =  region?.RegionId;
+            string regionAbr = region?.Abbreviation ?? "";
+            string conNum = confirmationNumber(regionAbr, pr.FirstName, pr.LastName);
+            
+
             var dbasp = await _context?.Aspnetusers?.FirstOrDefaultAsync(m => m.Email == pr.Email);
             if (dbasp == null)
             {
@@ -347,6 +400,7 @@ namespace halloDocLogic.Repository
                 request.PhoneNumber = pr.Mobile;
                 request.Email = pr.Email;
                 request.PhoneNumber = pr.Mobile;
+                request.ConfirmationNumber = conNum;
                 /*request.CreatedDate = DateTime.Now;*/
                 request.Status = 2;
 
@@ -363,6 +417,7 @@ namespace halloDocLogic.Repository
                 rc.Street = pr.Street;
                 rc.City = pr.City;
                 rc.State = pr.State;
+                rc.RegionId = regionId;
                 rc.ZipCode = pr.ZipCode;
                 rc.Email = pr.Email;
                 rc.IntDate = pr.CreatedDate.Day;
@@ -423,9 +478,21 @@ namespace halloDocLogic.Repository
 
                 return "first";
             }
-            
-            
+
+
             return "";
+        }
+
+        public string confirmationNumber(string abr, string FirstName, string LastName)
+        {
+            var today = DateTime.Today;
+            var yearMonth = today.ToString("MMyy").PadLeft(4, '0'); // Extract last two digits of year and month
+            var requestCount = _context.Requests.Count(r => r.CreatedDate.Date == DateTime.Today)+1;
+
+            // Ensure request count is padded with leading zeros
+            var paddedCount = requestCount.ToString("D2"); // Format with two digits (leading zeros)
+
+            return $"{abr.ToUpper()}{yearMonth}{LastName.Substring(0, 2).ToUpper()}{FirstName.Substring(0, 2).ToUpper()}{paddedCount}";
         }
     }
 }

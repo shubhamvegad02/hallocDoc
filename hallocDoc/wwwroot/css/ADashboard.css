@@ -80,12 +80,13 @@
     border-radius: 10px;
     font-size: 1.2rem;
     opacity: 0.7;
-    transition-duration:0.2s;
-    text-decoration:none;
+    transition-duration: 0.2s;
+    text-decoration: none;
 }
-.card:hover{
-    text-decoration:none;
-}
+
+    .card:hover {
+        text-decoration: none;
+    }
 
 .cactive {
     scale: 1.02;
@@ -95,7 +96,7 @@
     box-shadow: 5px 9px 4px rgba(0, 0, 0, 0.1);
     border: 1px solid;
 }
-    /*border: 2px solid red;*/
+/*border: 2px solid red;*/
 }
 
 /*.card:active {
@@ -207,28 +208,35 @@ table {
 thead th {
     padding: 1rem !important;
 }
+
 th, td {
     white-space: wrap;
 }
+
 thead .th-phone {
-    min-width:11rem;
+    min-width: 11rem;
 }
+
 thead .th-chat {
     min-width: 7rem;
 }
+
 thead .th-action {
     width: 6rem;
 }
+
 thead .th-name {
     min-width: 9rem;
 }
+
 thead .th-address {
-    min-width:10rem;
+    min-width: 10rem;
 }
+
 thead .th-notes {
     width: 15rem;
 }
-    /*thead .th-name {
+/*thead .th-name {
     width: 14rem;
     min-width: 9rem;
 }
@@ -247,42 +255,44 @@ thead .th-requestDate {
 
 thead .th-phone {
     width: 12.5rem;*/
-    /* min-width: 12.5rem; */
-    /*min-width: fit-content;
+/* min-width: 12.5rem; */
+/*min-width: fit-content;
 }
 
 thead .th-address {
     width: 14rem;*/
-    /* min-width: 9.5rem; */
-    /*min-width: fit-content;
+/* min-width: 9.5rem; */
+/*min-width: fit-content;
 }
 
 thead .th-notes {
     width: 15rem;*/
-    /* min-width: 10rem; */
-    /*min-width: fit-content;
+/* min-width: 10rem; */
+/*min-width: fit-content;
 }
 
 thead .th-chat {
     width: 8rem;*/
-    /* min-width: fit-content; */
-    /*min-width: 7rem;
+/* min-width: fit-content; */
+/*min-width: 7rem;
 }
 
 thead .th-action {
     width: 5.5rem;
 }*/
-    tbody .icon-phone, .icon-Ehome, .icone-Chome, .action {
+tbody .icon-phone, .icon-Ehome, .icone-Chome, .action {
     border-radius: 5px;
     padding: 2px 8px;
     border: 1px solid;
 }
-tbody tr{
-    min-height:70px;
+
+tbody tr {
+    min-height: 70px;
 }
-tbody tr td {
-    /*background-color: aquamarine !important;*/
-}
+
+    tbody tr td {
+        /*background-color: aquamarine !important;*/
+    }
 
 .dropdown-menu .d-item:hover {
     background-color: #d4d0d0cb !important;
@@ -362,6 +372,7 @@ a {
 .dd-input:checked + .dd-menu {
     display: block;
 }
+
 .hidden {
     display: none;
 }
@@ -386,30 +397,41 @@ a {
         padding: 0;
         border-bottom: 1px solid #cccccc;
     }
-.modal-header{
-    background-color:var(--blue);
-    color:white;
+
+.modal-header {
+    background-color: var(--blue);
+    color: white;
 }
 
 /*-------------view case-------------*/
 
 .casemain {
-    width: 60%;
+    width: 70%;
     margin-inline: auto;
     min-height: 70vh;
     height: fit-content;
     background-color: #ebebeb91;
     border-radius: 10px;
 }
-.notedata{
-    background-color:white;
+
+.notedata {
+    background-color: white;
     /*border:0.5px solid gray;*/
-    box-shadow:2px 2px 4px gray;
-    min-height:100px;
-    height:fit-content;
-    border-radius:5px;
-    width:48%;
-    
+    box-shadow: 2px 2px 4px gray;
+    min-height: 100px;
+    height: fit-content;
+    border-radius: 5px;
+    width: 46%;
+}
+
+.btnbadge {
+    width: 40%;
+    margin-inline: 5%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 7px;
 }
 
 
@@ -437,6 +459,7 @@ a {
     .container1 {
         flex-wrap: wrap;
     }
+
     .card {
         width: 30% !important;
         font-weight: 600;
@@ -445,6 +468,12 @@ a {
         padding-top: 2%;
         padding-bottom: 2%;
         padding-inline: 2%;
+    }
+    .notedata{
+        width:45%;
+    }
+    .casemain{
+        width:90%;
     }
 }
 
@@ -503,7 +532,7 @@ a {
 
     .pbox {
         flex-direction: column;
-        padding-inline:2px;
+        padding-inline: 2px;
         font-size: small;
         justify-content: center;
         align-items: center;
@@ -512,4 +541,12 @@ a {
         .pbox:nth-child(1) {
             display: none !important;
         }
+
+    .casemain {
+        width: 96%;
+    }
+
+    .notedata {
+        width: 96%;
+    }
 }

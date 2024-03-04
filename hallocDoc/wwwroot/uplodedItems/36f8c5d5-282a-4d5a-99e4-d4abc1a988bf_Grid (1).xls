@@ -1,0 +1,214 @@
+
+        <table class="table table-hover" style="border: 1px solid rgba(201, 201, 201, 0.878);">
+        <thead>
+            <tr>
+                <th scope="col" class="px-2 py-1.5 th-name">Name</th>
+                <th scope="col" class="px-2 py-1.5 th-date">Date of Birth</th>
+                <th scope="col" class="px-2 py-1.5 th-request">Requestor</th>
+                <th scope="col" class="px-2 py-1.5 th-requestDate">Requested Date</th>
+                <th scope="col" class="px-2 py-1.5 th-phone">Phone</th>
+                <th scope="col" class="px-2 py-1.5 th-address">Address</th>
+                <th scope="col" class="px-2 py-1.5 th-notes">Notes</th>
+                <th scope="col" class="px-2 py-1.5 th-chat">Chat With</th>
+                <th scope="col" class="px-2 py-1.5 th-action">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+<tr>
+                        <td id="region" class="d-none"></td>
+                        <td style="background-color: white" class="px-2 py-1.5">
+                            <span class="d-flex  d-flex justify-content-between align-items-center">
+                                <span>sdsd sdsd</span><span class="icon-Ehome"><i class="fa-solid fa-envelope"></i></span>
+                            </span>
+                        </td>
+                        <td style="background-color: white" class="px-2 py-1.5">2/12/2024 2:54:25 PM</td>
+                        <td style="background-color: white" class="px-2 py-1.5"></td>
+                        <td style="background-color: white" class="px-2 py-1.5">2/12/2024 12:00:00 AM</td>
+                        <td style="background-color: white" class="px-2 py-1.5">
+                            <span class="tb-phone d-flex flex-column">
+                                <span class="icon-phone d-flex align-items-center justify-content-center gap-1 p-1">
+                                    <i class="fa-solid fa-phone mx-1"></i><span>+91 8155973839</span>
+                                </span>
+                                <span></span>
+                            </span>
+                        </td>
+                        <td style="background-color: white" class="px-2 py-1.5">sdsdsd sdsd sdsd</td>
+                        <td style="background-color: white" class="px-2 py-1.5">Admin Transferred to Dr. AGOLA on 17/10/2023 at 3:07:19 AM:trse</td>
+                        <td style="background-color: white" class="px-2 py-1.5">
+                            <span class="icone-Chome"><i class="fa-solid fa-user"></i>Provider</span>
+                        </td>
+                        <td style="background-color: white" class="px-2 py-1.5">
+                            <span class="action dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">Action</span>
+                            <ul class="dropdown-menu">
+                                <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-suitcase" style="margin-right: 0.5rem;"></i><span>Assign Patient</span></a></li>
+                                <li class="d-item">
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-regular fa-rectangle-xmark" style="margin-right: 0.5rem;"></i>
+                                        <span>Cancle Case</span>
+                                    </a>
+                                </li>
+                                <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>View Case</span></a></li>
+                                <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-notes-medical" style="margin-right: 0.5rem;"></i><span>View  Notes</span></a></li>
+                                <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-ban" style="margin-right: 0.5rem;"></i><span>Block Patient</span></a></li>
+                            </ul>
+                        </td>
+                    </tr>
+<tr>
+                        <td id="region" class="d-none"></td>
+                        <td style="background-color: #b1c9ef" class="px-2 py-1.5">
+                            <span class="d-flex  d-flex justify-content-between align-items-center">
+                                <span>q q</span><span class="icon-Ehome"><i class="fa-solid fa-envelope"></i></span>
+                            </span>
+                        </td>
+                        <td style="background-color: #b1c9ef" class="px-2 py-1.5">2/12/2024 4:50:56 PM</td>
+                        <td style="background-color: #b1c9ef" class="px-2 py-1.5">patient</td>
+                        <td style="background-color: #b1c9ef" class="px-2 py-1.5">2/12/2024 12:00:00 AM</td>
+                        <td style="background-color: #b1c9ef" class="px-2 py-1.5">
+                            <span class="tb-phone d-flex flex-column">
+                                <span class="icon-phone d-flex align-items-center justify-content-center gap-1 p-1">
+                                    <i class="fa-solid fa-phone mx-1"></i><span>+91 8155973838</span>
+                                </span>
+                                <span>patient</span>
+                            </span>
+                        </td>
+                        <td style="background-color: #b1c9ef" class="px-2 py-1.5">q q q</td>
+                        <td style="background-color: #b1c9ef" class="px-2 py-1.5">Admin Transferred to Dr. AGOLA on 17/10/2023 at 3:07:19 AM:trse</td>
+                        <td style="background-color: #b1c9ef" class="px-2 py-1.5">
+                            <span class="icone-Chome"><i class="fa-solid fa-user"></i>Provider</span>
+                        </td>
+                        <td style="background-color: #b1c9ef" class="px-2 py-1.5">
+                            <span class="action dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">Action</span>
+                            <ul class="dropdown-menu">
+                                <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-suitcase" style="margin-right: 0.5rem;"></i><span>Assign Patient</span></a></li>
+                                <li class="d-item">
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-regular fa-rectangle-xmark" style="margin-right: 0.5rem;"></i>
+                                        <span>Cancle Case</span>
+                                    </a>
+                                </li>
+                                <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>View Case</span></a></li>
+                                <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-notes-medical" style="margin-right: 0.5rem;"></i><span>View  Notes</span></a></li>
+                                <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-ban" style="margin-right: 0.5rem;"></i><span>Block Patient</span></a></li>
+                            </ul>
+                        </td>
+                    </tr>
+<tr>
+                        <td id="region" class="d-none"></td>
+                        <td style="background-color: #f2f254b8" class="px-2 py-1.5">
+                            <span class="d-flex  d-flex justify-content-between align-items-center">
+                                <span>SDSD </span><span class="icon-Ehome"><i class="fa-solid fa-envelope"></i></span>
+                            </span>
+                        </td>
+                        <td style="background-color: #f2f254b8" class="px-2 py-1.5">2/13/2024 3:52:10 PM</td>
+                        <td style="background-color: #f2f254b8" class="px-2 py-1.5">family</td>
+                        <td style="background-color: #f2f254b8" class="px-2 py-1.5">2/13/2024 12:00:00 AM</td>
+                        <td style="background-color: #f2f254b8" class="px-2 py-1.5">
+                            <span class="tb-phone d-flex flex-column">
+                                <span class="icon-phone d-flex align-items-center justify-content-center gap-1 p-1">
+                                    <i class="fa-solid fa-phone mx-1"></i><span>+91 8155973839</span>
+                                </span>
+                                <span>family</span>
+                            </span>
+                        </td>
+                        <td style="background-color: #f2f254b8" class="px-2 py-1.5">  </td>
+                        <td style="background-color: #f2f254b8" class="px-2 py-1.5">Admin Transferred to Dr. AGOLA on 17/10/2023 at 3:07:19 AM:trse</td>
+                        <td style="background-color: #f2f254b8" class="px-2 py-1.5">
+                            <span class="icone-Chome"><i class="fa-solid fa-user"></i>Provider</span>
+                        </td>
+                        <td style="background-color: #f2f254b8" class="px-2 py-1.5">
+                            <span class="action dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">Action</span>
+                            <ul class="dropdown-menu">
+                                <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-suitcase" style="margin-right: 0.5rem;"></i><span>Assign Patient</span></a></li>
+                                <li class="d-item">
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-regular fa-rectangle-xmark" style="margin-right: 0.5rem;"></i>
+                                        <span>Cancle Case</span>
+                                    </a>
+                                </li>
+                                <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>View Case</span></a></li>
+                                <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-notes-medical" style="margin-right: 0.5rem;"></i><span>View  Notes</span></a></li>
+                                <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-ban" style="margin-right: 0.5rem;"></i><span>Block Patient</span></a></li>
+                            </ul>
+                        </td>
+                    </tr>
+<tr>
+                        <td id="region" class="d-none"></td>
+                        <td style="background-color: #f2f254b8" class="px-2 py-1.5">
+                            <span class="d-flex  d-flex justify-content-between align-items-center">
+                                <span>vivek san</span><span class="icon-Ehome"><i class="fa-solid fa-envelope"></i></span>
+                            </span>
+                        </td>
+                        <td style="background-color: #f2f254b8" class="px-2 py-1.5">2/16/2024 10:37:21 AM</td>
+                        <td style="background-color: #f2f254b8" class="px-2 py-1.5">family</td>
+                        <td style="background-color: #f2f254b8" class="px-2 py-1.5">2/16/2024 12:00:00 AM</td>
+                        <td style="background-color: #f2f254b8" class="px-2 py-1.5">
+                            <span class="tb-phone d-flex flex-column">
+                                <span class="icon-phone d-flex align-items-center justify-content-center gap-1 p-1">
+                                    <i class="fa-solid fa-phone mx-1"></i><span>+91 8155973839</span>
+                                </span>
+                                <span>family</span>
+                            </span>
+                        </td>
+                        <td style="background-color: #f2f254b8" class="px-2 py-1.5">sdsd sdsd sd</td>
+                        <td style="background-color: #f2f254b8" class="px-2 py-1.5">Admin Transferred to Dr. AGOLA on 17/10/2023 at 3:07:19 AM:trse</td>
+                        <td style="background-color: #f2f254b8" class="px-2 py-1.5">
+                            <span class="icone-Chome"><i class="fa-solid fa-user"></i>Provider</span>
+                        </td>
+                        <td style="background-color: #f2f254b8" class="px-2 py-1.5">
+                            <span class="action dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">Action</span>
+                            <ul class="dropdown-menu">
+                                <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-suitcase" style="margin-right: 0.5rem;"></i><span>Assign Patient</span></a></li>
+                                <li class="d-item">
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-regular fa-rectangle-xmark" style="margin-right: 0.5rem;"></i>
+                                        <span>Cancle Case</span>
+                                    </a>
+                                </li>
+                                <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>View Case</span></a></li>
+                                <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-notes-medical" style="margin-right: 0.5rem;"></i><span>View  Notes</span></a></li>
+                                <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-ban" style="margin-right: 0.5rem;"></i><span>Block Patient</span></a></li>
+                            </ul>
+                        </td>
+                    </tr>
+<tr>
+                        <td id="region" class="d-none"></td>
+                        <td style="background-color: #d454d6a6" class="px-2 py-1.5">
+                            <span class="d-flex  d-flex justify-content-between align-items-center">
+                                <span>sdsd </span><span class="icon-Ehome"><i class="fa-solid fa-envelope"></i></span>
+                            </span>
+                        </td>
+                        <td style="background-color: #d454d6a6" class="px-2 py-1.5">2/16/2024 5:25:58 PM</td>
+                        <td style="background-color: #d454d6a6" class="px-2 py-1.5">Concierge</td>
+                        <td style="background-color: #d454d6a6" class="px-2 py-1.5">2/16/2024 12:00:00 AM</td>
+                        <td style="background-color: #d454d6a6" class="px-2 py-1.5">
+                            <span class="tb-phone d-flex flex-column">
+                                <span class="icon-phone d-flex align-items-center justify-content-center gap-1 p-1">
+                                    <i class="fa-solid fa-phone mx-1"></i><span>+91 8155973839</span>
+                                </span>
+                                <span>Concierge</span>
+                            </span>
+                        </td>
+                        <td style="background-color: #d454d6a6" class="px-2 py-1.5">  </td>
+                        <td style="background-color: #d454d6a6" class="px-2 py-1.5">Admin Transferred to Dr. AGOLA on 17/10/2023 at 3:07:19 AM:trse</td>
+                        <td style="background-color: #d454d6a6" class="px-2 py-1.5">
+                            <span class="icone-Chome"><i class="fa-solid fa-user"></i>Provider</span>
+                        </td>
+                        <td style="background-color: #d454d6a6" class="px-2 py-1.5">
+                            <span class="action dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">Action</span>
+                            <ul class="dropdown-menu">
+                                <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-suitcase" style="margin-right: 0.5rem;"></i><span>Assign Patient</span></a></li>
+                                <li class="d-item">
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-regular fa-rectangle-xmark" style="margin-right: 0.5rem;"></i>
+                                        <span>Cancle Case</span>
+                                    </a>
+                                </li>
+                                <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>View Case</span></a></li>
+                                <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-notes-medical" style="margin-right: 0.5rem;"></i><span>View  Notes</span></a></li>
+                                <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-ban" style="margin-right: 0.5rem;"></i><span>Block Patient</span></a></li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+    

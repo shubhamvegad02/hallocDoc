@@ -89,12 +89,25 @@
             <thead>
                 <tr>
                     <th scope="col" class="px-2 py-1.5 th-name">Name</th>
-                    <th scope="col" class="px-2 py-1.5 th-date">Date of Birth</th>
-                    <th scope="col" class="px-2 py-1.5 th-request">Requestor</th>
+                    @if (ViewBag.n != 6)
+                    {
+                        <th scope="col" class="px-2 py-1.5 th-date">Date of Birth</th>
+                    }
+                    @if (ViewBag.n == 1 || ViewBag.n == 2 || ViewBag.n == 3)
+                    {
+                        <th scope="col" class="px-2 py-1.5 th-request">Requestor</th>
+                    }
+                    @if (ViewBag.n != 1)
+                    {
+                        <th scope="col" class="px-2 py-1.5 th-request">Physician</th>
+                    }
                     <th scope="col" class="px-2 py-1.5 th-requestDate">Requested Date</th>
                     <th scope="col" class="px-2 py-1.5 th-phone">Phone</th>
                     <th scope="col" class="px-2 py-1.5 th-address">Address</th>
-                    <th scope="col" class="px-2 py-1.5 th-notes">Notes</th>
+                    @if (ViewBag.n != 6)
+                    {
+                        <th scope="col" class="px-2 py-1.5 th-notes">Notes</th>
+                    }
                     <th scope="col" class="px-2 py-1.5 th-chat">Chat With</th>
                     <th scope="col" class="px-2 py-1.5 th-action">Action</th>
                 </tr>
@@ -112,8 +125,19 @@
                                     <span>@item.name</span><span class="icon-Ehome"><a class="tdn" href='mailto:@item.email?subject=subject&body=Hello!'><i class="fa-solid fa-envelope"></i></a></span>
                                 </span>
                             </td>
-                            <td style="background-color: @bgcolor" class="px-2 py-1.5">@item.dob</td>
-                            <td style="background-color: @bgcolor" class="px-2 py-1.5">@item.requstor</td>
+                            @if (ViewBag.n != 6)
+                            {
+                                <td style="background-color: @bgcolor" class="px-2 py-1.5">@item.dob</td>
+                            }
+                            @if (ViewBag.n == 1 || ViewBag.n == 2 || ViewBag.n == 3)
+                            {
+                                <td style="background-color: @bgcolor" class="px-2 py-1.5">@item.requstor</td>
+                            }
+                            @if (ViewBag.n != 1)
+                            {
+                                <td style="background-color: @bgcolor" class="px-2 py-1.5">@item.PhysicianName</td>
+                            }
+
                             <td style="background-color: @bgcolor" class="px-2 py-1.5">@item.reqDate</td>
                             <td style="background-color: @bgcolor" class="px-2 py-1.5">
                                 <span class="tb-phone d-flex flex-column">
@@ -124,50 +148,69 @@
                                 </span>
                             </td>
                             <td style="background-color: @bgcolor" class="px-2 py-1.5">@item.address</td>
-                            <td style="background-color: @bgcolor" class="px-2 py-1.5">Admin Transferred to Dr. AGOLA on 17/10/2023 at 3:07:19 AM:trse</td>
+                            @if (ViewBag.n != 6)
+                            {
+                                <td style="background-color: @bgcolor" class="px-2 py-1.5">Admin Transferred to Dr. AGOLA on 17/10/2023 at 3:07:19 AM:trse</td>
+                            }
                             <td style="background-color: @bgcolor" class="px-2 py-1.5">
                                 <span class="icone-Chome"><i class="fa-solid fa-user"></i>Provider</span>
                             </td>
                             <td style="background-color: @bgcolor" class="px-2 py-1.5">
-                                @*<span class="action dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">Action</span>
-                        <ul class="dropdown-menu">
-                        <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-suitcase" style="margin-right: 0.5rem;"></i><span>Assign Patient</span></a></li>
-                        <li class="d-item">
-                        <a class="dropdown-item" href="#">
-                        <i class="fa-regular fa-rectangle-xmark" style="margin-right: 0.5rem;"></i>
-                        <span>Cancle Case</span>
-                        </a>
-                        </li>
-                        <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>View Case</span></a></li>
-                        <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-notes-medical" style="margin-right: 0.5rem;"></i><span>View  Notes</span></a></li>
-                        <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-ban" style="margin-right: 0.5rem;"></i><span>Block Patient</span></a></li>
-                        </ul>*@
+
                                 <label class="dropdown">
                                     <div class="dd-button">
                                         Action
                                     </div>
                                     <input type="checkbox" class="dd-input" id="test">
                                     <ul class="dd-menu">
-                                        <li><a data-bs-toggle="modal" data-bs-target="#assignreq-@item.rid" class="dropdown-item"><i class="fa-solid fa-suitcase" style="margin-right: 0.5rem;"></i><span>Assign Patient</span></a></li>
-                                        <li>
+                                        @if (ViewBag.n == 1)
+                                        {
+                                            <li><a data-bs-toggle="modal" data-bs-target="#assignreq-@item.rid" class="dropdown-item"><i class="fa-solid fa-suitcase" style="margin-right: 0.5rem;"></i><span>Assign Patient</span></a></li>
+                                            <li>
+                                                <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#cancelcase-@item.rid">
+                                                    <i class="fa-regular fa-rectangle-xmark" style="margin-right: 0.5rem;"></i>
+                                                    <span>Cancle Case</span>
+                                                </a>
+                                            </li>
+                                            <li><a data-bs-toggle="modal" data-bs-target="#confirmblock-@item.rid" class="dropdown-item"><i class="fa-solid fa-ban" style="margin-right: 0.5rem;"></i><span>Block Patient</span></a></li>
+                                        }
 
-                                            <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#cancelcase-@item.rid">
-                                                <i class="fa-regular fa-rectangle-xmark" style="margin-right: 0.5rem;"></i>
-                                                <span>Cancle Case</span>
-                                            </a>
-                                        </li>
-                                        <li><a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="dropdown-item" ><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>View Case</span></a></li>
+                                        <li><a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>View Case</span></a></li>
                                         <li><a asp-area="" asp-controller="ADashboard" asp-action="ViewNote" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-notes-medical" style="margin-right: 0.5rem;"></i><span>View  Notes</span></a></li>
-                                        <li><a data-bs-toggle="modal" data-bs-target="#confirmblock-@item.rid" class="dropdown-item"><i class="fa-solid fa-ban" style="margin-right: 0.5rem;"></i><span>Block Patient</span></a></li>
+                                        @if (ViewBag.n != 1)
+                                        {
+                                            <li><a asp-area="" asp-controller="ADashboard" asp-action="ViewUpload" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>View Upload</span></a></li>
+                                        }
+                                        @if (ViewBag.n == 2)
+                                        {
+                                            <li><a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Transfer</span></a></li>
+                                            <li><a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>send agrrement</span></a></li>
+                                        }
+                                        @if (ViewBag.n == 2 || ViewBag.n == 5)
+                                        {
+                                            <li><a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Clear Case</span></a></li>
+                                        }
+                                        @if (ViewBag.n == 3 || ViewBag.n == 5 || ViewBag.n == 4)
+                                        {
+                                            <li><a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Doctor Notes</span></a></li>
+                                            <li><a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Orders</span></a></li>
+                                            <li><a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Encounter</span></a></li>
+                                        }
+                                        @if (ViewBag.n == 5)
+                                        {
+                                            <li><a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Close Case</span></a></li>
+                                        }
+
                                     </ul>
                                 </label>
+
                             </td>
                         </tr>
 
 
                         @*assign request*@
                         <div class="modal fade" id="assignreq-@item.rid" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
+                            <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm Cancellation</h1>
@@ -193,7 +236,7 @@
                                                     <option class="ACRoption" data-region-id="@pitem.RegionId" value="@pitem.PhysicianId">@pitem.FirstName</option>
 
                                                 }
-                                                
+
                                             </select>
 
                                             <div class="form-floating col-12 mb-2">
@@ -208,9 +251,9 @@
                                         </form>
                                     </div>
                                     @*<div class="modal-footer">
-                                        <button type="button" class="btn " data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn ">Save changes</button>
-                                    </div>*@
+                            <button type="button" class="btn " data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn ">Save changes</button>
+                            </div>*@
                                 </div>
                             </div>
                         </div>
@@ -218,7 +261,7 @@
 
                         @*cancel case*@
                         <div class="modal fade" id="cancelcase-@item.rid" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
+                            <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm Cancellation</h1>
@@ -236,7 +279,7 @@
                                                 <option value="10">Insurance Issue </option>
                                                 <option value="11">Out of Service Area </option>
                                                 <option value="12">Not appropriate for service </option>
-                                                <option value="13">Referral to Clinic or Hospital </option> 
+                                                <option value="13">Referral to Clinic or Hospital </option>
                                             </select>
                                             <div class="form-floating col-12 mb-2">
                                                 <input asp-for="notes" type="text" class="form-control" id="floatingInput1" placeholder="Provide additional notes..">
@@ -249,15 +292,15 @@
                                             </div>
                                         </form>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
 
 
                         @* block case*@
-                        <div class="modal fade" id="confirmblock-@item.rid" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
+                        <div class="modal fade " id="confirmblock-@item.rid" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm Block</h1>
@@ -279,13 +322,10 @@
                                             </div>
                                         </form>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
-
-
-
                     }
                 }
             </tbody>
@@ -317,45 +357,60 @@
                         <div class="accordion-body" style="background-color:#cbe5faa3">
                             <div class="p-1 d-flex align-items-start flex-column">
                                 <div class="d-none" id="acrregion">@item.region</div>
-                                <div class="mb-1"><i class="bi bi-cake2 border border-2 border-info rounded-circle pe-1 ps-1 m-1"></i><span class="fw-bold">Date Of Birth : </span><span>@item.dob</span></div>
-                                <div class="mb-1"><i class="bi bi-envelope border border-2 border-info rounded-circle pe-1 ps-1 m-1"></i> <span class="fw-bold">Email : </span><span>@item.email</span></div>
-                                <div class="mb-1"><i class="bi bi-telephone border border-2 border-info rounded-circle pe-1 ps-1 m-1"></i> <span class="fw-bold">Mobile : </span><span>@item.mobile</span></div>
-                                <div class="mb-1"><i class="bi bi-folder2-open border border-2 border-info rounded-circle pe-1 ps-1 m-1"></i> <span class="fw-bold">Notes : </span><span>@item.notes</span></div>
-                                <div class="mb-1"><i class="bi bi-calendar-date border border-2 border-info rounded-circle pe-1 ps-1 m-1"></i> <span class="fw-bold">Date Of service : </span><span>@item.reqDate</span></div>
-                                <div class="mb-1"><i class="bi bi-heart-pulse border border-2 border-info rounded-circle pe-1 ps-1 m-1"></i> <span class="fw-bold">Physician : </span><span>@item?.provider</span></div>
-                                <div class="mb-1"><i class="bi bi-person border border-2 border-info rounded-circle pe-1 ps-1 m-1"></i> <span class="fw-bold">Requestor : </span><span> @item.requstor</span></div>
+                                <div class="mb-2"><i class="bi bi-cake2 border border-2 border-info rounded-circle pe-1 ps-1 m-1"></i><span class="fw-bold">Date Of Birth : </span><span>@item.dob</span></div>
+                                <div class="mb-2"><i class="bi bi-envelope border border-2 border-info rounded-circle pe-1 ps-1 m-1"></i> <span class="fw-bold">Email : </span><span>@item.email</span></div>
+                                <div class="mb-2"><i class="bi bi-telephone border border-2 border-info rounded-circle pe-1 ps-1 m-1"></i> <span class="fw-bold">Mobile : </span><span>@item.mobile</span></div>
+                                <div class="mb-2"><i class="bi bi-folder2-open border border-2 border-info rounded-circle pe-1 ps-1 m-1"></i> <span class="fw-bold">Notes : </span><span>@item.notes</span></div>
+                                <div class="mb-2"><i class="bi bi-calendar-date border border-2 border-info rounded-circle pe-1 ps-1 m-1"></i> <span class="fw-bold">Date Of service : </span><span>@item.reqDate</span></div>
+                                <div class="mb-2"><i class="bi bi-heart-pulse border border-2 border-info rounded-circle pe-1 ps-1 m-1"></i> <span class="fw-bold">Physician : </span><span>@item?.PhysicianName</span></div>
+                                <div class="mb-2"><i class="bi bi-person border border-2 border-info rounded-circle pe-1 ps-1 m-1"></i> <span class="fw-bold">Requestor : </span><span> @item.requstor</span></div>
                             </div>
-                            <div class="p-1">
-                                <div class="row d-flex justify-content-evenly mb-2">
-                                    <button class="badge rounded-pill bg-success col-5">View Notes</button>
-                                    <button class="badge rounded-pill bg-success col-5">Doctor Notes</button>
-                                </div>
-                                <div class="row d-flex justify-content-evenly mb-2">
-                                    <button class="badge rounded-pill bg-success col-5">View Uploads</button>
-                                    <button class="badge rounded-pill bg-success col-5">Encounter</button>
-                                </div>
-                                <div class="row d-flex justify-content-evenly mb-2">
-                                    <button class="badge rounded-pill bg-success col-5">orders</button>
-                                    <button class="badge rounded-pill bg-success col-5" onclick="location.href='mailto:@item.email?subject=subject&body=Hello!'" class="badge rounded-pill bg-success col-5">Email</button>
-                                    @*<a class="tdn col-5" href='mailto:@item.email?subject=subject&body=Hello!'><div class="badge rounded-pill bg-success col-5">Email</div></a>*@
-                                </div>
+                            
+                            <div class="d-flex align-items-center flex-wrap w-100">
+
+                                @if (ViewBag.n == 1)
+                                {
+                                    <a data-bs-toggle="modal" data-bs-target="#assignreq-@item.rid" class="btnbadge badge rounded-pill bg-info"><i class="fa-solid fa-suitcase" style="margin-right: 0.5rem;"></i><span>Assign Patient</span></a>
+
+                                    <a class="btnbadge badge rounded-pill bg-success" data-bs-toggle="modal" data-bs-target="#cancelcase-@item.rid">
+                                        <i class="fa-regular fa-rectangle-xmark" style="margin-right: 0.5rem;"></i>
+                                        <span>Cancle Case</span>
+                                    </a>
+
+                                    <a data-bs-toggle="modal" data-bs-target="#confirmblock-@item.rid" class="btnbadge badge rounded-pill bg-danger"><i class="fa-solid fa-ban" style="margin-right: 0.5rem;"></i><span>Block Patient</span></a>
+                                }
+
+                                <a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="btnbadge badge rounded-pill bg-success"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>View Case</span></a>
+                                <a asp-area="" asp-controller="ADashboard" asp-action="ViewNote" asp-route-rid="@item.rid" class="btnbadge badge rounded-pill bg-success"><i class="fa-solid fa-notes-medical" style="margin-right: 0.5rem;"></i><span>View  Notes</span></a>
+                                @if (ViewBag.n != 1)
+                                {
+                                    <a asp-area="" asp-controller="ADashboard" asp-action="ViewUpload" asp-route-rid="@item.rid" class="btnbadge badge rounded-pill bg-warning"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>View Upload</span></a>
+                                }
+                                @if (ViewBag.n == 2)
+                                {
+                                    <a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="btnbadge badge rounded-pill bg-info"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Transfer</span></a>
+                                    <a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="btnbadge badge rounded-pill bg-warning"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>send agrrement</span></a>
+                                }
+                                @if (ViewBag.n == 2 || ViewBag.n == 5)
+                                {
+                                    <a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="btnbadge badge rounded-pill bg-danger"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Clear Case</span></a>
+                                }
+                                @if (ViewBag.n == 3 || ViewBag.n == 5 || ViewBag.n == 4)
+                                {
+                                    <a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="btnbadge badge rounded-pill bg-success"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Doctor Notes</span></a>
+                                    <a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="btnbadge badge rounded-pill bg-warning"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Orders</span></a>
+                                    <a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="btnbadge badge rounded-pill bg-warning"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Encounter</span></a>
+                                }
+                                @if (ViewBag.n == 5)
+                                {
+                                    <a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="btnbadge badge rounded-pill bg-danger"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Close Case</span></a>
+                                }
                             </div>
+
                             <div class="p-1 d-flex justify-content-end">
                                 <span>Chat with : </span>
                                 <span class="icone-Chome ms-1"><i class="fa-solid fa-user"></i>Provider</span>
-                                <span class="action dropdown-toggle ms-1" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">Action</span>
-                                <ul class="dropdown-menu">
-                                    <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-suitcase" style="margin-right: 0.5rem;"></i><span>Assign Patient</span></a></li>
-                                    <li class="d-item">
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fa-regular fa-rectangle-xmark" style="margin-right: 0.5rem;"></i>
-                                            <span>Cancle Case</span>
-                                        </a>
-                                    </li>
-                                    <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>View Case</span></a></li>
-                                    <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-notes-medical" style="margin-right: 0.5rem;"></i><span>View  Notes</span></a></li>
-                                    <li class="d-item"><a class="dropdown-item" href="#"><i class="fa-solid fa-ban" style="margin-right: 0.5rem;"></i><span>Block Patient</span></a></li>
-                                </ul>
+
                             </div>
                         </div>
                     </div>

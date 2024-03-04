@@ -160,7 +160,7 @@ namespace halloDocLogic.Repository
             {
                 vnc.status = 1;
             }
-            
+
             foreach (var item in dbnotedata)
             {
                 vnc.Tnotes = item.rl.Notes;
@@ -189,12 +189,12 @@ namespace halloDocLogic.Repository
                          join rc in _context.Requestclients on r.RequestId equals rc.RequestId
                          where r.RequestId == rid
                          select new { r, rc };
-            
+
             AViewNoteCase vnc = new AViewNoteCase();
             vnc.rid = rid;
             foreach (var item in dbdata)
             {
-                
+
                 vnc.relation = item.r.RelationName;
                 vnc.status = item.r.Status;
                 vnc.guid = Guid.NewGuid().ToString();
@@ -231,16 +231,23 @@ namespace halloDocLogic.Repository
         public async Task<List<ADashTable>> ADashTableData(int n)
 
         {
+            var dbdata1 = from r in _context.Requests
+                          join rc in _context.Requestclients on r.RequestId equals rc.RequestId
+                          where r.Status == n
+                          select new { r, rc };
+
             var dbdata = from r in _context.Requests
                          join rc in _context.Requestclients on r.RequestId equals rc.RequestId
+                         join p in _context.Physicians on r.PhysicianId equals p.PhysicianId into gj
+                         from p in gj.DefaultIfEmpty() // Left outer join
                          where r.Status == n
-                         select new { r, rc };
-
+                         select new { r, rc, p };
 
             List<ADashTable> dtable = new List<ADashTable>();
             foreach (var item in dbdata)
             {
                 var dt = new ADashTable();
+
                 dt.status = n;
                 dt.guid = Guid.NewGuid().ToString();
                 dt.rid = item.r.RequestId;
@@ -253,12 +260,15 @@ namespace halloDocLogic.Repository
                 dt.mobile = item.r.PhoneNumber;
                 dt.address = string.Concat(item.rc.Street, " ", item.rc.City, " ", item.rc.State);
                 dt.notes = "";
-                dt.region = item.rc.RegionId.ToString();
-                /*var providerName = await _context.Physicians?.FirstOrDefaultAsync(m => m.PhysicianId == item.r.PhysicianId);
-                if (providerName != null)
+                if (item.p != null)
                 {
-                    dt.provider = providerName.FirstName;
-                }*/
+                    dt.PhysicianName = string.Concat(item.p.FirstName, " ", item.p.LastName);
+                }
+                else
+                {
+                    dt.PhysicianName = "Physician";
+                }
+                dt.region = item.rc.RegionId.ToString();
                 dt.relation = item.r.RelationName;
 
                 dtable.Add(dt);
