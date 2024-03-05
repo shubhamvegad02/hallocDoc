@@ -10,6 +10,7 @@ using halloDocEntities.DataContext;
 using Microsoft.Extensions.Hosting;
 using System.Data.Common;
 using Microsoft.EntityFrameworkCore;
+using Nest;
 
 namespace halloDocLogic.Repository
 {
@@ -24,8 +25,24 @@ namespace halloDocLogic.Repository
 
 
 
-
-
+        public string fileNameFromId(int fileId)
+        {
+            var dbreqfile = _context.Requestwisefiles.FirstOrDefault(m => m.RequestWiseFileId == fileId);
+            string fileName = dbreqfile?.FileName;
+            return fileName;
+        }
+        public async Task<int> DeleteFile(string file)
+        {
+            var dbreqfile = await _context.Requestwisefiles.FirstOrDefaultAsync(m => m.FileName == file);
+            int rid = dbreqfile.RequestId;
+            var fileToDelete = await _context.Requestwisefiles.FirstOrDefaultAsync(f => f.FileName == file);
+            if (fileToDelete != null)
+            {
+                fileToDelete.IsDeleted = true;
+            }
+            await _context.SaveChangesAsync();
+            return rid;
+        }
         public async Task<int> BlockCase(int rid, ADashTable dt)
         {
             var dbreq = _context.Requests.FirstOrDefault(m => m.RequestId == rid);

@@ -1,4 +1,4 @@
-﻿@model halloDocEntities.ViewDataModels.ViewUploadedDoc;
+﻿@model halloDocEntities.ViewDataModels.History;
 @{
     ViewData["Title"] = "View upload";
     Layout = "~/Views/Shared/_ADashboard.cshtml";
@@ -6,16 +6,16 @@
 <div class="docMain mt-3">
     <div class="dmboxbar">
         <h2 m-0>Document</h2>
-        <a asp-area="" asp-controller="pDashboard" asp-action="History" class="logout tdn dmnewreq mb-3">Back</a>
+        <a asp-area="" asp-controller="ADashboard" asp-action="Dmain" asp-route-id="2" class="logout tdn dmnewreq mb-3">Back</a>
     </div>
 
     <div class="dmbox">
         <span>Patient Name</span>
-        <h5><span>@ViewBag.FileData.patientName</span>(<span>@ViewBag.FileData.confirmation</span>)</h5>
+        <h5><span>@ViewBag.patientName</span>(<span>@ViewBag.confirmation</span>)</h5>
         <span class="lh-sm">Check here any files that you or your doctor attached for review.</span>
-        <form asp-area="" asp-controller="pDashboard" asp-action="uploadbtn" asp-route-reqid="@ViewBag.reqid" enctype="multipart/form-data">
+        <form asp-area="" asp-controller="ADashboard" asp-action="uploadbtn" asp-route-reqid="@ViewBag.reqid" enctype="multipart/form-data">
             <div class="upbtncon mt-3 w-100">
-                <input type="file" id="actual-btn" hidden />
+                <input asp-for="myfile" type="file" id="actual-btn" hidden />
 
                 <!-- our custom upload button -->
                 <label class="mylable uploadbtn d-flex align-items-center justify-content-evenly" for="actual-btn">
@@ -36,15 +36,15 @@
             @* <a asp-area="" asp-controller="pDashboard" asp-action="viewDoc" class="logout tdn dmnewreq ">Donwlod All</a> *@
 
             <div class="w-50">
-            <a class="logout tdn dmnewreq ms-2" href="@Url.Action("DonwlodFileAll", "pDashboard")">
-                Download All
-            </a>
-            <a class="logout tdn dmnewreq ms-2" href="@Url.Action("DonwlodFileAll", "pDashboard")">
-                Delete All
-            </a>
-            <a class="logout tdn dmnewreq ms-2" href="@Url.Action("DonwlodFileAll", "pDashboard")">
-                Send Mail
-            </a>
+                <button class="logout tdn dmnewreq ms-2" id="downloadButton">
+                    Download All
+                </button>
+                <button class="logout tdn dmnewreq ms-2" id="deleteButton">
+                    Delete All
+                </button>
+                <a class="logout tdn dmnewreq ms-2" href="@Url.Action("DonwlodFileAll", "pDashboard")">
+                    Send Mail
+                </a>
             </div>
 
         </div>
@@ -64,15 +64,21 @@
                     temp = temp.Substring(temp.IndexOf("_") + 1);
 
                     <tr class="lh-3">
-                        <th><input type="checkbox" /></th>
-                        
+                        @*<th><input type="checkbox" /></th>*@
+                        <td>
+                            <input type="checkbox" name="selectedFiles" value="@item.fileName" />
+                            
+                        </td>
+
                         <td>@temp</td>
                         <td>@item.uploadDate</td>
-                        <td>
-
-                            <a class="logout btnnohovor tdn p-0" href="@Url.Action("DonwlodFile", "pDashboard", new { fileName = item.fileName })">
-                                <img class="h-100 w-100" src="~/images/cloud-arrow-down-alt-svgrepo-com.svg"
-                                     alt="">
+                        <td class="d-flex flex-row">
+                            
+                            <a class="ms-2 logout btnnohovor tdn p-0" href="@Url.Action("DonwlodFile", "pDashboard", new { fileName = item.fileName })">
+                                <img class="h-100 w-100" src="~/images/cloud-arrow-down-alt-svgrepo-com.svg" alt="">
+                            </a>
+                            <a class=" ms-2 logout btnnohovor tdn p-0" href="@Url.Action("DeleteFile", "ADashboard", new { fileId = item.fileId })">
+                                <i style="color:#4bcbcb;" class="bi bi-trash"></i>
                             </a>
 
                         </td>
@@ -80,35 +86,97 @@
                 }
 
             </tbody>
+            @Html.ValidationMessage("deleted", null, new { @class= "text-success fw-bold"})
         </table>
         <div class="accordion accordion-flush mt-3" id="accordionFlushExample">
             @*@foreach (var item in ViewBag.history)
             {
-                var temp = item.name;
-                temp = temp.Substring(temp.IndexOf("_") + 1);
+            var temp = item.name;
+            temp = temp.Substring(temp.IndexOf("_") + 1);
 
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.guid" aria-expanded="false" aria-controls="flush-@item.guid">
-                            @temp
-                        </button>
-                    </h2>
-                    <div id="flush-@item.guid" class="accordion-collapse collapse p-3" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-item">
+            <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.guid" aria-expanded="false" aria-controls="flush-@item.guid">
+            @temp
+            </button>
+            </h2>
+            <div id="flush-@item.guid" class="accordion-collapse collapse p-3" data-bs-parent="#accordionFlushExample">
 
-                        
-                        <div>@item.uploder</div>
-                        <div>@item.date</div>
-                        <div>
-                            <a href="~/uplodedItems/21379940-69d2-4e3c-ad8b-acbf7d60a064_hamburger-svgrepo-com.svg" class="logout logsm btnnohovor tdn p-0">
-                                <img class="h-100 w-100" src="~/images/cloud-arrow-down-alt-svgrepo-com.svg"
-                                     alt="">
-                            </a>
-                        </div>
-                    </div>
-                </div>
+
+            <div>@item.uploder</div>
+            <div>@item.date</div>
+            <div>
+            <a href="~/uplodedItems/21379940-69d2-4e3c-ad8b-acbf7d60a064_hamburger-svgrepo-com.svg" class="logout logsm btnnohovor tdn p-0">
+            <img class="h-100 w-100" src="~/images/cloud-arrow-down-alt-svgrepo-com.svg"
+            alt="">
+            </a>
+            </div>
+            </div>
+            </div>
             }*@
 
 
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <script>
+        document.getElementById("deleteButton").addEventListener("click", function () {
+            var selectedCheckboxes = document.querySelectorAll('input[name="selectedFiles"]:checked');
+            var selectedFilenames = [];
+
+            for (var i = 0; i < selectedCheckboxes.length; i++) {
+                selectedFilenames.push(selectedCheckboxes[i].value);
+            }
+
+            // Send the filenames to the controller using AJAX
+            sendFilenamesToController(selectedFilenames);
+        });
+
+        function sendFilenamesToController(filenames) {
+            fetch('@Url.Action("DeleteFiles", "ADashboard", new { reqId = @ViewBag.reqid })', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(filenames)
+            })
+                .then(response => {
+                    
+                })
+                .catch(error => {
+                    alert("not done");
+                });
+        }
+        
+        //for donwlodAll
+        document.getElementById("downloadButton").addEventListener("click", function () {
+            var selectedCheckboxes = document.querySelectorAll('input[name="selectedFiles"]:checked');
+            var selectedFilenames = [];
+
+            for (var i = 0; i < selectedCheckboxes.length; i++) {
+                selectedFilenames.push(selectedCheckboxes[i].value);
+            }
+
+            // Send the filenames to the controller using AJAX
+            sendFilenamesToController(selectedFilenames);
+        });
+
+        function sendFilenamesToController(filenames) {
+            fetch('@Url.Action("DonwlodFileAlldummy", "pDashboard")', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(filenames)
+            })
+                .then(response => {
+                    
+                })
+                .catch(error => {
+                    alert("not done");
+                });
+        }
+    </script>
+}

@@ -42,10 +42,9 @@ public partial class Requestwisefile
     public BitArray? IsFinalize { get; set; }
 
     [Column(TypeName = "bit(1)")]
-    public BitArray? IsDeleted { get; set; }
-
-    [Column(TypeName = "bit(1)")]
     public BitArray? IsPatientRecords { get; set; }
+
+    public bool? IsDeleted { get; set; }
 
     [ForeignKey("AdminId")]
     [InverseProperty("Requestwisefiles")]

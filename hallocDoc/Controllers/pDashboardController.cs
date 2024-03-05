@@ -13,6 +13,8 @@ using NuGet.Protocol.Plugins;
 using Microsoft.CodeAnalysis.Elfie.Serialization;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using halloDocLogic.Interfaces;
+using Org.BouncyCastle.Ocsp;
+using Microsoft.Extensions.Hosting;
 
 namespace hallocDoc.Controllers
 {
@@ -100,9 +102,17 @@ namespace hallocDoc.Controllers
         }
 
 
-        public IActionResult DonwlodFileAll()
+        public IActionResult DonwlodFileAll(string aspId)
         {
-            var aspid = HttpContext.Session?.GetString("aspid").ToString();
+            string aspid;
+            if(aspId != null)
+            {
+                 aspid = aspId;
+            }
+            else
+            {
+             aspid = HttpContext.Session?.GetString("aspid").ToString();
+            }
             var zipstream = _pDashboard.downloadAll(aspid);
             /*var userdb = _context.Users.FirstOrDefault(m => m.AspNetUserId == aspid);
             var userid = userdb?.UserId;
@@ -130,6 +140,28 @@ namespace hallocDoc.Controllers
             } // disposal of archive will force data to be written to memory stream.
             zipStream.Position = 0; //reset memory stream position.*/
             return File(zipstream, "application/zip", "MyDocuments.zip");
+        }
+
+        public IActionResult DonwlodFileAlldummy([FromBody] string[] filenames)
+        {
+            string baseFilePath = Path.Combine(this.Environment.WebRootPath, "uplodedItems");
+
+            MemoryStream zipStream = new MemoryStream();
+            using (var zipArchive = new ZipArchive(zipStream, ZipArchiveMode.Create, leaveOpen: true))
+            {
+                foreach (var item in filenames)
+                {
+                    string fullFilePath = Path.Combine(baseFilePath, item);
+
+                    string fileName = item;
+                    int index = fileName.LastIndexOf("/");
+                    if (index != -1)
+                        fileName = fileName.Substring(index + 1);
+                    zipArchive.CreateEntryFromFile(fullFilePath, fileName);
+                }
+            } // disposal of archive will force data to be written to memory stream.
+            zipStream.Position = 0; //reset memory stream position.
+            return File(zipStream, "application/zip", "MyDocuments.zip");
         }
 
 

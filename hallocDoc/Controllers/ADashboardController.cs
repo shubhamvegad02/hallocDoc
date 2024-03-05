@@ -20,36 +20,77 @@ namespace hallocDoc.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IADashboard _iadash;
-        public ADashboardController(ApplicationDbContext dbContext, IADashboard dashboard)
+        private readonly IPDashboard _pDashboard;
+        public ADashboardController(ApplicationDbContext dbContext, IADashboard dashboard, IPDashboard pDashboard)
         {
             _context = dbContext;
             _iadash = dashboard;
+            _pDashboard = pDashboard;
         }
 
 
+
+        public async Task<IActionResult> uploadbtn(History h, int reqid)
+        {
+            if (await _pDashboard.uploadtoid(h, reqid))
+            {
+                return RedirectToAction("Dmain", "ADashboard", new { id = 2 });
+            }
+            return RedirectToAction("ViewUpload", "ADashboard", new {rid = reqid});
+        }
+        public async Task<IActionResult> DeleteFiles(int reqId, [FromBody] string[] filenames)
+        {
+            if (filenames == null || filenames.Length == 0)
+            {
+                return BadRequest("No files selected");
+            }
+            int x = 0;
+            foreach (var item in filenames)
+            {
+                
+                 x = await _iadash.DeleteFile(item);
+            }
+            
+            ModelState.AddModelError("deleted", "File Deleted Successfully..");
+            return RedirectToAction("ViewUpload", "ADashboard", new { rid = x });
+
+        }
+        public async Task<IActionResult> DeleteFile(int fileId)
+        {
+            string fileName = _iadash.fileNameFromId(fileId);
+            int x = await _iadash.DeleteFile(fileName);
+            ModelState.AddModelError("deleted", "File Deleted Successfully..");
+            return RedirectToAction("ViewUpload", "ADashboard", new { rid = x });
+        }
 
 
         public async Task<IActionResult> ViewUpload(int rid)
         {
             var dbreq = from r in _context.Requests
-                         join rf in _context.Requestwisefiles on r.RequestId equals rf.RequestId
-                         where rf.RequestId == rid
-                         select new { r, rf };
+                        join rf in _context.Requestwisefiles on r.RequestId equals rf.RequestId
+                        where rf.RequestId == rid
+                        where rf.IsDeleted == false || rf.IsDeleted == null
+                        select new { r, rf };
 
             var dbReqClient = await _context.Requestclients.FirstOrDefaultAsync(m => m.RequestId == rid);
-            string pName = string.Concat(dbReqClient.FirstName, " ", dbReqClient.LastName);
+            ViewBag.PatientName = string.Concat(dbReqClient.FirstName, " ", dbReqClient.LastName);
+            string con = "";
+            ViewBag.reqid = rid;
             List<ViewUploadedDoc> data = new List<ViewUploadedDoc>();
             foreach (var item in dbreq)
             {
                 var vu = new ViewUploadedDoc();
 
-                vu.patientName = pName;
-                vu.confirmation = item?.r?.ConfirmationNumber;
+
+                con = item?.r?.ConfirmationNumber;
                 vu.uploadDate = item.r.CreatedDate;
                 vu.fileName = item.rf.FileName;
+                vu.fileId = item.rf.RequestWiseFileId;
+
 
                 data.Add(vu);
             }
+            ViewBag.confirmation = con;
             ViewBag.FileData = data;
             return View();
         }
@@ -73,14 +114,14 @@ namespace hallocDoc.Controllers
         public async Task<IActionResult> ViewNote(int rid, AViewNoteCase vnc)
         {
             var result = _iadash.VNData(rid, vnc);
-            
+
 
             return View(result);
         }
         [HttpPost]
         public async Task<IActionResult> ViewNote(AViewNoteCase vnc)
         {
-           
+
             var check = await _iadash.VNDatapost(vnc);
             /*if(check)
             {

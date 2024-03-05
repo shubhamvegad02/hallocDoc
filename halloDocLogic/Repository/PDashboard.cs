@@ -184,6 +184,27 @@ namespace halloDocLogic.Repository
             zipStream.Position = 0; //reset memory stream position.
             return zipStream;
         }
+        public Stream downloadSelected(string[] filenames)
+        {
+            string baseFilePath = Path.Combine(_hostEnvironment.ContentRootPath, "wwwroot/uplodedItems");
+
+            MemoryStream zipStream = new MemoryStream();
+            using (var zipArchive = new ZipArchive(zipStream, ZipArchiveMode.Create, leaveOpen: true))
+            {
+                foreach (var item in filenames)
+                {
+                    string fullFilePath = Path.Combine(baseFilePath, item);
+
+                    string fileName = item;
+                    int index = fileName.LastIndexOf("/");
+                    if (index != -1)
+                        fileName = fileName.Substring(index + 1);
+                    zipArchive.CreateEntryFromFile(fullFilePath, fileName);
+                }
+            } // disposal of archive will force data to be written to memory stream.
+            zipStream.Position = 0; //reset memory stream position.
+            return zipStream;
+        }
 
     }
 }

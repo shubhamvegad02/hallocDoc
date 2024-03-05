@@ -26,5 +26,9 @@ namespace halloDocLogic.Interfaces
         Task<bool> VNDatapost(AViewNoteCase vnc);
 
         Task<bool> VCDataPost(AViewNoteCase vnc);
+
+        Task<int> DeleteFile(string file);
+
+        public string fileNameFromId(int fileId);
     }
 }
