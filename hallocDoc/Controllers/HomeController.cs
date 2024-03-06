@@ -19,16 +19,16 @@ namespace hallocDoc.Controllers
     public class HomeController : Controller
     {
         private readonly ApplicationDbContext _context;
-
         private readonly ILogger<HomeController> _logger;
-
         private readonly IHome _home;
+        private readonly IJwtService _jwtservice;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, IHome home)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, IHome home, IJwtService jwtservice)
         {
             _logger = logger;
             _context = context;
             _home = home;
+            _jwtservice = jwtservice;
         }
         public IActionResult CreateuserfromLink(string email, string token, createPatient cp)
         {
@@ -107,7 +107,11 @@ namespace hallocDoc.Controllers
 
                 if (result.Status == "success")
                 {
-                    HttpContext.Session.SetString("aspid", result.Aspid);
+                    Aspnetuser aspnetuser = _home.AspDataFromId(result?.Aspid);
+                    var jwtToken = _jwtservice.GenerateJwtToken(aspnetuser);
+                    Response.Cookies.Append("jwt", jwtToken);
+
+                    /*HttpContext.Session.SetString("aspid", result.Aspid);*/
                     return RedirectToAction("History", "pDashboard");
                 }
                 if(result.Status == "fail")

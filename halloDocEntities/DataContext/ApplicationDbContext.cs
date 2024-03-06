@@ -18,6 +18,8 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Admin> Admins { get; set; }
 
+    public virtual DbSet<Aspnetrole> Aspnetroles { get; set; }
+
     public virtual DbSet<Aspnetuser> Aspnetusers { get; set; }
 
     public virtual DbSet<Blockrequest> Blockrequests { get; set; }
@@ -67,9 +69,33 @@ public partial class ApplicationDbContext : DbContext
             entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.AdminModifiedByNavigations).HasConstraintName("admin_ModifiedBy_fkey");
         });
 
+        modelBuilder.Entity<Aspnetrole>(entity =>
+        {
+            entity.HasKey(e => e.AspNetRoleId).HasName("aspnetroles_pkey");
+        });
+
         modelBuilder.Entity<Aspnetuser>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("aspnetusers_pkey");
+
+            entity.HasMany(d => d.Roles).WithMany(p => p.Users)
+                .UsingEntity<Dictionary<string, object>>(
+                    "Aspnetuserrole",
+                    r => r.HasOne<Aspnetrole>().WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("aspnetuserroles_RoleId_fkey"),
+                    l => l.HasOne<Aspnetuser>().WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("aspnetuserroles_UserId_fkey"),
+                    j =>
+                    {
+                        j.HasKey("UserId", "RoleId").HasName("aspnetuserroles_pkey");
+                        j.ToTable("aspnetuserroles");
+                        j.IndexerProperty<string>("UserId").HasMaxLength(128);
+                        j.IndexerProperty<string>("RoleId").HasMaxLength(128);
+                    });
         });
 
         modelBuilder.Entity<Blockrequest>(entity =>

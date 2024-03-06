@@ -26,6 +26,17 @@ namespace halloDocLogic.Repository
             _context = context;
         }
 
+
+        public Aspnetuser AspDataFromId(string aspId)
+        {
+            Aspnetuser au = new Aspnetuser();
+            var dbasp = _context.Aspnetusers.FirstOrDefault(m => m.Id == aspId);
+            if (dbasp != null)
+            {
+                au = dbasp;
+            }
+            return au;
+        }
         public patientLogin login(patientLogin pl)
         {
             patientLogin patientLogin = new patientLogin();

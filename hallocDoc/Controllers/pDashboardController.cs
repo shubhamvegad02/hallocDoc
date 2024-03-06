@@ -15,15 +15,18 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using halloDocLogic.Interfaces;
 using Org.BouncyCastle.Ocsp;
 using Microsoft.Extensions.Hosting;
+using halloDocLogic.Repository;
 
 namespace hallocDoc.Controllers
 {
+    [CustomAuthorize]
     public class pDashboardController : Controller
     {
         /*private readonly ApplicationDbContext _context;*/
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment Environment;
         /* private readonly IWebHostEnvironment _webHostEnvironment;*/
         private readonly IPDashboard _pDashboard;
+        
 
         public pDashboardController(ApplicationDbContext context, Microsoft.AspNetCore.Hosting.IHostingEnvironment _environment, /*IWebHostEnvironment webHostEnvironment,*/ IPDashboard pDashboard)
         {
@@ -31,10 +34,11 @@ namespace hallocDoc.Controllers
             Environment = _environment;
             /*_webHostEnvironment = webHostEnvironment;*/
             _pDashboard = pDashboard;
+           
         }
 
 
-
+        
         public async Task<IActionResult> uploadbtn(History h, int reqid)
         {
             if (await _pDashboard.uploadtoid(h, reqid)){
@@ -161,7 +165,7 @@ namespace hallocDoc.Controllers
                 }
             } // disposal of archive will force data to be written to memory stream.
             zipStream.Position = 0; //reset memory stream position.
-            return File(zipStream, "application/zip", "MyDocuments.zip");
+            return File(zipStream.ToArray(), "application/zip", "MyDocuments.zip");
         }
 
 

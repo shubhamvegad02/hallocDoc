@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using halloDocEntities.DataModels;
 using halloDocEntities.ViewDataModels;
 
 namespace halloDocLogic.Interfaces
@@ -26,5 +27,7 @@ namespace halloDocLogic.Interfaces
         public string generateToken(string email);
 
         public string getEmailFromId(string aspid);
+
+        public Aspnetuser AspDataFromId(string aspId);
     }
 }
