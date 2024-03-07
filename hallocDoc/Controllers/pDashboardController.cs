@@ -16,32 +16,36 @@ using halloDocLogic.Interfaces;
 using Org.BouncyCastle.Ocsp;
 using Microsoft.Extensions.Hosting;
 using halloDocLogic.Repository;
+using Newtonsoft.Json.Linq;
 
 namespace hallocDoc.Controllers
 {
-    [CustomAuthorize]
+    [CustomAuthorize("User")]
     public class pDashboardController : Controller
     {
         /*private readonly ApplicationDbContext _context;*/
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment Environment;
         /* private readonly IWebHostEnvironment _webHostEnvironment;*/
         private readonly IPDashboard _pDashboard;
-        
+        private readonly IJwtService _jwtService;
 
-        public pDashboardController(ApplicationDbContext context, Microsoft.AspNetCore.Hosting.IHostingEnvironment _environment, /*IWebHostEnvironment webHostEnvironment,*/ IPDashboard pDashboard)
+
+        public pDashboardController(ApplicationDbContext context, Microsoft.AspNetCore.Hosting.IHostingEnvironment _environment, IJwtService jwtService, IPDashboard pDashboard)
         {
             /*_context = context;*/
             Environment = _environment;
             /*_webHostEnvironment = webHostEnvironment;*/
             _pDashboard = pDashboard;
-           
+            _jwtService = jwtService;
+
         }
 
 
-        
+
         public async Task<IActionResult> uploadbtn(History h, int reqid)
         {
-            if (await _pDashboard.uploadtoid(h, reqid)){
+            if (await _pDashboard.uploadtoid(h, reqid))
+            {
                 return RedirectToAction("History", "pDashboard");
             }
             return RedirectToAction("viewDoc", "pDashboard");
@@ -49,8 +53,9 @@ namespace hallocDoc.Controllers
 
         public IActionResult logout()
         {
-            HttpContext.Session.Clear();
-            HttpContext.Session.Remove("aspid");
+            /*HttpContext.Session.Clear();
+            HttpContext.Session.Remove("aspid");*/
+            Response.Cookies.Delete("jwt");
 
             return RedirectToAction("Index", "Home");
         }
@@ -62,14 +67,23 @@ namespace hallocDoc.Controllers
             ViewBag.username = userdb?.FirstName;*/
             return View();
         }
+        
         public async Task<IActionResult> History()
         {
-            if (HttpContext.Session?.GetString("aspid")?.ToString() == null)
+            /*if (HttpContext.Session?.GetString("aspid")?.ToString() == null)
             {
                 return RedirectToAction("Index", "Home");
-            }
-            
             var aspid = HttpContext.Session?.GetString("aspid").ToString();
+            }*/
+
+            
+
+            string jwtToken = Request.Cookies["jwt"] ?? "";
+            JwtClaimsModel jwtClaims = new JwtClaimsModel();
+            jwtClaims = _jwtService.GetClaimsFromJwtToken(jwtToken);
+            var aspid = jwtClaims.AspId;
+
+
             ViewBag.username = _pDashboard.UserNameFromId(aspid);
 
             var Calc = _pDashboard.HistoryData(aspid);
@@ -79,18 +93,21 @@ namespace hallocDoc.Controllers
         }
         public async Task<IActionResult> viewDoc(int reqid)
         {
-            if (HttpContext.Session?.GetString("aspid")?.ToString() == null)
+            /*if (HttpContext.Session?.GetString("aspid")?.ToString() == null)
             {
                 return RedirectToAction("Index", "Home");
             }
-
-            var aspid = HttpContext.Session?.GetString("aspid").ToString();
+            var aspid = HttpContext.Session?.GetString("aspid").ToString();*/
+            string jwtToken = Request.Cookies["jwt"] ?? "";
+            JwtClaimsModel jwtClaims = new JwtClaimsModel();
+            jwtClaims = _jwtService.GetClaimsFromJwtToken(jwtToken);
+            var aspid = jwtClaims.AspId;
 
             ViewBag.username = _pDashboard.UserNameFromId(aspid);
             ViewBag.reqid = reqid;
             /*var userdb = await _context.Users.FirstOrDefaultAsync(m => m.AspNetUserId == aspid);
             var userid = userdb?.UserId;*/
-            
+
             var data = _pDashboard.ViewDocData(aspid, reqid);
             ViewBag.history = data;
             return View();
@@ -109,13 +126,17 @@ namespace hallocDoc.Controllers
         public IActionResult DonwlodFileAll(string aspId)
         {
             string aspid;
-            if(aspId != null)
+            if (aspId != null)
             {
-                 aspid = aspId;
+                aspid = aspId;
             }
             else
             {
-             aspid = HttpContext.Session?.GetString("aspid").ToString();
+                /*aspid = HttpContext.Session?.GetString("aspid").ToString();*/
+                string jwtToken = Request.Cookies["jwt"] ?? "";
+                JwtClaimsModel jwtClaims = new JwtClaimsModel();
+                jwtClaims = _jwtService.GetClaimsFromJwtToken(jwtToken);
+                aspid = jwtClaims.AspId;
             }
             var zipstream = _pDashboard.downloadAll(aspid);
             /*var userdb = _context.Users.FirstOrDefault(m => m.AspNetUserId == aspid);
@@ -146,7 +167,7 @@ namespace hallocDoc.Controllers
             return File(zipstream, "application/zip", "MyDocuments.zip");
         }
 
-        public IActionResult DonwlodFileAlldummy([FromBody] string[] filenames)
+        public IActionResult DownloadSelected([FromBody] string[] filenames)
         {
             string baseFilePath = Path.Combine(this.Environment.WebRootPath, "uplodedItems");
 
@@ -165,18 +186,23 @@ namespace hallocDoc.Controllers
                 }
             } // disposal of archive will force data to be written to memory stream.
             zipStream.Position = 0; //reset memory stream position.
-            return File(zipStream.ToArray(), "application/zip", "MyDocuments.zip");
+            return File(zipStream, "application/zip", "MyDocuments.zip");
         }
 
 
         [HttpGet]
         public async Task<IActionResult> profile(profile p)
         {
-            if (HttpContext.Session?.GetString("aspid")?.ToString() == null)
+            /*if (HttpContext.Session?.GetString("aspid")?.ToString() == null)
             {
                 return RedirectToAction("Index", "Home");
             }
-            var aspid = HttpContext.Session?.GetString("aspid").ToString();
+            var aspid = HttpContext.Session?.GetString("aspid").ToString();*/
+
+            string jwtToken = Request.Cookies["jwt"] ?? "";
+            JwtClaimsModel jwtClaims = new JwtClaimsModel();
+            jwtClaims = _jwtService.GetClaimsFromJwtToken(jwtToken);
+            var aspid = jwtClaims.AspId;
             ViewBag.username = _pDashboard.UserNameFromId(aspid);
 
             var pr = _pDashboard.ProfileData(aspid, p);
@@ -186,9 +212,13 @@ namespace hallocDoc.Controllers
         [HttpPost]
         public IActionResult profilesubmit(profile p)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                var aspid = HttpContext.Session?.GetString("aspid").ToString();
+                /*var aspid = HttpContext.Session?.GetString("aspid").ToString();*/
+                string jwtToken = Request.Cookies["jwt"] ?? "";
+                JwtClaimsModel jwtClaims = new JwtClaimsModel();
+                jwtClaims = _jwtService.GetClaimsFromJwtToken(jwtToken);
+                var aspid = jwtClaims.AspId;
 
                 if (_pDashboard.ProfileSubmit(aspid, p))
                 {

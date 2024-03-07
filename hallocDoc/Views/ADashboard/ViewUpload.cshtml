@@ -163,16 +163,26 @@
             sendFilenamesToController(selectedFilenames);
         });
 
-        function sendFilenamesToController(filenames) {
-            fetch('@Url.Action("DonwlodFileAlldummy", "pDashboard")', {
+        async function sendFilenamesToController(filenames) {
+            fetch('@Url.Action("DownloadSelected", "pDashboard")', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(filenames)
             })
-                .then(response => {
-                    
+                .then(async (response) =>  {
+                    const data = await response.blob();
+                    console.log(data);
+
+                    const a = document.createElement('a');
+                    const url = window.URL.createObjectURL(data);
+                    a.href = url;
+                    a.download = 'download.zip';
+                    document.body.append(a);
+                    a.click();
+                    a.remove();
+                    window.URL.revokeObjectURL(url);
                 })
                 .catch(error => {
                     alert("not done");

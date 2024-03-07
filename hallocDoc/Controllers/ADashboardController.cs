@@ -16,6 +16,7 @@ using Microsoft.CodeAnalysis.Elfie.Serialization;
 
 namespace hallocDoc.Controllers
 {
+    [CustomAuthorize("Admin")]
     public class ADashboardController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -29,7 +30,20 @@ namespace hallocDoc.Controllers
         }
 
 
+        public async Task<IActionResult> Order()
+        {
+           
+            var dbProType = await _context.Healthprofessionaltypes.ToListAsync();
+            var dbpro = await _context.Healthprofessionals.ToListAsync();
 
+            var sendOrder = new SendOrder
+            {
+                professionList = dbProType,
+                businessList = dbpro
+            };
+
+            return View(sendOrder);
+        }
         public async Task<IActionResult> uploadbtn(History h, int reqid)
         {
             if (await _pDashboard.uploadtoid(h, reqid))
@@ -291,5 +305,8 @@ namespace hallocDoc.Controllers
                 return File(memoryStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "TableData.xlsx");
             }
         }
+
+
+
     }
 }

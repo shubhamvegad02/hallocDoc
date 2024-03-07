@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Unauthorized Access";
+    
+}
+<div class="container mt-5" style="background-color: #ffffff7a;
+    width: 50%;
+    margin-inline: auto;
+    border-radius: 15px;
+    padding: 1%;">
+    <div class="row justify-content-center">
+        <div class="col-md-12 text-center">
+            <h1 class="display-4" style="color: #dc3545;">Oops!</h1>
+            <p class="fw-bold">You don't have permission to access this page.</p>
+            <h2><i style="color:#dc3545;" class="bi bi-ban"></i></h2>
+            <a class="btn btn-primary" href="@Url.Action("Index", "Home")">Return to Home</a>
+        </div>
+    </div>
+</div>

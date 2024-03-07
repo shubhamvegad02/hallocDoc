@@ -13,6 +13,11 @@ using NuGet.Protocol;
 using Nest;
 using System.Xml.Linq;
 using halloDocLogic.Interfaces;
+using Microsoft.AspNetCore.Mvc.Filters;
+using halloDocLogic.Repository;
+using NuGet.Common;
+using System.IdentityModel.Tokens.Jwt;
+using Newtonsoft.Json.Linq;
 
 namespace hallocDoc.Controllers
 {
@@ -30,6 +35,12 @@ namespace hallocDoc.Controllers
             _home = home;
             _jwtservice = jwtservice;
         }
+
+        public IActionResult UnauthorizedAccess()
+        {
+            return View();
+        }
+
         public IActionResult CreateuserfromLink(string email, string token, createPatient cp)
         {
             TempData["Email"] = email;
@@ -90,15 +101,32 @@ namespace hallocDoc.Controllers
 
         public IActionResult Index()
         {
+            string jwtTokenCheck = Request.Cookies["jwt"] ?? "";
+            if (_jwtservice.ValidateToken(jwtTokenCheck, out JwtSecurityToken jwtToken1))
+            {
+                JwtClaimsModel jwtClaims = new JwtClaimsModel();
+                jwtClaims = _jwtservice.GetClaimsFromJwtToken(jwtTokenCheck);
+                string userRole = jwtClaims?.Role;
+
+                if (userRole == "User")
+                {
+                    return RedirectToAction("History", "pDashboard");
+                }
+                else if (userRole == "Admin")
+                {
+                    return RedirectToAction("Dmain", "ADashboard");
+                }
+            }
             return View();
         }
 
         [HttpPost]
         public  IActionResult Index(patientLogin pl)
         {
-            if (ModelState.IsValid)
-            {
-                var result = _home.login(pl);
+            
+                if (ModelState.IsValid)
+                {
+                    var result = _home.login(pl);
                 if (result.Status == "notfound")
                 {
                     ModelState.AddModelError("NotFound", "User not found, please register first..");
@@ -111,8 +139,26 @@ namespace hallocDoc.Controllers
                     var jwtToken = _jwtservice.GenerateJwtToken(aspnetuser);
                     Response.Cookies.Append("jwt", jwtToken);
 
-                    /*HttpContext.Session.SetString("aspid", result.Aspid);*/
+                    JwtClaimsModel jwtClaims = new JwtClaimsModel();
+                    jwtClaims = _jwtservice.GetClaimsFromJwtToken(jwtToken);
+                    string userRole = jwtClaims.Role;
+
+                    if(userRole == "User")
+                    {
                     return RedirectToAction("History", "pDashboard");
+                    }
+                    else if(userRole == "Admin")
+                    {
+                    return RedirectToAction("Dmain", "ADashboard");
+                    }
+                    else
+                    {
+                    return RedirectToAction("UnauthorizedAccess", "Home");
+
+                    }
+                    /*string aspid = jwtClaims.AspId;
+                    HttpContext.Session.SetString("aspid", aspid);*/
+
                 }
                 if(result.Status == "fail")
                 {

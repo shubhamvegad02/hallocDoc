@@ -1,6 +1,7 @@
 ﻿@model halloDocEntities.ViewDataModels.patientLogin;
 @{
     ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="back">
 
@@ -40,8 +41,19 @@
     <a class="forpw ntext cp" asp-area="" asp-controller="Home" asp-action="Privacy">Forgot Password?</a>
 </div>
 
-@section scripts{
 
-    <script type="text/javascript" src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    @*<script type="text/javascript" src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>*@
+@section Homescripts{
+
+    <script type="text/javascript">
+        
+        function preventBack() {
+            window.history.forward();
+        }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () {
+            null
+        };
+    </script>
 }

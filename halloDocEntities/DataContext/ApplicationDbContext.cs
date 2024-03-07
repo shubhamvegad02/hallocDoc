@@ -22,6 +22,8 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Aspnetuser> Aspnetusers { get; set; }
 
+    public virtual DbSet<Aspnetuserrole> Aspnetuserroles { get; set; }
+
     public virtual DbSet<Blockrequest> Blockrequests { get; set; }
 
     public virtual DbSet<Business> Businesses { get; set; }
@@ -29,6 +31,12 @@ public partial class ApplicationDbContext : DbContext
     public virtual DbSet<Casetag> Casetags { get; set; }
 
     public virtual DbSet<Concierge> Concierges { get; set; }
+
+    public virtual DbSet<Healthprofessional> Healthprofessionals { get; set; }
+
+    public virtual DbSet<Healthprofessionaltype> Healthprofessionaltypes { get; set; }
+
+    public virtual DbSet<Orderdetail> Orderdetails { get; set; }
 
     public virtual DbSet<Physician> Physicians { get; set; }
 
@@ -77,25 +85,19 @@ public partial class ApplicationDbContext : DbContext
         modelBuilder.Entity<Aspnetuser>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("aspnetusers_pkey");
+        });
 
-            entity.HasMany(d => d.Roles).WithMany(p => p.Users)
-                .UsingEntity<Dictionary<string, object>>(
-                    "Aspnetuserrole",
-                    r => r.HasOne<Aspnetrole>().WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("aspnetuserroles_RoleId_fkey"),
-                    l => l.HasOne<Aspnetuser>().WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("aspnetuserroles_UserId_fkey"),
-                    j =>
-                    {
-                        j.HasKey("UserId", "RoleId").HasName("aspnetuserroles_pkey");
-                        j.ToTable("aspnetuserroles");
-                        j.IndexerProperty<string>("UserId").HasMaxLength(128);
-                        j.IndexerProperty<string>("RoleId").HasMaxLength(128);
-                    });
+        modelBuilder.Entity<Aspnetuserrole>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("aspnetuserroles_pkey");
+
+            entity.HasOne(d => d.Role).WithMany(p => p.Aspnetuserroles)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("aspnetuserroles_RoleId_fkey");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Aspnetuserroles)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("aspnetuserroles_UserId_fkey");
         });
 
         modelBuilder.Entity<Blockrequest>(entity =>
@@ -128,6 +130,23 @@ public partial class ApplicationDbContext : DbContext
             entity.HasKey(e => e.ConciergeId).HasName("concierge_pkey");
 
             entity.HasOne(d => d.Region).WithMany(p => p.Concierges).HasConstraintName("concierge_RegionId_fkey");
+        });
+
+        modelBuilder.Entity<Healthprofessional>(entity =>
+        {
+            entity.HasKey(e => e.VendorId).HasName("healthprofessionals_pkey");
+
+            entity.HasOne(d => d.ProfessionNavigation).WithMany(p => p.Healthprofessionals).HasConstraintName("healthprofessionals_Profession_fkey");
+        });
+
+        modelBuilder.Entity<Healthprofessionaltype>(entity =>
+        {
+            entity.HasKey(e => e.HealthProfessionalId).HasName("healthprofessionaltype_pkey");
+        });
+
+        modelBuilder.Entity<Orderdetail>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("orderdetails_pkey");
         });
 
         modelBuilder.Entity<Physician>(entity =>

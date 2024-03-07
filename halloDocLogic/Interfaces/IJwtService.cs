@@ -1,4 +1,5 @@
 ﻿using halloDocEntities.DataModels;
+using halloDocEntities.ViewDataModels;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -13,5 +14,7 @@ namespace halloDocLogic.Interfaces
         public string GenerateJwtToken(Aspnetuser aspuser);
 
         public bool ValidateToken(string token, out JwtSecurityToken jwtSecurityToken);
+
+        public JwtClaimsModel GetClaimsFromJwtToken(string token);
     }
 }
