@@ -6,31 +6,31 @@
 <div class="docMain mt-3">
     <div class="dmboxbar">
         <h2 m-0>Send Order</h2>
-        <a asp-area="" asp-controller="ADashboard" asp-action="Dmain" asp-route-id="2" class="logout tdn dmnewreq mb-3">Back</a>
+        <a asp-area="" asp-controller="ADashboard" asp-action="Dmain" asp-route-id="@ViewBag.status" class="logout tdn dmnewreq mb-3">Back</a>
     </div>
 
     <div class="dmbox">
-        <form asp-controller="ReqForm" asp-action="Patient" enctype="multipart/form-data" class="row g-2 g-md-3">
+        <form asp-controller="ADashboard" asp-action="Order"  class="row g-2 g-md-3">
 
 
 
             <div class="form-floating col-12 col-md-6 d-flex justify-content-center align-items-center">
                 <select id="profdropdown" asp-for="profession" class="form-select pt-0 pb-0">
                     <option value="" selected>Select profession</option>
-                    @foreach (var ritem in Model.professionList)
+                    @foreach (var ritem in Model?.professionList)
                     {
-                        <option value="@ritem.HealthProfessionalId">@ritem.Healthprofessionals</option>
+                        <option value="@ritem.HealthProfessionalId">@ritem.ProfessionName</option>
 
                     }
                 </select>
                 <span asp-validation-for="profession" class="text-danger"></span>
             </div>
             <div class="form-floating col-12 col-md-6 d-flex justify-content-center align-items-center">
-                <select asp-for="business" class="form-select pt-0 pb-0">
+                <select id="business" asp-for="business" class="form-select pt-0 pb-0">
                     <option value="" selected>Select business</option>
-                    @foreach (var ritem in Model.businessList)
+                    @foreach (var ritem in Model?.businessList)
                     {
-                        <option value="@ritem.VendorId">@ritem.VendorName</option>
+                        
                         <option class="businessOption" data-profession-id="@ritem.Profession" value="@ritem.VendorId">@ritem.VendorName</option>
 
                     }
@@ -39,17 +39,17 @@
             </div>
 
             <div class="form-floating col-12 col-md-6">
-                <input asp-for="Contact" type="text" class="form-control" id="fdate1" placeholder="Password">
+                <input asp-for="Contact" type="text" class="form-control" id="fdate1" placeholder="Password" value="">
                 <label class="mylable" for="fdate1">Business Contact</label>
                 <span asp-validation-for="Contact" class="text-danger"></span>
             </div>
             <div class="form-floating col-12 col-md-6">
-                <input asp-for="email" type="text" class="form-control" id="fdate2" placeholder="Password">
+                <input asp-for="email" type="text" class="form-control" id="fdate2" placeholder="Password" value="">
                 <label class="mylable" for="fdate2">Business email</label>
                 <span asp-validation-for="email" class="text-danger"></span>
             </div>
             <div class="form-floating col-12 col-md-6">
-                <input asp-for="fax" type="text" class="form-control" id="fdate3" placeholder="Password">
+                <input asp-for="fax" type="text" class="form-control" id="fdate3" placeholder="Password" value="">
                 <label class="mylable" for="fdate3">Fax</label>
                 <span asp-validation-for="fax" class="text-danger"></span>
             </div>
@@ -72,17 +72,18 @@
 
             <div class="btnline">
                 <button type="submit" class="btn btn-outline-primary active blbtn">Submit</button>
-                <button type="button" asp-area="" asp-controller="ReqForm" asp-action="Patient" class="btn btn-outline-primary blbtn">Cancel</button>
+                <button type="button" asp-area="" asp-controller="ADashboard" asp-action="Order" class="btn btn-outline-primary blbtn">Cancel</button>
             </div>
 
+            @Html.ValidationMessage("ordersuccess", null, new { @class= "text-success fw-bold"})
         </form>
     </div>
 </div>
 
-@section AddScript{
+@section OrderScript{
     <script>
         $('#profdropdown').change(function () {
-            console.log("new");
+            
             var selectedprofessionId = $(this).val(); // Get the selected region ID
 
             $('.businessOption').each(function () {
@@ -95,6 +96,24 @@
                     $(this).hide();
                 }
             });
+        });
+
+        document.querySelector('#business').addEventListener('change', function () {
+            console.log("new");
+            // Get the selected business ID
+            var selectedBusinessId = this.value;
+
+            // Fetch data for the selected business using AJAX
+            fetch('/ADashboard/GetOrderData?businessId=' + selectedBusinessId)
+                .then(response => response.json())
+                .then(data => {
+                    
+                    if (data) {
+                        document.getElementById('fdate1').value = data.contact;
+                        document.getElementById('fdate2').value = data.email;
+                        document.getElementById('fdate3').value = data.fax;
+                    }
+                });
         });
     </script>
 }

@@ -28,8 +28,8 @@
         <a asp-area="" asp-controller="Home" asp-action="first" class="nlogo tdn"><img class="nlimg" src="/images/halloDoc img.png" alt=""></a>
         <div class="navchild">
             <div class="navwelcome">Hello Welcome @ViewBag.username</div>
-            <a asp-area="" asp-controller="pDashboard" asp-action="logout" class="logout loglg tdn">Logout</a>
-            <a asp-area="" asp-controller="pDashboard" asp-action="logout" class="logout logsm tdn">
+            <a asp-area="" asp-controller="ADashboard" asp-action="Logout" class="logout loglg tdn">Logout</a>
+            <a asp-area="" asp-controller="ADashboard" asp-action="Logout" class="logout logsm tdn">
                 <img class="smimg" src="/images/logout-svgrepo1-com.svg" alt="">
             </a>
             <button class="moonbtn" id="moonbtn" onclick="darkfunction()">
@@ -106,7 +106,7 @@
 
 
 
-        $('#ACregiondrop').change(function () {
+        $('.ACregiondrop').change(function () {
             console.log("new");
             var selectedRegionId = $(this).val(); // Get the selected region ID
 
@@ -163,6 +163,10 @@
 
 
     </script>
+        @if (IsSectionDefined("OrderScript"))
+        {
+            @RenderSection("OrderScript", required: false)
+        }
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript">
         $(function () {

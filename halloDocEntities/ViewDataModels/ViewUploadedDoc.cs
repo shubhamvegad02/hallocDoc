@@ -18,6 +18,8 @@ namespace halloDocEntities.ViewDataModels
 
         public int fileId { get; set; }
 
+        public int rid { get; set; }
+
 
     }
 }

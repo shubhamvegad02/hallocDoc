@@ -13,6 +13,7 @@ using halloDocEntities.DataModels;
 using System.Security.Cryptography;
 using Org.BouncyCastle.Ocsp;
 using Microsoft.CodeAnalysis.Elfie.Serialization;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace hallocDoc.Controllers
 {
@@ -22,27 +23,126 @@ namespace hallocDoc.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IADashboard _iadash;
         private readonly IPDashboard _pDashboard;
-        public ADashboardController(ApplicationDbContext dbContext, IADashboard dashboard, IPDashboard pDashboard)
+        private readonly IHostingEnvironment _hostEnvironment;
+        public ADashboardController(ApplicationDbContext dbContext, IADashboard dashboard, IPDashboard pDashboard, IHostingEnvironment hostingEnvironment)
         {
             _context = dbContext;
             _iadash = dashboard;
             _pDashboard = pDashboard;
+            _hostEnvironment = hostingEnvironment;
         }
 
 
-        public async Task<IActionResult> Order()
+
+        public FileResult DonwlodFile(string filename)
         {
-           
+            string path = Path.Combine(_hostEnvironment.WebRootPath, "uplodedItems/") + filename;
+            byte[] bytes = System.IO.File.ReadAllBytes(path);
+            return File(bytes, "application/octet-stream", filename);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> TransferCase(int rid, ADashTable adt)
+        {
+            var dbreq = _context.Requests.FirstOrDefault(m => m.RequestId == rid);
+            if (dbreq != null)
+            {
+                dbreq.PhysicianId = adt.phyId;
+                _context.Requests.Update(dbreq);
+                _context.SaveChanges();
+            }
+            var dbreqnotes = await _context.Requestnotes.FirstOrDefaultAsync(m => m.RequestId == rid);
+            if (dbreqnotes != null)
+            {
+                dbreqnotes.AdminNotes = adt.notes;
+                dbreqnotes.ModifiedBy = "Admin";
+                dbreqnotes.ModifiedDate = DateTime.Now;
+                _context.Requestnotes.Update(dbreqnotes);
+                _context.SaveChanges();
+            }
+            var rl = new Requeststatuslog();
+            rl.RequestId = rid;
+            rl.Status = 2;
+            rl.AdminId = 1;
+            rl.TransToPhysicianId = adt.phyId;
+            rl.Notes = adt.notes;
+            rl.CreatedDate = DateTime.Now;
+            _context.Requeststatuslogs.Add(rl);
+            _context.SaveChanges();
+
+            return RedirectToAction("Dmain", "ADashboard", new { id = 2 });
+        }
+        public async Task<IActionResult> Logout()
+        {
+            Response.Cookies.Delete("jwt");
+            return RedirectToAction("Index", "Home");
+        }
+        public async Task<IActionResult> GetOrderData(int businessId)
+        {
+            var business = await _context.Healthprofessionals
+                              .Where(p => p.VendorId == businessId)
+                              .Select(p => new
+                              {
+                                  Contact = p.PhoneNumber,
+                                  Email = p.Email,
+                                  Fax = p.FaxNumber,
+
+                              })
+                              .FirstOrDefaultAsync();
+
+            return Json(business);
+        }
+
+        public async Task<IActionResult> Order(int rid)
+        {
+            TempData["rid"] = rid;
+            var dbReq = await _context.Requests.FirstOrDefaultAsync(m => m.RequestId == rid);
+            TempData["status"] = dbReq.Status;
+            ViewBag.status = dbReq.Status;
             var dbProType = await _context.Healthprofessionaltypes.ToListAsync();
             var dbpro = await _context.Healthprofessionals.ToListAsync();
+
 
             var sendOrder = new SendOrder
             {
                 professionList = dbProType,
                 businessList = dbpro
             };
+            /*{
+                professionList = dbProType,
+                businessList = dbpro
+            };*/
 
             return View(sendOrder);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Order(SendOrder so)
+        {
+            var rid = TempData["rid"] as int?;
+            var status = TempData["status"] as int?;
+            var dbprofessional = await _context.Healthprofessionals.FirstOrDefaultAsync(m => m.VendorName == so.business);
+            int? vendor = dbprofessional?.VendorId;
+
+            if (so != null)
+            {
+                var od = new Orderdetail();
+                od.VendorId = int.Parse(so.business);
+                od.RequestId = rid;
+                od.FaxNumber = so.fax;
+                od.BusinessContact = so.Contact;
+                od.Email = so.email;
+                od.Prescription = so.orderDetail;
+                od.NoOfRefill = so.refill;
+                od.CreatedBy = "Admin";
+                od.CreatedDate = DateTime.Today;
+                await _context.Orderdetails.AddAsync(od);
+                _context.SaveChanges();
+            }
+
+
+            ModelState.AddModelError("ordersuccess", "Order placed Successfully..");
+            return RedirectToAction("Dmain", "ADashboard", new { id = status });
         }
         public async Task<IActionResult> uploadbtn(History h, int reqid)
         {
@@ -50,7 +150,7 @@ namespace hallocDoc.Controllers
             {
                 return RedirectToAction("Dmain", "ADashboard", new { id = 2 });
             }
-            return RedirectToAction("ViewUpload", "ADashboard", new {rid = reqid});
+            return RedirectToAction("ViewUpload", "ADashboard", new { rid = reqid });
         }
         public async Task<IActionResult> DeleteFiles(int reqId, [FromBody] string[] filenames)
         {
@@ -61,10 +161,10 @@ namespace hallocDoc.Controllers
             int x = 0;
             foreach (var item in filenames)
             {
-                
-                 x = await _iadash.DeleteFile(item);
+
+                x = await _iadash.DeleteFile(item);
             }
-            
+
             ModelState.AddModelError("deleted", "File Deleted Successfully..");
             return RedirectToAction("ViewUpload", "ADashboard", new { rid = x });
 
@@ -100,6 +200,8 @@ namespace hallocDoc.Controllers
                 vu.uploadDate = item.r.CreatedDate;
                 vu.fileName = item.rf.FileName;
                 vu.fileId = item.rf.RequestWiseFileId;
+                vu.rid = rid;
+                
 
 
                 data.Add(vu);

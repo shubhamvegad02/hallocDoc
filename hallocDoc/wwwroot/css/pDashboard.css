@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-     /*border: 1px solid red; */
+    /*border: 1px solid red; */
 }
 
 :root {
@@ -19,30 +19,34 @@
 .tdn {
     text-decoration: none;
 }
-.tdn:hover{
-    text-decoration:none;
-}
+
+    .tdn:hover {
+        text-decoration: none;
+    }
 
 /*---------layout design---------*/
 
 .hambtn {
-    display:none;
+    display: none;
     height: 44px;
     width: 44px;
     background-color: transparent;
     border: 2px solid var(--blue);
     border-radius: 5px;
 }
+
 .navchild {
-    height:46%;
+    height: 46%;
     width: 70%;
     display: flex;
     align-items: center;
     justify-content: flex-end;
 }
-.navchild > *{
-    margin-inline:1%;
-}
+
+    .navchild > * {
+        margin-inline: 1%;
+    }
+
 .logout {
     border: 2px solid var(--blue);
     color: var(--blue);
@@ -56,48 +60,54 @@
     justify-content: center;
     padding-inline: 10px;
 }
+
 .loglg {
     display: flex;
 }
 
 .logsm {
     display: none;
-    height:44px !important;
-    width:44px !important;
+    height: 44px !important;
+    width: 44px !important;
 }
-.smimg{
+
+.smimg {
     /*width:100%;
     height:100%;*/
 }
-.logout:hover{
-    color:white;
-    background-color:var(--blue);
+
+.logout:hover {
+    color: white;
+    background-color: var(--blue);
 }
-.navwelcome{
-    display:flex;
-    align-items:center;
-    height:100%;
-    width:fit-content;
-    padding-inline:5px;
+
+.navwelcome {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: fit-content;
+    padding-inline: 5px;
 }
 
 
 /*---------dashboard-----------*/
 
 
-.historyhead{
-    width:96%;
-    margin-inline:auto;
-
+.historyhead {
+    width: 96%;
+    margin-inline: auto;
 }
+
 .dashsidebar {
     display: none;
     transition-duration: 1s !important;
 }
+
 .hideside {
     transform: translateX(-105%);
     transition-duration: 1s !important;
 }
+
 .dashnav {
     height: 60px;
     width: 96%;
@@ -107,54 +117,59 @@
     border-bottom: 1px solid gray;
     margin-top: 7px;
 }
+
 .dnchild {
-    color:black;
-    font-weight:500;
+    color: black;
+    font-weight: 500;
     width: 100px;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-    .dnchild:focus-visible{
-        color:red;
-    }
-    .dncactive {
-        border-bottom: 3px solid var(--blue);
+
+    .dnchild:focus-visible {
+        color: red;
     }
 
+.dncactive {
+    border-bottom: 3px solid var(--blue);
+}
+
 .dmain {
-    height:fit-content;
-    min-height:63vh;
+    height: fit-content;
+    min-height: 63vh;
     width: 96%;
     margin-inline: auto;
     background-color: #f1f1f1a3;
     padding: 1%;
     border-radius: 10px;
 }
+
 .dmtable {
     height: 100%;
     width: 100%;
     margin-inline: auto;
-    margin-top:50px;
+    margin-top: 50px;
 }
-.dmnewreq{
-    float:right;
-    height:50px !important;
+
+.dmnewreq {
+    float: right;
+    height: 50px !important;
 }
-.accordion{
-    display:none;
+
+.accordion {
+    display: none;
 }
 
 /*-------------ViewData--------------*/
 
-.docMain{
-    
-    width:70%;
-    margin-inline:auto;
-    height:fit-content;
-    
+.docMain {
+    width: 70%;
+    margin-inline: auto;
+    height: fit-content;
 }
+
 .dmbox {
     height: fit-content;
     min-height: 70vh;
@@ -162,6 +177,7 @@
     background-color: #f1f1f1a3;
     border-radius: 10px;
 }
+
 .dmboxbar {
     display: flex;
     flex-direction: row;
@@ -202,15 +218,16 @@
     align-items: center;
     display: flex;
 }
-.btnnohovor{
-    width:50px;
-    height:50px;
-    
+
+.btnnohovor {
+    width: 50px;
+    height: 50px;
 }
-.btnnohovor:hover {
-    background-color: white !important;
-    border-color: var(--blue) !important;
-}
+
+    .btnnohovor:hover {
+        background-color: white !important;
+        border-color: var(--blue) !important;
+    }
 
 #countrybtn {
     width: 30%;
@@ -222,8 +239,8 @@
 
 .cloudimg {
     /*scale: 1.4;*/
-    height:100%;
-    width:80%;
+    height: 100%;
+    width: 80%;
 }
 
 /*--------------agreement------------*/
@@ -235,7 +252,7 @@
 .container {
     justify-content: center;
     align-items: center;
-    height:73vh;
+    height: 73vh;
 }
 
 .Discription {
@@ -256,61 +273,76 @@
     justify-content: space-around;
 }
 
-.agreebtn{
-    border:none !important;
-    color:white !important;
-}
-.agreebtn:hover{
-    border: 1px solid var(--blue) !important;
-    color:var(--blue) !important;
+.agreebtn {
+    border: none !important;
+    color: white !important;
 }
 
+    .agreebtn:hover {
+        border: 1px solid var(--blue) !important;
+        color: var(--blue) !important;
+    }
 
+@media screen and (max-width : 1200px) {
+    .docMain{
+        width:98%;
+    }
+}
 
 
     @media screen and (max-width : 768px) {
-        .hambtn{
-        display:block;
-    }
-    .navwelcome {
-        display: none;
-    }
-    .navchild{
-        width:37%;
-    }
-    .logout {
-        
-        height: 100%;
-        width: fit-content;
-        background: transparent;
-        display: flex;
-        align-items: center;
-        font-size: 1rem;
-        justify-content: center;
-        padding-inline: 5px;
-    }
-    .loglg{
-        display:none;
-    }
-    .logsm{
-        display:flex;
-    }
-    .dmnewreq {
-        height: 42px !important;
-        margin-right: 11px;
-    }
-    .table{
-        display:none;
-    }
-    .accordion{
-        display:block;
-    }
-    .docMain{
-        width:96%;
-    }
-    .dashnav{
-        display:none;
-    }
+        .hambtn {
+            display: block;
+        }
+
+        .navwelcome {
+            display: none;
+        }
+
+        .navchild {
+            width: 37%;
+        }
+
+        .logout {
+            height: 100%;
+            width: fit-content;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+            justify-content: center;
+            padding-inline: 5px;
+        }
+
+        .loglg {
+            display: none;
+        }
+
+        .logsm {
+            display: flex;
+        }
+
+        .dmnewreq {
+            height: 42px !important;
+            margin-right: 11px;
+        }
+
+        .table {
+            display: none;
+        }
+
+        .accordion {
+            display: block;
+        }
+
+        .docMain {
+            width: 96%;
+        }
+
+        .dashnav {
+            display: none;
+        }
+
         .dashsidebar {
             background-color: #f4f9ff;
             /*position: absolute;*/
@@ -326,6 +358,7 @@
             display: flex;
             box-shadow: 4px 2px 10px gray;
         }
+
         .dschild {
             border: 2px solid var(--blue);
             margin-top: 10px;
@@ -339,13 +372,10 @@
             border-radius: 5px;
             font-weight: 500;
         }
-    .dschildactive{
-        color:white;
-        border-color:var(--blue);
-        background-color:var(--blue);
 
-
-
+        .dschildactive {
+            color: white;
+            border-color: var(--blue);
+            background-color: var(--blue);
+        }
     }
-    
-}

@@ -183,7 +183,7 @@
                                         }
                                         @if (ViewBag.n == 2)
                                         {
-                                            <li><a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Transfer</span></a></li>
+                                            <li><a data-bs-toggle="modal" data-bs-target="#transferreq-@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Transfer</span></a></li>
                                             <li><a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>send agrrement</span></a></li>
                                         }
                                         @if (ViewBag.n == 2 || ViewBag.n == 5)
@@ -221,7 +221,7 @@
                                             <span class="fw-bold">Patient Name : </span><span>@item.name</span>
                                         </div>
                                         <form asp-area="" asp-controller="ADashboard" asp-action="AssignCase" asp-route-rid="@item.rid" class="row g-2 mt-3">
-                                            <select asp-for="region" id="ACregiondrop" class="form-select d-searchbar form-control mb-2" aria-label="Default select example">
+                                            <select asp-for="region" id="ACregiondrop" class="ACregiondrop form-select d-searchbar form-control mb-2" aria-label="Default select example">
                                                 <option value="" selected>Select Region</option>
                                                 @foreach (var ritem in ViewBag.rlist)
                                                 {
@@ -242,7 +242,7 @@
                                             <div class="form-floating col-12 mb-2">
                                                 <input asp-for="notes" type="text" class="form-control" id="floatingInput1" placeholder="Provide additional notes..">
                                                 <label class="mylable" for="floatingInput1">Description</label>
-                                                @*<span asp-validation-for="FFirstName" class="text-danger"></span>*@
+                                                
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn " data-bs-dismiss="modal">Close</button>
@@ -250,10 +250,49 @@
                                             </div>
                                         </form>
                                     </div>
-                                    @*<div class="modal-footer">
-                            <button type="button" class="btn " data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn ">Save changes</button>
-                            </div>*@
+                                </div>
+                            </div>
+                        </div>
+
+                        @*transfer case*@
+                        <div class="modal fade" id="transferreq-@item.rid" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Transfer Patient</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form asp-area="" asp-controller="ADashboard" asp-action="TransferCase" asp-route-rid="@item.rid" class="row g-2 mt-3">
+                                            <select asp-for="region" class="ACregiondrop form-select d-searchbar form-control mb-2" >
+                                                <option value="" selected>Select Region</option>
+                                                @foreach (var ritem in ViewBag.rlist)
+                                                {
+                                                    <option value="@ritem.RegionId">@ritem.Name</option>
+
+                                                }
+                                            </select>
+                                            <select asp-for="phyId"  class="form-select d-searchbar form-control mb-2" >
+                                                <option value="" selected>select physician</option>
+                                                @foreach (var pitem in ViewBag.plist)
+                                                {
+                                                    <option class="ACRoption" data-region-id="@pitem.RegionId" value="@pitem.PhysicianId">@pitem.FirstName</option>
+
+                                                }
+
+                                            </select>
+
+                                            <div class="form-floating col-12 mb-2">
+                                                <input asp-for="notes" type="text" class="form-control" id="floatingInput1" placeholder="Provide additional notes..">
+                                                <label class="mylable" for="floatingInput1">Description</label>
+                                                
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn " data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn ">Save changes</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -388,7 +427,7 @@
                                 }
                                 @if (ViewBag.n == 2)
                                 {
-                                    <a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="btnbadge badge rounded-pill bg-info"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Transfer</span></a>
+                                    <a data-bs-toggle="modal" data-bs-target="#transferreq-@item.rid" class="btnbadge badge rounded-pill bg-warning"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Transfer</span></a>
                                     <a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="btnbadge badge rounded-pill bg-warning"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>send agrrement</span></a>
                                 }
                                 @if (ViewBag.n == 2 || ViewBag.n == 5)

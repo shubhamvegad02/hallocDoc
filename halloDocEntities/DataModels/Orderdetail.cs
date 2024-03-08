@@ -22,7 +22,7 @@ public partial class Orderdetail
     [StringLength(50)]
     public string? Email { get; set; }
 
-    [StringLength(100)]
+    [StringLength(50)]
     public string? BusinessContact { get; set; }
 
     public string? Prescription { get; set; }

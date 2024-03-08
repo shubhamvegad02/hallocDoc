@@ -309,47 +309,6 @@ namespace halloDocLogic.Repository
             return reqc;
         }
 
-        /*public async Task SendEmailAsync(string[] filePaths, string recipientEmail, string subject, string body)
-        {
-            using var client = new SmtpClient(_configuration["EmailSettings:SmtpServer"],
-                                              int.Parse(_configuration["EmailSettings:Port"]),
-                                              bool.Parse(_configuration["EmailSettings:UseSsl"]));
-
-            await client.ConnectAsync(_configuration["EmailSettings:SmtpServer"],
-                                     int.Parse(_configuration["EmailSettings:Port"]),
-                                     SecureSocketOptions.StartTls);
-
-            // Optional: Authenticate with your email server if required
-            await client.AuthenticateAsync(_configuration["EmailSettings:FromEmail"],
-                                          _configuration["EmailSettings:Password"]);
-
-            var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("Your App Name", _configuration["EmailSettings:FromEmail"]));
-            message.To.Add(new MailboxAddress("Recipient Name", recipientEmail));
-            message.Subject = subject;
-
-            // Create a multipart/mixed message body
-            var bodyBuilder = new BodyBuilder();
-            bodyBuilder.TextBody = body;
-
-            // Attach files
-            foreach (var filePath in filePaths)
-            {
-                if (System.IO.File.Exists(filePath))
-                {
-                    using var fileStream = System.IO.File.OpenRead(filePath);
-                    var attachment = new Attachment(fileStream, Path.GetFileName(filePath));
-                    bodyBuilder.Attachments.Add(attachment);
-                }
-                else
-                {
-                    // Handle missing file gracefully (e.g., log error)
-                }
-            }
-
-            message.Body = bodyBuilder.ToMessage();
-
-            await client.SendAsync(message);
-        }*/
+        
     }
 }
