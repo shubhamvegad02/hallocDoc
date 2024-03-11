@@ -28,6 +28,38 @@ namespace halloDocLogic.Repository
             _hostEnvironment = environment;
         }
 
+
+        public bool agreement(int rid)
+        {
+            var dbreq = _context.Requests.FirstOrDefault(m => m.RequestId == rid);
+            if (dbreq != null)
+            {
+                dbreq.Status = 3;
+                _context.Requests.Update(dbreq);
+                _context.SaveChanges();
+            }
+            return true;
+        }
+
+        public bool popupSubmit(string notes, int reqid)
+        {
+            Requeststatuslog rsl = new Requeststatuslog();
+            rsl.Status = 10;
+            rsl.Notes = notes;
+            rsl.CreatedDate = DateTime.Now;
+            rsl.RequestId = reqid;
+            _context.Requeststatuslogs.Add(rsl);
+            _context.SaveChanges();
+
+            var dbreq = _context.Requests.FirstOrDefault(m => m.RequestId == reqid);    
+            if (dbreq != null)
+            {
+                dbreq.Status = 10;
+                _context.Requests.Update(dbreq);
+                _context.SaveChanges();
+            }
+            return true;
+        }
         public Task<bool> uploadtoid(History h, int reqid)
         {
             string filename1 = null;

@@ -24,5 +24,9 @@ namespace halloDocLogic.Interfaces
         public Stream downloadAll(string aspid);
 
         public Stream downloadSelected(string[] filenames);
+
+        public bool popupSubmit(string notes, int reqid);
+
+        public bool agreement(int rid);
     }
 }

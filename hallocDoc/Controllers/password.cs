@@ -4,6 +4,7 @@ namespace hallocDoc.Controllers
 {
     public static class password
     {
+
         public static string encry(string pass)
         {
             if (pass == null)

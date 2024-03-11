@@ -17,10 +17,11 @@ using Org.BouncyCastle.Ocsp;
 using Microsoft.Extensions.Hosting;
 using halloDocLogic.Repository;
 using Newtonsoft.Json.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace hallocDoc.Controllers
 {
-    [CustomAuthorize("User")]
+    /*[CustomAuthorize("User")]*/
     public class pDashboardController : Controller
     {
         /*private readonly ApplicationDbContext _context;*/
@@ -59,15 +60,28 @@ namespace hallocDoc.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-        public IActionResult agreement()
+        [HttpGet]
+        public IActionResult agreement(int Rid)
         {
-            /*var aspid = HttpContext.Session?.GetString("aspid").ToString();
-            var userdb = _context.Users.FirstOrDefault(m => m.AspNetUserId == aspid);
-
-            ViewBag.username = userdb?.FirstName;*/
+            ViewBag.rid = Rid;
             return View();
         }
-        
+
+        [HttpPost]
+        public IActionResult agreement(int rid, string? s)
+        {
+            var check = _pDashboard.agreement(rid);
+            ModelState.AddModelError("agreesuccess", "Your Response saved successfully..");
+            return View();
+        }
+        public IActionResult popupSubmit(History h, int rid)
+        {
+            string notes = h.popupNotes;
+            var check = _pDashboard.popupSubmit(notes, rid);
+            return RedirectToAction("agreement");
+        }
+
+        [CustomAuthorize("User")]
         public async Task<IActionResult> History()
         {
             /*if (HttpContext.Session?.GetString("aspid")?.ToString() == null)
@@ -91,6 +105,8 @@ namespace hallocDoc.Controllers
 
             return View();
         }
+
+        [CustomAuthorize("User")]
         public async Task<IActionResult> viewDoc(int reqid)
         {
             /*if (HttpContext.Session?.GetString("aspid")?.ToString() == null)
@@ -189,7 +205,7 @@ namespace hallocDoc.Controllers
             return File(zipStream, "application/zip", "MyDocuments.zip");
         }
 
-
+        [CustomAuthorize("User")]
         [HttpGet]
         public async Task<IActionResult> profile(profile p)
         {
@@ -209,6 +225,7 @@ namespace hallocDoc.Controllers
             return View(p);
         }
 
+        [CustomAuthorize("User")]
         [HttpPost]
         public IActionResult profilesubmit(profile p)
         {

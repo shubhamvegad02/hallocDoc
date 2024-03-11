@@ -1,0 +1,190 @@
+﻿@model halloDocEntities.ViewDataModels.AViewNoteCase;
+@{
+    ViewData["Title"] = "View upload";
+    Layout = "~/Views/Shared/_ADashboard.cshtml";
+}
+<div class="docMain mt-3">
+    <div class="dmboxbar">
+        <h2 m-0>Close Case</h2>
+        <a asp-area="" asp-controller="ADashboard" asp-action="Dmain" asp-route-id="2" class="logout tdn dmnewreq mb-3">Back</a>
+    </div>
+
+    <div class="dmbox">
+        <span>Patient Name</span>
+        <h5><span style="color:#68cbe1;">@Model.fname</span>(<span>@Model.confNumber</span>)</h5>
+
+        <h4>Documents</h4>
+        <table class="table w-100 mt-3">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Document</th>
+                    <th scope="col">Upload Date</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody class="lh-lg">
+                @if (ViewBag.Filedata == null)
+                {
+                    <span>Documents are not available</span>
+                }
+                @foreach (var item in ViewBag.FileData)
+                {
+                    var temp = item.fileName;
+                    temp = temp.Substring(temp.IndexOf("_") + 1);
+
+                    <tr class="lh-3">
+                        @*<th><input type="checkbox" /></th>*@
+                        <td>
+                            <input type="checkbox" name="selectedFiles" value="@item.fileName" />
+
+                        </td>
+
+                        <td>@temp</td>
+                        <td>@item.uploadDate</td>
+                        <td class="d-flex flex-row">
+
+                            <a class="ms-2 logout btnnohovor tdn p-0" href="@Url.Action("DonwlodFile", "ADashboard", new { fileName = item.fileName })">
+                                <img class="h-100 w-100" src="~/images/cloud-arrow-down-alt-svgrepo-com.svg" alt="">
+                            </a>
+                            <a class=" ms-2 logout btnnohovor tdn p-0" href="@Url.Action("DeleteFile", "ADashboard", new { fileId = item.fileId })">
+                                <i style="color:#4bcbcb;" class="bi bi-trash"></i>
+                            </a>
+
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+            @Html.ValidationMessage("deleted", null, new { @class= "text-success fw-bold"})
+        </table>
+        <h4>Patient Information</h4>
+
+        <form asp-controller="ADashboard" asp-action="closeCase" asp-route-id="@Model.rid" class="row g-2 g-md-3 mt-2">
+            <div class=" form-floating col-12">
+                <textarea asp-for="symptoms" typeof="text" class="form-control h-100" id="floatingInput4" rows="3"
+                          placeholder="Enter symptoms details in detail(optional)" disabled readonly></textarea>
+                <label class="mylable" for="floatingInput4">Patient Notes</label>
+            </div>
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="fname" type="text" class="form-control" id="floatingInput2" placeholder="" disabled readonly>
+                <label class="mylable" for="floatingInput2">First Name</label>
+
+
+            </div>
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="lname" type="text" class="form-control" id="floatingPassword" placeholder="Password" disabled readonly>
+                <label class="mylable" for="floatingPassword">Last Name</label>
+
+
+            </div>
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="dob" type="date" class="form-control" id="fdate" placeholder="Password" disabled readonly>
+                <label class="mylable" for="fdate">Date of birth</label>
+
+
+            </div>
+
+
+
+            <div class="form-floating col-12 col-md-6 d-flex flex-row justify-content-between">
+
+                <input style="width:80%;" type="tel" asp-for="mobile" id="phonebox" class="form-control" placeholder="Mobile Number" disabled readonly />
+                <label class="mylable" for="phone">Mobile No.</label>
+                <div class="border-2 border rounded border-info d-flex justify-content-center align-items-center cp" style="width:15%; height:100%;">
+                    <h3><i class="bi bi-telephone" style="color: #00c4ff;"></i></h3>
+                </div>
+            </div>
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="email" type="email" class="form-control" id="emailbox" placeholder="name@example.com" disabled readonly>
+                <label class="mylable" for="emailbox">Email address</label>
+
+            </div>
+            <div class="form-floating col-2 border-1 border-info">
+                <button type="button" id="editButton" class="w-100 btn btn-outline-primary active blbtn ms-2">Edit</button>
+            </div>
+
+            <h4>Location Information</h4>
+
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="region" type="text" class="form-control" id="6" placeholder="name@example.com" disabled readonly>
+                <label class="mylable" for="6">State</label>
+
+            </div>
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="address" type="text" class="form-control" id="4" placeholder="name@example.com" disabled readonly>
+                <label class="mylable" for="4">Address</label>
+
+            </div>
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="room" type="text" class="form-control" id="4SDSD" placeholder="name@example.com" disabled readonly>
+                <label class="mylable" for="4SDSD">#Room</label>
+
+            </div>
+            <input type="hidden" asp-for="rid" value="@Model?.rid" />
+            <div class="d-flex justify-content-end mb-2">
+                <button id="savebtn" type="submit" class="btn btn-outline-primary active blbtn ms-2 d-none">Save</button>
+                <a id="closecasebtn" asp-area="" asp-controller="ADashboard" asp-action="closeCasefinal" asp-route-rid="@Model?.rid" class="btn btn-danger ms-2" style="border:none; color:white;">Close Case</a>
+                <a id="cancelbtn" asp-area="" asp-controller="ADashboard" asp-action="closeCase" asp-route-rid="@Model?.rid" class="btn btn-danger ms-2 d-none" style="border:none; color:white;">Cancel</a>
+            </div>
+            @Html.ValidationMessage("closecaseupdate", null, new { @class= "text-success fw-bold"})
+        </form>
+
+
+
+        <div class="accordion accordion-flush mt-3" id="accordionFlushExample">
+            @foreach (var item in ViewBag.FileData)
+            {
+                var temp = item.fileName;
+                temp = temp.Substring(temp.IndexOf("_") + 1);
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header border-0">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.fileId" aria-expanded="false" aria-controls="flush-@item.fileId">
+                            @temp
+                        </button>
+                    </h2>
+                    <div style="background-color:#cfe2ff;" id="flush-@item.fileId" class="accordion-collapse collapse p-2" data-bs-parent="#accordionFlushExample">
+
+                        <div class="d-flex flex-column justify-content-between h-100 w-100">
+                            <div>@item.uploadDate</div>
+                            <div class="d-flex mt-2">
+                                <a class="ms-2 logout btnnohovor tdn p-1 d-flex align-items-center h-100 w-25" href="@Url.Action("DonwlodFile", "ADashboard", new { fileName = item.fileName })">
+                                    <h3><i style="color:#4bcbcb;" class="bi bi-cloud-arrow-down"></i></h3>
+                                </a>
+                                <a class=" ms-2 logout btnnohovor tdn p-1 d-flex align-items-center h-100 w-25" href="@Url.Action("DeleteFile", "ADashboard", new { fileId = item.fileId })">
+                                    <h4><i style="color:#4bcbcb;" class="bi bi-trash"></i></h4>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        document.getElementById("editButton").addEventListener("click", function () {
+            var mobileInput = document.getElementById("phonebox");
+            var emailInput = document.getElementById("emailbox");
+            var closecasebtn = document.getElementById("closecasebtn");
+            var cancelbtn = document.getElementById("cancelbtn");
+            var savebtn = document.getElementById("savebtn");
+            var editButton = document.getElementById("editButton");
+
+        mobileInput.disabled = !mobileInput.disabled;
+        mobileInput.readOnly = !mobileInput.readOnly;
+        emailInput.disabled = !emailInput.disabled;
+        emailInput.readOnly = !emailInput.readOnly;
+        closecasebtn.classList.add("d-none");
+        cancelbtn.classList.add("d-block");
+        cancelbtn.classList.remove("d-none");
+        savebtn.classList.add("d-block");
+        savebtn.classList.remove("d-none");
+            editButton.disabled = true;
+        });
+    </script>
+}

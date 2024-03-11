@@ -40,5 +40,7 @@ namespace halloDocEntities.ViewDataModels
         public string? TempAnotes { get; set; }
 
         public int rid { get; set; }
+
+        public string confNumber { get; set; }
     }
 }

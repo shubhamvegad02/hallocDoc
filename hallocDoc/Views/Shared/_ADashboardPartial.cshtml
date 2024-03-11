@@ -184,11 +184,11 @@
                                         @if (ViewBag.n == 2)
                                         {
                                             <li><a data-bs-toggle="modal" data-bs-target="#transferreq-@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Transfer</span></a></li>
-                                            <li><a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>send agrrement</span></a></li>
+                                            <li><a data-bs-toggle="modal" data-bs-target="#sendAgreement-@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>send agrrement</span></a></li>
                                         }
                                         @if (ViewBag.n == 2 || ViewBag.n == 5)
                                         {
-                                            <li><a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Clear Case</span></a></li>
+                                            <li><a data-bs-toggle="modal" data-bs-target="#clearCase-@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Clear Case</span></a></li>
                                         }
                                         @if (ViewBag.n == 3 || ViewBag.n == 5 || ViewBag.n == 4)
                                         {
@@ -198,7 +198,7 @@
                                         }
                                         @if (ViewBag.n == 5)
                                         {
-                                            <li><a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Close Case</span></a></li>
+                                            <li><a asp-area="" asp-controller="ADashboard" asp-action="closeCase" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Close Case</span></a></li>
                                         }
 
                                     </ul>
@@ -242,7 +242,7 @@
                                             <div class="form-floating col-12 mb-2">
                                                 <input asp-for="notes" type="text" class="form-control" id="floatingInput1" placeholder="Provide additional notes..">
                                                 <label class="mylable" for="floatingInput1">Description</label>
-                                                
+
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn " data-bs-dismiss="modal">Close</button>
@@ -264,7 +264,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <form asp-area="" asp-controller="ADashboard" asp-action="TransferCase" asp-route-rid="@item.rid" class="row g-2 mt-3">
-                                            <select asp-for="region" class="ACregiondrop form-select d-searchbar form-control mb-2" >
+                                            <select asp-for="region" class="ACregiondrop form-select d-searchbar form-control mb-2">
                                                 <option value="" selected>Select Region</option>
                                                 @foreach (var ritem in ViewBag.rlist)
                                                 {
@@ -272,7 +272,7 @@
 
                                                 }
                                             </select>
-                                            <select asp-for="phyId"  class="form-select d-searchbar form-control mb-2" >
+                                            <select asp-for="phyId" class="form-select d-searchbar form-control mb-2">
                                                 <option value="" selected>select physician</option>
                                                 @foreach (var pitem in ViewBag.plist)
                                                 {
@@ -285,7 +285,7 @@
                                             <div class="form-floating col-12 mb-2">
                                                 <input asp-for="notes" type="text" class="form-control" id="floatingInput1" placeholder="Provide additional notes..">
                                                 <label class="mylable" for="floatingInput1">Description</label>
-                                                
+
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn " data-bs-dismiss="modal">Close</button>
@@ -336,6 +336,64 @@
                             </div>
                         </div>
 
+                        @*clear case*@
+                        <div class="modal fade" id="clearCase-@item.rid" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body p-2">
+                                        <div class="d-flex justify-content-center flex-column align-items-center p-3">
+                                            <h1><i style="color: rgb(234, 199, 0);" class="bi bi-exclamation-circle-fill"></i></h1>
+                                            <h3 class="fw-bold">Confirmation for clear case</h3>
+                                            <div class="ps-5 pe-5">Are you sure to clear this request? Once you clear request then you are not able to see this request</div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <form asp-area="" asp-controller="ADashboard" asp-action="ClearCase" asp-route-id="@item.rid">
+                                                <button type="button" style=""  class="btn" data-bs-dismiss="modal">Cancel</button>
+                                                <button type="submit"  class="btn btn-danger">Clear Case</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*send aggrement*@
+                        <div class="modal fade" id="sendAgreement-@item.rid" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Send Agreement</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div>
+                                            <span class="fw-bold">@item.requstor</span>
+                                        </div>
+                                        <form asp-area="" asp-controller="ADashboard" asp-action="sendAgreement" asp-route-rid="@item.rid" class="row g-2 mt-3">
+                                            <div class="form-floating col-12 mb-2">
+                                                <input asp-for="mobile" type="text" class="form-control" id="floatingInput1" value="@item.mobile">
+                                                <label class="mylable" for="floatingInput1">Mobile No.</label>
+
+                                            </div>
+                                            <div class="form-floating col-12 mb-2">
+                                                <input asp-for="email" type="text" class="form-control" id="floatingInput10" value="@item.email">
+                                                <label class="mylable" for="floatingInput10">Email</label>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn " data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn ">Send</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         @* block case*@
                         <div class="modal fade " id="confirmblock-@item.rid" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -404,7 +462,7 @@
                                 <div class="mb-2"><i class="bi bi-heart-pulse border border-2 border-info rounded-circle pe-1 ps-1 m-1"></i> <span class="fw-bold">Physician : </span><span>@item?.PhysicianName</span></div>
                                 <div class="mb-2"><i class="bi bi-person border border-2 border-info rounded-circle pe-1 ps-1 m-1"></i> <span class="fw-bold">Requestor : </span><span> @item.requstor</span></div>
                             </div>
-                            
+
                             <div class="d-flex align-items-center flex-wrap w-100">
 
                                 @if (ViewBag.n == 1)
@@ -428,11 +486,11 @@
                                 @if (ViewBag.n == 2)
                                 {
                                     <a data-bs-toggle="modal" data-bs-target="#transferreq-@item.rid" class="btnbadge badge rounded-pill bg-warning"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Transfer</span></a>
-                                    <a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="btnbadge badge rounded-pill bg-warning"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>send agrrement</span></a>
+                                    <a data-bs-toggle="modal" data-bs-target="#sendAgreement-@item.rid" class="btnbadge badge rounded-pill bg-warning"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>send agrrement</span></a>
                                 }
                                 @if (ViewBag.n == 2 || ViewBag.n == 5)
                                 {
-                                    <a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="btnbadge badge rounded-pill bg-danger"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Clear Case</span></a>
+                                    <a data-bs-toggle="modal" data-bs-target="#clearCase-@item.rid" class="btnbadge badge rounded-pill bg-danger"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Clear Case</span></a>
                                 }
                                 @if (ViewBag.n == 3 || ViewBag.n == 5 || ViewBag.n == 4)
                                 {
@@ -442,7 +500,7 @@
                                 }
                                 @if (ViewBag.n == 5)
                                 {
-                                    <a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="btnbadge badge rounded-pill bg-danger"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Close Case</span></a>
+                                    <a asp-area="" asp-controller="ADashboard" asp-action="closeCase" asp-route-rid="@item.rid" class="btnbadge badge rounded-pill bg-danger"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Close Case</span></a>
                                 }
                             </div>
 

@@ -41,6 +41,7 @@ namespace hallocDoc.Controllers
 
             var roleClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Role);
 
+
             if (roleClaim == null)
             {
                 context.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Home", action = "Index" }));

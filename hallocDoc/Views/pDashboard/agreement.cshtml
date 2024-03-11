@@ -1,4 +1,6 @@
-﻿@{
+﻿@model halloDocEntities.ViewDataModels.History;
+
+@{
     ViewData["Title"] = "viewData";
     Layout = "~/Views/Shared/pDashboard.cshtml";
 
@@ -7,10 +9,13 @@
     <div class="Discription">
         <p>To provide the best medical service, we cannot determine the cost right away. If you agree to our service,so we will provide care and follow-up until all care is completed. So with these points, if you like us to provide care to you, click on 'Agree' and we'll get started immediately,If you do not agree, simply click 'Cancel'.</p>
     </div>
-    <div class="button flex">
-        <button type="button" class="btn btn-success agreebtn">I Agree</button>
-        <button type="button" class="btn btn-danger agreebtn" data-bs-toggle="modal" data-bs-target="#exampleModal">Cancel</button>
-    </div>
+    <form class="w-100" asp-area="" asp-action="agreement" asp-controller="pDashboard" asp-route-rid="@ViewBag.rid">
+        <div class="d-flex flex-row justify-content-evenly w-100">
+            <button type="submit" style="" class="btn btn-success ">Agree</button>
+            <button type="button" class="btn btn-danger " data-bs-toggle="modal" data-bs-target="#exampleModal">Cancel</button>
+        </div>
+    </form>
+    @Html.ValidationMessage("agreesuccess", null, new { @class= "text-success fw-bold"})
 
     @* -------------popup------------- *@
 
@@ -22,19 +27,19 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h4>@ViewBag.username shubham</h4>
-                    <form>
+                    
+                    <form method="post" asp-area="" asp-action="popupSubmit" asp-controller="pDashboard" asp-route-rid="@ViewBag.rid">
                         <div class=" form-floating col-12 mb-2">
-                            <textarea class="form-control h-100" id="floatingInput1" rows="3"
+                            <textarea asp-for="popupNotes" class="form-control h-100" id="popupinput" rows="3"
                                       placeholder="Please Provide brief explaination for your cancelation"></textarea>
                             <label class="mylable" for="floatingInput1">Enter symptoms in detail(optional)</label>
                             <span class="text-danger"></span>
                         </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn" data-bs-dismiss="modal">Confirm</button>
+                            <button type="button" class="btn">Cancel</button>
+                        </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary agreebtn" data-bs-dismiss="modal">Confirm</button>
-                    <button type="button" class="btn btn-secondary agreebtn">Cancel</button>
                 </div>
             </div>
         </div>

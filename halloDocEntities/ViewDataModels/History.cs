@@ -17,6 +17,8 @@ namespace halloDocEntities.ViewDataModels
 
         public IFormFile myfile { get; set; }
 
+        public string popupNotes { get; set; }
+
 
 
     }

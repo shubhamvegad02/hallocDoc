@@ -34,6 +34,38 @@ namespace hallocDoc.Controllers
 
 
 
+        [HttpPost]
+        public async Task<IActionResult> closeCase(int id, AViewNoteCase vnc)
+        {
+            if(await _iadash.closeCasePost(id,vnc))
+            {
+                ModelState.AddModelError("closecaseupdate", "Data updated Successfully..");
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> closeCase(int rid)
+        {
+            ViewBag.FileData = await _iadash.closeCase(rid);
+            AViewNoteCase vnc = _iadash.VCData(rid);
+            return View(vnc);
+        }
+
+        [HttpPost]
+        public IActionResult sendAgreement(int rid)
+        {
+            int status = _iadash.sendAgreement(rid); 
+            return RedirectToAction("Dmain", "ADashboard", new { id = status });
+        }
+
+        [HttpPost]
+        public IActionResult ClearCase(int id)
+        {
+            int status = _iadash.ClearCase(id);
+            return RedirectToAction("Dmain", "ADashboard", new { id = status });
+        }
+
         public FileResult DonwlodFile(string filename)
         {
             string path = Path.Combine(_hostEnvironment.WebRootPath, "uplodedItems/") + filename;

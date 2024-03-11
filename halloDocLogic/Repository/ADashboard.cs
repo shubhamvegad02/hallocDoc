@@ -13,6 +13,14 @@ using Microsoft.EntityFrameworkCore;
 using Nest;
 using MailKit.Security;
 using MimeKit;
+using System.Net.Mail;
+using System.Net;
+using Microsoft.AspNetCore.Http;
+using NuGet.Common;
+using System.Security.Policy;
+using Humanizer;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using System.Security.Cryptography.X509Certificates;
 
 namespace halloDocLogic.Repository
 {
@@ -27,6 +35,100 @@ namespace halloDocLogic.Repository
 
 
 
+        public async Task<bool> closeCasePost(int rid, AViewNoteCase vnc)
+        {
+            var dbreqClient = await _context.Requestclients.FirstOrDefaultAsync(m => m.RequestId == rid);
+            if(dbreqClient != null)
+            {
+            dbreqClient.PhoneNumber = vnc.mobile;
+            dbreqClient.Email = vnc.email;
+            _context.Requestclients.Update(dbreqClient);
+            _context.SaveChanges();
+            }
+            return true;
+        }
+        public async Task<List<ViewUploadedDoc>> closeCase(int rid)
+        {
+            var dbreq = from r in _context.Requests
+                        join rf in _context.Requestwisefiles on r.RequestId equals rf.RequestId
+                        where rf.RequestId == rid
+                        where rf.IsDeleted == false || rf.IsDeleted == null
+                        select new { r, rf };
+
+            var dbReqClient = await _context.Requestclients.FirstOrDefaultAsync(m => m.RequestId == rid);
+            List<ViewUploadedDoc> data = new List<ViewUploadedDoc>();
+            foreach (var item in dbreq)
+            {
+                var vu = new ViewUploadedDoc();
+                vu.uploadDate = item.r.CreatedDate;
+                vu.fileName = item.rf.FileName;
+                vu.fileId = item.rf.RequestWiseFileId;
+                vu.rid = rid;
+                data.Add(vu);
+            }
+            return data;
+        }
+        public bool sendMail(string email,string? subject, string? message)
+        {
+            var smtpClient = new SmtpClient("smtp.office365.com")
+            {
+                Port = 587,
+                Credentials = new NetworkCredential("tatva.dotnet.shubhamvegad@outlook.com", "Vegad@12"),
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false
+            };
+
+            var mailMessage = new MailMessage
+            {
+                From = new MailAddress("tatva.dotnet.shubhamvegad@outlook.com"),
+                Subject = subject,
+
+                Body = message,
+                IsBodyHtml = true,
+            };
+            mailMessage.To.Add(email);
+
+            smtpClient.Send(mailMessage);
+            return true;
+        }
+        public int sendAgreement(int rid)
+        {
+            string email = "";
+            int status = 1;
+            var dbreq = _context.Requests.FirstOrDefault(m => m.RequestId == rid);
+            if (dbreq != null)
+            {
+                email = dbreq?.Email;
+                status = dbreq?.Status?? 1;
+            }
+            string newRid = rid.ToString();
+            string subject = "halloDoc Agreement Update";
+            string message = "Hii " +email+", Review & agree to our updated Terms for continued process: "+ "http://localhost:5011/pDashboard/agreement?Rid="+newRid;
+            var check = sendMail(email,subject ,message);
+            return status;
+        }
+
+        public int ClearCase(int rid)
+        {
+            var dbreq = _context.Requests.FirstOrDefault(m => m.RequestId == rid);
+            int? status = dbreq?.Status;
+            if(dbreq != null)
+            {
+                dbreq.Status = 10;
+                _context.Update(dbreq);
+                _context.SaveChanges();
+            }
+            Requeststatuslog rsl = new Requeststatuslog();
+            rsl.RequestId = rid;
+            rsl.Status = 10;
+            rsl.AdminId = 1;
+            rsl.CreatedDate = DateTime.Now; 
+            _context.Requeststatuslogs.Add(rsl);
+            _context.SaveChanges();
+
+            return status?? 1;
+        }
         public string fileNameFromId(int fileId)
         {
             var dbreqfile = _context.Requestwisefiles.FirstOrDefault(m => m.RequestWiseFileId == fileId);
@@ -223,6 +325,7 @@ namespace halloDocLogic.Repository
                 vnc.mobile = item?.rc.PhoneNumber;
                 vnc.symptoms = item?.rc?.Notes;
                 vnc.status = item?.r.Status;
+                vnc.confNumber = item?.r?.ConfirmationNumber?? "";
                 /*var dates = string.Concat(item?.rc?.IntDate.ToString() + item.rc.StrMonth?.Substring(0, 3) + item.rc.IntYear);
                 DateTime fdate = DateTime.Parse(dates);
                 vnc.dob = fdate;*/
@@ -276,7 +379,7 @@ namespace halloDocLogic.Repository
                 dt.dob = item.r.CreatedDate.Date;
                 dt.requstor = item.r?.RelationName;
                 dt.reqDate = item.r.CreatedDate.Date;
-                dt.mobile = item.r.PhoneNumber;
+                dt.mobile = item.rc.PhoneNumber;
                 dt.address = string.Concat(item.rc.Street, " ", item.rc.City, " ", item.rc.State);
                 dt.notes = "";
                 if (item.p != null)

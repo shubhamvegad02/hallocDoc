@@ -30,5 +30,15 @@ namespace halloDocLogic.Interfaces
         Task<int> DeleteFile(string file);
 
         public string fileNameFromId(int fileId);
+
+        public int ClearCase(int rid);
+
+        public int sendAgreement(int rid);
+
+        public bool sendMail(string email, string? subject, string? message);
+
+        Task<List<ViewUploadedDoc>> closeCase(int rid);
+
+        Task<bool> closeCasePost(int rid, AViewNoteCase vnc);
     }
 }
