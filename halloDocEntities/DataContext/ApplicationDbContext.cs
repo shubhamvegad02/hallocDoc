@@ -32,6 +32,8 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Concierge> Concierges { get; set; }
 
+    public virtual DbSet<Encounter> Encounters { get; set; }
+
     public virtual DbSet<Healthprofessional> Healthprofessionals { get; set; }
 
     public virtual DbSet<Healthprofessionaltype> Healthprofessionaltypes { get; set; }
@@ -130,6 +132,15 @@ public partial class ApplicationDbContext : DbContext
             entity.HasKey(e => e.ConciergeId).HasName("concierge_pkey");
 
             entity.HasOne(d => d.Region).WithMany(p => p.Concierges).HasConstraintName("concierge_RegionId_fkey");
+        });
+
+        modelBuilder.Entity<Encounter>(entity =>
+        {
+            entity.HasKey(e => e.EncounterId).HasName("encounter_pkey");
+
+            entity.HasOne(d => d.Request).WithMany(p => p.Encounters)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("encounter_RequestId_fkey");
         });
 
         modelBuilder.Entity<Healthprofessional>(entity =>

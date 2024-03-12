@@ -21,6 +21,7 @@ using System.Security.Policy;
 using Humanizer;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using System.Security.Cryptography.X509Certificates;
+using System.Globalization;
 
 namespace halloDocLogic.Repository
 {
@@ -35,17 +36,134 @@ namespace halloDocLogic.Repository
 
 
 
-        public async Task<bool> closeCasePost(int rid, AViewNoteCase vnc)
+        public async Task<bool> EncounterPost(int rid, EncounterData ed)
         {
-            var dbreqClient = await _context.Requestclients.FirstOrDefaultAsync(m => m.RequestId == rid);
-            if(dbreqClient != null)
+            var dbencounter = await _context.Encounters.FirstOrDefaultAsync(m => m.RequestId == rid);
+            if (dbencounter != null)
             {
-            dbreqClient.PhoneNumber = vnc.mobile;
-            dbreqClient.Email = vnc.email;
-            _context.Requestclients.Update(dbreqClient);
-            _context.SaveChanges();
+                dbencounter.Email = ed.Email;
+                dbencounter.Mobile = ed.Mobile;
+                dbencounter.Address = ed.Address;
+                dbencounter.CreatedDate = ed.CreatedDate;
+                dbencounter.Dob = ed.Dob;
+                dbencounter.IllnessHistory = ed.IllnessHistory;
+                dbencounter.MedicalHistory = ed.MedicalHistory;
+                dbencounter.Medication = ed.Medication;
+                dbencounter.Allergies = ed.Allergies;
+                dbencounter.Temp = ed.Temp;
+                dbencounter.Hr = ed.Hr;
+                dbencounter.Rr = ed.Rr;
+                dbencounter.O2 = ed.O2;
+                dbencounter.Bp = ed.Bp;
+                dbencounter.Pain = ed.Pain;
+                dbencounter.Heent = ed.Heent;
+                dbencounter.Cv = ed.Cv;
+                dbencounter.Chest = ed.Chest;
+                dbencounter.Abd = ed.Abd;
+                dbencounter.Extr = ed.Extr;
+                dbencounter.Skin = ed.Skin;
+                dbencounter.Neuro = ed.Neuro;
+                dbencounter.Other = ed.Other;
+                dbencounter.Diagnosis = ed.Diagnosis;
+                dbencounter.TreatmentPlan = ed.TreatmentPlan;
+                dbencounter.MedicationDespensed = ed.MedicationDespensed;
+                dbencounter.Procedure = ed.Procedure;
+                dbencounter.Followup = ed.Followup;
+                _context.Encounters.Update(dbencounter);
+                _context.SaveChanges(); 
             }
             return true;
+        }
+
+        public async Task<EncounterData> Encounter(int rid, EncounterData ed)
+        {
+            var dbencounter = await _context.Encounters.FirstOrDefaultAsync(m => m.RequestId == rid);
+            if (dbencounter != null)
+            {
+                ed.rid = rid;
+                ed.Status = dbencounter.Status;
+                ed.FirstName = dbencounter.FirstName;
+                ed.LastName = dbencounter.LastName;
+                ed.Mobile = dbencounter?.Mobile;
+                ed.Email = dbencounter?.Email;
+                ed.Address = dbencounter?.Address;
+                ed.CreatedDate = DateTime.Now;
+                ed.Dob = dbencounter?.Dob;
+                ed.CreatedDate = dbencounter.CreatedDate;
+                ed.Dob = dbencounter.Dob;
+                ed.IllnessHistory = dbencounter.IllnessHistory;
+                ed.MedicalHistory = dbencounter.MedicalHistory;
+                ed.Medication = dbencounter.Medication;
+                ed.Allergies = dbencounter.Allergies;
+                ed.Temp = dbencounter.Temp;
+                ed.Hr = dbencounter.Hr;
+                ed.Rr = dbencounter.Rr;
+                ed.O2 = dbencounter.O2;
+                ed.Bp = dbencounter.Bp;
+                ed.Pain = dbencounter.Pain;
+                ed.Heent = dbencounter.Heent;
+                ed.Cv = dbencounter.Cv;
+                ed.Chest = dbencounter.Chest;
+                ed.Abd = dbencounter.Abd;
+                ed.Extr = dbencounter.Extr;
+                ed.Skin = dbencounter.Skin;
+                ed.Neuro = dbencounter.Neuro;
+                ed.Other = dbencounter.Other;
+                ed.Diagnosis = dbencounter.Diagnosis;
+                ed.TreatmentPlan = dbencounter.TreatmentPlan;
+                ed.MedicationDespensed = dbencounter.MedicationDespensed;
+                ed.Procedure = dbencounter.Procedure;
+                ed.Followup = dbencounter.Followup;
+                ed.Status = dbencounter.Status;
+                ed.IsFinalize = dbencounter.IsFinalize;
+                /*if (dbencounter.IntDate.HasValue && dbencounter.IntYear.HasValue && dbencounter.StrMonth != null)
+                {
+                    DateTime monthDateTime = DateTime.ParseExact(dbencounter.StrMonth, "MMMM", CultureInfo.InvariantCulture);
+                    int month = monthDateTime.Month;
+                    DateOnly date = new DateOnly((int)dbencounter.IntYear, month, dbencounter.IntDate.Value);
+                    e.Dob = date.ToString("yyyy-MM-dd");
+                }*/
+
+            }
+            return ed;
+        }
+
+        public async Task<int> closeCasefinal(int rid)
+        {
+            int status = 1;
+            var dbreq = await _context.Requests.FirstOrDefaultAsync(m => m.RequestId == rid);
+            if (dbreq != null)
+            {
+                status = dbreq.Status ?? 1;
+                dbreq.Status = 5;
+                _context.Requests.Update(dbreq);
+                _context.SaveChanges();
+            }
+            Requeststatuslog rsl = new Requeststatuslog();
+            rsl.RequestId = rid;
+            rsl.Status = 6;
+            rsl.AdminId = 1;
+            rsl.Notes = "closed by admin";
+            rsl.CreatedDate = DateTime.Now;
+            _context.Requeststatuslogs.Add(rsl);
+            _context.SaveChanges();
+
+            return status;
+        }
+
+        public async Task<int> closeCasePost(int rid, AViewNoteCase vnc)
+        {
+            var dbreq = await _context.Requests.FirstOrDefaultAsync(m => m.RequestId == rid);
+            int status = dbreq?.Status ?? 1;
+            var dbreqClient = await _context.Requestclients.FirstOrDefaultAsync(m => m.RequestId == rid);
+            if (dbreqClient != null)
+            {
+                dbreqClient.PhoneNumber = vnc.mobile;
+                dbreqClient.Email = vnc.email;
+                _context.Requestclients.Update(dbreqClient);
+                _context.SaveChanges();
+            }
+            return status;
         }
         public async Task<List<ViewUploadedDoc>> closeCase(int rid)
         {
@@ -68,7 +186,7 @@ namespace halloDocLogic.Repository
             }
             return data;
         }
-        public bool sendMail(string email,string? subject, string? message)
+        public bool sendMail(string email, string? subject, string? message)
         {
             var smtpClient = new SmtpClient("smtp.office365.com")
             {
@@ -100,12 +218,12 @@ namespace halloDocLogic.Repository
             if (dbreq != null)
             {
                 email = dbreq?.Email;
-                status = dbreq?.Status?? 1;
+                status = dbreq?.Status ?? 1;
             }
             string newRid = rid.ToString();
             string subject = "halloDoc Agreement Update";
-            string message = "Hii " +email+", Review & agree to our updated Terms for continued process: "+ "http://localhost:5011/pDashboard/agreement?Rid="+newRid;
-            var check = sendMail(email,subject ,message);
+            string message = "Hii " + email + ", Review & agree to our updated Terms for continued process: " + "http://localhost:5011/pDashboard/agreement?Rid=" + newRid;
+            var check = sendMail(email, subject, message);
             return status;
         }
 
@@ -113,7 +231,7 @@ namespace halloDocLogic.Repository
         {
             var dbreq = _context.Requests.FirstOrDefault(m => m.RequestId == rid);
             int? status = dbreq?.Status;
-            if(dbreq != null)
+            if (dbreq != null)
             {
                 dbreq.Status = 10;
                 _context.Update(dbreq);
@@ -123,11 +241,11 @@ namespace halloDocLogic.Repository
             rsl.RequestId = rid;
             rsl.Status = 10;
             rsl.AdminId = 1;
-            rsl.CreatedDate = DateTime.Now; 
+            rsl.CreatedDate = DateTime.Now;
             _context.Requeststatuslogs.Add(rsl);
             _context.SaveChanges();
 
-            return status?? 1;
+            return status ?? 1;
         }
         public string fileNameFromId(int fileId)
         {
@@ -325,7 +443,7 @@ namespace halloDocLogic.Repository
                 vnc.mobile = item?.rc.PhoneNumber;
                 vnc.symptoms = item?.rc?.Notes;
                 vnc.status = item?.r.Status;
-                vnc.confNumber = item?.r?.ConfirmationNumber?? "";
+                vnc.confNumber = item?.r?.ConfirmationNumber ?? "";
                 /*var dates = string.Concat(item?.rc?.IntDate.ToString() + item.rc.StrMonth?.Substring(0, 3) + item.rc.IntYear);
                 DateTime fdate = DateTime.Parse(dates);
                 vnc.dob = fdate;*/
@@ -412,6 +530,6 @@ namespace halloDocLogic.Repository
             return reqc;
         }
 
-        
+
     }
 }

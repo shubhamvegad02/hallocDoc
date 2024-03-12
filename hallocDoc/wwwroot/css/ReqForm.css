@@ -149,17 +149,32 @@ footer {
     height: 25px;
     width: 25px;
 }
+/*change input btn color-profile bootstrap override class add bgcolor line input .btn , address color-profile command border input btn hover nothing else */
 
 .btn {
-    color: var(--blue) !important;
-    border: 2px solid var(--blue) !important;
+    /*color: var(--blue) !important;
+    border: 2px solid var(--blue) !important;*/
+
+
+    background-color:var(--blue) !important;
+    color:white !important;
+    border:2px solid var(--blue) !important;
+
 }
 
     .btn:hover {
         background-color: white !important;
         /* color: white !important; */
-    }
 
+
+        color:var(--blue) !important;
+        
+    }
+.btnoutline{
+    background-color:white !important;
+    border: 2px solid var(--blue) !important;
+    color:var(--blue) !important;
+}
 
 .main {
     height: fit-content;

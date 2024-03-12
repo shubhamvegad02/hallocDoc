@@ -39,6 +39,12 @@ namespace halloDocLogic.Interfaces
 
         Task<List<ViewUploadedDoc>> closeCase(int rid);
 
-        Task<bool> closeCasePost(int rid, AViewNoteCase vnc);
+        Task<int> closeCasePost(int rid, AViewNoteCase vnc);
+
+        Task<int> closeCasefinal(int rid);
+
+        Task<EncounterData> Encounter(int rid, EncounterData ed);
+
+        Task<bool> EncounterPost(int rid, EncounterData ed);
     }
 }

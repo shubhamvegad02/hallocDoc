@@ -32,16 +32,39 @@ namespace hallocDoc.Controllers
             _hostEnvironment = hostingEnvironment;
         }
 
-
-
         [HttpPost]
+        public async Task<IActionResult> Encounter(int rid, EncounterData ed, string? s)
+        {
+            if(await _iadash.EncounterPost(rid, ed))
+            {
+                
+            }
+            /*int status = (int)TempData["status"];*/
+            return RedirectToAction("Dmain", "ADashboard", new { id = 2 });
+        }
+
+        public async Task<IActionResult> Encounter(int rid, EncounterData ed)
+        {
+            var encounterData = await _iadash.Encounter(rid, ed);
+            ViewBag.status = encounterData.Status;
+            ViewBag.rid = rid;
+            /*TempData["status"] = encounterData.Status;*/
+            return View(encounterData);
+        }
+
+        
+        public async Task<IActionResult> closeCasefinal(int rid)
+        {
+            int status = await _iadash.closeCasefinal(rid);
+            return RedirectToAction("Dmain", "ADashboard", new { id = status });
+        }
+
+        
         public async Task<IActionResult> closeCase(int id, AViewNoteCase vnc)
         {
-            if(await _iadash.closeCasePost(id,vnc))
-            {
-                ModelState.AddModelError("closecaseupdate", "Data updated Successfully..");
-            }
-            return View();
+           int status = await _iadash.closeCasePost(id, vnc);
+            
+            return RedirectToAction("Dmain", "ADashboard", new {id = status});
         }
 
         [HttpGet]

@@ -24,35 +24,40 @@
                 </tr>
             </thead>
             <tbody class="lh-lg">
-                @if (ViewBag.Filedata == null)
+                
+                @if (ViewBag.Filedata?.Count == 0)
                 {
-                    <span>Documents are not available</span>
+                    <div>Documents are not available</div>
                 }
-                @foreach (var item in ViewBag.FileData)
+                else
                 {
-                    var temp = item.fileName;
-                    temp = temp.Substring(temp.IndexOf("_") + 1);
+                    @foreach (var item in ViewBag.FileData?? "")
+                    {
+                        var temp = item.fileName;
+                        temp = temp.Substring(temp.IndexOf("_") + 1);
 
-                    <tr class="lh-3">
-                        @*<th><input type="checkbox" /></th>*@
-                        <td>
-                            <input type="checkbox" name="selectedFiles" value="@item.fileName" />
+                        <tr class="lh-3">
+                            @*<th><input type="checkbox" /></th>*@
+                            <td>
+                                <input type="checkbox" name="selectedFiles" value="@item.fileName" />
 
-                        </td>
+                            </td>
 
-                        <td>@temp</td>
-                        <td>@item.uploadDate</td>
-                        <td class="d-flex flex-row">
+                            <td>@temp</td>
+                            <td>@item.uploadDate</td>
+                            <td class="d-flex flex-row">
 
-                            <a class="ms-2 logout btnnohovor tdn p-0" href="@Url.Action("DonwlodFile", "ADashboard", new { fileName = item.fileName })">
-                                <img class="h-100 w-100" src="~/images/cloud-arrow-down-alt-svgrepo-com.svg" alt="">
-                            </a>
-                            <a class=" ms-2 logout btnnohovor tdn p-0" href="@Url.Action("DeleteFile", "ADashboard", new { fileId = item.fileId })">
-                                <i style="color:#4bcbcb;" class="bi bi-trash"></i>
-                            </a>
+                                <a class="ms-2 logout btnnohovor tdn p-0" href="@Url.Action("DonwlodFile", "ADashboard", new { fileName = item.fileName })">
+                                    <img class="h-100 w-100" src="~/images/cloud-arrow-down-alt-svgrepo-com.svg" alt="">
+                                </a>
+                                <a class=" ms-2 logout btnnohovor tdn p-0" href="@Url.Action("DeleteFile", "ADashboard", new { fileId = item.fileId })">
+                                    <i style="color:#4bcbcb;" class="bi bi-trash"></i>
+                                </a>
 
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    }
+
                 }
 
             </tbody>
@@ -133,7 +138,7 @@
 
 
         <div class="accordion accordion-flush mt-3" id="accordionFlushExample">
-            @foreach (var item in ViewBag.FileData)
+            @foreach (var item in ViewBag.FileData ?? "")
             {
                 var temp = item.fileName;
                 temp = temp.Substring(temp.IndexOf("_") + 1);
@@ -175,15 +180,15 @@
             var savebtn = document.getElementById("savebtn");
             var editButton = document.getElementById("editButton");
 
-        mobileInput.disabled = !mobileInput.disabled;
-        mobileInput.readOnly = !mobileInput.readOnly;
-        emailInput.disabled = !emailInput.disabled;
-        emailInput.readOnly = !emailInput.readOnly;
-        closecasebtn.classList.add("d-none");
-        cancelbtn.classList.add("d-block");
-        cancelbtn.classList.remove("d-none");
-        savebtn.classList.add("d-block");
-        savebtn.classList.remove("d-none");
+            mobileInput.disabled = !mobileInput.disabled;
+            mobileInput.readOnly = !mobileInput.readOnly;
+            emailInput.disabled = !emailInput.disabled;
+            emailInput.readOnly = !emailInput.readOnly;
+            closecasebtn.classList.add("d-none");
+            cancelbtn.classList.add("d-block");
+            cancelbtn.classList.remove("d-none");
+            savebtn.classList.add("d-block");
+            savebtn.classList.remove("d-none");
             editButton.disabled = true;
         });
     </script>

@@ -194,7 +194,7 @@
                                         {
                                             <li><a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Doctor Notes</span></a></li>
                                             <li><a asp-area="" asp-controller="ADashboard" asp-action="Order" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Orders</span></a></li>
-                                            <li><a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Encounter</span></a></li>
+                                            <li><a asp-area="" asp-controller="ADashboard" asp-action="Encounter" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Encounter</span></a></li>
                                         }
                                         @if (ViewBag.n == 5)
                                         {
@@ -496,7 +496,7 @@
                                 {
                                     <a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="btnbadge badge rounded-pill bg-success"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Doctor Notes</span></a>
                                     <a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="btnbadge badge rounded-pill bg-warning"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Orders</span></a>
-                                    <a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="btnbadge badge rounded-pill bg-warning"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Encounter</span></a>
+                                    <a asp-area="" asp-controller="ADashboard" asp-action="Encounter" asp-route-rid="@item.rid" class="btnbadge badge rounded-pill bg-warning"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Encounter</span></a>
                                 }
                                 @if (ViewBag.n == 5)
                                 {

@@ -1,0 +1,185 @@
+﻿@model halloDocEntities.ViewDataModels.EncounterData;
+@{
+    ViewData["Title"] = "Encounter";
+    Layout = "~/Views/Shared/_ADashboard.cshtml";
+}
+<div class="docMain mt-3">
+    <div class="dmboxbar">
+        <h2 m-0>Encounter Form</h2>
+        <a asp-area="" asp-controller="ADashboard" asp-action="Dmain" asp-route-id="@Model.Status" class="logout tdn dmnewreq mb-3">Back</a>
+    </div>
+
+    <div class="dmbox">
+        <h2 style="width:60%; margin-inline:auto; color:#68cbe1; text-align:center;">Medical Report-Confidential</h2>
+
+
+        <form asp-controller="ADashboard" asp-action="Encounter" asp-route-rid="@Model.rid" class="row g-2 g-md-3 mt-3">
+             
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="FirstName" type="text" class="form-control" id="floatingInput1" placeholder="name@example.com">
+                <label class="mylable ms-2 " for="floatingInput1">First Name</label>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="LastName" type="text" class="form-control" id="floatingPassword" placeholder="Password">
+                <label class="mylable ms-2 " for="floatingPassword">Last Name</label>
+            </div>
+
+            <div class="form-floating col-12">
+                <input asp-for="Address" type="text" class="form-control" id="add" placeholder="">
+                <label class="mylable ms-2 " for="floatingPassword">Adderss</label>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="Dob" type="date" class="form-control" id="fdate" placeholder="">
+                <label class="mylable ms-2 " for="fdate">Date of birth</label>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="CreatedDate" type="date" class="form-control" id="fdate" placeholder="">
+                <label class="mylable ms-2 " for="fdate">Date</label>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <div class="input-group h-100">
+                    <select class=" btn btn-outline-secondary numselect form-control" id="countrybtn" aria-label="Default select example">
+                        <option selected>Country</option>
+                        <option value="1">+91</option>
+                        <option value="2">+1</option>
+                        <option value="3">+216</option>
+                    </select>
+                    <input asp-for="Mobile" type="tel" id="phone" class="form-control" placeholder="Mobile Number" />
+                </div>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="Email" type="email" class="form-control" id="floatingInput2" placeholder="name@example.com">
+                <label class="mylable ms-2 " for="floatingInput2">Email</label>
+                @*<span asp-validation-for="FEmail" class="text-danger"></span>*@
+            </div>
+
+            <div class=" form-floating col-12 col-md-6">
+                <textarea asp-for="IllnessHistory" class="form-control h-100" id="illness" rows="3" placeholder="History of prsent illness or injury"></textarea>
+                <label class="mylable ms-2 " for="illness">History of prsent illness or injury</label>
+            </div>
+
+            <div class=" form-floating col-12 col-md-6">
+                <textarea asp-for="MedicalHistory"  class="form-control h-100" id="History" rows="3" placeholder="Medical History"></textarea>
+                <label class="mylable ms-2 " for="History">Medical History</label>
+            </div>
+
+            <div class=" form-floating col-12 col-md-6">
+                <textarea asp-for="Medication" class="form-control h-100" id="Medication" rows="3" placeholder="Medication"></textarea>
+                <label class="mylable ms-2 " for="Medication">Medication</label>
+            </div>
+
+            <div class=" form-floating col-12 col-md-6">
+                <textarea asp-for="Allergies" class="form-control h-100" id="Allergies" rows="3" placeholder="Allergies"></textarea>
+                <label class="mylable ms-2 " for="Allergies">Allergies</label>
+            </div>
+
+            <div class="form-floating col-6 col-md-4">
+                <input asp-for="Temp" type="text" class="form-control" id="Temp" placeholder="name@example.com">
+                <label class="mylable ms-2 " for="Temp">Temp</label>
+            </div>
+
+            <div class="form-floating col-6 col-md-4">
+                <input asp-for="Hr" type="text" class="form-control" id="hr" placeholder="name@example.com">
+                <label class="mylable ms-2 " for="hr">HR</label>
+            </div>
+
+            <div class="form-floating col-6 col-md-4">
+                <input asp-for="Rr" type="text" class="form-control" id="rr" placeholder="name@example.com">
+                <label class="mylable ms-2 " for="rr">RR</label>
+            </div>
+
+            <div class="form-floating col-6 col-md-4">
+                <input asp-for="Bp" type="text" class="form-control" id="Pressure" placeholder="name@example.com">
+                <label class="mylable ms-2 " for="Pressure">Blood Pressure</label>
+            </div>
+
+            <div class="form-floating col-6 col-md-4">
+                <input asp-for="O2" type="text" class="form-control" id="o2" placeholder="name@example.com">
+                <label class="mylable ms-2 " for="o2">O2</label>
+            </div>
+
+            <div class="form-floating col-6 col-md-4">
+                <input asp-for="Pain" type="text" class="form-control" id="Pain" placeholder="name@example.com">
+                <label class="mylable ms-2 " for="Pain">Pain</label>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input type="text" asp-for="Heent" class="form-control" id="Heent" placeholder="name@example.com">
+                <label class="mylable ms-2 " for="Heent">Heent</label>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input type="text" asp-for="Cv" class="form-control" id="CV" placeholder="name@example.com">
+                <label class="mylable ms-2 " for="CV">CV</label>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input type="text" asp-for="Chest" class="form-control" id="Chest" placeholder="name@example.com">
+                <label class="mylable ms-2 " for="Chest">Chest</label>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input type="text" asp-for="Abd" class="form-control" id="ABD" placeholder="name@example.com">
+                <label class="mylable ms-2 " for="ABD">ABD</label>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input type="text" asp-for="Extr" class="form-control" id="Extr" placeholder="name@example.com">
+                <label class="mylable ms-2 " for="Extr">Extr</label>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input type="text" asp-for="Skin" class="form-control" id="Skin" placeholder="name@example.com">
+                <label class="mylable ms-2 " for="Skin">Skin</label>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input type="text" asp-for="Neuro" class="form-control" id="Neuro" placeholder="name@example.com">
+                <label class="mylable ms-2 " for="Neuro">Neuro</label>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input type="text" asp-for="Other" class="form-control" id="Other" placeholder="name@example.com">
+                <label class="mylable ms-2 " for="Other">Other</label>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input type="text" asp-for="Diagnosis" class="form-control" id="Diagnosis" placeholder="name@example.com">
+                <label class="mylable ms-2 " for="Diagnosis">Diagnosis</label>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input type="text" asp-for="TreatmentPlan" class="form-control" id="TreatmentPlan" placeholder="name@example.com">
+                <label class="mylable ms-2 " for="Medication DespensedPlan">Treatment Plan</label>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input type="text" class="form-control" asp-for="MedicationDespensed" id="MedicationDespensed" placeholder="name@example.com">
+                <label class="mylable ms-2 " for="MedicationDespensed">Medication Despensed</label>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="Procedure" type="text" class="form-control" id="Procedure" placeholder="name@example.com">
+                <label class="mylable ms-2 " for="Procedure">Procedure</label>
+            </div>
+
+            <div class=" form-floating col-12">
+                <textarea asp-for="Followup" class="form-control h-100" id="Followup" rows="3" placeholder="Followup"></textarea>
+                <label class="mylable ms-2  ms-2" for="Followup">Followup</label>
+            </div>
+
+            <div class="btnline">
+                <button type="submit" class="btn btn-outline-primary active blbtn">Save Changes</button>
+                @*<button type="button" style="background-color:#800080db !important; border:1px solid !important; color:white !important;" class="btn">Finalize</button>*@
+                <button type="button" asp-area="" asp-controller="ADashboard" asp-action="Encounter" asp-route-rid="@Model.rid" class="btn btnoutline blbtn">Cancel</button>
+            </div>
+
+            @Html.ValidationMessage("encountersuccess", null, new { @class= "text-success fw-bold"})
+        </form>
+    </div>
+</div>
