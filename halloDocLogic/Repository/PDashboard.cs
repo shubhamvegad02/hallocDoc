@@ -132,6 +132,7 @@ namespace halloDocLogic.Repository
 
             var dbreq2 = from r in _context.Requests
                          join rf in _context.Requestwisefiles on r.RequestId equals rf.RequestId
+                         where rf.IsDeleted == false || rf.IsDeleted == null
                          where rf.RequestId == reqid
                          select new { r, rf };
 
@@ -143,6 +144,8 @@ namespace halloDocLogic.Repository
                 nh.uploder = string.Concat(item.r.FirstName, " ", item.r.LastName);
                 nh.date = item.r.CreatedDate;
                 nh.name = item.rf.FileName;
+                nh.fileId = item.rf.RequestWiseFileId;
+                
 
                 data.Add(nh);
 

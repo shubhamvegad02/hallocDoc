@@ -35,7 +35,7 @@ namespace halloDocLogic.Interfaces
 
         public int sendAgreement(int rid);
 
-        public bool sendMail(string email, string? subject, string? message);
+        public bool sendMail(string email, string? subject, string? message, string[]? filenames);
 
         Task<List<ViewUploadedDoc>> closeCase(int rid);
 
@@ -45,6 +45,8 @@ namespace halloDocLogic.Interfaces
 
         Task<EncounterData> Encounter(int rid, EncounterData ed);
 
-        Task<bool> EncounterPost(int rid, EncounterData ed);
+        Task<int> EncounterPost(int rid, EncounterData ed);
+
+        public string EmailFromRid(int rid);
     }
 }

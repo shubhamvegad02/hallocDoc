@@ -138,7 +138,7 @@
 
 .dmain {
     height: fit-content;
-    min-height: 63vh;
+    min-height: 70vh;
     width: 96%;
     margin-inline: auto;
     background-color: #f1f1f1a3;
@@ -305,7 +305,7 @@
 
         .logout {
             height: 100%;
-            width: fit-content;
+            width: 20%;
             background: transparent;
             display: flex;
             align-items: center;

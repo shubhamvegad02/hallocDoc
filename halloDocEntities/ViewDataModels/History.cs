@@ -19,6 +19,8 @@ namespace halloDocEntities.ViewDataModels
 
         public string popupNotes { get; set; }
 
+        public int fileId { get; set; }
+
 
 
     }

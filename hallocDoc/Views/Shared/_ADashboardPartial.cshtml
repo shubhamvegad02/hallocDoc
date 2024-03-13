@@ -435,9 +435,9 @@
             @foreach (var item in ViewBag.tableData)
             {
                 var bgcolor = @GetBackgroundColor(@item.relation);
-                <div class="accordion-item mb-1">
+                <div class="accordion-item">
                     <h2 class="accordion-header" id="headingOne">
-                        <button class="accordion-button border-dark border-2 mb-1" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.guid" aria-expanded="true" aria-controls="flush-@item.guid">
+                        <button class="accordion-button border-dark border-2" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.guid" aria-expanded="true" aria-controls="flush-@item.guid">
                             <div class="d-flex flex-row justify-content-between w-100 pe-2 align-items-center">
                                 <div class="abchild1">
                                     <h4>@item.name</h4>

@@ -44,15 +44,16 @@
             <h3 class="mb-0">Documents</h3>
             @* <a asp-area="" asp-controller="pDashboard" asp-action="viewDoc" class="logout tdn dmnewreq ">Donwlod All</a> *@
 
-            <a class="logout tdn dmnewreq" href="@Url.Action("DonwlodFileAll", "pDashboard")">
-                Download All
-            </a>
+            <button class="logout tdn dmnewreq ms-2" id="downloadButton">
+                <span class="d-none d-md-block">Download All</span>
+                <h4 class="mb-0"><i class="d-md-none bi bi-cloud-arrow-down-fill"></i></h4>
+            </button>
 
         </div>
         <table class="table w-100 mt-3">
             <thead>
                 <tr>
-                    <th scope="col"></th>
+                    <th scope="col"><input id="maincheckbox" type="checkbox" name="" /></th>
                     <th scope="col">Document</th>
                     <th scope="col">Uploader</th>
                     <th scope="col">Upload Date</th>
@@ -66,8 +67,11 @@
                     temp = temp.Substring(temp.IndexOf("_") + 1);
 
                     <tr class="lh-3">
-                        <th><input type="checkbox" /></th>
                         @* <td>@item.name</td> *@
+                        <td>
+                            <input class="formcheckbox" type="checkbox" name="selectedFiles" value="@item.name" />
+
+                        </td>
                         <td>@temp</td>
                         <td>@item.uploder</td>
                         <td>@item.date</td>
@@ -97,7 +101,8 @@
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.guid" aria-expanded="false" aria-controls="flush-@item.guid">
-                            @temp
+                            <input class="formcheckbox me-3" type="checkbox" name="selectedFiles" value="@item.name" /> <h4 class="me-2"><i class="bi bi-file-earmark-pdf-fill text-info"></i></h4><b>@temp</b>
+
                         </button>
                     </h2>
                     <div id="flush-@item.guid" class="accordion-collapse collapse p-3" data-bs-parent="#accordionFlushExample">
@@ -119,3 +124,61 @@
         </div>
     </div>
 </div>
+
+
+@section Scripts{
+    <script>
+        //function for main checkbox
+        const mainCheckbox = document.getElementById("maincheckbox");
+        mainCheckbox.addEventListener("change", fillFormCheckboxes);
+        function fillFormCheckboxes() {
+            const mainCheckbox = document.getElementById("maincheckbox");
+            const formCheckboxes = document.querySelectorAll(".formcheckbox");
+            const checked = mainCheckbox.checked;
+            formCheckboxes.forEach(checkbox => checkbox.checked = checked);
+        }
+
+        //for donwlodAll
+        document.getElementById("downloadButton").addEventListener("click", function () {
+            var selectedCheckboxes = document.querySelectorAll('input[name="selectedFiles"]:checked');
+            var selectedFilenames = [];
+
+            for (var i = 0; i < selectedCheckboxes.length; i++) {
+                selectedFilenames.push(selectedCheckboxes[i].value);
+            }
+            if (selectedFilenames.length === 0) {
+                alert("No files selected. Please select files to delete.");
+                return;
+            }
+            // Send the filenames to the controller using AJAX
+            sendFilenamesToDownloadSelected(selectedFilenames);
+        });
+
+        async function sendFilenamesToDownloadSelected(filenames) {
+            fetch('@Url.Action("DownloadSelected", "pDashboard")', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(filenames)
+            })
+                .then(async (response) => {
+                    const data = await response.blob();
+                    console.log(data);
+
+                    const a = document.createElement('a');
+                    const url = window.URL.createObjectURL(data);
+                    a.href = url;
+                    a.download = 'download.zip';
+                    document.body.append(a);
+                    a.click();
+                    a.remove();
+                    window.URL.revokeObjectURL(url);
+                })
+                .catch(error => {
+                    alert("not done");
+                });
+        }
+
+    </script>
+}

@@ -176,7 +176,7 @@
             <div class="btnline">
                 <button type="submit" class="btn btn-outline-primary active blbtn">Save Changes</button>
                 @*<button type="button" style="background-color:#800080db !important; border:1px solid !important; color:white !important;" class="btn">Finalize</button>*@
-                <button type="button" asp-area="" asp-controller="ADashboard" asp-action="Encounter" asp-route-rid="@Model.rid" class="btn btnoutline blbtn">Cancel</button>
+                <a type="button" asp-area="" asp-controller="ADashboard" asp-action="Encounter" asp-route-rid="@Model.rid" class="btn btnoutline blbtn">Cancel</a>
             </div>
 
             @Html.ValidationMessage("encountersuccess", null, new { @class= "text-success fw-bold"})

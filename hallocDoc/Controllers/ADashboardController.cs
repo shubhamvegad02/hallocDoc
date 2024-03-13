@@ -32,23 +32,34 @@ namespace hallocDoc.Controllers
             _hostEnvironment = hostingEnvironment;
         }
 
+
+
+
+
+        public async Task<IActionResult> SendFilesInMail(int rid, [FromBody] string[] filenames)
+        {
+
+            //string email = _iadash.EmailFromRid(rid);
+            string email = "vegadshubham2002@gmail.com";
+            string subject = "HalloDoc Attachement";
+            string message = "Please Check Attached Files for your Request From HalloDoc..";
+            List<string> files = new List<string>();
+            var check = _iadash.sendMail(email, subject, message, filenames);
+            return RedirectToAction("ViewUpload", "ADashboard", new { rid = rid });
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> Encounter(int rid, EncounterData ed, string? s)
         {
-            if(await _iadash.EncounterPost(rid, ed))
-            {
-                
-            }
-            /*int status = (int)TempData["status"];*/
-            return RedirectToAction("Dmain", "ADashboard", new { id = 2 });
+            int status = await _iadash.EncounterPost(rid, ed);
+            
+            return RedirectToAction("Dmain", "ADashboard", new { id = status });
         }
 
         public async Task<IActionResult> Encounter(int rid, EncounterData ed)
         {
             var encounterData = await _iadash.Encounter(rid, ed);
-            ViewBag.status = encounterData.Status;
-            ViewBag.rid = rid;
-            /*TempData["status"] = encounterData.Status;*/
             return View(encounterData);
         }
 
@@ -203,7 +214,7 @@ namespace hallocDoc.Controllers
         {
             if (await _pDashboard.uploadtoid(h, reqid))
             {
-                return RedirectToAction("Dmain", "ADashboard", new { id = 2 });
+                return RedirectToAction("ViewUpload", "ADashboard", new { rid = reqid });
             }
             return RedirectToAction("ViewUpload", "ADashboard", new { rid = reqid });
         }
@@ -220,7 +231,6 @@ namespace hallocDoc.Controllers
                 x = await _iadash.DeleteFile(item);
             }
 
-            ModelState.AddModelError("deleted", "File Deleted Successfully..");
             return RedirectToAction("ViewUpload", "ADashboard", new { rid = x });
 
         }

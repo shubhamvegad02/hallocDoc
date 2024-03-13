@@ -26,7 +26,7 @@
                 </label>
 
                 <!-- name of file chosen -->
-                <span id="file-chosen" class="upbtntext">No file selected</span>
+                <span id="file-chosen" class="upbtntext"></span>
             </div>
             <button class="logout tdn h-100 mt-2 " type="submit">submit</button>
         </form>
@@ -35,18 +35,18 @@
             <h3 class="mb-0">Documents</h3>
             @* <a asp-area="" asp-controller="pDashboard" asp-action="viewDoc" class="logout tdn dmnewreq ">Donwlod All</a> *@
 
-            <div class="w-50">
+            <div class="w-75">
                 <button class="logout tdn dmnewreq ms-2" id="downloadButton">
                     <span class="d-none d-md-block">Download All</span>
-                    <h4><i class="d-md-none bi bi-cloud-arrow-down-fill"></i></h4>
+                    <h4 class="mb-0"><i class="d-md-none bi bi-cloud-arrow-down-fill"></i></h4>
                 </button>
                 <button class="logout tdn dmnewreq ms-2" id="deleteButton">
                     <span class="d-none d-md-block">Delete All</span>
-                   <h4><i class="d-md-none bi bi-trash3-fill"></i></h4>
+                   <h4 class="mb-0"><i class="d-md-none bi bi-trash3-fill"></i></h4>
                 </button>
-                <a class="logout tdn dmnewreq ms-2" href="@Url.Action("DonwlodFileAll", "pDashboard")">
+                <a class="logout tdn dmnewreq ms-2" id="emailButton">
                     <span class="d-none d-md-block">Send Mail</span>
-                    <h4><i class="d-md-none bi bi-envelope-arrow-down-fill"></i></h4>
+                    <h4 class="mb-0"><i class="d-md-none bi bi-envelope-arrow-down-fill"></i></h4>
                 </a>
             </div>
 
@@ -54,7 +54,7 @@
         <table class="table w-100 mt-3">
             <thead>
                 <tr>
-                    <th scope="col"></th>
+                    <th class="ps-2" scope="col"><input id="maincheckbox" type="checkbox" name="" /></th>
                     <th scope="col">Document</th>
                     <th scope="col">Upload Date</th>
                     <th scope="col">Action</th>
@@ -69,7 +69,7 @@
                     <tr class="lh-3">
                         @*<th><input type="checkbox" /></th>*@
                         <td>
-                            <input type="checkbox" name="selectedFiles" value="@item.fileName" />
+                            <input class="formcheckbox" type="checkbox" name="selectedFiles" value="@item.fileName" />
 
                         </td>
 
@@ -100,7 +100,7 @@
                 <div class="accordion-item">
                     <h2 class="accordion-header border-0">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.fileId" aria-expanded="false" aria-controls="flush-@item.fileId">
-                            @temp
+                            <input class="formcheckbox me-3" type="checkbox" name="selectedFiles" value="@item.fileName" /> <h4 class="me-2"><i class="bi bi-file-earmark-pdf-fill text-info"></i></h4><b>@temp</b>
                         </button>
                     </h2>
                     <div style="background-color:#cfe2ff;" id="flush-@item.fileId" class="accordion-collapse collapse p-2" data-bs-parent="#accordionFlushExample">
@@ -108,10 +108,10 @@
                         <div class="d-flex flex-column justify-content-between h-100 w-100">
                             <div>@item.uploadDate</div>
                             <div class="d-flex mt-2">
-                                <a class="ms-2 logout btnnohovor tdn p-1 d-flex align-items-center h-100 w-25" href="@Url.Action("DonwlodFile", "ADashboard", new { fileName = item.fileName })">
-                                    <h3><i style="color:#4bcbcb;" class="bi bi-cloud-arrow-down"></i></h3>
+                                <a class="ms-2 logout btnnohovor tdn p-1 d-flex align-items-center h-100 w-50" href="@Url.Action("DonwlodFile", "ADashboard", new { fileName = item.fileName })">
+                                    <h4><i style="color:#4bcbcb;" class="bi bi-cloud-arrow-down"></i></h4>
                                 </a>
-                                <a class=" ms-2 logout btnnohovor tdn p-1 d-flex align-items-center h-100 w-25" href="@Url.Action("DeleteFile", "ADashboard", new { fileId = item.fileId })">
+                                <a class=" ms-2 logout btnnohovor tdn p-1 d-flex align-items-center h-100 w-50" href="@Url.Action("DeleteFile", "ADashboard", new { fileId = item.fileId })">
                                     <h4><i style="color:#4bcbcb;" class="bi bi-trash"></i></h4>
                                 </a>
                             </div>
@@ -127,6 +127,20 @@
 
 @section Scripts{
     <script>
+        //function for main checkbox
+        const mainCheckbox = document.getElementById("maincheckbox");
+        mainCheckbox.addEventListener("change", fillFormCheckboxes);
+        function fillFormCheckboxes() {
+            const mainCheckbox = document.getElementById("maincheckbox");
+            const formCheckboxes = document.querySelectorAll(".formcheckbox");
+            const checked = mainCheckbox.checked;
+            formCheckboxes.forEach(checkbox => checkbox.checked = checked);
+        }
+
+
+
+
+        //for delete all btn
         document.getElementById("deleteButton").addEventListener("click", function () {
             var selectedCheckboxes = document.querySelectorAll('input[name="selectedFiles"]:checked');
             var selectedFilenames = [];
@@ -134,12 +148,15 @@
             for (var i = 0; i < selectedCheckboxes.length; i++) {
                 selectedFilenames.push(selectedCheckboxes[i].value);
             }
-
+            if (selectedFilenames.length === 0) {
+                alert("No files selected. Please select files to delete.");
+                return;  
+            }
             // Send the filenames to the controller using AJAX
-            sendFilenamesToController(selectedFilenames);
+            sendFilenamesToDeleteFiles(selectedFilenames);
         });
 
-        function sendFilenamesToController(filenames) {
+        function sendFilenamesToDeleteFiles(filenames) {
             fetch('@Url.Action("DeleteFiles", "ADashboard", new { reqId = @ViewBag.reqid })', {
                 method: 'POST',
                 headers: {
@@ -148,10 +165,11 @@
                 body: JSON.stringify(filenames)
             })
                 .then(response => {
-
+                    window.location.reload();
+                    alert("Files Deleted successfully..");
                 })
                 .catch(error => {
-                    alert("not done");
+                    alert("Files are not deleted..");
                 });
         }
 
@@ -163,12 +181,15 @@
             for (var i = 0; i < selectedCheckboxes.length; i++) {
                 selectedFilenames.push(selectedCheckboxes[i].value);
             }
-
+            if (selectedFilenames.length === 0) {
+                alert("No files selected. Please select files to delete.");
+                return;
+            }
             // Send the filenames to the controller using AJAX
-            sendFilenamesToController(selectedFilenames);
+            sendFilenamesToDownloadSelected(selectedFilenames);
         });
 
-        async function sendFilenamesToController(filenames) {
+        async function sendFilenamesToDownloadSelected(filenames) {
             fetch('@Url.Action("DownloadSelected", "pDashboard")', {
                 method: 'POST',
                 headers: {
@@ -191,6 +212,40 @@
                 })
                 .catch(error => {
                     alert("not done");
+                });
+        }
+
+
+        //for email all btn
+        document.getElementById("emailButton").addEventListener("click", function () {
+            var selectedCheckboxes = document.querySelectorAll('input[name="selectedFiles"]:checked');
+            var selectedFilenames = [];
+
+            for (var i = 0; i < selectedCheckboxes.length; i++) {
+                selectedFilenames.push(selectedCheckboxes[i].value);
+            }
+            if (selectedFilenames.length === 0) {
+                alert("No files selected. Please select files to delete.");
+                return;
+            }
+            // Send the filenames to the controller using AJAX
+            sendFilenamesToSendFilesInMail(selectedFilenames);
+        });
+
+        function sendFilenamesToSendFilesInMail(filenames) {
+            fetch('@Url.Action("SendFilesInMail", "ADashboard", new { rid = @ViewBag.reqid })', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(filenames)
+            })
+                .then(response => {
+                    window.location.reload();
+                    alert("Email Sent successfully..");
+                })
+                .catch(error => {
+                    alert("Email Can't sent");
                 });
         }
     </script>

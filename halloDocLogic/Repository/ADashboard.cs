@@ -10,7 +10,7 @@ using halloDocEntities.DataContext;
 using Microsoft.Extensions.Hosting;
 using System.Data.Common;
 using Microsoft.EntityFrameworkCore;
-using Nest;
+/*using Nest;*/
 using MailKit.Security;
 using MimeKit;
 using System.Net.Mail;
@@ -28,16 +28,33 @@ namespace halloDocLogic.Repository
     public class ADashboard : IADashboard
     {
         private readonly ApplicationDbContext _context;
+        private readonly IHostEnvironment _hostEnvironment;
 
-        public ADashboard(ApplicationDbContext context)
+        public ADashboard(ApplicationDbContext context, IHostEnvironment environment)
         {
             _context = context;
+            _hostEnvironment = environment;
         }
 
 
-
-        public async Task<bool> EncounterPost(int rid, EncounterData ed)
+        public string EmailFromRid(int rid)
         {
+            var dbreq = _context.Requests.FirstOrDefault(m => m.RequestId == rid);
+            if (dbreq != null)
+            {
+                string email = dbreq?.Email;
+                return email;
+            }
+            return "";
+        }
+        public async Task<int> EncounterPost(int rid, EncounterData ed)
+        {
+            var dbreq = await _context.Requests.FirstOrDefaultAsync(m => m.RequestId == rid);
+            int status = 1;
+            if (dbreq != null)
+            {
+                status = dbreq.Status ?? 1;
+            }
             var dbencounter = await _context.Encounters.FirstOrDefaultAsync(m => m.RequestId == rid);
             if (dbencounter != null)
             {
@@ -70,9 +87,9 @@ namespace halloDocLogic.Repository
                 dbencounter.Procedure = ed.Procedure;
                 dbencounter.Followup = ed.Followup;
                 _context.Encounters.Update(dbencounter);
-                _context.SaveChanges(); 
+                _context.SaveChanges();
             }
-            return true;
+            return status;
         }
 
         public async Task<EncounterData> Encounter(int rid, EncounterData ed)
@@ -186,7 +203,7 @@ namespace halloDocLogic.Repository
             }
             return data;
         }
-        public bool sendMail(string email, string? subject, string? message)
+        public bool sendMail(string email, string? subject, string? message, string[] filenames = null)
         {
             var smtpClient = new SmtpClient("smtp.office365.com")
             {
@@ -207,6 +224,21 @@ namespace halloDocLogic.Repository
             };
             mailMessage.To.Add(email);
 
+            foreach (var filename in filenames)
+            {
+                string baseFilePath = Path.Combine(_hostEnvironment.ContentRootPath, "wwwroot/uplodedItems");
+                string fullFilePath = Path.Combine(baseFilePath, filename);
+                if (System.IO.File.Exists(fullFilePath))
+                {
+                    mailMessage.Attachments.Add(new Attachment(fullFilePath));
+                }
+                else
+                {
+                    // Handle non-existent files (optional)
+                    Console.WriteLine($"File not found: {fullFilePath}"); // Log or display an error message
+                }
+            }
+
             smtpClient.Send(mailMessage);
             return true;
         }
@@ -223,6 +255,7 @@ namespace halloDocLogic.Repository
             string newRid = rid.ToString();
             string subject = "halloDoc Agreement Update";
             string message = "Hii " + email + ", Review & agree to our updated Terms for continued process: " + "http://localhost:5011/pDashboard/agreement?Rid=" + newRid;
+            string[] s = new string[1];
             var check = sendMail(email, subject, message);
             return status;
         }
