@@ -224,35 +224,55 @@ namespace halloDocLogic.Repository
             };
             mailMessage.To.Add(email);
 
-            foreach (var filename in filenames)
+            if (filenames != null)
             {
-                string baseFilePath = Path.Combine(_hostEnvironment.ContentRootPath, "wwwroot/uplodedItems");
-                string fullFilePath = Path.Combine(baseFilePath, filename);
-                if (System.IO.File.Exists(fullFilePath))
+
+                foreach (var filename in filenames)
                 {
-                    mailMessage.Attachments.Add(new Attachment(fullFilePath));
-                }
-                else
-                {
-                    // Handle non-existent files (optional)
-                    Console.WriteLine($"File not found: {fullFilePath}"); // Log or display an error message
+                    string baseFilePath = Path.Combine(_hostEnvironment.ContentRootPath, "wwwroot/uplodedItems");
+                    string fullFilePath = Path.Combine(baseFilePath, filename);
+                    if (System.IO.File.Exists(fullFilePath))
+                    {
+                        mailMessage.Attachments.Add(new Attachment(fullFilePath));
+                    }
+                    else
+                    {
+                        // Handle non-existent files (optional)
+                        Console.WriteLine($"File not found: {fullFilePath}"); // Log or display an error message
+                    }
                 }
             }
 
             smtpClient.Send(mailMessage);
             return true;
         }
+
+        public string encry(string pass)
+        {
+            if (pass == null)
+            {
+                return null;
+            }
+            else
+            {
+                byte[] storePass = ASCIIEncoding.ASCII.GetBytes(pass);
+                string encryptedPass = Convert.ToBase64String(storePass);
+                return encryptedPass;
+            }
+
+        }
         public int sendAgreement(int rid)
         {
-            string email = "";
+            string email = "vegadshubham2002@gmail.com";
             int status = 1;
             var dbreq = _context.Requests.FirstOrDefault(m => m.RequestId == rid);
             if (dbreq != null)
             {
-                email = dbreq?.Email;
+                /*email = dbreq?.Email;*/
                 status = dbreq?.Status ?? 1;
             }
-            string newRid = rid.ToString();
+
+            string newRid = encry(rid.ToString());
             string subject = "halloDoc Agreement Update";
             string message = "Hii " + email + ", Review & agree to our updated Terms for continued process: " + "http://localhost:5011/pDashboard/agreement?Rid=" + newRid;
             string[] s = new string[1];

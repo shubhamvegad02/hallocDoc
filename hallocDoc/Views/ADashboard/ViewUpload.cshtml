@@ -3,7 +3,25 @@
     ViewData["Title"] = "View upload";
     Layout = "~/Views/Shared/_ADashboard.cshtml";
 }
-<div class="docMain mt-3">
+<div class="anav mt-3">
+    <a class="anavchild cp tdn ncactive">Dashboard</a>
+    <a class="anavchild cp tdn">Provider Location</a>
+    <a class="anavchild cp tdn">My Profile</a>
+    <a class="anavchild cp tdn">Provider</a>
+    <a class="anavchild cp tdn">Partners</a>
+    <a class="anavchild cp tdn">Access</a>
+    <a class="anavchild cp tdn">Records</a>
+</div>
+<div class="dashsidebar hideside" id="dashsidebar">
+    <a class="dschild cp tdn dschildactive">Dashboard</a>
+    <a class="dschild cp tdn">Provider Location</a>
+    <a class="dschild cp tdn">My Profile</a>
+    <a class="dschild cp tdn">Provider</a>
+    <a class="dschild cp tdn">Partners</a>
+    <a class="dschild cp tdn">Access</a>
+    <a class="dschild cp tdn">Records</a>
+</div>
+<div class="docMain mt-2">
     <div class="dmboxbar">
         <h2 m-0>Document</h2>
         <a asp-area="" asp-controller="ADashboard" asp-action="Dmain" asp-route-id="2" class="logout tdn dmnewreq mb-3">Back</a>
@@ -13,7 +31,7 @@
         <span>Patient Name</span>
         <h5><span style="color:#68cbe1;">@ViewBag.patientName</span>(<span>@ViewBag.confirmation</span>)</h5>
         <span class="lh-sm">Check here any files that you or your doctor attached for review.</span>
-        <form asp-area="" asp-controller="ADashboard" asp-action="uploadbtn" asp-route-reqid="@ViewBag.reqid" enctype="multipart/form-data">
+        @*<form asp-area="" asp-controller="ADashboard" asp-action="uploadbtn" asp-route-reqid="@ViewBag.reqid" enctype="multipart/form-data">
             <div class="upbtncon mt-3 w-100">
                 <input asp-for="myfile" type="file" id="actual-btn" hidden />
 
@@ -29,6 +47,16 @@
                 <span id="file-chosen" class="upbtntext"></span>
             </div>
             <button class="logout tdn h-100 mt-2 " type="submit">submit</button>
+        </form>*@
+
+        <form asp-area="" asp-controller="ADashboard" asp-action="uploadbtn" asp-route-reqid="@ViewBag.reqid" enctype="multipart/form-data">
+            <div class="input-group mb-3 mt-2" style="height:45px;">
+                <input asp-for="myfile" type="file" class="form-control" id="inputGroupFile02">
+                <button type="submit" class="input-group-text" style="background-color: #68cbe1; color: white;">
+                    <i class="bi bi-cloud-arrow-up mx-2"></i>
+                    <span>Upload</span>
+                </button>
+            </div>
         </form>
 
         <div class="dmboxbar mt-4">

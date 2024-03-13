@@ -3,7 +3,25 @@
     ViewData["Title"] = "View upload";
     Layout = "~/Views/Shared/_ADashboard.cshtml";
 }
-<div class="docMain mt-3">
+<div class="anav mt-3">
+    <a class="anavchild cp tdn ncactive">Dashboard</a>
+    <a class="anavchild cp tdn">Provider Location</a>
+    <a class="anavchild cp tdn">My Profile</a>
+    <a class="anavchild cp tdn">Provider</a>
+    <a class="anavchild cp tdn">Partners</a>
+    <a class="anavchild cp tdn">Access</a>
+    <a class="anavchild cp tdn">Records</a>
+</div>
+<div class="dashsidebar hideside" id="dashsidebar">
+    <a class="dschild cp tdn dschildactive">Dashboard</a>
+    <a class="dschild cp tdn">Provider Location</a>
+    <a class="dschild cp tdn">My Profile</a>
+    <a class="dschild cp tdn">Provider</a>
+    <a class="dschild cp tdn">Partners</a>
+    <a class="dschild cp tdn">Access</a>
+    <a class="dschild cp tdn">Records</a>
+</div>
+<div class="docMain mt-2">
     <div class="dmboxbar">
         <h2 m-0>Close Case</h2>
         <a asp-area="" asp-controller="ADashboard" asp-action="Dmain" asp-route-id="2" class="logout tdn dmnewreq mb-3">Back</a>
@@ -63,7 +81,7 @@
             </tbody>
             @Html.ValidationMessage("deleted", null, new { @class= "text-success fw-bold"})
         </table>
-        <h4>Patient Information</h4>
+        <h4 class="mt-2">Patient Information</h4>
 
         <form asp-controller="ADashboard" asp-action="closeCase" asp-route-id="@Model.rid" class="row g-2 g-md-3 mt-2">
             <div class=" form-floating col-12">

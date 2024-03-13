@@ -3,7 +3,25 @@
     ViewData["Title"] = "View Notes";
     Layout = "~/Views/Shared/_ADashboard.cshtml";
 }
-<div class="casemain mt-4">
+<div class="anav mt-3">
+    <a class="anavchild cp tdn ncactive">Dashboard</a>
+    <a class="anavchild cp tdn">Provider Location</a>
+    <a class="anavchild cp tdn">My Profile</a>
+    <a class="anavchild cp tdn">Provider</a>
+    <a class="anavchild cp tdn">Partners</a>
+    <a class="anavchild cp tdn">Access</a>
+    <a class="anavchild cp tdn">Records</a>
+</div>
+<div class="dashsidebar hideside" id="dashsidebar">
+    <a class="dschild cp tdn dschildactive">Dashboard</a>
+    <a class="dschild cp tdn">Provider Location</a>
+    <a class="dschild cp tdn">My Profile</a>
+    <a class="dschild cp tdn">Provider</a>
+    <a class="dschild cp tdn">Partners</a>
+    <a class="dschild cp tdn">Access</a>
+    <a class="dschild cp tdn">Records</a>
+</div>
+<div class="casemain mt-2">
     <div class="cmhead d-flex flex-row justify-content-between align-items-center p-2 px-4">
         <h2>Notes</h2>
         <a asp-area="" asp-controller="ADashboard" asp-action="Dmain" asp-route-id="@Model.status" class="logout tdn dmnewreq mb-3">Back</a>

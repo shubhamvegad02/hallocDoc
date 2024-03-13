@@ -61,9 +61,11 @@ namespace hallocDoc.Controllers
             return RedirectToAction("Index", "Home");
         }
         [HttpGet]
-        public IActionResult agreement(int Rid)
+        public IActionResult agreement(string Rid)
         {
-            ViewBag.rid = Rid;
+            string originalRid = password.decry(Rid);
+            int OriginalRid = int.Parse(originalRid);
+            ViewBag.rid = OriginalRid;
             return View();
         }
 

@@ -48,5 +48,7 @@ namespace halloDocLogic.Interfaces
         Task<int> EncounterPost(int rid, EncounterData ed);
 
         public string EmailFromRid(int rid);
+
+        public string encry(string pass);
     }
 }

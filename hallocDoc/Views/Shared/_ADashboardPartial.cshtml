@@ -353,8 +353,8 @@
                                         </div>
                                         <div class="modal-footer">
                                             <form asp-area="" asp-controller="ADashboard" asp-action="ClearCase" asp-route-id="@item.rid">
-                                                <button type="button" style=""  class="btn" data-bs-dismiss="modal">Cancel</button>
-                                                <button type="submit"  class="btn btn-danger">Clear Case</button>
+                                                <button type="button" style="" class="btn" data-bs-dismiss="modal">Cancel</button>
+                                                <button type="submit" class="btn btn-danger">Clear Case</button>
                                             </form>
                                         </div>
                                     </div>
@@ -435,17 +435,21 @@
             @foreach (var item in ViewBag.tableData)
             {
                 var bgcolor = @GetBackgroundColor(@item.relation);
-                <div class="accordion-item">
+                <div class="accordion-item border-bottom-2">
                     <h2 class="accordion-header" id="headingOne">
-                        <button class="accordion-button border-dark border-2" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.guid" aria-expanded="true" aria-controls="flush-@item.guid">
+                        <button style="background-color:white !important; border:none !important; border-bottom:2px solid gray;" class="accordion-button border-dark border-2" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.guid" aria-expanded="true" aria-controls="flush-@item.guid">
                             <div class="d-flex flex-row justify-content-between w-100 pe-2 align-items-center">
                                 <div class="abchild1">
                                     <h4>@item.name</h4>
                                     <h6>@item.address</h6>
                                 </div>
-                                <div class="abchild2 d-flex flex-row justify-content-evenly align-items-center">
-                                    <span class="circle me-2" style="background-color:@bgcolor"></span>
-                                    <span>@item.requstor</span>
+                                <div>
+                                    <div class="abchild2 d-flex flex-row justify-content-evenly align-items-center">
+                                        <span class="circle" style="background-color:@bgcolor; filter:brightness(0.9);"></span>
+                                        <span>@item.requstor</span>
+                                    </div>
+                                    <div style="height:29px; " class="ps-2 pe-2 mt-2 rounded-pill btn-outline-info btnoutline">Map Location</div>
+
                                 </div>
                             </div>
                         </button>
@@ -454,13 +458,13 @@
                         <div class="accordion-body" style="background-color:#cbe5faa3">
                             <div class="p-1 d-flex align-items-start flex-column">
                                 <div class="d-none" id="acrregion">@item.region</div>
-                                <div class="mb-2"><i class="bi bi-cake2 border border-2 border-info rounded-circle pe-1 ps-1 m-1"></i><span class="fw-bold">Date Of Birth : </span><span>@item.dob</span></div>
-                                <div class="mb-2"><i class="bi bi-envelope border border-2 border-info rounded-circle pe-1 ps-1 m-1"></i> <span class="fw-bold">Email : </span><span>@item.email</span></div>
-                                <div class="mb-2"><i class="bi bi-telephone border border-2 border-info rounded-circle pe-1 ps-1 m-1"></i> <span class="fw-bold">Mobile : </span><span>@item.mobile</span></div>
-                                <div class="mb-2"><i class="bi bi-folder2-open border border-2 border-info rounded-circle pe-1 ps-1 m-1"></i> <span class="fw-bold">Notes : </span><span>@item.notes</span></div>
-                                <div class="mb-2"><i class="bi bi-calendar-date border border-2 border-info rounded-circle pe-1 ps-1 m-1"></i> <span class="fw-bold">Date Of service : </span><span>@item.reqDate</span></div>
-                                <div class="mb-2"><i class="bi bi-heart-pulse border border-2 border-info rounded-circle pe-1 ps-1 m-1"></i> <span class="fw-bold">Physician : </span><span>@item?.PhysicianName</span></div>
-                                <div class="mb-2"><i class="bi bi-person border border-2 border-info rounded-circle pe-1 ps-1 m-1"></i> <span class="fw-bold">Requestor : </span><span> @item.requstor</span></div>
+                                <div class="mb-2"><i class="bi bi-cake2 border border-1 border-info rounded-circle p-1 pe-2 ps-2 me-1"></i><span class="fw-bold">Date Of Birth : </span><span>@item.dob</span></div>
+                                <div class="mb-2"><i class="bi bi-envelope border border-1 border-info rounded-circle p-1 pe-2 ps-2 me-1"></i> <span class="fw-bold">Email : </span><span>@item.email</span></div>
+                                <div class="mb-2"><i class="bi bi-telephone border border-1 border-info rounded-circle p-1 pe-2 ps-2 me-1"></i> <span class="fw-bold">Mobile : </span><span>@item.mobile</span></div>
+                                <div class="mb-2"><i class="bi bi-folder2-open border border-1 border-info rounded-circle p-1 pe-2 ps-2 me-1"></i> <span class="fw-bold">Notes : </span><span>@item.notes</span></div>
+                                <div class="mb-2"><i class="bi bi-calendar-date border border-1 border-info rounded-circle p-1 pe-2 ps-2 me-1"></i> <span class="fw-bold">Date Of service : </span><span>@item.reqDate</span></div>
+                                <div class="mb-2"><i class="bi bi-heart-pulse border border-1 border-info rounded-circle p-1 pe-2 ps-2 me-1"></i> <span class="fw-bold">Physician : </span><span>@item?.PhysicianName</span></div>
+                                <div class="mb-2"><i class="bi bi-person border border-1 border-info rounded-circle p-1 pe-2 ps-2 me-1"></i> <span class="fw-bold">Requestor : </span><span> @item.requstor</span></div>
                             </div>
 
                             <div class="d-flex align-items-center flex-wrap w-100">
@@ -505,8 +509,8 @@
                             </div>
 
                             <div class="p-1 d-flex justify-content-end">
-                                <span>Chat with : </span>
-                                <span class="icone-Chome ms-1"><i class="fa-solid fa-user"></i>Provider</span>
+                                <span class="fw-bold">Chat with : </span>
+                                <span class="ms-1 icone-Chome ms-1 text-info"><i class="fa-solid fa-user me-1"></i>Provider</span>
 
                             </div>
                         </div>
