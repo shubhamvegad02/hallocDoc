@@ -22,6 +22,7 @@ using Humanizer;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using System.Security.Cryptography.X509Certificates;
 using System.Globalization;
+/*using Nest;*/
 
 namespace halloDocLogic.Repository
 {
@@ -36,6 +37,66 @@ namespace halloDocLogic.Repository
             _hostEnvironment = environment;
         }
 
+
+
+
+        public async Task<AdminProfile> MyProfile(int aid)
+        {
+            var dbregion = _context.Regions;
+            List<string> list = new List<string>();
+            foreach (var i in dbregion)
+            {
+                list.Add(i?.Name);
+            }
+
+            var dbdata = from user in _context.Aspnetusers
+                         join admin in _context.Admins on user.Id equals admin.AspNetUserId
+                         join userRole in _context.Aspnetuserroles on user.Id equals userRole.UserId
+                         join role in _context.Aspnetroles on userRole.RoleId equals role.AspNetRoleId
+                         select new
+                         {
+                             aspData = user,
+                             AdminData = admin,
+                             RoleName = role.Name
+                         };
+            foreach (var item in dbdata)
+            {
+                AdminProfile ap = new AdminProfile();
+                ap.username = item?.aspData?.Email;
+                ap.status = item?.AdminData?.Status?.ToString();
+                ap.role = item?.RoleName;
+                ap.firstname = item?.AdminData?.FirstName;
+                ap.lastname = item?.AdminData?.LastName;
+                ap.email = item?.AdminData?.Email;
+                ap.confirmMail = item?.AdminData?.Email;
+                ap.mobile = item?.AdminData?.Mobile;
+                ap.address1 = item?.AdminData?.Address1;
+                ap.address2 = item?.AdminData?.Address2;
+                ap.city = item?.AdminData?.City;
+                ap.state = "Gujarat";
+                ap.zipcode = item?.AdminData?.Zip;
+                ap.billingMobile = item?.AdminData?.AltPhone ?? item?.AdminData.Mobile;
+                ap.stateList = list;
+                   
+                
+
+                return ap;
+
+
+            }
+            return null;
+
+        }
+        public int AdminidFromAspid(string aspid)
+        {
+            var dbadmin = _context.Admins.FirstOrDefault(m => m.AspNetUserId == aspid);
+            if (dbadmin != null)
+            {
+                int Aid = dbadmin.AdminId;
+                return Aid;
+            }
+            return 0;
+        }
 
         public string EmailFromRid(int rid)
         {

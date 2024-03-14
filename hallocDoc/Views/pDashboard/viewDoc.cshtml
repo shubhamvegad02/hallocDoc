@@ -22,7 +22,7 @@
         <span>Patient Name</span>
         <h5>@ViewBag.username</h5>
         <span class="lh-sm">Check here any files that you or your doctor attached for review.</span>
-        <form asp-area="" asp-controller="pDashboard" asp-action="uploadbtn" asp-route-reqid="@ViewBag.reqid" enctype="multipart/form-data">
+        @*<form asp-area="" asp-controller="pDashboard" asp-action="uploadbtn" asp-route-reqid="@ViewBag.reqid" enctype="multipart/form-data">
             <div class="upbtncon mt-3 w-100">
                 <input asp-for="myfile" type="file" id="actual-btn" hidden />
 
@@ -38,8 +38,16 @@
                 <span id="file-chosen" class="upbtntext">No file selected</span>
             </div>
             <button class="logout tdn h-100 mt-2 " type="submit">submit</button>
+        </form>*@
+        <form asp-area="" asp-controller="pDashboard" asp-action="uploadbtn" asp-route-reqid="@ViewBag.reqid" enctype="multipart/form-data">
+            <div class="input-group mb-3 mt-2" style="height:45px;">
+                <input asp-for="myfile" type="file" class="form-control" id="inputGroupFile02">
+                <button type="submit" class="input-group-text" style="background-color: #68cbe1; color: white;">
+                    <i class="bi bi-cloud-arrow-up mx-2"></i>
+                    <span>Upload</span>
+                </button>
+            </div>
         </form>
-
         <div class="dmboxbar mt-4">
             <h3 class="mb-0">Documents</h3>
             @* <a asp-area="" asp-controller="pDashboard" asp-action="viewDoc" class="logout tdn dmnewreq ">Donwlod All</a> *@

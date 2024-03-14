@@ -434,6 +434,13 @@ a {
     margin-bottom: 7px;
 }
 
+.form-check-input {
+    border: 1px solid var(--blue) !important;
+}
+.form-check-input:checked{
+    background-color: var(--blue) !important;
+    border-color:var(--blue) !important;
+}
 
 @media screen and (max-width : 1200px) {
     .tableparent {

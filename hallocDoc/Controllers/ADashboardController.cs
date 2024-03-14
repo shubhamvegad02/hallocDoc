@@ -14,6 +14,7 @@ using System.Security.Cryptography;
 using Org.BouncyCastle.Ocsp;
 using Microsoft.CodeAnalysis.Elfie.Serialization;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+using halloDocLogic.Repository;
 
 namespace hallocDoc.Controllers
 {
@@ -24,17 +25,48 @@ namespace hallocDoc.Controllers
         private readonly IADashboard _iadash;
         private readonly IPDashboard _pDashboard;
         private readonly IHostingEnvironment _hostEnvironment;
-        public ADashboardController(ApplicationDbContext dbContext, IADashboard dashboard, IPDashboard pDashboard, IHostingEnvironment hostingEnvironment)
+        private readonly IJwtService _jwtService;
+
+        public ADashboardController(ApplicationDbContext dbContext, IADashboard dashboard, IPDashboard pDashboard, IHostingEnvironment hostingEnvironment, IJwtService jwtService)
         {
             _context = dbContext;
             _iadash = dashboard;
             _pDashboard = pDashboard;
             _hostEnvironment = hostingEnvironment;
+            _jwtService = jwtService;
         }
 
 
 
 
+        public IActionResult ProfilePasswordSubmit(int Aid)
+        {
+            return RedirectToAction("MyProfile", "ADashboard", new { Aid = Aid });
+        }
+
+        public async Task<IActionResult> MyProfile(int? Aid)
+        {
+            int aid = 0;
+            if (Aid == null)
+            {
+                string jwtToken = Request.Cookies["jwt"] ?? "";
+                JwtClaimsModel jwtClaims = new JwtClaimsModel();
+                jwtClaims = _jwtService.GetClaimsFromJwtToken(jwtToken);
+                var aspid = jwtClaims.AspId;
+
+                int NewAid = _iadash.AdminidFromAspid(aspid);
+                aid = NewAid;
+                ViewBag.Aid = NewAid;
+
+            }
+            else
+            {
+                ViewBag.Aid = Aid;
+                aid = Aid??0;
+            }
+            AdminProfile ap = await _iadash.MyProfile(aid);
+            return View(ap);
+        }
 
         public async Task<IActionResult> SendFilesInMail(int rid, [FromBody] string[] filenames)
         {
@@ -53,7 +85,7 @@ namespace hallocDoc.Controllers
         public async Task<IActionResult> Encounter(int rid, EncounterData ed, string? s)
         {
             int status = await _iadash.EncounterPost(rid, ed);
-            
+
             return RedirectToAction("Dmain", "ADashboard", new { id = status });
         }
 
@@ -63,19 +95,19 @@ namespace hallocDoc.Controllers
             return View(encounterData);
         }
 
-        
+
         public async Task<IActionResult> closeCasefinal(int rid)
         {
             int status = await _iadash.closeCasefinal(rid);
             return RedirectToAction("Dmain", "ADashboard", new { id = status });
         }
 
-        
+
         public async Task<IActionResult> closeCase(int id, AViewNoteCase vnc)
         {
-           int status = await _iadash.closeCasePost(id, vnc);
-            
-            return RedirectToAction("Dmain", "ADashboard", new {id = status});
+            int status = await _iadash.closeCasePost(id, vnc);
+
+            return RedirectToAction("Dmain", "ADashboard", new { id = status });
         }
 
         [HttpGet]
@@ -89,7 +121,7 @@ namespace hallocDoc.Controllers
         [HttpPost]
         public IActionResult sendAgreement(int rid)
         {
-            int status = _iadash.sendAgreement(rid); 
+            int status = _iadash.sendAgreement(rid);
             return RedirectToAction("Dmain", "ADashboard", new { id = status });
         }
 
@@ -266,7 +298,7 @@ namespace hallocDoc.Controllers
                 vu.fileName = item.rf.FileName;
                 vu.fileId = item.rf.RequestWiseFileId;
                 vu.rid = rid;
-                
+
 
 
                 data.Add(vu);

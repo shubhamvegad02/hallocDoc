@@ -38,6 +38,8 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Healthprofessionaltype> Healthprofessionaltypes { get; set; }
 
+    public virtual DbSet<Menu> Menus { get; set; }
+
     public virtual DbSet<Orderdetail> Orderdetails { get; set; }
 
     public virtual DbSet<Physician> Physicians { get; set; }
@@ -55,6 +57,10 @@ public partial class ApplicationDbContext : DbContext
     public virtual DbSet<Requeststatuslog> Requeststatuslogs { get; set; }
 
     public virtual DbSet<Requestwisefile> Requestwisefiles { get; set; }
+
+    public virtual DbSet<Role> Roles { get; set; }
+
+    public virtual DbSet<Rolemenu> Rolemenus { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
 
@@ -155,6 +161,11 @@ public partial class ApplicationDbContext : DbContext
             entity.HasKey(e => e.HealthProfessionalId).HasName("healthprofessionaltype_pkey");
         });
 
+        modelBuilder.Entity<Menu>(entity =>
+        {
+            entity.HasKey(e => e.MenuId).HasName("menu_pkey");
+        });
+
         modelBuilder.Entity<Orderdetail>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("orderdetails_pkey");
@@ -246,6 +257,24 @@ public partial class ApplicationDbContext : DbContext
             entity.HasOne(d => d.Request).WithMany(p => p.Requestwisefiles)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("requestwisefile_RequestId_fkey");
+        });
+
+        modelBuilder.Entity<Role>(entity =>
+        {
+            entity.HasKey(e => e.RoleId).HasName("role_pkey");
+        });
+
+        modelBuilder.Entity<Rolemenu>(entity =>
+        {
+            entity.HasKey(e => e.RoleMenuId).HasName("rolemenu_pkey");
+
+            entity.HasOne(d => d.Menu).WithMany(p => p.Rolemenus)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("rolemenu_MenuId_fkey");
+
+            entity.HasOne(d => d.Role).WithMany(p => p.Rolemenus)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("rolemenu_RoleId_fkey");
         });
 
         modelBuilder.Entity<User>(entity =>

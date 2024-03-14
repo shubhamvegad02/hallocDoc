@@ -50,5 +50,9 @@ namespace halloDocLogic.Interfaces
         public string EmailFromRid(int rid);
 
         public string encry(string pass);
+
+        public int AdminidFromAspid(string aspid);
+
+        Task<AdminProfile> MyProfile(int aid);
     }
 }

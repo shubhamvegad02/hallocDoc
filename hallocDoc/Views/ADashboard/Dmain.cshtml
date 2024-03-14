@@ -4,18 +4,18 @@
     Layout = "~/Views/Shared/_ADashboard.cshtml";
 }
 <div class="anav mt-2">
-    <a class="anavchild cp tdn ncactive">Dashboard</a>
+    <a asp-area="" asp-controller="ADashboard" asp-action="Dmain" class="anavchild cp tdn ncactive">Dashboard</a>
     <a class="anavchild cp tdn">Provider Location</a>
-    <a class="anavchild cp tdn">My Profile</a>
+    <a asp-area="" asp-controller="ADashboard" asp-action="MyProfile" class="anavchild cp tdn">My Profile</a>
     <a class="anavchild cp tdn">Provider</a>
     <a class="anavchild cp tdn">Partners</a>
     <a class="anavchild cp tdn">Access</a>
     <a class="anavchild cp tdn">Records</a>
 </div>
 <div class="dashsidebar hideside" id="dashsidebar">
-    <a class="dschild cp tdn dschildactive">Dashboard</a>
+    <a asp-area="" asp-controller="ADashboard" asp-action="Dmain" class="dschild cp tdn dschildactive">Dashboard</a>
     <a class="dschild cp tdn">Provider Location</a>
-    <a class="dschild cp tdn">My Profile</a>
+    <a asp-area="" asp-controller="ADashboard" asp-action="MyProfile" class="dschild cp tdn">My Profile</a>
     <a class="dschild cp tdn">Provider</a>
     <a class="dschild cp tdn">Partners</a>
     <a class="dschild cp tdn">Access</a>

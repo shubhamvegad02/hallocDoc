@@ -1,0 +1,201 @@
+﻿@model halloDocEntities.ViewDataModels.AdminProfile;
+@{
+    ViewData["Title"] = "My Profile";
+    Layout = "~/Views/Shared/_ADashboard.cshtml";
+}
+<div class="anav mt-3">
+    <a asp-area="" asp-controller="ADashboard" asp-action="Dmain" class="anavchild cp tdn ">Dashboard</a>
+    <a class="anavchild cp tdn">Provider Location</a>
+    <a asp-area="" asp-controller="ADashboard" asp-action="MyProfile" class="anavchild cp tdn ncactive">My Profile</a>
+    <a class="anavchild cp tdn">Provider</a>
+    <a class="anavchild cp tdn">Partners</a>
+    <a class="anavchild cp tdn">Access</a>
+    <a class="anavchild cp tdn">Records</a>
+</div>
+<div class="dashsidebar hideside" id="dashsidebar">
+    <a asp-area="" asp-controller="ADashboard" asp-action="Dmain" class="dschild cp tdn ">Dashboard</a>
+    <a class="dschild cp tdn">Provider Location</a>
+    <a asp-area="" asp-controller="ADashboard" asp-action="MyProfile" class="dschild cp tdn dschildactive">My Profile</a>
+    <a class="dschild cp tdn">Provider</a>
+    <a class="dschild cp tdn">Partners</a>
+    <a class="dschild cp tdn">Access</a>
+    <a class="dschild cp tdn">Records</a>
+</div>
+<div class="docMain mt-2">
+    <div class="dmboxbar">
+        <h2 m-0>My Profile</h2>
+        <a asp-area="" asp-controller="ADashboard" asp-action="Dmain" asp-route-id="1" class="logout tdn dmnewreq mb-3">Back</a>
+    </div>
+
+    <div class="dmbox">
+
+        <form asp-controller="ADashboard" asp-action="Order" class="row g-2 g-md-3">
+            <h3 class="mt-2 ms-1">Account Information</h3>
+
+            <div class="form-floating col-12 col-md-6">
+                <input disabled asp-for="username" type="text" class="form-control" id="fdate2" placeholder="Password" value="@Model?.email">
+                <label class="mylable" for="fdate2">UserName</label>
+                <span asp-validation-for="username" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="password" type="password" class="form-control" id="Password" placeholder="Password" value="">
+                <label class="mylable" for="Password">Password</label>
+                <span asp-validation-for="password" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating col-12 col-md-6 d-flex justify-content-center align-items-center">
+                <select disabled id="profdropdown" asp-for="status" class="form-select pt-0 pb-0">
+                    <option value="" selected>@Model?.status</option>
+                </select>
+                <span asp-validation-for="status" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating col-12 col-md-6 d-flex justify-content-center align-items-center">
+                <select disabled id="profdropdown" asp-for="role" class="form-select pt-0 pb-0">
+                    <option value="" selected>@Model?.role</option>
+                </select>
+                <span asp-validation-for="role" class="text-danger"></span>
+            </div>
+
+            <div class="btnline mt-3 me-1">
+                <button type="submit" class="btn btn-outline-primary active blbtn">Reset Password</button>
+                
+
+            </div>
+        </form>
+
+        <h3 class="m-2 ms-1">Administator Information</h3>
+
+        <form asp-controller="ADashboard" asp-action="Order" class="row g-2 g-md-3">
+            <div class="form-floating col-12 col-md-6">
+                <input disabled asp-for="firstname" type="text" class="form1 form-control" id="floatingInput2" placeholder="name@example.com">
+                <label class="mylable" for="floatingInput2">First Name</label>
+                <span asp-validation-for="firstname" class="text-danger"></span>
+
+            </div>
+            <div class="form-floating col-12 col-md-6">
+                <input disabled asp-for="lastname" type="text" class="form1 form-control" id="floatingPassword" placeholder="Password">
+                <label class="mylable" for="floatingPassword">Last Name</label>
+                <span asp-validation-for="lastname" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input disabled asp-for="email" type="email" class="form1 form-control" id="floatingInput5" placeholder="name@example.com">
+                <label class="mylable" for="floatingInput5">Email address</label>
+                <span asp-validation-for="email" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input disabled asp-for="confirmMail" type="email" class="form1 form-control" id="floatingInpu" placeholder="name@example.com">
+                <label class="mylable" for="floatingInpu">Email address</label>
+                <span asp-validation-for="confirmMail" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input disabled type="tel" asp-for="mobile" id="phone23" class=" form1 form-control" placeholder="Mobile Number" />
+                <label class="mylable" for="phone23">Mobile No.</label>
+                <span asp-validation-for="mobile" class="text-danger"></span>
+            </div>
+
+            @*<div class="form-floating col-12 col-md-6 border-1">
+
+            </div>*@
+
+            <div class="form-floating col-12 col-md-6 border-1">
+                <div class="row">
+                    <div class="col">
+                        @if (Model?.stateList?.Count != 0)
+                        {
+                            @foreach (var item in Model?.stateList)
+                            {
+                                <div class="form-check form-check-inline">
+                                    <input disabled class="form1 form-check-input text-info" type="checkbox" id="checkboxGujarat" value="@item" @(Model.state?.ToLower() == item.ToLower() ? "checked" : "")>
+                                    <label for="checkboxGujarat" class="form-check-label">@item</label>
+                                </div>
+
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="btnline mt-2">
+                <button id="form1btn" style="width:80px;" class="btn btn-danger ms-2" style="border:none; color:white;">Edit</button>
+                <button type="button" class="btn btn-outline-danger">Danger</button>
+            </div>
+
+
+
+            <h3 class="m-2 ms-1">Mailing & Billing Information</h3>
+
+            <div class="form-floating col-12 col-md-6">
+                <input disabled asp-for="address1" type="text" class="form2 form-control" id="address1" placeholder="address1">
+                <label class="mylable" for="address1">Address 1</label>
+            </div>
+            <div class="form-floating col-12 col-md-6">
+                <input disabled asp-for="address2" type="text" class="form2 form-control" id="address2" placeholder="address1">
+                <label class="mylable" for="address1">Address 2</label>
+            </div>
+            <div class="form-floating col-12 col-md-6">
+                <input disabled asp-for="city" type="text" class="form2 form-control" id="City" placeholder="address1">
+                <label class="mylable" for="City">City</label>
+            </div>
+            <div class="form-floating col-12 col-md-6 d-flex justify-content-center align-items-center">
+                <select disabled id="profdropdown" asp-for="role" class="form2 form-select pt-0 pb-0">
+                    @foreach(var item in Model.stateList)
+                    {
+                        @if (item == Model.state)
+                        {
+                            <option value="@item" selected>@item</option>
+                        }
+                        else
+                        {
+                            <option value="@item">@item</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="role" class="text-danger"></span>
+            </div>
+            <div class="form-floating col-12 col-md-6">
+                <input disabled asp-for="zipcode" type="text" class="form2 form-control" id="Zipcode" placeholder="address1">
+                <label class="mylable" for="Zipcode">Zipcode</label>
+            </div>
+            <div class="form-floating col-12 col-md-6">
+                <input disabled type="tel" asp-for="billingMobile" id="phone2" class="form2 form-control" placeholder="Mobile Number" />
+                <label class="mylable" for="phone2">Mobile No.</label>
+                <span asp-validation-for="billingMobile" class="text-danger"></span>
+            </div>
+
+            <div class="btnline mt-3">
+                <a style="color:#ff4343 !important; border-color:#ff4343 !important; background-color:white !important;" class="me-2 btn btn-outline-danger">Cancel</a>
+                <button id="form2btn" style="width:80px;" class="btn btn-danger ms-2" style="border:none; color:white;">Edit</button>
+            </div> 
+
+
+            <button type="submit" style="width:fit-content !important;" class="m-2 btn btn-outline-primary active blbtn">Save Data</button>
+
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById("form1btn").addEventListener("click", function () {
+            var inputs = document.querySelectorAll(".form1");
+            inputs.forEach(function (input) {
+                input.disabled = !input.disabled;
+            });
+            this.disabled = true;
+        });
+        
+        document.getElementById("form2btn").addEventListener("click", function () {
+            var inputs = document.querySelectorAll(".form2");
+            inputs.forEach(function (input) {
+                input.disabled = !input.disabled;
+            });
+            this.disabled = true; 
+        });
+    </script>
+}
