@@ -56,11 +56,16 @@ public partial class Admin
     [Column(TypeName = "timestamp without time zone")]
     public DateTime? ModifiedDate { get; set; }
 
-    public short? Status { get; set; }
-
     public bool? IsDeleted { get; set; }
 
     public int? RoleId { get; set; }
+
+    [Column("status")]
+    [StringLength(50)]
+    public string? Status { get; set; }
+
+    [InverseProperty("Admin")]
+    public virtual ICollection<AdminRegion> AdminRegions { get; set; } = new List<AdminRegion>();
 
     [ForeignKey("AspNetUserId")]
     [InverseProperty("AdminAspNetUsers")]

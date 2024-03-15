@@ -1,4 +1,5 @@
-﻿using halloDocEntities.ViewDataModels;
+﻿using halloDocEntities.DataModels;
+using halloDocEntities.ViewDataModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,5 +55,26 @@ namespace halloDocLogic.Interfaces
         public int AdminidFromAspid(string aspid);
 
         Task<AdminProfile> MyProfile(int aid);
+
+        public bool ProfilePasswordSubmit(int aid, AdminProfile ap);
+
+        public bool MyProfilePost(int aid, AdminProfile ap);
+
+        Task<List<ViewUploadedDoc>> ViewUpload(int rid);
+
+        public bool OrderPost(int rid, SendOrder so);
+
+        Task<SendOrder> order();
+
+        Task<int> statusFromRid(int rid);
+
+        Task<object> GetOrderData(int businessId);
+
+        Task<bool> TransferCase(int rid, ADashTable adt);
+
+        public List<Physician> getPhysiciandata();
+
+        public List<Region> getRegiondata();
     }
+
 }

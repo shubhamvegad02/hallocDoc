@@ -29,7 +29,7 @@
 
     <div class="dmbox">
 
-        <form asp-controller="ADashboard" asp-action="Order" class="row g-2 g-md-3">
+        <form asp-controller="ADashboard" asp-action="ProfilePasswordSubmit" asp-route-Aid="@ViewBag.Aid" class="row g-2 g-md-3">
             <h3 class="mt-2 ms-1">Account Information</h3>
 
             <div class="form-floating col-12 col-md-6">
@@ -45,14 +45,14 @@
             </div>
 
             <div class="form-floating col-12 col-md-6 d-flex justify-content-center align-items-center">
-                <select disabled id="profdropdown" asp-for="status" class="form-select pt-0 pb-0">
+                <select disabled asp-for="status" class="form-select pt-0 pb-0">
                     <option value="" selected>@Model?.status</option>
                 </select>
                 <span asp-validation-for="status" class="text-danger"></span>
             </div>
 
             <div class="form-floating col-12 col-md-6 d-flex justify-content-center align-items-center">
-                <select disabled id="profdropdown" asp-for="role" class="form-select pt-0 pb-0">
+                <select disabled asp-for="role" class="form-select pt-0 pb-0">
                     <option value="" selected>@Model?.role</option>
                 </select>
                 <span asp-validation-for="role" class="text-danger"></span>
@@ -60,14 +60,12 @@
 
             <div class="btnline mt-3 me-1">
                 <button type="submit" class="btn btn-outline-primary active blbtn">Reset Password</button>
-                
-
             </div>
         </form>
 
         <h3 class="m-2 ms-1">Administator Information</h3>
 
-        <form asp-controller="ADashboard" asp-action="Order" class="row g-2 g-md-3">
+        <form asp-controller="ADashboard" asp-action="MyProfilePost" asp-route-Aid="@ViewBag.Aid" class="row g-2 g-md-3">
             <div class="form-floating col-12 col-md-6">
                 <input disabled asp-for="firstname" type="text" class="form1 form-control" id="floatingInput2" placeholder="name@example.com">
                 <label class="mylable" for="floatingInput2">First Name</label>
@@ -105,15 +103,14 @@
             <div class="form-floating col-12 col-md-6 border-1">
                 <div class="row">
                     <div class="col">
-                        @if (Model?.stateList?.Count != 0)
+                        @if (Model?.stateList?.Count != 0 && Model?.AdminStateList?.Count != 0)
                         {
-                            @foreach (var item in Model?.stateList)
+                            @foreach (var state in Model?.regionList)
                             {
                                 <div class="form-check form-check-inline">
-                                    <input disabled class="form1 form-check-input text-info" type="checkbox" id="checkboxGujarat" value="@item" @(Model.state?.ToLower() == item.ToLower() ? "checked" : "")>
-                                    <label for="checkboxGujarat" class="form-check-label">@item</label>
+                                    <input name="AdminStateList" disabled class="form1 form-check-input text-info" type="checkbox" id="checkbox-@state.Name" value="@state.RegionId" @(Model.AdminStateList.Contains(state.Name) ? "checked" : "")>
+                                    <label for="checkbox-@state.Name" class="form-check-label">@state.Name</label>
                                 </div>
-
                             }
                         }
                     </div>
@@ -121,8 +118,8 @@
             </div>
 
             <div class="btnline mt-2">
-                <button id="form1btn" style="width:80px;" class="btn btn-danger ms-2" style="border:none; color:white;">Edit</button>
-                <button type="button" class="btn btn-outline-danger">Danger</button>
+                <a asp-area="" asp-controller="ADashboard" asp-action="MyProfile" asp-route-Aid="@ViewBag.Aid" hidden id="cancelbtn1" style="color:#ff4343 !important; border-color:#ff4343 !important; background-color:white !important;" class="me-2 pt-2 btn">Cancel</a>
+                <button id="form1btn" style="width:80px; border:none; color:white;" class="btn btn-danger ms-2">Edit</button>
             </div>
 
 
@@ -142,16 +139,16 @@
                 <label class="mylable" for="City">City</label>
             </div>
             <div class="form-floating col-12 col-md-6 d-flex justify-content-center align-items-center">
-                <select disabled id="profdropdown" asp-for="role" class="form2 form-select pt-0 pb-0">
-                    @foreach(var item in Model.stateList)
+                <select disabled id="profdropdown" asp-for="state" class="form2 form-select pt-0 pb-0">
+                    @foreach (var item in Model.regionList)
                     {
-                        @if (item == Model.state)
+                        @if (item.Name == Model.state)
                         {
-                            <option value="@item" selected>@item</option>
+                            <option value="@item.RegionId" selected>@item.Name</option>
                         }
                         else
                         {
-                            <option value="@item">@item</option>
+                            <option value="@item.RegionId">@item.Name</option>
                         }
                     }
                 </select>
@@ -168,12 +165,12 @@
             </div>
 
             <div class="btnline mt-3">
-                <a style="color:#ff4343 !important; border-color:#ff4343 !important; background-color:white !important;" class="me-2 btn btn-outline-danger">Cancel</a>
-                <button id="form2btn" style="width:80px;" class="btn btn-danger ms-2" style="border:none; color:white;">Edit</button>
-            </div> 
+                <a asp-area="" asp-controller="ADashboard" asp-action="MyProfile" asp-route-Aid="@ViewBag.Aid" id="cancelbtn2" hidden style="color:#ff4343 !important; border-color:#ff4343 !important; background-color:white !important;" class=" me-2 pt-2 btn">Cancel</a>
+                <button id="form2btn" style="width:80px; border:none; color:white;" class="btn btn-danger ms-2">Edit</button>
+            </div>
 
 
-            <button type="submit" style="width:fit-content !important;" class="m-2 btn btn-outline-primary active blbtn">Save Data</button>
+            <button id="savedata" type="submit" style="width:fit-content !important;" class="m-2 btn btn-outline-primary active blbtn">Save Data</button>
 
         </form>
 
@@ -184,18 +181,53 @@
     <script>
         document.getElementById("form1btn").addEventListener("click", function () {
             var inputs = document.querySelectorAll(".form1");
+            var cancelbtn = document.getElementById("cancelbtn1");
             inputs.forEach(function (input) {
                 input.disabled = !input.disabled;
             });
             this.disabled = true;
+            cancelbtn.hidden = false;
         });
-        
+
         document.getElementById("form2btn").addEventListener("click", function () {
             var inputs = document.querySelectorAll(".form2");
+            var cancelbtn = document.getElementById("cancelbtn2");
             inputs.forEach(function (input) {
                 input.disabled = !input.disabled;
             });
-            this.disabled = true; 
+            this.disabled = true;
+            cancelbtn.hidden = false;
         });
+
+        document.getElementById("savedata").addEventListener("click", function () {
+
+            var cancelbtn = document.getElementById("cancelbtn2");
+            inputs.forEach(function (input) {
+                input.disabled = !input.disabled;
+            });
+            var cancelbtn = document.getElementById("cancelbtn1");
+            inputs.forEach(function (input) {
+                input.disabled = !input.disabled;
+            });
+        })
+
+
     </script>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <script>
+            toastr.success("@TempData["SuccessMessage"]");
+        </script>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <script>
+
+            toastr.error("@TempData["ErrorMessage"]");
+
+        </script>
+    }
+
 }

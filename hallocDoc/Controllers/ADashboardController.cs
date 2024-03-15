@@ -21,15 +21,13 @@ namespace hallocDoc.Controllers
     [CustomAuthorize("Admin")]
     public class ADashboardController : Controller
     {
-        private readonly ApplicationDbContext _context;
         private readonly IADashboard _iadash;
         private readonly IPDashboard _pDashboard;
         private readonly IHostingEnvironment _hostEnvironment;
         private readonly IJwtService _jwtService;
 
-        public ADashboardController(ApplicationDbContext dbContext, IADashboard dashboard, IPDashboard pDashboard, IHostingEnvironment hostingEnvironment, IJwtService jwtService)
+        public ADashboardController(IADashboard dashboard, IPDashboard pDashboard, IHostingEnvironment hostingEnvironment, IJwtService jwtService)
         {
-            _context = dbContext;
             _iadash = dashboard;
             _pDashboard = pDashboard;
             _hostEnvironment = hostingEnvironment;
@@ -37,15 +35,29 @@ namespace hallocDoc.Controllers
         }
 
 
-
-
-        public IActionResult ProfilePasswordSubmit(int Aid)
+        public IActionResult MyProfilePost(int Aid, AdminProfile ap)
         {
+            bool check = _iadash.MyProfilePost(Aid, ap);
+            if (check)
+            {
+                TempData["SuccessMessage"] = "Data Updated Successfully..";
+            }
+            return RedirectToAction("MyProfile", "ADashboard", new { Aid = Aid });
+        }
+
+        public IActionResult ProfilePasswordSubmit(int Aid, AdminProfile ap)
+        {
+            bool check = _iadash.ProfilePasswordSubmit(Aid, ap);
+            if (check)
+            {
+                TempData["SuccessMessage"] = "Data Updated Successfully..";
+            }
             return RedirectToAction("MyProfile", "ADashboard", new { Aid = Aid });
         }
 
         public async Task<IActionResult> MyProfile(int? Aid)
         {
+                TempData["SuccessMessage"] = "Data Updated Successfully..";
             int aid = 0;
             if (Aid == null)
             {
@@ -62,7 +74,7 @@ namespace hallocDoc.Controllers
             else
             {
                 ViewBag.Aid = Aid;
-                aid = Aid??0;
+                aid = Aid ?? 0;
             }
             AdminProfile ap = await _iadash.MyProfile(aid);
             return View(ap);
@@ -71,8 +83,7 @@ namespace hallocDoc.Controllers
         public async Task<IActionResult> SendFilesInMail(int rid, [FromBody] string[] filenames)
         {
 
-            //string email = _iadash.EmailFromRid(rid);
-            string email = "vegadshubham2002@gmail.com";
+            string email = _iadash.EmailFromRid(rid);
             string subject = "HalloDoc Attachement";
             string message = "Please Check Attached Files for your Request From HalloDoc..";
             List<string> files = new List<string>();
@@ -142,32 +153,7 @@ namespace hallocDoc.Controllers
         [HttpPost]
         public async Task<IActionResult> TransferCase(int rid, ADashTable adt)
         {
-            var dbreq = _context.Requests.FirstOrDefault(m => m.RequestId == rid);
-            if (dbreq != null)
-            {
-                dbreq.PhysicianId = adt.phyId;
-                _context.Requests.Update(dbreq);
-                _context.SaveChanges();
-            }
-            var dbreqnotes = await _context.Requestnotes.FirstOrDefaultAsync(m => m.RequestId == rid);
-            if (dbreqnotes != null)
-            {
-                dbreqnotes.AdminNotes = adt.notes;
-                dbreqnotes.ModifiedBy = "Admin";
-                dbreqnotes.ModifiedDate = DateTime.Now;
-                _context.Requestnotes.Update(dbreqnotes);
-                _context.SaveChanges();
-            }
-            var rl = new Requeststatuslog();
-            rl.RequestId = rid;
-            rl.Status = 2;
-            rl.AdminId = 1;
-            rl.TransToPhysicianId = adt.phyId;
-            rl.Notes = adt.notes;
-            rl.CreatedDate = DateTime.Now;
-            _context.Requeststatuslogs.Add(rl);
-            _context.SaveChanges();
-
+            bool check = await _iadash.TransferCase(rid, adt);
             return RedirectToAction("Dmain", "ADashboard", new { id = 2 });
         }
         public async Task<IActionResult> Logout()
@@ -177,67 +163,35 @@ namespace hallocDoc.Controllers
         }
         public async Task<IActionResult> GetOrderData(int businessId)
         {
-            var business = await _context.Healthprofessionals
-                              .Where(p => p.VendorId == businessId)
-                              .Select(p => new
-                              {
-                                  Contact = p.PhoneNumber,
-                                  Email = p.Email,
-                                  Fax = p.FaxNumber,
-
-                              })
-                              .FirstOrDefaultAsync();
+            var business = await _iadash.GetOrderData(businessId);
 
             return Json(business);
         }
 
         public async Task<IActionResult> Order(int rid)
         {
+            int status = await _iadash.statusFromRid(rid);
+
             TempData["rid"] = rid;
-            var dbReq = await _context.Requests.FirstOrDefaultAsync(m => m.RequestId == rid);
-            TempData["status"] = dbReq.Status;
-            ViewBag.status = dbReq.Status;
-            var dbProType = await _context.Healthprofessionaltypes.ToListAsync();
-            var dbpro = await _context.Healthprofessionals.ToListAsync();
+            TempData["status"] = status;
+            ViewBag.status = status;
 
+            SendOrder so = await _iadash.order();
 
-            var sendOrder = new SendOrder
-            {
-                professionList = dbProType,
-                businessList = dbpro
-            };
-            /*{
-                professionList = dbProType,
-                businessList = dbpro
-            };*/
-
-            return View(sendOrder);
+            return View(so);
         }
 
         [HttpPost]
         public async Task<IActionResult> Order(SendOrder so)
         {
             var rid = TempData["rid"] as int?;
+            int nrid = rid ?? 0;
             var status = TempData["status"] as int?;
-            var dbprofessional = await _context.Healthprofessionals.FirstOrDefaultAsync(m => m.VendorName == so.business);
-            int? vendor = dbprofessional?.VendorId;
 
-            if (so != null)
-            {
-                var od = new Orderdetail();
-                od.VendorId = int.Parse(so.business);
-                od.RequestId = rid;
-                od.FaxNumber = so.fax;
-                od.BusinessContact = so.Contact;
-                od.Email = so.email;
-                od.Prescription = so.orderDetail;
-                od.NoOfRefill = so.refill;
-                od.CreatedBy = "Admin";
-                od.CreatedDate = DateTime.Today;
-                await _context.Orderdetails.AddAsync(od);
-                _context.SaveChanges();
-            }
+            /*var dbprofessional = await _context.Healthprofessionals.FirstOrDefaultAsync(m => m.VendorName == so.business);
+            int? vendor = dbprofessional?.VendorId;*/
 
+            bool check = _iadash.OrderPost(nrid, so);
 
             ModelState.AddModelError("ordersuccess", "Order placed Successfully..");
             return RedirectToAction("Dmain", "ADashboard", new { id = status });
@@ -277,33 +231,14 @@ namespace hallocDoc.Controllers
 
         public async Task<IActionResult> ViewUpload(int rid)
         {
-            var dbreq = from r in _context.Requests
-                        join rf in _context.Requestwisefiles on r.RequestId equals rf.RequestId
-                        where rf.RequestId == rid
-                        where rf.IsDeleted == false || rf.IsDeleted == null
-                        select new { r, rf };
+            var data = await _iadash.ViewUpload(rid);
 
-            var dbReqClient = await _context.Requestclients.FirstOrDefaultAsync(m => m.RequestId == rid);
-            ViewBag.PatientName = string.Concat(dbReqClient.FirstName, " ", dbReqClient.LastName);
-            string con = "";
-            ViewBag.reqid = rid;
-            List<ViewUploadedDoc> data = new List<ViewUploadedDoc>();
-            foreach (var item in dbreq)
+            foreach (var item in data)
             {
-                var vu = new ViewUploadedDoc();
-
-
-                con = item?.r?.ConfirmationNumber;
-                vu.uploadDate = item.r.CreatedDate;
-                vu.fileName = item.rf.FileName;
-                vu.fileId = item.rf.RequestWiseFileId;
-                vu.rid = rid;
-
-
-
-                data.Add(vu);
+                ViewBag.PatientName = item.patientName;
+                ViewBag.confirmation = item.confirmation;
             }
-            ViewBag.confirmation = con;
+            ViewBag.reqid = rid;
             ViewBag.FileData = data;
             return View();
         }
@@ -383,64 +318,14 @@ namespace hallocDoc.Controllers
             ViewBag.closec = arc.closec;
             ViewBag.unpaidc = arc.unpaidc;
 
-            List<Region> rlist = new List<Region>();
-            var dbregion = _context.Regions;
-            foreach (var item in dbregion)
-            {
-                Region r = new Region();
-                r.RegionId = item.RegionId;
-                r.Name = item.Name;
-                rlist.Add(r);
-            }
+            List<Region> rlist = _iadash.getRegiondata();
             ViewBag.rlist = rlist;
 
-            List<Physician> plist = new List<Physician>();
-            var dbphysician = _context.Physicians;
-            foreach (var item in dbphysician)
-            {
-                Physician p = new Physician();
-                p.FirstName = item.FirstName;
-                p.RegionId = item.RegionId;
-                p.PhysicianId = item.PhysicianId;
-                plist.Add(p);
-            }
+            List<Physician> plist = _iadash.getPhysiciandata();
             ViewBag.plist = plist;
 
-            /*var dbdata = from r in _context.Requests
-                         join rc in _context.Requestclients on r.RequestId equals rc.RequestId
-                         where r.Status == 1
-                         select new { r, rc };*/
             ViewBag.heading = TempData["heading"];
-            /*var dbdata = await (from r in _context.Requests
-                                join rc in _context.Requestclients on r.RequestId equals rc.RequestId
-                                where r.Status == n
-                                select new { r, rc }).ToListAsync();
 
-
-            List<ADashTable> dtable = new List<ADashTable>();
-            foreach (var item in dbdata)
-            {
-                var dt = new ADashTable();
-                dt.guid = Guid.NewGuid().ToString();
-                dt.name = string.Concat(item.rc.FirstName, " ", item.rc.LastName);
-                dt.email = item.rc.Email;
-                *//*dt.dob = new DateTime(item.rc.IntYear.Value, int.Parse(item.rc.StrMonth), item.rc.IntDate.Value);*//*
-                dt.dob = item.r.CreatedDate.Date;
-                dt.requstor = item.r?.RelationName;
-                dt.reqDate = item.r.CreatedDate.Date;
-                dt.mobile = item.r.PhoneNumber;
-                dt.address = string.Concat(item.rc.Street, " ", item.rc.City, " ", item.rc.State);
-                dt.notes = "";
-                dt.region = item.rc.RegionId.ToString();
-                var providerName = await _context.Physicians?.FirstOrDefaultAsync(m => m.PhysicianId == item.r.PhysicianId);
-                if (providerName != null)
-                {
-                    dt.provider = providerName.FirstName;
-                }
-                dt.relation = item.r.RelationName;
-
-                dtable.Add(dt);
-            }*/
             var dtable = await _iadash.ADashTableData(n);
             ViewBag.tableData = dtable;
             string name = "c" + n.ToString();

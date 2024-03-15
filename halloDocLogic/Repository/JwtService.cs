@@ -166,6 +166,35 @@ namespace halloDocLogic.Repository
             }
         }
 
+        public string encry(string pass)
+        {
+            if (pass == null)
+            {
+                return null;
+            }
+            else
+            {
+                byte[] storePass = ASCIIEncoding.ASCII.GetBytes(pass);
+                string encryptedPass = Convert.ToBase64String(storePass);
+                return encryptedPass;
+            }
+
+        }
+
+        public string decry(string pass)
+        {
+            if (pass == null)
+            {
+                return null;
+            }
+            else
+            {
+                byte[] encryptedPass = Convert.FromBase64String(pass);
+                string decryptedPass = ASCIIEncoding.ASCII.GetString(encryptedPass);
+                return decryptedPass;
+            }
+        }
+
 
 
     }

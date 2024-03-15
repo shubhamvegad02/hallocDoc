@@ -30,34 +30,239 @@ namespace halloDocLogic.Repository
     {
         private readonly ApplicationDbContext _context;
         private readonly IHostEnvironment _hostEnvironment;
+        private readonly IJwtService _jwtService;
 
-        public ADashboard(ApplicationDbContext context, IHostEnvironment environment)
+        public ADashboard(ApplicationDbContext context, IHostEnvironment environment, IJwtService jwtService)
         {
             _context = context;
             _hostEnvironment = environment;
+            _jwtService = jwtService;
         }
 
 
+        public async Task<bool> TransferCase(int rid, ADashTable adt)
+        {
+            var dbreq = _context.Requests.FirstOrDefault(m => m.RequestId == rid);
+            if (dbreq != null)
+            {
+                dbreq.PhysicianId = adt.phyId;
+                _context.Requests.Update(dbreq);
+                _context.SaveChanges();
+            }
+            var dbreqnotes = await _context.Requestnotes.FirstOrDefaultAsync(m => m.RequestId == rid);
+            if (dbreqnotes != null)
+            {
+                dbreqnotes.AdminNotes = adt.notes;
+                dbreqnotes.ModifiedBy = "Admin";
+                dbreqnotes.ModifiedDate = DateTime.Now;
+                _context.Requestnotes.Update(dbreqnotes);
+                _context.SaveChanges();
+            }
+            var rl = new Requeststatuslog();
+            rl.RequestId = rid;
+            rl.Status = 2;
+            rl.AdminId = 1;
+            rl.TransToPhysicianId = adt.phyId;
+            rl.Notes = adt.notes;
+            rl.CreatedDate = DateTime.Now;
+            _context.Requeststatuslogs.Add(rl);
+            _context.SaveChanges();
+
+            return true;
+        }
+
+        public async Task<object> GetOrderData(int businessId)
+        {
+            var business = await _context.Healthprofessionals
+                              .Where(p => p.VendorId == businessId)
+                              .Select(p => new
+                              {
+                                  Contact = p.PhoneNumber,
+                                  Email = p.Email,
+                                  Fax = p.FaxNumber,
+
+                              })
+                              .FirstOrDefaultAsync();
+            return business;
+        }
+        public async Task<int> statusFromRid(int rid)
+        {
+            var dbReq = await _context.Requests.FirstOrDefaultAsync(m => m.RequestId == rid);
+            if(dbReq != null)
+            {
+                return  dbReq?.Status??1;
+            }
+            return 0;
+        }
+
+        public async Task<SendOrder> order()
+        {
+            var dbProType = await _context.Healthprofessionaltypes.ToListAsync();
+            var dbpro = await _context.Healthprofessionals.ToListAsync();
+
+
+            var s = new SendOrder
+            {
+                professionList = dbProType,
+                businessList = dbpro
+            };
+            return s;
+        }
+
+        public bool OrderPost(int rid, SendOrder so)
+        {
+            if (so != null)
+            {
+                var od = new Orderdetail();
+                od.VendorId = int.Parse(so.business);
+                od.RequestId = rid;
+                od.FaxNumber = so.fax;
+                od.BusinessContact = so.Contact;
+                od.Email = so.email;
+                od.Prescription = so.orderDetail;
+                od.NoOfRefill = so.refill;
+                od.CreatedBy = "Admin";
+                od.CreatedDate = DateTime.Today;
+                _context.Orderdetails.AddAsync(od);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<List<ViewUploadedDoc>> ViewUpload(int rid)
+        {
+            var dbreq = from r in _context.Requests
+                        join rf in _context.Requestwisefiles on r.RequestId equals rf.RequestId
+                        where rf.RequestId == rid
+                        where rf.IsDeleted == false || rf.IsDeleted == null
+                        select new { r, rf };
+
+            var dbReqClient = await _context.Requestclients.FirstOrDefaultAsync(m => m.RequestId == rid);
+            string patientName = string.Concat(dbReqClient.FirstName, " ", dbReqClient.LastName);
+            string con = "";
+            List<ViewUploadedDoc> data = new List<ViewUploadedDoc>();
+            foreach (var item in dbreq)
+            {
+                var vu = new ViewUploadedDoc();
+
+                vu.confirmation = item?.r?.ConfirmationNumber;
+                vu.uploadDate = item.r.CreatedDate;
+                vu.fileName = item.rf.FileName;
+                vu.fileId = item.rf.RequestWiseFileId;
+                vu.rid = rid;
+                vu.patientName = patientName;
+
+                data.Add(vu);
+            }
+            return data;
+        }
+
+        public bool MyProfilePost(int aid, AdminProfile ap)
+        {
+            string aspid = "";
+            var dbadmin = _context.Admins.FirstOrDefault(m => m.AdminId == aid);
+            if (dbadmin != null)
+            {
+                aspid = dbadmin.AspNetUserId;
+                dbadmin.FirstName = ap?.firstname ?? dbadmin.FirstName;
+                dbadmin.LastName = ap?.lastname ?? dbadmin.LastName;
+                dbadmin.Email = ap?.email ?? dbadmin.Email;
+                dbadmin.Mobile = ap?.mobile ?? dbadmin.Mobile;
+                dbadmin.Address1 = ap?.address1 ?? dbadmin.Address1;
+                dbadmin.Address2 = ap?.address2 ?? dbadmin.Address2;
+                dbadmin.City = ap?.city ?? dbadmin.City;
+                dbadmin.Zip = ap?.zipcode ?? dbadmin.Zip;
+                if (ap?.state != null)
+                {
+                    dbadmin.RegionId = int.Parse(ap?.state);
+                }
+                _context.Admins.Update(dbadmin);
+                _context.SaveChanges();
+            }
+
+            var dbasp = _context.Aspnetusers.FirstOrDefault(m => m.Id == aspid);
+            if (dbasp != null)
+            {
+                dbasp.UserName = ap.email ?? dbasp.UserName;
+                dbasp.Email = ap.email ?? dbasp.Email;
+                dbasp.PhoneNumber = ap.mobile ?? dbasp.PhoneNumber;
+                _context.Aspnetusers.Update(dbasp);
+                _context.SaveChanges();
+            }
+            if (ap?.AdminStateList?.Count > 0)
+            {
+                var rowsToRemove = _context.AdminRegions.Where(m => m.AdminId == aid);
+                _context.AdminRegions.RemoveRange(rowsToRemove);
+                _context.SaveChanges();
+
+                foreach (var row in ap.AdminStateList)
+                {
+                    AdminRegion ar = new AdminRegion();
+                    ar.AdminId = aid;
+                    /*ar.RegionId = row;*/
+                    ar.RegionId = int.Parse(row);
+                    _context.AdminRegions.Add(ar);
+                    _context.SaveChanges();
+                }
+            }
+
+            return true;
+        }
+
+        public bool ProfilePasswordSubmit(int aid, AdminProfile ap)
+        {
+            var dbadmin = _context.Admins.FirstOrDefault(m => m.AdminId == aid);
+            if (dbadmin != null)
+            {
+                string aspid = dbadmin.AspNetUserId;
+                if (aspid != null && ap.password != null)
+                {
+                    var dbasp = _context.Aspnetusers.FirstOrDefault(m => m.Id == aspid);
+                    dbasp.PasswordHash = _jwtService.encry(ap?.password);
+                    _context.Aspnetusers.Update(dbasp);
+                    _context.SaveChanges();
+                }
+            }
+            return true;
+        }
 
 
         public async Task<AdminProfile> MyProfile(int aid)
         {
+            var dbadminRegion = from ar in _context.AdminRegions
+                                join r in _context.Regions on ar.RegionId equals r.RegionId
+                                where ar.AdminId == aid
+                                select r.Name;
+            List<string> adminRegion = new List<string>();
+            foreach (var region in dbadminRegion)
+            {
+                adminRegion.Add(region);
+            }
+
+
             var dbregion = _context.Regions;
             List<string> list = new List<string>();
+            List<Region> regions = new List<Region>();
             foreach (var i in dbregion)
             {
+                regions.Add(i);
                 list.Add(i?.Name);
             }
+
 
             var dbdata = from user in _context.Aspnetusers
                          join admin in _context.Admins on user.Id equals admin.AspNetUserId
                          join userRole in _context.Aspnetuserroles on user.Id equals userRole.UserId
                          join role in _context.Aspnetroles on userRole.RoleId equals role.AspNetRoleId
+                         join region in _context.Regions on admin.RegionId equals region.RegionId
+
                          select new
                          {
                              aspData = user,
                              AdminData = admin,
-                             RoleName = role.Name
+                             RoleName = role.Name,
+                             RegionName = region.Name
                          };
             foreach (var item in dbdata)
             {
@@ -73,12 +278,14 @@ namespace halloDocLogic.Repository
                 ap.address1 = item?.AdminData?.Address1;
                 ap.address2 = item?.AdminData?.Address2;
                 ap.city = item?.AdminData?.City;
-                ap.state = "Gujarat";
                 ap.zipcode = item?.AdminData?.Zip;
                 ap.billingMobile = item?.AdminData?.AltPhone ?? item?.AdminData.Mobile;
                 ap.stateList = list;
-                   
-                
+                ap.AdminStateList = adminRegion;
+                ap.state = item?.RegionName;
+                ap.regionList = regions;
+
+
 
                 return ap;
 
@@ -581,6 +788,35 @@ namespace halloDocLogic.Repository
             return true;
         }
 
+        public List<Physician> getPhysiciandata()
+        {
+            List<Physician> plist = new List<Physician>();
+            var dbphysician = _context.Physicians;
+            foreach (var item in dbphysician)
+            {
+                Physician p = new Physician();
+                p.FirstName = item.FirstName;
+                p.RegionId = item.RegionId;
+                p.PhysicianId = item.PhysicianId;
+                plist.Add(p);
+            }
+            return plist;
+        }
+
+
+            public List<Region> getRegiondata()
+        {
+            List<Region> rlist = new List<Region>();
+            var dbregion = _context.Regions;
+            foreach (var item in dbregion)
+            {
+                Region r = new Region();
+                r.RegionId = item.RegionId;
+                r.Name = item.Name;
+                rlist.Add(r);
+            }
+            return rlist;
+        }
 
         public async Task<List<ADashTable>> ADashTableData(int n)
 

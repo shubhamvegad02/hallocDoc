@@ -16,5 +16,9 @@ namespace halloDocLogic.Interfaces
         public bool ValidateToken(string token, out JwtSecurityToken jwtSecurityToken);
 
         public JwtClaimsModel GetClaimsFromJwtToken(string token);
+
+        public string encry(string pass);
+
+        public string decry(string pass);
     }
 }

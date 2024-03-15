@@ -18,6 +18,8 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Admin> Admins { get; set; }
 
+    public virtual DbSet<AdminRegion> AdminRegions { get; set; }
+
     public virtual DbSet<Aspnetrole> Aspnetroles { get; set; }
 
     public virtual DbSet<Aspnetuser> Aspnetusers { get; set; }
@@ -83,6 +85,19 @@ public partial class ApplicationDbContext : DbContext
                 .HasConstraintName("admin_CreatedBy_fkey");
 
             entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.AdminModifiedByNavigations).HasConstraintName("admin_ModifiedBy_fkey");
+        });
+
+        modelBuilder.Entity<AdminRegion>(entity =>
+        {
+            entity.HasKey(e => e.AdminRegionId).HasName("AdminRegion_pkey");
+
+            entity.HasOne(d => d.Admin).WithMany(p => p.AdminRegions)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("AdminRegion_AdminId_fkey");
+
+            entity.HasOne(d => d.Region).WithMany(p => p.AdminRegions)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("AdminRegion_RegionId_fkey");
         });
 
         modelBuilder.Entity<Aspnetrole>(entity =>
