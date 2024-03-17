@@ -90,3 +90,19 @@
         </div>
     </div>
 </div>
+
+@section darkAdd {
+    const dmain = document.querySelector(".dmain");
+    var table = document.querySelector(".table");
+
+table.classList.add("dtable")
+dmain.classList.add("d1");
+}
+
+@section darkToggle {
+const dmain = document.querySelector(".dmain");
+var table = document.querySelector(".table");
+
+table.classList.toggle("dtable")
+dmain.classList.toggle("d1");
+}

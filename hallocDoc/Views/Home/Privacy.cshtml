@@ -1,24 +1,16 @@
 ﻿@model halloDocEntities.ViewDataModels.forgotpass;
 @{
-    ViewData["Title"] = "forgot password";
+    ViewData["Title"] = "ForgotPassword";
 }
 <div class="back">
 
     <a class="tdn cp backbtn" asp-asp-area="" asp-asp-controller="Home" asp-action="Index">
-        <img class="bimg" src="/images/up-arrow-svgrepo-com.svg" alt=""><span class="ntext">back</span>
+        <i class="bi bi-caret-left-fill"></i><span class="ntext">back</span>
     </a>
 </div>
 <div class="mrcon">
     <div class="mrhead">Reset Password</div>
     
-    @*@if (Model.emailSent is true)
-    {
-    <div class="alert alert-success" role="alert">
-    <p>link has been sent successfully</p>
-    </div>
-    }
-    else*@
-
     <form method="post" class="mrcform" asp-area="" asp-controller="Home" asp-action="Privacy" asp-route-id="@ViewBag.userdata">
         <div class="form-floating mb-3">
             <input asp-for="Email" type="email" class="form-control mrcfin" id="floatingInput" placeholder="name@example.com">
@@ -37,5 +29,5 @@
 
 
 
-    <a class="forpw cp back" asp-asp-area="" asp-asp-controller="Home" asp-action="Index"><img class="bimg" src="/images/up-arrow-svgrepo-com.svg" alt=""><span class="ntext">back to login</span></a>
+    <a class="forpw cp back text-black" asp-asp-area="" asp-asp-controller="Home" asp-action="Index"><i class="bi bi-caret-left-fill"></i><span class="ntext">back to login</span></a>
 </div>

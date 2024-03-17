@@ -157,3 +157,19 @@
     <script type="text/javascript" src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 }
+
+@section darkAdd {
+    const main = document.querySelector(".main");
+    var info = document.querySelector(".info");
+
+info.classList.add("pdark");
+main.classList.add("d1");
+}
+
+@section darkToggle {
+const main = document.querySelector(".main");
+var info = document.querySelector(".info");
+
+info.classList.toggle("pdark");
+main.classList.toggle("d1");
+}

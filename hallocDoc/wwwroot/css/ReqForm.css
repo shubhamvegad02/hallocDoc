@@ -9,11 +9,14 @@
     --blue: #68cbe1;
     --nblue: #55b2bc;
     --white: #ffffff;
-    --pdark: #272233f0;
+    --pdark: #362f47e6;
     --sdark: #2A2438;
     --darkpur: #310A5D;
     --lightpur: #411E8F;
     --clasicwhite: #d3d2d2;
+    --d1: #382c51e3;
+    --d2: #DAA520;
+    --d3: #B85CFF;
 }
 .tdn{
     text-decoration:none;
@@ -101,9 +104,9 @@
 }
 
 .nlimg {
+    background-color:white;
     height: 100%;
     width: 100%;
-    scale: 1.2;
 }
 
 .moon {
@@ -163,12 +166,8 @@ footer {
 }
 
     .btn:hover {
-        background-color: white !important;
-        /* color: white !important; */
-
-
-        color:var(--blue) !important;
-        
+        background: transparent !important;
+        color: var(--blue) !important;
     }
 .btnoutline{
     background-color:white !important;
@@ -291,13 +290,21 @@ footer {
     /*dark mode*/
 
    .pdark{
-        background-color:var(--pdark);
+        background-color:var(--pdark) !important;
         color: var(--clasicwhite);
    }
    .sdark{
-       background-color: var(--sdark);
+       background-color: var(--sdark) !important;
    }
-
+   .drnav{
+       box-shadow:0px 1px 8px var(--blue);
+   }
+.d1 {
+    background-color: #382c51e3 !important;
+}
+.text-white{
+    color:white;
+}
 
 
 

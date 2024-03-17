@@ -133,6 +133,21 @@
     </div>
 </div>
 
+@section darkAdd {
+    const dmbox = document.querySelector(".dmbox");
+    var table = document.querySelector(".table");
+
+table.classList.add("dtable")
+dmbox.classList.add("d1");
+}
+
+@section darkToggle {
+const dmbox = document.querySelector(".dmbox");
+var table = document.querySelector(".table");
+
+table.classList.toggle("dtable")
+dmbox.classList.toggle("d1");
+}
 
 @section Scripts{
     <script>

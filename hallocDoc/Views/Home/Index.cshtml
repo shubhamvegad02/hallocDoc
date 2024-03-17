@@ -1,13 +1,14 @@
 ﻿@model halloDocEntities.ViewDataModels.patientLogin;
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "HomePage";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="back">
 
-    <a class="tdn cp backbtn" asp-asp-area="" asp-asp-controller="Home" asp-action="first">
-        <img class="bimg" src="/images/up-arrow-svgrepo-com.svg" alt=""><span class="ntext">back</span>
+    <a class="tdn cp backbtn" asp-area="" asp-controller="Home" asp-action="first">
+        <i class="bi bi-caret-left-fill"></i><span class="ntext">back</span>
     </a>
+
 
 </div>
 <div class="mrcon">
@@ -42,8 +43,6 @@
 </div>
 
 
-    @*<script type="text/javascript" src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>*@
 @section Homescripts{
 
     <script type="text/javascript">

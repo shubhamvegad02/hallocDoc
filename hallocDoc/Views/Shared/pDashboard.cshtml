@@ -39,37 +39,74 @@
         <footer class="myfooter">
             <span class="fele">Terms & Condition | Privacy Policy</span>
         </footer>
-        <script>
-            function darkfunction() {
-                document.body.classList.toggle("pdark");
-                const rnav = document.querySelector("nav");
-                rnav.classList.toggle("sdark");
-                const fter = document.querySelector(".myfooter");
-                fter.classList.toggle("sdark");
-                const fc = document.querySelectorAll(".form-control");
-                fc.forEach(el => {
-                    el.classList.toggle('bg-dark');
-                });
-            }
-
-            function hambtn() {
-                var x = document.querySelector(".dashsidebar")
-                x.classList.toggle("hideside");
-                console.log("hiden");
-            }
-        </script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-                crossorigin="anonymous"></script>
-        
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/jquery-validate/jquery.validate.js"></script>
-        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-
-        @*<script src="~/lib/jquery/dist/jquery.min.js"></script>*@
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-        @await RenderSectionAsync("Scripts", required: false)
     </div>
+
+
+    <script>
+        window.onload = function () {
+            var isDarkModeEnabled = localStorage.getItem("darkModeEnabled") === "true";
+            if (isDarkModeEnabled) {
+                var nlimg = document.querySelector(".nlimg")
+                const rnav = document.querySelector("nav");
+                const fter = document.querySelector(".myfooter");
+                const fc = document.querySelectorAll(".form-control");
+
+
+                document.body.classList.add("pdark");
+                rnav.classList.add("sdark");
+                rnav.classList.toggle("drnav");
+                fter.classList.add("sdark");
+                fc.forEach(el => {
+                    el.classList.add('bg-dark');
+                    el.classList.add('text-white')
+                });
+                nlimg.classList.add("sdark");
+
+        @await RenderSectionAsync("darkAdd", required: false);
+
+            }
+        };
+
+        function darkfunction() {
+            var nlimg = document.querySelector(".nlimg")
+            const rnav = document.querySelector("nav");
+            const fter = document.querySelector(".myfooter");
+            //const main = document.querySelector(".main");
+            const fc = document.querySelectorAll(".form-control");
+
+
+            document.body.classList.toggle("pdark");
+            rnav.classList.toggle("sdark");
+            rnav.classList.toggle("drnav");
+            fter.classList.toggle("sdark");
+            fc.forEach(el => {
+                el.classList.toggle('bg-dark');
+                el.classList.toggle('text-white');
+            });
+            nlimg.classList.toggle("sdark");
+        @await RenderSectionAsync("darkToggle", required: false);
+
+            var isDarkModeEnabled = document.body.classList.contains("pdark");
+            localStorage.setItem("darkModeEnabled", isDarkModeEnabled);
+        }
+
+        function hambtn() {
+            var x = document.querySelector(".dashsidebar")
+            x.classList.toggle("hideside");
+            console.log("hiden");
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/jquery-validate/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>*@
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -33,7 +33,7 @@ html {
     --blue: #68cbe1;
     --nblue: #55b2bc;
     --white: #ffffff;
-    --pdark: #272233f0;
+    --pdark: #362f47e6;
     --sdark: #2A2438;
     --darkpur: #310A5D;
     --lightpur: #411E8F;
@@ -72,6 +72,8 @@ html {
 }
 
 .backbtn {
+    background-color:var(--blue);
+    color:white;
     height: 100%;
     width: fit-content;
     border: 2px solid var(--blue);
@@ -81,6 +83,10 @@ html {
     align-items:center;
     justify-content:center;
 }
+    .backbtn:hover {
+        color: var(--blue);
+        background: transparent;
+    }
 
 .bgimgform {
     display: none;
@@ -232,10 +238,10 @@ html {
 }
 
 .mrcfin {
-    background-image: url("/images/person-svgrepo-com.svg");
+    /*background-image: url("/images/person-svgrepo-com.svg");
     background-repeat: no-repeat;
     background-position: 98% 50%;
-    background-size: 35px;
+    background-size: 35px;*/
 }
 .inlab{
     font-size:1.1rem;
@@ -243,10 +249,10 @@ html {
 
 }
 .mrcpass {
-    background-image: url("/images/eye-svgrepo-com.svg");
+    /*background-image: url("/images/eye-svgrepo-com.svg");
     background-repeat: no-repeat;
     background-position: 98% 50%;
-    background-size: 35px;
+    background-size: 35px;*/
 }
 
 .loginbtn {
@@ -315,6 +321,10 @@ html {
 }
 .white-font {
     color: #d3d2d2 !important;
+}
+.mrimgdark {
+    background: transparent;
+    box-shadow: 0px 0px 4px var(--blue);
 }
 
 
