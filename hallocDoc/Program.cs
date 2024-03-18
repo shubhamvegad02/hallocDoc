@@ -13,6 +13,7 @@ builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IFormRequest, FormRequest>();
 builder.Services.AddScoped<IPDashboard, PDashboard>();
 builder.Services.AddScoped<IADashboard, ADashboard>();
+builder.Services.AddScoped<IAdminProvider, AdminProvider>();
 
 
 /*var provider = builder.Services.BuildServiceProvider();*/

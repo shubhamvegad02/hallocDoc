@@ -171,6 +171,7 @@ footer {
     }
 .btnoutline{
     background-color:white !important;
+    background-color:transparent !important;
     border: 2px solid var(--blue) !important;
     color:var(--blue) !important;
 }

@@ -141,7 +141,7 @@ namespace hallocDoc.Controllers
 
                     JwtClaimsModel jwtClaims = new JwtClaimsModel();
                     jwtClaims = _jwtservice.GetClaimsFromJwtToken(jwtToken);
-                    string userRole = jwtClaims.Role;
+                    string userRole = jwtClaims.Role??"";
 
                     if(userRole == "User")
                     {

@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\vivsa\\OneDrive\\Desktop\\halloDoc\\halloDocEntities\\halloDocEntities.csproj": {}
+    "G:\\Projects\\halloDocEntities\\halloDocEntities.csproj": {}
   },
   "projects": {
-    "C:\\Users\\vivsa\\OneDrive\\Desktop\\halloDoc\\halloDocEntities\\halloDocEntities.csproj": {
+    "G:\\Projects\\halloDocEntities\\halloDocEntities.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\vivsa\\OneDrive\\Desktop\\halloDoc\\halloDocEntities\\halloDocEntities.csproj",
+        "projectUniqueName": "G:\\Projects\\halloDocEntities\\halloDocEntities.csproj",
         "projectName": "halloDocEntities",
-        "projectPath": "C:\\Users\\vivsa\\OneDrive\\Desktop\\halloDoc\\halloDocEntities\\halloDocEntities.csproj",
-        "packagesPath": "C:\\Users\\vivsa\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\vivsa\\OneDrive\\Desktop\\halloDoc\\halloDocEntities\\obj\\",
+        "projectPath": "G:\\Projects\\halloDocEntities\\halloDocEntities.csproj",
+        "packagesPath": "C:\\Users\\pci214\\.nuget\\packages\\",
+        "outputPath": "G:\\Projects\\halloDocEntities\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\vivsa\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\pci214\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -101,7 +97,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }

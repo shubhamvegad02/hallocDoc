@@ -236,50 +236,7 @@ thead .th-address {
 thead .th-notes {
     width: 15rem;
 }
-/*thead .th-name {
-    width: 14rem;
-    min-width: 9rem;
-}
 
-thead .th-date {
-    min-width: 8rem;
-}
-
-thead .th-request {
-    width: 11rem;
-}
-
-thead .th-requestDate {
-    width: 14.5rem;
-}
-
-thead .th-phone {
-    width: 12.5rem;*/
-/* min-width: 12.5rem; */
-/*min-width: fit-content;
-}
-
-thead .th-address {
-    width: 14rem;*/
-/* min-width: 9.5rem; */
-/*min-width: fit-content;
-}
-
-thead .th-notes {
-    width: 15rem;*/
-/* min-width: 10rem; */
-/*min-width: fit-content;
-}
-
-thead .th-chat {
-    width: 8rem;*/
-/* min-width: fit-content; */
-/*min-width: 7rem;
-}
-
-thead .th-action {
-    width: 5.5rem;
-}*/
 tbody .icon-phone, .icon-Ehome, .icone-Chome, .action {
     border-radius: 5px;
     padding: 2px 8px;
@@ -456,13 +413,6 @@ a {
         padding: 0;
     }
 
-    /*.card {
-        font-weight: 600;
-        border-radius: 10px;
-        font-size: 1rem;
-        padding: 1%;
-        padding-inline: 0;
-    }*/
     .container1 {
         flex-wrap: wrap;
     }
@@ -484,7 +434,19 @@ a {
     }
 }
 
+@media (min-width: 768px) {
+    .dropdown:hover .dropdown-menu {
+        display: block;
+        margin-top: 0;
+    }
+}
 
+@media (max-width: 767px) {
+    .dropdown:hover .dropdown-menu{
+    display: none;
+    margin-top: auto;
+    }
+}
 
 
 
