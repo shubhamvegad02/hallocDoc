@@ -123,6 +123,9 @@ public partial class Physician
     public virtual Aspnetuser? ModifiedByNavigation { get; set; }
 
     [InverseProperty("Physician")]
+    public virtual ICollection<Physicianregion> Physicianregions { get; set; } = new List<Physicianregion>();
+
+    [InverseProperty("Physician")]
     public virtual ICollection<Request> Requests { get; set; } = new List<Request>();
 
     [InverseProperty("Physician")]

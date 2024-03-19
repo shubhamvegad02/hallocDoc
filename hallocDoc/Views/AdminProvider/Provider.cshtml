@@ -15,7 +15,7 @@
                 <option value="" selected>&#128269; All Regions</option>
                 @foreach (var item in @ViewBag.APData[0].regionList)
                 {
-                    <option value="1">@item</option>
+                    <option value="@item">@item</option>
                 }
             </select>
             <button class="btn">Create Provider Account</button>
@@ -37,20 +37,73 @@
                 {
                     <tr class="ptr">
                         <td class="tdregion" hidden>@item.region</td>
-                        <td class="tdchild"><input type="checkbox" /></td>
+                        <td class="tdchild tdcheckbox"><input type="checkbox" /></td>
                         <td class="tdchild">@item.name</td>
                         <td class="tdchild">@item.role</td>
                         <td class="tdchild">@item.onCall</td>
                         <td class="tdchild">@item.status</td>
                         <td class="tdchild px-0">
-                            <button class="btn btnoutline btn-outline-info">contact</button>
-                            <button class="btn btnoutline btn-outline-info">Edit</button>
+                            <button class="btn btnoutline btn-outline-info" data-bs-toggle="modal" data-bs-target="#contactprovider-@item.physicianId">Contact</button>
+                            <a asp-area="" asp-controller="AdminProvider" asp-action="EditProvider" asp-route-physicianId="@item.physicianId" class="btn btnoutline btn-outline-info">Edit</a>
                         </td>
                     </tr>
 
+                    //popup
+
+                    <div class="modal fade" id="contactprovider-@item.physicianId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Contact Your Provider</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body p-2">
+                                    <div>Choose communication type to send message</div>
+
+                                    <form asp-area="" asp-controller="AdminProvider" asp-action="MailToProvider" class="row g-2 mt-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="flexRadioDefault" value="SMS" id="flexRadioDefault1">
+                                            <label class="form-check-label" for="flexRadioDefault1">
+                                                SMS
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="flexRadioDefault" value="Email" id="flexRadioDefault2" checked>
+                                            <label class="form-check-label" for="flexRadioDefault2">
+                                                Email
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="flexRadioDefault" value="Both" id="flexRadioDefault3">
+                                            <label class="form-check-label" for="flexRadioDefault3">
+                                                Both
+                                            </label>
+                                        </div>
+
+                                        <input type="text" hidden asp-for="email" value="@item.email" />
+                                        <div class="form-floating col-12 mb-2 mt-2">
+                                            <input asp-for="popupMsg" type="text" class="form-control" id="floatingInput1" placeholder="Provide additional notes..">
+                                            <label class="mylable" for="floatingInput1">Message</label>
+                                        </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" style="" class="btn" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn">Send</button>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    
                 }
             </tbody>
         </table>
+        <div class="d-flex justify-content-end p-2">
+            <button style="display:none;" class="btn" id="providersavebtn">Save</button>
+        </div>
     </div>
 </div>
 
@@ -58,8 +111,8 @@
 
     <script>
         $('#providerregiondrop').change(function () {
-            debugger
             var selectedRegion = $(this).val();
+            console.log(selectedRegion);
             $('.ptr').each(function () {
                 var region = $(this).find('.tdregion').text();
                 if (selectedRegion === '' || region === selectedRegion) {
@@ -68,6 +121,13 @@
                     $(this).hide();
                 }
             });
+        });
+
+        $('.tdcheckbox').click(function () {
+            var saveButton = $('#providersavebtn');
+            saveButton.show(); // Show the button using jQuery's show() method
+
+
         });
     </script>
 }

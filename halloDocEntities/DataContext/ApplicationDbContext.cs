@@ -46,6 +46,8 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Physician> Physicians { get; set; }
 
+    public virtual DbSet<Physicianregion> Physicianregions { get; set; }
+
     public virtual DbSet<Region> Regions { get; set; }
 
     public virtual DbSet<Request> Requests { get; set; }
@@ -197,6 +199,19 @@ public partial class ApplicationDbContext : DbContext
             entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.PhysicianCreatedByNavigations).HasConstraintName("Physician_CreatedBy_fkey");
 
             entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.PhysicianModifiedByNavigations).HasConstraintName("Physician_ModifiedBy_fkey");
+        });
+
+        modelBuilder.Entity<Physicianregion>(entity =>
+        {
+            entity.HasKey(e => e.PhysicianRegionId).HasName("physicianregion_pkey");
+
+            entity.HasOne(d => d.Physician).WithMany(p => p.Physicianregions)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("physicianregion_PhysicianId_fkey");
+
+            entity.HasOne(d => d.Region).WithMany(p => p.Physicianregions)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("physicianregion_RegionId_fkey");
         });
 
         modelBuilder.Entity<Region>(entity =>

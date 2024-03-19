@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "+4hD4aDAbRzQumhZJX8Hky2nkiTH0s1TYj76gfaRJka5gbLOSYoh7kqXQk0dgNLSQ4yWNJTZLCAcY55P0EdjqQ==",
+  "dgSpecHash": "5iYNW8Oc+BOy5FJ3Fyjd9wniSXx3c6z7kkrCFDFvKzRHso0r2Gl9s6Er1U9QGng2LWBGxXZQz5WY0LbpwwXPlw==",
   "success": true,
   "projectFilePath": "G:\\Projects\\halloDocLogic\\halloDocLogic.csproj",
   "expectedPackageFiles": [
@@ -104,6 +104,7 @@
     "C:\\Users\\pci214\\.nuget\\packages\\microsoft.extensions.filesystemglobbing\\8.0.0\\microsoft.extensions.filesystemglobbing.8.0.0.nupkg.sha512",
     "C:\\Users\\pci214\\.nuget\\packages\\microsoft.extensions.hosting\\8.0.0\\microsoft.extensions.hosting.8.0.0.nupkg.sha512",
     "C:\\Users\\pci214\\.nuget\\packages\\microsoft.extensions.hosting.abstractions\\8.0.0\\microsoft.extensions.hosting.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\pci214\\.nuget\\packages\\microsoft.extensions.http\\7.0.0\\microsoft.extensions.http.7.0.0.nupkg.sha512",
     "C:\\Users\\pci214\\.nuget\\packages\\microsoft.extensions.logging\\8.0.0\\microsoft.extensions.logging.8.0.0.nupkg.sha512",
     "C:\\Users\\pci214\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.0\\microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\pci214\\.nuget\\packages\\microsoft.extensions.logging.configuration\\8.0.0\\microsoft.extensions.logging.configuration.8.0.0.nupkg.sha512",
@@ -170,6 +171,8 @@
     "C:\\Users\\pci214\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
     "C:\\Users\\pci214\\.nuget\\packages\\system.collections.concurrent\\4.3.0\\system.collections.concurrent.4.3.0.nupkg.sha512",
     "C:\\Users\\pci214\\.nuget\\packages\\system.collections.immutable\\6.0.0\\system.collections.immutable.6.0.0.nupkg.sha512",
+    "C:\\Users\\pci214\\.nuget\\packages\\system.collections.nongeneric\\4.3.0\\system.collections.nongeneric.4.3.0.nupkg.sha512",
+    "C:\\Users\\pci214\\.nuget\\packages\\system.collections.specialized\\4.3.0\\system.collections.specialized.4.3.0.nupkg.sha512",
     "C:\\Users\\pci214\\.nuget\\packages\\system.composition\\6.0.0\\system.composition.6.0.0.nupkg.sha512",
     "C:\\Users\\pci214\\.nuget\\packages\\system.composition.attributedmodel\\6.0.0\\system.composition.attributedmodel.6.0.0.nupkg.sha512",
     "C:\\Users\\pci214\\.nuget\\packages\\system.composition.convention\\6.0.0\\system.composition.convention.6.0.0.nupkg.sha512",
@@ -245,7 +248,10 @@
     "C:\\Users\\pci214\\.nuget\\packages\\system.threading.timer\\4.3.0\\system.threading.timer.4.3.0.nupkg.sha512",
     "C:\\Users\\pci214\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512",
     "C:\\Users\\pci214\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
-    "C:\\Users\\pci214\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512"
+    "C:\\Users\\pci214\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
+    "C:\\Users\\pci214\\.nuget\\packages\\twilio\\6.2.4\\twilio.6.2.4.nupkg.sha512",
+    "C:\\Users\\pci214\\.nuget\\packages\\twilio.aspnet.common\\8.0.2\\twilio.aspnet.common.8.0.2.nupkg.sha512",
+    "C:\\Users\\pci214\\.nuget\\packages\\twilio.aspnet.core\\8.0.2\\twilio.aspnet.core.8.0.2.nupkg.sha512"
   ],
   "logs": []
 }

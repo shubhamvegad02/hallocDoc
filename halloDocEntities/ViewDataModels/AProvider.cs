@@ -24,5 +24,9 @@ namespace halloDocEntities.ViewDataModels
         public string? popupMsg { get; set; }
 
         public string? region { get; set; }
+
+        public int physicianId { get; set; }
+
+        public string email { get; set; }
     }
 }

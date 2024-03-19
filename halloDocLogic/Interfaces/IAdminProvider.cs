@@ -11,5 +11,9 @@ namespace halloDocLogic.Interfaces
     {
         List<AProvider> Provider();
 
+        Task sendSMS(string number, string msg);
+
+        Task<EditPhysicianData> EditPhysician(int physicianId);
+
     }
 }

@@ -1,0 +1,288 @@
+﻿@model halloDocEntities.ViewDataModels.EditPhysicianData;
+@{
+    ViewData["Title"] = "EditProvider";
+    Layout = "~/Views/Shared/_AdminProvider.cshtml";
+}
+<div class="docMain mt-2">
+    <div class="dmboxbar">
+        <h2 m-0>Edit Physician Account</h2>
+        <a asp-area="" asp-controller="ADashboard" asp-action="Dmain" asp-route-id="1" class="logout tdn dmnewreq mb-3">Back</a>
+    </div>
+
+    <div class="dmbox">
+
+        <form asp-controller="ADashboard" asp-action="ProfilePasswordSubmit" asp-route-Aid="@ViewBag.Aid" class="row g-2 g-md-3">
+            <h3 class="mt-2 ms-1">Account Information</h3>
+
+            <div class="form-floating col-12 col-md-6">
+                <input disabled asp-for="username" type="text" class="form-control" id="fdate2" placeholder="Password" value="@Model?.email">
+                <label class="mylable" for="fdate2">UserName</label>
+                <span asp-validation-for="username" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="password" type="password" class="form-control" id="Password" placeholder="Password" value="">
+                <label class="mylable" for="Password">Password</label>
+                <span asp-validation-for="password" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating col-12 col-md-6 d-flex justify-content-center align-items-center">
+                <select disabled asp-for="status" class="form-select pt-0 pb-0">
+                    <option value="" selected>@Model?.status</option>
+                </select>
+                <span asp-validation-for="status" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating col-12 col-md-6 d-flex justify-content-center align-items-center">
+                <select disabled asp-for="role" class="form-select pt-0 pb-0">
+                    <option value="" selected>@Model?.role</option>
+                </select>
+                <span asp-validation-for="role" class="text-danger"></span>
+            </div>
+
+            <div class="btnline mt-3 me-1">
+                <button type="submit" class="btn btn-outline-primary active blbtn">Reset Password</button>
+            </div>
+        </form>
+
+        <h3 class="m-2 ms-1">Physician Information</h3>
+
+        <form asp-controller="ADashboard" asp-action="MyProfilePost" asp-route-Aid="@ViewBag.Aid" class="row g-2 g-md-3">
+            <div class="form-floating col-12 col-md-6">
+                <input disabled asp-for="firstname" type="text" class="form1 form-control" id="floatingInput2" placeholder="name@example.com">
+                <label class="mylable" for="floatingInput2">First Name</label>
+                <span asp-validation-for="firstname" class="text-danger"></span>
+
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input disabled asp-for="lastname" type="text" class="form1 form-control" id="floatingPassword" placeholder="Password">
+                <label class="mylable" for="floatingPassword">Last Name</label>
+                <span asp-validation-for="lastname" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input disabled asp-for="email" type="email" class="form1 form-control" id="floatingInput5" placeholder="name@example.com">
+                <label class="mylable" for="floatingInput5">Email address</label>
+                <span asp-validation-for="email" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input disabled type="tel" asp-for="mobile" id="phone23" class=" form1 form-control" placeholder="Mobile Number" />
+                <label class="mylable" for="phone23">Mobile No.</label>
+                <span asp-validation-for="mobile" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input disabled asp-for="medicallicence" type="text" class="form1 form-control" id="medicallicence" placeholder="name@example.com">
+                <label class="mylable" for="medicallicence">Medical License</label>
+                <span asp-validation-for="medicallicence" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input disabled asp-for="npinumber" type="text" class="form1 form-control" id="npinumber" placeholder="name@example.com">
+                <label class="mylable" for="npinumber">NPI Number</label>
+                <span asp-validation-for="npinumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input disabled asp-for="semail" type="text" class="form1 form-control" id="semail" placeholder="name@example.com">
+                <label class="mylable" for="semail">Synchronization Email</label>
+                <span asp-validation-for="semail" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating col-12 col-md-6 border-1">
+                <div class="row">
+                    <div class="col">
+                        @*@if (Model?.stateList?.Count != 0 && Model?.AdminStateList?.Count != 0)
+                        {
+                        @foreach (var state in Model?.regionList)
+                        {
+                        <div class="form-check form-check-inline">
+                        <input name="AdminStateList" disabled class="form1 form-check-input text-info" type="checkbox" id="checkbox-@state.Name" value="@state.RegionId" @(Model.AdminStateList.Contains(state.Name) ? "checked" : "")>
+                        <label for="checkbox-@state.Name" class="form-check-label">@state.Name</label>
+                        </div>
+                        }
+                        }*@
+                    </div>
+                </div>
+            </div>
+
+            <div class="btnline mt-2">
+                <a asp-area="" asp-controller="ADashboard" asp-action="MyProfile" asp-route-Aid="@ViewBag.Aid" hidden id="cancelbtn1" style="color:#ff4343 !important; border-color:#ff4343 !important; background-color:white !important;" class="me-2 pt-2 btn">Cancel</a>
+                <button id="form1btn" style="width:80px; border:none; color:white;" class="btn btn-danger ms-2">Edit</button>
+            </div>
+        </form>
+
+        <h3 class="m-2 ms-1">Mailing & Billing Information</h3>
+
+        <form asp-controller="ADashboard" asp-action="MyProfilePost" asp-route-Aid="@ViewBag.Aid" class="row g-2 g-md-3">
+
+            <div class="form-floating col-12 col-md-6">
+                <input disabled asp-for="address1" type="text" class="form2 form-control" id="address1" placeholder="address1">
+                <label class="mylable" for="address1">Address 1</label>
+            </div>
+            <div class="form-floating col-12 col-md-6">
+                <input disabled asp-for="address2" type="text" class="form2 form-control" id="address2" placeholder="address1">
+                <label class="mylable" for="address1">Address 2</label>
+            </div>
+            <div class="form-floating col-12 col-md-6">
+                <input disabled asp-for="city" type="text" class="form2 form-control" id="City" placeholder="address1">
+                <label class="mylable" for="City">City</label>
+            </div>
+            <div class="form-floating col-12 col-md-6 d-flex justify-content-center align-items-center">
+                <select disabled id="profdropdown" asp-for="state" class="form2 form-select pt-0 pb-0">
+                    @*@foreach (var item in Model.regionList)
+                    {
+                    @if (item.Name == Model.state)
+                    {
+                    <option value="@item.RegionId" selected>@item.Name</option>
+                    }
+                    else
+                    {
+                    <option value="@item.RegionId">@item.Name</option>
+                    }
+                    }*@
+                </select>
+                <span asp-validation-for="role" class="text-danger"></span>
+            </div>
+            <div class="form-floating col-12 col-md-6">
+                <input disabled asp-for="zipcode" type="text" class="form2 form-control" id="Zipcode" placeholder="address1">
+                <label class="mylable" for="Zipcode">Zipcode</label>
+            </div>
+            <div class="form-floating col-12 col-md-6">
+                <input disabled type="tel" asp-for="billingMobile" id="phone2" class="form2 form-control" placeholder="Mobile Number" />
+                <label class="mylable" for="phone2">Mobile No.</label>
+                <span asp-validation-for="billingMobile" class="text-danger"></span>
+            </div>
+
+            <div class="btnline mt-3">
+                <a asp-area="" asp-controller="ADashboard" asp-action="MyProfile" asp-route-Aid="@ViewBag.Aid" id="cancelbtn2" hidden style="color:#ff4343 !important; border-color:#ff4343 !important; background-color:white !important;" class=" me-2 pt-2 btn">Cancel</a>
+                <button id="form2btn" style="width:80px; border:none; color:white;" class="btn btn-danger ms-2">Edit</button>
+            </div>
+        </form>
+
+        <h3 class="m-2 ms-1">Provider Profile</h3>
+
+        <form asp-controller="ADashboard" asp-action="MyProfilePost" asp-route-Aid="@ViewBag.Aid" class="row g-2 g-md-3">
+
+            <div class="form-floating col-12 col-md-6">
+                <input disabled asp-for="businessname" type="text" class="form2 form-control" id="businessname" placeholder="address1">
+                <label class="mylable" for="businessname">Business Name</label>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input disabled asp-for="businesssite" type="text" class="form2 form-control" id="businesssite" placeholder="address1">
+                <label class="mylable" for="businesssite">business Site</label>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <div class="input-group">
+                    <input type="file" multiple class="form-control px-3 py-2 file-upload d-none" id="Files">
+                    <label class="input-group-text w-100 d-flex justify-content-between p-0 rounded-3 upload-label" for="Files">
+                        <span class="px-3 py-2" id="file">Select File</span>
+                        <div class="btn btn-info p-3 text-white fw-bold rounded-0">
+                            <i class="bi bi-cloud-arrow-up me-1"></i>Upload
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-floating col-8 col-md-5">
+                <div class="input-group">
+                    <input type="file" multiple class="form-control px-3 py-2 file-upload d-none" id="MultipleFiles">
+                    <label class="input-group-text w-100 d-flex justify-content-between p-0 rounded-3 upload-label" for="MultipleFiles">
+                        <span class="px-3 py-2" id="filename">Select File</span>
+                        <div class="btn btn-info p-3 text-white fw-bold rounded-0">
+                            <i class="bi bi-cloud-arrow-up me-1"></i>Upload
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-floating col-4 col-md-1">
+                <button class="btn h-100"><i class="bi bi-pencil me-1"></i>Create</button>
+            </div>
+
+            <div class=" form-floating col-12 mb-2">
+                <textarea disabled  class="form-control h-100" id="floatingInput1" rows="3"
+                          placeholder="Enter symptoms details in detail(optional)"></textarea>
+                <label class="mylable" for="floatingInput1">Admin Notes</label>
+            </div>
+
+            <div class="btnline mt-3">
+                <a asp-area="" asp-controller="ADashboard" asp-action="MyProfile" asp-route-Aid="@ViewBag.Aid" id="cancelbtn2" hidden style="color:#ff4343 !important; border-color:#ff4343 !important; background-color:white !important;" class=" me-2 pt-2 btn">Cancel</a>
+                <button id="form2btn" style="width:80px; border:none; color:white;" class="btn btn-danger ms-2">Edit</button>
+            </div>
+
+        </form>
+
+        <h3 class="m-2 ms-1">Onboardig</h3>
+
+        <div class="w-50 d-flex mt-2 justify-content-start align-items-center flex-row">
+            <input  disabled class="form1 form-check-input text-info ms-3" type="checkbox"  @*@(Model.AdminStateList.Contains(state.Name) ? "checked" : "")*@>
+            <span class="ms-3">Independent Contractor Agreement</span>
+            <button class="btn ms-3">Upload</button>
+            <button class="btn ms-3">View</button>
+        </div>
+
+        <div class="w-50 d-flex mt-2 justify-content-start align-items-center flex-row">
+            <input  disabled class="form1 form-check-input text-info ms-3" type="checkbox"  @*@(Model.AdminStateList.Contains(state.Name) ? "checked" : "")*@>
+            <span class="ms-3">Background Check</span>
+            <button class="btn ms-3">Upload</button>
+            <button class="btn ms-3">View</button>
+        </div>
+
+        <div class="w-50 d-flex mt-2 justify-content-start align-items-center flex-row">
+            <input  disabled class="form1 form-check-input text-info ms-3" type="checkbox"  @*@(Model.AdminStateList.Contains(state.Name) ? "checked" : "")*@>
+            <span class="ms-3">HIPAA Compliance</span>
+            <button class="btn ms-3">Upload</button>
+            <button class="btn ms-3">View</button>
+        </div>
+
+        <div class="w-50 d-flex mt-2 justify-content-start align-items-center flex-row">
+            <input  disabled class="form1 form-check-input text-info ms-3" type="checkbox"  @*@(Model.AdminStateList.Contains(state.Name) ? "checked" : "")*@>
+            <span class="ms-3">NonDisclosuer Agreement</span>
+            <button class="btn ms-3">Upload</button>
+            <button class="btn ms-3">View</button>
+        </div>
+
+        <div class="w-50 d-flex mt-2 justify-content-start align-items-center flex-row">
+            <input  disabled class="form1 form-check-input text-info ms-3" type="checkbox"  @*@(Model.AdminStateList.Contains(state.Name) ? "checked" : "")*@>
+            <span class="ms-3">License Document</span>
+            <button class="btn ms-3">Upload</button>
+            <button class="btn ms-3">View</button>
+        </div>
+
+        <div class="btnline mt-3">
+            <button id="form2btn" style="width:80px; border:none; color:white;" class="btn btn-danger me-2">Save</button>
+            <a asp-area="" asp-controller="ADashboard" asp-action="MyProfile" asp-route-Aid="@ViewBag.Aid" id="cancelbtn2" style="color:white !important; border-color:#ff4343 !important; background-color:#ff4343 !important;" class=" me-2 pt-2 btn">Delete Account</a>
+        </div>
+
+
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        const actualBtn = document.querySelector('#MultipleFiles');
+        const fileChosen = document.querySelector('#filename');
+        actualBtn.addEventListener('change', function () {
+            fileChosen.textContent = '';
+            for (var i = 0; i < this.files.length; i++) {
+                fileChosen.textContent += this.files[i].name + ', ';
+            }
+            fileChosen.textContent = fileChosen.textContent.slice(0, fileChosen.textContent.length - 2);
+        })
+
+        const actualBtn1 = document.querySelector('#Files');
+        const fileChosen1 = document.querySelector('#file');
+        actualBtn1.addEventListener('change', function () {
+            fileChosen1.textContent = '';
+            for (var i = 0; i < this.files.length; i++) {
+                fileChosen1.textContent += this.files[i].name + ', ';
+            }
+            fileChosen1.textContent = fileChosen1.textContent.slice(0, fileChosen1.textContent.length - 2);
+        })
+    </script>
+}
