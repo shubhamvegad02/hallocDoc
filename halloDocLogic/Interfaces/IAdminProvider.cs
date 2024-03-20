@@ -15,5 +15,14 @@ namespace halloDocLogic.Interfaces
 
         Task<EditPhysicianData> EditPhysician(int physicianId);
 
+        bool EditProviderForm1(int physicianId, EditPhysicianData edt);
+
+        bool EditProviderForm2(int physicianId, EditPhysicianData edt);
+
+        bool EditProviderForm3(int physicianId, EditPhysicianData edt);
+
+        bool EditProviderForm4(int physicianId, EditPhysicianData edt);
+
+        bool DeleteProvider(int physicianId);
     }
 }

@@ -64,6 +64,6 @@ namespace halloDocEntities.ViewDataModels
 
         public string? billingMobile { get; set; }
 
-        public List<Region> regionList { get; set; }
+        public List<Region>? regionList { get; set; }
     }
 }

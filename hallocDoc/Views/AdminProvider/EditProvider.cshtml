@@ -6,87 +6,123 @@
 <div class="docMain mt-2">
     <div class="dmboxbar">
         <h2 m-0>Edit Physician Account</h2>
-        <a asp-area="" asp-controller="ADashboard" asp-action="Dmain" asp-route-id="1" class="logout tdn dmnewreq mb-3">Back</a>
+        <a asp-area="" asp-controller="AdminProvider" asp-action="Provider" class="logout tdn dmnewreq mb-3">Back</a>
     </div>
 
     <div class="dmbox">
 
-        <form asp-controller="ADashboard" asp-action="ProfilePasswordSubmit" asp-route-Aid="@ViewBag.Aid" class="row g-2 g-md-3">
+        <form asp-controller="AdminProvider" asp-action="EditProviderForm1" asp-route-PhysicianId="@Model.PId" class="row g-2 g-md-3">
             <h3 class="mt-2 ms-1">Account Information</h3>
 
             <div class="form-floating col-12 col-md-6">
-                <input disabled asp-for="username" type="text" class="form-control" id="fdate2" placeholder="Password" value="@Model?.email">
+                <input disabled asp-for="username" type="text" class="form-control form1" id="fdate2" placeholder="Password" value="@Model?.username">
                 <label class="mylable" for="fdate2">UserName</label>
                 <span asp-validation-for="username" class="text-danger"></span>
             </div>
 
             <div class="form-floating col-12 col-md-6">
-                <input asp-for="password" type="password" class="form-control" id="Password" placeholder="Password" value="">
+                <input disabled asp-for="password" type="password" class="form-control form1" id="Password" placeholder="Password" value="">
                 <label class="mylable" for="Password">Password</label>
                 <span asp-validation-for="password" class="text-danger"></span>
             </div>
 
             <div class="form-floating col-12 col-md-6 d-flex justify-content-center align-items-center">
-                <select disabled asp-for="status" class="form-select pt-0 pb-0">
-                    <option value="" selected>@Model?.status</option>
+                <select disabled asp-for="status" class="form-select pt-0 pb-0 form1">
+                    
+                    @if (Model?.status == 1)
+                    {
+                        <option value="1" selected>Active</option>
+                    }
+                    else
+                    {
+                        <option value="1">Active</option>
+                    }
+                    @if (Model?.status == 2)
+                    {
+                        <option value="2" selected>Pending</option>
+                    }
+                    else
+                    {
+                        <option value="2">Pending</option>
+                    }
+                    @if (Model?.status == 3)
+                    {
+                        <option value="3" selected>Non Active</option>
+                    }
+                    else
+                    {
+                        <option value="3">Non Active</option>
+                    }
                 </select>
                 <span asp-validation-for="status" class="text-danger"></span>
             </div>
 
             <div class="form-floating col-12 col-md-6 d-flex justify-content-center align-items-center">
-                <select disabled asp-for="role" class="form-select pt-0 pb-0">
-                    <option value="" selected>@Model?.role</option>
+                <select disabled asp-for="role" class="form-select pt-0 pb-0 form1">
+                    @foreach (var item in Model.roleList)
+                    {
+                        @if (item.Name == Model.state)
+                        {
+                            <option value="@item.RoleId" selected>@item.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@item.RoleId">@item.Name</option>
+                        }
+                    }
                 </select>
                 <span asp-validation-for="role" class="text-danger"></span>
             </div>
 
             <div class="btnline mt-3 me-1">
-                <button type="submit" class="btn btn-outline-primary active blbtn">Reset Password</button>
+                <a asp-area="" asp-controller="AdminProvider" asp-action="EditProvider" asp-route-physicianId="@Model.PId" id="form1cancel" style="color:#ff4343 !important; border-color:#ff4343 !important; background-color:white !important; display:flex;" class="me-2 pt-2 btn justify-content-center align-items-center" hidden>Cancel</a>
+                <button hidden class="btn" type="submit" id="form1save">Save</button>
+                <button id="form1edit" style="width:80px; border:none; color:white;" class="btn btn-danger ms-2">Edit</button>
             </div>
         </form>
 
         <h3 class="m-2 ms-1">Physician Information</h3>
 
-        <form asp-controller="ADashboard" asp-action="MyProfilePost" asp-route-Aid="@ViewBag.Aid" class="row g-2 g-md-3">
+        <form asp-controller="AdminProvider" asp-action="EditProviderForm2" asp-route-PhysicianId="@Model.PId" class="row g-2 g-md-3">
             <div class="form-floating col-12 col-md-6">
-                <input disabled asp-for="firstname" type="text" class="form1 form-control" id="floatingInput2" placeholder="name@example.com">
+                <input disabled asp-for="firstname" type="text" class="form2 form-control" id="floatingInput2" placeholder="name@example.com">
                 <label class="mylable" for="floatingInput2">First Name</label>
                 <span asp-validation-for="firstname" class="text-danger"></span>
 
             </div>
 
             <div class="form-floating col-12 col-md-6">
-                <input disabled asp-for="lastname" type="text" class="form1 form-control" id="floatingPassword" placeholder="Password">
+                <input disabled asp-for="lastname" type="text" class="form2 form-control" id="floatingPassword" placeholder="Password">
                 <label class="mylable" for="floatingPassword">Last Name</label>
                 <span asp-validation-for="lastname" class="text-danger"></span>
             </div>
 
             <div class="form-floating col-12 col-md-6">
-                <input disabled asp-for="email" type="email" class="form1 form-control" id="floatingInput5" placeholder="name@example.com">
+                <input disabled asp-for="email" type="email" class="form2 form-control" id="floatingInput5" placeholder="name@example.com">
                 <label class="mylable" for="floatingInput5">Email address</label>
                 <span asp-validation-for="email" class="text-danger"></span>
             </div>
 
             <div class="form-floating col-12 col-md-6">
-                <input disabled type="tel" asp-for="mobile" id="phone23" class=" form1 form-control" placeholder="Mobile Number" />
+                <input disabled type="tel" asp-for="mobile" id="phone23" class=" form2 form-control" placeholder="Mobile Number" />
                 <label class="mylable" for="phone23">Mobile No.</label>
                 <span asp-validation-for="mobile" class="text-danger"></span>
             </div>
 
             <div class="form-floating col-12 col-md-6">
-                <input disabled asp-for="medicallicence" type="text" class="form1 form-control" id="medicallicence" placeholder="name@example.com">
+                <input disabled asp-for="medicallicence" type="text" class="form2 form-control" id="medicallicence" placeholder="name@example.com">
                 <label class="mylable" for="medicallicence">Medical License</label>
                 <span asp-validation-for="medicallicence" class="text-danger"></span>
             </div>
 
             <div class="form-floating col-12 col-md-6">
-                <input disabled asp-for="npinumber" type="text" class="form1 form-control" id="npinumber" placeholder="name@example.com">
+                <input disabled asp-for="npinumber" type="text" class="form2 form-control" id="npinumber" placeholder="name@example.com">
                 <label class="mylable" for="npinumber">NPI Number</label>
                 <span asp-validation-for="npinumber" class="text-danger"></span>
             </div>
 
             <div class="form-floating col-12 col-md-6">
-                <input disabled asp-for="semail" type="text" class="form1 form-control" id="semail" placeholder="name@example.com">
+                <input disabled asp-for="semail" type="text" class="form2 form-control" id="semail" placeholder="name@example.com">
                 <label class="mylable" for="semail">Synchronization Email</label>
                 <span asp-validation-for="semail" class="text-danger"></span>
             </div>
@@ -94,93 +130,95 @@
             <div class="form-floating col-12 col-md-6 border-1">
                 <div class="row">
                     <div class="col">
-                        @*@if (Model?.stateList?.Count != 0 && Model?.AdminStateList?.Count != 0)
+                        @if (Model?.stateList?.Count != 0 || Model?.ProviderStateList?.Count != 0)
                         {
-                        @foreach (var state in Model?.regionList)
-                        {
-                        <div class="form-check form-check-inline">
-                        <input name="AdminStateList" disabled class="form1 form-check-input text-info" type="checkbox" id="checkbox-@state.Name" value="@state.RegionId" @(Model.AdminStateList.Contains(state.Name) ? "checked" : "")>
-                        <label for="checkbox-@state.Name" class="form-check-label">@state.Name</label>
-                        </div>
+                            @foreach (var state in Model?.stateList)
+                            {
+                                <div class="form-check form-check-inline">
+                                    <input name="ProviderStateList" disabled class="form2 form-check-input text-info" type="checkbox" id="checkbox-@state.Name" value="@state.RegionId" @(Model.ProviderStateList.Contains(state.Name) ? "checked" : "")>
+                                    <label for="checkbox-@state.Name" class="form-check-label">@state.Name</label>
+                                </div>
+                            }
                         }
-                        }*@
                     </div>
                 </div>
             </div>
 
-            <div class="btnline mt-2">
-                <a asp-area="" asp-controller="ADashboard" asp-action="MyProfile" asp-route-Aid="@ViewBag.Aid" hidden id="cancelbtn1" style="color:#ff4343 !important; border-color:#ff4343 !important; background-color:white !important;" class="me-2 pt-2 btn">Cancel</a>
-                <button id="form1btn" style="width:80px; border:none; color:white;" class="btn btn-danger ms-2">Edit</button>
+            <div class="btnline mt-3 me-1">
+                <a asp-area="" asp-controller="AdminProvider" asp-action="EditProvider" asp-route-physicianId="@Model.PId" id="form2cancel" style="color:#ff4343 !important; border-color:#ff4343 !important; background-color:white !important; display:flex;" class="me-2 pt-2 btn justify-content-center align-items-center" hidden>Cancel</a>
+                <button hidden class="btn" type="submit" id="form2save">Save</button>
+                <button id="form2edit" style="width:80px; border:none; color:white;" class="btn btn-danger ms-2">Edit</button>
             </div>
         </form>
 
         <h3 class="m-2 ms-1">Mailing & Billing Information</h3>
 
-        <form asp-controller="ADashboard" asp-action="MyProfilePost" asp-route-Aid="@ViewBag.Aid" class="row g-2 g-md-3">
+        <form asp-controller="AdminProvider" asp-action="EditProviderForm3" asp-route-PhysicianId="@Model.PId" class="row g-2 g-md-3">
 
             <div class="form-floating col-12 col-md-6">
-                <input disabled asp-for="address1" type="text" class="form2 form-control" id="address1" placeholder="address1">
+                <input disabled asp-for="address1" type="text" class="form3 form-control" id="address1" placeholder="address1">
                 <label class="mylable" for="address1">Address 1</label>
             </div>
             <div class="form-floating col-12 col-md-6">
-                <input disabled asp-for="address2" type="text" class="form2 form-control" id="address2" placeholder="address1">
+                <input disabled asp-for="address2" type="text" class="form3 form-control" id="address2" placeholder="address1">
                 <label class="mylable" for="address1">Address 2</label>
             </div>
             <div class="form-floating col-12 col-md-6">
-                <input disabled asp-for="city" type="text" class="form2 form-control" id="City" placeholder="address1">
+                <input disabled asp-for="city" type="text" class="form3 form-control" id="City" placeholder="address1">
                 <label class="mylable" for="City">City</label>
             </div>
             <div class="form-floating col-12 col-md-6 d-flex justify-content-center align-items-center">
-                <select disabled id="profdropdown" asp-for="state" class="form2 form-select pt-0 pb-0">
-                    @*@foreach (var item in Model.regionList)
+                <select disabled id="profdropdown" asp-for="state" class="form3 form-select pt-0 pb-0">
+                    @foreach (var item in Model?.stateList)
                     {
-                    @if (item.Name == Model.state)
-                    {
-                    <option value="@item.RegionId" selected>@item.Name</option>
+                        @if (item.Name == Model.state)
+                        {
+                            <option value="@item.RegionId" selected>@item.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@item.RegionId">@item.Name</option>
+                        }
                     }
-                    else
-                    {
-                    <option value="@item.RegionId">@item.Name</option>
-                    }
-                    }*@
                 </select>
                 <span asp-validation-for="role" class="text-danger"></span>
             </div>
             <div class="form-floating col-12 col-md-6">
-                <input disabled asp-for="zipcode" type="text" class="form2 form-control" id="Zipcode" placeholder="address1">
+                <input disabled asp-for="zipcode" type="text" class="form3 form-control" id="Zipcode" placeholder="address1">
                 <label class="mylable" for="Zipcode">Zipcode</label>
             </div>
             <div class="form-floating col-12 col-md-6">
-                <input disabled type="tel" asp-for="billingMobile" id="phone2" class="form2 form-control" placeholder="Mobile Number" />
+                <input disabled type="tel" asp-for="billingMobile" id="phone2" class="form3 form-control" placeholder="Mobile Number" />
                 <label class="mylable" for="phone2">Mobile No.</label>
                 <span asp-validation-for="billingMobile" class="text-danger"></span>
             </div>
 
-            <div class="btnline mt-3">
-                <a asp-area="" asp-controller="ADashboard" asp-action="MyProfile" asp-route-Aid="@ViewBag.Aid" id="cancelbtn2" hidden style="color:#ff4343 !important; border-color:#ff4343 !important; background-color:white !important;" class=" me-2 pt-2 btn">Cancel</a>
-                <button id="form2btn" style="width:80px; border:none; color:white;" class="btn btn-danger ms-2">Edit</button>
+            <div class="btnline mt-3 me-1">
+                <a asp-area="" asp-controller="AdminProvider" asp-action="EditProvider" asp-route-physicianId="@Model.PId" id="form3cancel" style="color:#ff4343 !important; border-color:#ff4343 !important; background-color:white !important; display:flex;" class="me-2 pt-2 btn justify-content-center align-items-center" hidden>Cancel</a>
+                <button hidden class="btn" type="submit" id="form3save">Save</button>
+                <button id="form3edit" style="width:80px; border:none; color:white;" class="btn btn-danger ms-2">Edit</button>
             </div>
         </form>
 
         <h3 class="m-2 ms-1">Provider Profile</h3>
 
-        <form asp-controller="ADashboard" asp-action="MyProfilePost" asp-route-Aid="@ViewBag.Aid" class="row g-2 g-md-3">
+        <form asp-controller="AdminProvider" asp-action="EditProviderForm4" asp-route-PhysicianId="@Model.PId" enctype="multipart/form-data" class="row g-2 g-md-3">
 
             <div class="form-floating col-12 col-md-6">
-                <input disabled asp-for="businessname" type="text" class="form2 form-control" id="businessname" placeholder="address1">
+                <input disabled asp-for="businessname" type="text" class="form4 form-control" id="businessname" placeholder="address1">
                 <label class="mylable" for="businessname">Business Name</label>
             </div>
 
             <div class="form-floating col-12 col-md-6">
-                <input disabled asp-for="businesssite" type="text" class="form2 form-control" id="businesssite" placeholder="address1">
+                <input disabled asp-for="businesssite" type="text" class="form4 form-control" id="businesssite" placeholder="address1">
                 <label class="mylable" for="businesssite">business Site</label>
             </div>
 
             <div class="form-floating col-12 col-md-6">
                 <div class="input-group">
-                    <input type="file" multiple class="form-control px-3 py-2 file-upload d-none" id="Files">
+                    <input asp-for="photo" disabled type="file" multiple class="form4 form-control px-3 py-2 file-upload d-none" id="Files">
                     <label class="input-group-text w-100 d-flex justify-content-between p-0 rounded-3 upload-label" for="Files">
-                        <span class="px-3 py-2" id="file">Select File</span>
+                        <span class="px-3 py-2" id="file">Select Photo</span>
                         <div class="btn btn-info p-3 text-white fw-bold rounded-0">
                             <i class="bi bi-cloud-arrow-up me-1"></i>Upload
                         </div>
@@ -190,9 +228,9 @@
 
             <div class="form-floating col-8 col-md-5">
                 <div class="input-group">
-                    <input type="file" multiple class="form-control px-3 py-2 file-upload d-none" id="MultipleFiles">
+                    <input asp-for="sign" disabled type="file" multiple class="form4 form-control px-3 py-2 file-upload d-none" id="MultipleFiles">
                     <label class="input-group-text w-100 d-flex justify-content-between p-0 rounded-3 upload-label" for="MultipleFiles">
-                        <span class="px-3 py-2" id="filename">Select File</span>
+                        <span class="px-3 py-2" id="filename">Select Signature</span>
                         <div class="btn btn-info p-3 text-white fw-bold rounded-0">
                             <i class="bi bi-cloud-arrow-up me-1"></i>Upload
                         </div>
@@ -201,18 +239,19 @@
             </div>
 
             <div class="form-floating col-4 col-md-1">
-                <button class="btn h-100"><i class="bi bi-pencil me-1"></i>Create</button>
+                <button id="createbtn" disabled class="btn h-100"><i class="form4 bi bi-pencil me-1"></i>Create</button>
             </div>
 
             <div class=" form-floating col-12 mb-2">
-                <textarea disabled  class="form-control h-100" id="floatingInput1" rows="3"
+                <textarea asp-for="adminNotes" disabled class=" form-control h-100" id="floatingInput1" rows="3"
                           placeholder="Enter symptoms details in detail(optional)"></textarea>
                 <label class="mylable" for="floatingInput1">Admin Notes</label>
             </div>
 
-            <div class="btnline mt-3">
-                <a asp-area="" asp-controller="ADashboard" asp-action="MyProfile" asp-route-Aid="@ViewBag.Aid" id="cancelbtn2" hidden style="color:#ff4343 !important; border-color:#ff4343 !important; background-color:white !important;" class=" me-2 pt-2 btn">Cancel</a>
-                <button id="form2btn" style="width:80px; border:none; color:white;" class="btn btn-danger ms-2">Edit</button>
+            <div class="btnline mt-3 me-1">
+                <a asp-area="" asp-controller="AdminProvider" asp-action="EditProvider" asp-route-physicianId="@Model.PId" id="form4cancel" style="color:#ff4343 !important; border-color:#ff4343 !important; background-color:white !important; display:flex;" class="me-2 pt-2 btn justify-content-center align-items-center" hidden>Cancel</a>
+                <button hidden class="btn" type="submit" id="form4save">Save</button>
+                <button id="form4edit" style="width:80px; border:none; color:white;" class="btn btn-danger ms-2">Edit</button>
             </div>
 
         </form>
@@ -220,43 +259,43 @@
         <h3 class="m-2 ms-1">Onboardig</h3>
 
         <div class="w-50 d-flex mt-2 justify-content-start align-items-center flex-row">
-            <input  disabled class="form1 form-check-input text-info ms-3" type="checkbox"  @*@(Model.AdminStateList.Contains(state.Name) ? "checked" : "")*@>
-            <span class="ms-3">Independent Contractor Agreement</span>
+            <input disabled class="form1 form-check-input text-info ms-3" type="checkbox" @(Model.ICA != null ? "checked" : "")>
+            <span class="ms-3 w-50">Independent Contractor Agreement</span>
             <button class="btn ms-3">Upload</button>
-            <button class="btn ms-3">View</button>
+            <button class="btn ms-3" @(Model.ICA == null ? "hidden" : "")>View</button>
         </div>
 
         <div class="w-50 d-flex mt-2 justify-content-start align-items-center flex-row">
-            <input  disabled class="form1 form-check-input text-info ms-3" type="checkbox"  @*@(Model.AdminStateList.Contains(state.Name) ? "checked" : "")*@>
-            <span class="ms-3">Background Check</span>
+            <input disabled class="form1 form-check-input text-info ms-3" type="checkbox" @(Model.BC != null ? "checked" : "")>
+            <span class="ms-3 w-50">Background Check</span>
             <button class="btn ms-3">Upload</button>
-            <button class="btn ms-3">View</button>
+            <button class="btn ms-3" @(Model.BC == null ? "hidden" : "")>View</button>
         </div>
 
         <div class="w-50 d-flex mt-2 justify-content-start align-items-center flex-row">
-            <input  disabled class="form1 form-check-input text-info ms-3" type="checkbox"  @*@(Model.AdminStateList.Contains(state.Name) ? "checked" : "")*@>
-            <span class="ms-3">HIPAA Compliance</span>
+            <input disabled class="form1 form-check-input text-info ms-3" type="checkbox" @(Model.HC != null ? "checked" : "")>
+            <span class="ms-3 w-50">HIPAA Compliance</span>
             <button class="btn ms-3">Upload</button>
-            <button class="btn ms-3">View</button>
+            <button class="btn ms-3" @(Model.HC == null ? "hidden" : "")>View</button>
         </div>
 
         <div class="w-50 d-flex mt-2 justify-content-start align-items-center flex-row">
-            <input  disabled class="form1 form-check-input text-info ms-3" type="checkbox"  @*@(Model.AdminStateList.Contains(state.Name) ? "checked" : "")*@>
-            <span class="ms-3">NonDisclosuer Agreement</span>
+            <input disabled class="form1 form-check-input text-info ms-3" type="checkbox" @(Model.NDA != null ? "checked" : "")>
+            <span class="ms-3 w-50">NonDisclosuer Agreement</span>
             <button class="btn ms-3">Upload</button>
-            <button class="btn ms-3">View</button>
+            <button class="btn ms-3" @(Model.NDA == null ? "hidden" : "")>View</button>
         </div>
 
         <div class="w-50 d-flex mt-2 justify-content-start align-items-center flex-row">
-            <input  disabled class="form1 form-check-input text-info ms-3" type="checkbox"  @*@(Model.AdminStateList.Contains(state.Name) ? "checked" : "")*@>
-            <span class="ms-3">License Document</span>
+            <input disabled class="form1 form-check-input text-info ms-3" type="checkbox" @(Model.LD != null ? "checked" : "")>
+            <span class="ms-3 w-50">License Document</span>
             <button class="btn ms-3">Upload</button>
-            <button class="btn ms-3">View</button>
+            <button class="btn ms-3" @(Model.LD == null ? "hidden" : "")>View</button>
         </div>
 
         <div class="btnline mt-3">
             <button id="form2btn" style="width:80px; border:none; color:white;" class="btn btn-danger me-2">Save</button>
-            <a asp-area="" asp-controller="ADashboard" asp-action="MyProfile" asp-route-Aid="@ViewBag.Aid" id="cancelbtn2" style="color:white !important; border-color:#ff4343 !important; background-color:#ff4343 !important;" class=" me-2 pt-2 btn">Delete Account</a>
+            <a asp-area="" asp-controller="AdminProvider" asp-action="DeleteProvider" asp-route-physicianId="@Model.PId" id="cancelbtn2" style="color:white !important; border-color:#ff4343 !important; background-color:#ff4343 !important;" class=" me-2 pt-2 btn d-flex align-items-center">Delete Account</a>
         </div>
 
 
@@ -283,6 +322,62 @@
                 fileChosen1.textContent += this.files[i].name + ', ';
             }
             fileChosen1.textContent = fileChosen1.textContent.slice(0, fileChosen1.textContent.length - 2);
+        })
+
+        document.getElementById("form1edit").addEventListener("click", function () {
+            var inputs = document.querySelectorAll(".form1");
+            var cancelbtn = document.getElementById("form1cancel");
+            var savebtn = document.getElementById("form1save");
+
+            inputs.forEach(function (input) {
+                input.disabled = !input.disabled;
+            });
+            this.disabled = true;
+            cancelbtn.hidden = false;
+            savebtn.hidden = false;
+        });
+
+        document.getElementById("form2edit").addEventListener("click", function () {
+            var inputs = document.querySelectorAll(".form2");
+            var cancelbtn = document.getElementById("form2cancel");
+            var savebtn = document.getElementById("form2save");
+
+            inputs.forEach(function (input) {
+                input.disabled = !input.disabled;
+            });
+            this.disabled = true;
+            cancelbtn.hidden = false;
+            savebtn.hidden = false;
+        });
+
+        document.getElementById("form3edit").addEventListener("click", function () {
+            var inputs = document.querySelectorAll(".form3");
+            var cancelbtn = document.getElementById("form3cancel");
+            var savebtn = document.getElementById("form3save");
+
+            inputs.forEach(function (input) {
+                input.disabled = !input.disabled;
+            });
+            this.disabled = true;
+            cancelbtn.hidden = false;
+            savebtn.hidden = false;
+        })
+
+        document.getElementById("form4edit").addEventListener("click", function () {
+            var inputs = document.querySelectorAll(".form4");
+            var cancelbtn = document.getElementById("form4cancel");
+            var savebtn = document.getElementById("form4save");
+            var textArea = document.getElementById("floatingInput1");
+            var createBtn = document.getElementById("createbtn");
+
+            inputs.forEach(function (input) {
+                input.disabled = !input.disabled;
+            });
+            this.disabled = true;
+            cancelbtn.hidden = false;
+            savebtn.hidden = false;
+            textArea.disabled = false;
+            createBtn.disabled = false;
         })
     </script>
 }

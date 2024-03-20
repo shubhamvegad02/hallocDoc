@@ -285,11 +285,7 @@ namespace halloDocLogic.Repository
                 ap.state = item?.RegionName;
                 ap.regionList = regions;
 
-
-
                 return ap;
-
-
             }
             return null;
 

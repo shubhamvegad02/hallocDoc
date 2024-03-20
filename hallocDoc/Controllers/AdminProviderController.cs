@@ -17,10 +17,40 @@ namespace hallocDoc.Controllers
         }
 
 
+        public IActionResult DeleteProvider(int PhysicianId, EditPhysicianData epd)
+        {
+            bool check = _adminProvider.DeleteProvider(PhysicianId);
+            return RedirectToAction("Provider", "AdminProvider");
+        }
+
+        public IActionResult EditProviderForm4(int PhysicianId, EditPhysicianData epd)
+        {
+            bool check = _adminProvider.EditProviderForm4(PhysicianId, epd);
+            return RedirectToAction("EditProvider", "AdminProvider", new { physicianId = PhysicianId });
+        }
+
+        public IActionResult EditProviderForm3(int PhysicianId, EditPhysicianData epd)
+        {
+            bool check = _adminProvider.EditProviderForm3(PhysicianId, epd);
+            return RedirectToAction("EditProvider", "AdminProvider", new { physicianId = PhysicianId });
+        }
+
+        public IActionResult EditProviderForm2(int PhysicianId, EditPhysicianData epd)
+        {
+            bool check = _adminProvider.EditProviderForm2(PhysicianId, epd);
+            return RedirectToAction("EditProvider", "AdminProvider", new { physicianId = PhysicianId });
+        }
+
+        public IActionResult EditProviderForm1(int PhysicianId, EditPhysicianData epd)
+        {
+            bool check = _adminProvider.EditProviderForm1(PhysicianId, epd);
+            return RedirectToAction("EditProvider", "AdminProvider", new {physicianId = PhysicianId});
+        }
+
         public async Task<IActionResult> EditProvider(int physicianId)
         {
             EditPhysicianData epd = await _adminProvider.EditPhysician(physicianId);
-            return View();
+            return View(epd);
         }
 
         public IActionResult MailToProvider(AProvider ap, string flexRadioDefault)

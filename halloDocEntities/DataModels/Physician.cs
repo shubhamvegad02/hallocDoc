@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -36,18 +35,6 @@ public partial class Physician
 
     [StringLength(500)]
     public string? AdminNotes { get; set; }
-
-    [Column(TypeName = "bit(1)")]
-    public BitArray? IsAgreementDoc { get; set; }
-
-    [Column(TypeName = "bit(1)")]
-    public BitArray? IsBackgroundDoc { get; set; }
-
-    [Column(TypeName = "bit(1)")]
-    public BitArray? IsTrainingDoc { get; set; }
-
-    [Column(TypeName = "bit(1)")]
-    public BitArray? IsNonDisclosureDoc { get; set; }
 
     [StringLength(500)]
     public string? Address1 { get; set; }
@@ -86,29 +73,41 @@ public partial class Physician
     [StringLength(200)]
     public string? BusinessWebsite { get; set; }
 
-    [Column(TypeName = "bit(1)")]
-    public BitArray? IsDeleted { get; set; }
-
     public int? RoleId { get; set; }
 
     [Column("NPINumber")]
     [StringLength(500)]
     public string? Npinumber { get; set; }
 
-    [Column(TypeName = "bit(1)")]
-    public BitArray? IsLicenseDoc { get; set; }
-
     [StringLength(100)]
     public string? Signature { get; set; }
 
-    [Column(TypeName = "bit(1)")]
-    public BitArray? IsCredentialDoc { get; set; }
-
-    [Column(TypeName = "bit(1)")]
-    public BitArray? IsTokenGenerate { get; set; }
-
     [StringLength(50)]
     public string? SyncEmailAddress { get; set; }
+
+    [Column("isagreementdoc")]
+    public bool? Isagreementdoc { get; set; }
+
+    [Column("isbackgrounddoc")]
+    public bool? Isbackgrounddoc { get; set; }
+
+    [Column("istrainingdoc")]
+    public bool? Istrainingdoc { get; set; }
+
+    [Column("isnondisclosuredoc")]
+    public bool? Isnondisclosuredoc { get; set; }
+
+    [Column("isdeleted")]
+    public bool? Isdeleted { get; set; }
+
+    [Column("islicensedoc")]
+    public bool? Islicensedoc { get; set; }
+
+    [Column("iscredentialdoc")]
+    public bool? Iscredentialdoc { get; set; }
+
+    [Column("istokengenerate")]
+    public bool? Istokengenerate { get; set; }
 
     [ForeignKey("AspNetUserId")]
     [InverseProperty("PhysicianAspNetUsers")]

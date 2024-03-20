@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.FileProviders;
+﻿using halloDocEntities.DataModels;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.FileProviders;
 using Nest;
 using System;
 using System.Collections.Generic;
@@ -12,6 +14,9 @@ namespace halloDocEntities.ViewDataModels
 {
     public class EditPhysicianData
     {
+
+        public int? PId { get; set; }
+
         public string? username { get; set; }
 
         [Required]
@@ -20,13 +25,13 @@ namespace halloDocEntities.ViewDataModels
         [DataType(DataType.Password)]
         public string? password { get; set; }
 
-        public string? status { get; set; }
+        public int? status { get; set; }
 
         public string? role { get; set; }
 
         public List<string>? statusList { get; set; }
 
-        public List<string>? roleList { get; set; }
+        public List<Role>? roleList { get; set; }
 
         [Required]
         public string? firstname { get; set; }
@@ -51,7 +56,7 @@ namespace halloDocEntities.ViewDataModels
 
         public List<string>? ProviderStateList { get; set; }
 
-        public List<string>? stateList { get; set; }
+        public List<halloDocEntities.DataModels.Region>? stateList { get; set; }
 
         public string? address1 { get; set; }
 
@@ -71,29 +76,30 @@ namespace halloDocEntities.ViewDataModels
 
         public string? businesssite { get; set; }
 
-        public IFileInfo photo { get; set; }
+        public IFormFile photo { get; set; }
 
-        public IFileInfo sign { get; set; }
+        public IFormFile sign { get; set; }
+        
 
         public string? adminNotes { get; set; }
 
-        public bool ICA { get; set; }
+        public bool? ICA { get; set; }
 
         public string? ICADoc { get; set; }
 
-        public bool BC { get; set; }
+        public bool? BC { get; set; }
 
         public string? BCDoc {get; set;}
 
-        public bool HC { get; set; }
+        public bool? HC { get; set; }
 
         public string? HCDoc {get; set;}
 
-        public bool NDA { get; set; }
+        public bool? NDA { get; set; }
 
         public string? NDADoc {get; set;}
 
-        public bool LD { get; set; }
+        public bool? LD { get; set; }
 
         public string? LDDoc { get; set; }
     }
