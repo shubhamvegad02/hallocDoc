@@ -10,7 +10,7 @@
 
     <div class="dmbox">
 
-        <div class="d-flex flex-row justify-content-between align-items-center mt-1">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-1">
             <select id="providerregiondrop" class="form-select d-searchbar form-control m-0 w-25 " aria-label="Default select example">
                 <option value="" selected>&#128269; All Regions</option>
                 @foreach (var item in @ViewBag.APData[0].regionList)
@@ -18,7 +18,7 @@
                     <option value="@item">@item</option>
                 }
             </select>
-            <button class="btn">Create Provider Account</button>
+            <button class="btn mt-2 mt-md-0">Create Provider Account</button>
         </div>
 
         <table class="table table-hover mt-3" style="border: 1px solid rgba(201, 201, 201, 0.878);">
@@ -86,10 +86,10 @@
                                             <label class="mylable" for="floatingInput1">Message</label>
                                         </div>
 
-                                    <div class="modal-footer">
-                                        <button type="button" style="" class="btn" data-bs-dismiss="modal">Cancel</button>
-                                        <button type="submit" class="btn">Send</button>
-                                    </div>
+                                        <div class="modal-footer">
+                                            <button type="button" style="" class="btn" data-bs-dismiss="modal">Cancel</button>
+                                            <button type="submit" class="btn">Send</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -97,10 +97,51 @@
                     </div>
 
 
-                    
+
                 }
             </tbody>
         </table>
+
+        <div class="accordion d-block d-md-none mt-3" id="accordionExample">
+            @if (ViewBag.APData != null)
+            {
+                @foreach (var item in ViewBag.APData)
+                {
+                    <div class="accordion-item border-bottom-2 mt-2">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button style=" border:none !important; border-bottom:2px solid gray; color:black;" class="accordion-button border-dark border-2" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.physicianId" aria-expanded="true" aria-controls="flush-@item.physicianId">
+                                <div class="d-flex flex-column justify-content-center w-100 pe-2 align-items-start">
+                                    <div class="abchild1">
+                                        <input type="checkbox" />
+                                        <span class="fw-bold">@item.name</span>
+                                    </div>
+                                    <div>
+                                        <span>OnCall Status : </span><span class="fw-bold">@item.onCall</span>
+                                    </div>
+                                </div>
+                            </button>
+                        </h2>
+                        <div id="flush-@item.physicianId" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                            <div class="accordion-body" style="background-color:#cbe5faa3; border-top:1px solid;">
+                                <div class="p-1 d-flex align-items-start flex-column">
+                                    <div>
+                                        <span class=""></span><span class="ms-1">Role : </span><span class="fw-bold">@item.role</span>
+                                    </div>
+                                    <div>
+                                        <span class=""></span><span class="ms-1">Status : </span><span class="fw-bold">@item.status</span>
+                                    </div>
+                                    <div class="d-flex justify-content-end flex-row w-100">
+                                        <button class="btn btnoutline btn-outline-info" data-bs-toggle="modal" data-bs-target="#contactprovider-@item.physicianId">Contact</button>
+                                        <a asp-area="" asp-controller="AdminProvider" asp-action="EditProvider" asp-route-physicianId="@item.physicianId" class="btn btnoutline btn-outline-info ms-2">Edit</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
         <div class="d-flex justify-content-end p-2">
             <button style="display:none;" class="btn" id="providersavebtn">Save</button>
         </div>
@@ -108,6 +149,19 @@
 </div>
 
 @section Scripts{
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <script>
+            toastr.success("@TempData["SuccessMessage"]");
+        </script>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <script>
+            toastr.error("@TempData["ErrorMessage"]");
+        </script>
+    }
 
     <script>
         $('#providerregiondrop').change(function () {

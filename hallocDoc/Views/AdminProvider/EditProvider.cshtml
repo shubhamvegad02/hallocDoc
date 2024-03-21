@@ -258,35 +258,35 @@
 
         <h3 class="m-2 ms-1">Onboardig</h3>
 
-        <div class="w-50 d-flex mt-2 justify-content-start align-items-center flex-row">
+        <div class="OnboardingChild d-flex mt-2 justify-content-start align-items-center flex-row">
             <input disabled class="form1 form-check-input text-info ms-3" type="checkbox" @(Model.ICA != null ? "checked" : "")>
             <span class="ms-3 w-50">Independent Contractor Agreement</span>
             <button class="btn ms-3">Upload</button>
             <button class="btn ms-3" @(Model.ICA == null ? "hidden" : "")>View</button>
         </div>
 
-        <div class="w-50 d-flex mt-2 justify-content-start align-items-center flex-row">
+        <div class="OnboardingChild d-flex mt-2 justify-content-start align-items-center flex-row">
             <input disabled class="form1 form-check-input text-info ms-3" type="checkbox" @(Model.BC != null ? "checked" : "")>
             <span class="ms-3 w-50">Background Check</span>
             <button class="btn ms-3">Upload</button>
             <button class="btn ms-3" @(Model.BC == null ? "hidden" : "")>View</button>
         </div>
 
-        <div class="w-50 d-flex mt-2 justify-content-start align-items-center flex-row">
+        <div class="OnboardingChild d-flex mt-2 justify-content-start align-items-center flex-row">
             <input disabled class="form1 form-check-input text-info ms-3" type="checkbox" @(Model.HC != null ? "checked" : "")>
             <span class="ms-3 w-50">HIPAA Compliance</span>
             <button class="btn ms-3">Upload</button>
             <button class="btn ms-3" @(Model.HC == null ? "hidden" : "")>View</button>
         </div>
 
-        <div class="w-50 d-flex mt-2 justify-content-start align-items-center flex-row">
+        <div class="OnboardingChild d-flex mt-2 justify-content-start align-items-center flex-row">
             <input disabled class="form1 form-check-input text-info ms-3" type="checkbox" @(Model.NDA != null ? "checked" : "")>
             <span class="ms-3 w-50">NonDisclosuer Agreement</span>
             <button class="btn ms-3">Upload</button>
             <button class="btn ms-3" @(Model.NDA == null ? "hidden" : "")>View</button>
         </div>
 
-        <div class="w-50 d-flex mt-2 justify-content-start align-items-center flex-row">
+        <div class="OnboardingChild d-flex mt-2 justify-content-start align-items-center flex-row">
             <input disabled class="form1 form-check-input text-info ms-3" type="checkbox" @(Model.LD != null ? "checked" : "")>
             <span class="ms-3 w-50">License Document</span>
             <button class="btn ms-3">Upload</button>
@@ -303,7 +303,21 @@
 </div>
 
 @section Scripts{
+        @if (TempData["SuccessMessage"] != null)
+        {
+        <script>
+            toastr.success("@TempData["SuccessMessage"]");
+        </script>
+        }
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+        <script>
+            toastr.error("@TempData["ErrorMessage"]");
+        </script>
+        }
     <script>
+
         const actualBtn = document.querySelector('#MultipleFiles');
         const fileChosen = document.querySelector('#filename');
         actualBtn.addEventListener('change', function () {

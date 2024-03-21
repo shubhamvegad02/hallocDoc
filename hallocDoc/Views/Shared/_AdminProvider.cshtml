@@ -38,7 +38,7 @@
         <a asp-area="" asp-controller="ADashboard" asp-action="Dmain" class="anavchild cp tdn">Dashboard</a>
         <a class="anavchild cp tdn">Provider Location</a>
         <a asp-area="" asp-controller="ADashboard" asp-action="MyProfile" class="anavchild cp tdn">My Profile</a>
-        <div class="dropdown ">
+        <div class="dropdown">
             <a class="nav-link dropdown-toggle anavchild cp tdn ncactive" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Provider
             </a>
@@ -53,24 +53,21 @@
         <a class="anavchild cp tdn">Records</a>
     </div>
     <div class="dashsidebar hideside" id="dashsidebar">
-        <a asp-area="" asp-controller="ADashboard" asp-action="Dmain" class="dschild cp tdn ">Dashboard</a>
-        <a class="dschild cp tdn">Provider Location</a>
-        <a asp-area="" asp-controller="ADashboard" asp-action="MyProfile" class="dschild cp tdn">My Profile</a>
-        @*<a class="dschild cp tdn">Provider</a>*@
-        <div class="dropdown dschildactive">
-            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown link
-            </a>
-
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
+        <div class="w-100 mt-2 pe-2 d-flex justify-content-end"><h2><i onclick="hambtn()" class="bi bi-x-square text-info"></i></h2></div>
+        <a asp-area="" asp-controller="ADashboard" asp-action="Dmain" class="dschild cp tdn "><i class="bi bi-caret-right me-1"></i>Dashboard</a>
+        <a class="dschild cp tdn"><i class="bi bi-caret-right me-1"></i>Provider Location</a>
+        <a asp-area="" asp-controller="ADashboard" asp-action="MyProfile" class="dschild cp tdn"><i class="bi bi-caret-right me-1"></i>My Profile</a>
+        <a class="dropdown-toggle dschild dschildactive" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-caret-right me-1"></i>Provider
+        </a>
+        <div class="dropdown-menu" style="background-color:white; min-width: 9rem;" aria-labelledby="navbarDropdownMenuLink">
+            <a asp-area="" asp-controller="AdminProvider" asp-action="Provider" class="dropdown-item">Provider</a>
+            <a class="dropdown-item">Scheduling</a>
+            <a class="dropdown-item">Invoicing</a>
         </div>
-        <a class="dschild cp tdn">Partners</a>
-        <a class="dschild cp tdn">Access</a>
-        <a class="dschild cp tdn">Records</a>
+        <a class="dschild cp tdn"><i class="bi bi-caret-right me-1"></i>Partners</a>
+        <a class="dschild cp tdn"><i class="bi bi-caret-right me-1"></i>Access</a>
+        <a class="dschild cp tdn"><i class="bi bi-caret-right me-1"></i>Records</a>
     </div>
 
     <div>
@@ -88,7 +85,14 @@
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 
     <script src="~/js/site.js" asp-append-version="true"></script>
-
+    <script>
+        function hambtn() {
+            var x = document.querySelector(".dashsidebar")
+            x.classList.toggle("hideside");
+            console.log("hiden");
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     @if (IsSectionDefined("Scripts"))
     {
         @RenderSection("Scripts", required: false)

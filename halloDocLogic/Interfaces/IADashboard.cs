@@ -75,6 +75,8 @@ namespace halloDocLogic.Interfaces
         public List<Physician> getPhysiciandata();
 
         public List<Region> getRegiondata();
+
+        public List<Request> ReqData();
     }
 
 }

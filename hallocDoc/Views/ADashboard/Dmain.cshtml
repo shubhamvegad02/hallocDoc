@@ -7,46 +7,41 @@
     <a asp-area="" asp-controller="ADashboard" asp-action="Dmain" class="anavchild cp tdn ncactive">Dashboard</a>
     <a class="anavchild cp tdn">Provider Location</a>
     <a asp-area="" asp-controller="ADashboard" asp-action="MyProfile" class="anavchild cp tdn">My Profile</a>
-    @*<a class="anavchild cp tdn">*@
-    <div class="dropdown anavchild cp tdn">
-            <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Provider
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a asp-area="" asp-controller="AdminProvider" asp-action="Provider" class="dropdown-item">Provider</a>
-                <a class="dropdown-item">Scheduling</a>
-                <a class="dropdown-item">Invoicing</a>
-            </div>
+    <div class="dropdown ">
+        <a class="nav-link dropdown-toggle anavchild cp tdn " id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Provider
+        </a>
+        <div class="dropdown-menu" style="background-color:white;" aria-labelledby="navbarDropdownMenuLink">
+            <a asp-area="" asp-controller="AdminProvider" asp-action="Provider" class="dropdown-item">Provider</a>
+            <a class="dropdown-item">Scheduling</a>
+            <a class="dropdown-item">Invoicing</a>
         </div>
-    @*</a>*@
+    </div>
     <a class="anavchild cp tdn">Partners</a>
     <a class="anavchild cp tdn">Access</a>
     <a class="anavchild cp tdn">Records</a>
 </div>
 <div class="dashsidebar hideside" id="dashsidebar">
-    <a asp-area="" asp-controller="ADashboard" asp-action="Dmain" class="dschild cp tdn dschildactive">Dashboard</a>
-    <a class="dschild cp tdn">Provider Location</a>
-    <a asp-area="" asp-controller="ADashboard" asp-action="MyProfile" class="dschild cp tdn">My Profile</a>
-    @*<a class="dschild cp tdn">Provider</a>*@
-    <div class="dropdown">
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown link
-        </a>
-
-        <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-        </ul>
+    <div class="w-100 mt-2 pe-2 d-flex justify-content-end"><h2><i onclick="hambtn()" class="bi bi-x-square text-info"></i></h2></div>
+    <a asp-area="" asp-controller="ADashboard" asp-action="Dmain" class="dschild cp tdn dschildactive"><i class="bi bi-caret-right me-1"></i>Dashboard</a>
+    <a class="dschild cp tdn"><i class="bi bi-caret-right me-1"></i>Provider Location</a>
+    <a asp-area="" asp-controller="ADashboard" asp-action="MyProfile" class="dschild cp tdn"><i class="bi bi-caret-right me-1"></i>My Profile</a>
+    <a class="dropdown-toggle dschild" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi bi-caret-right me-1"></i>Provider
+    </a>
+    <div class="dropdown-menu" style="background-color:white; min-width: 9rem;" aria-labelledby="navbarDropdownMenuLink">
+        <a asp-area="" asp-controller="AdminProvider" asp-action="Provider" class="dropdown-item">Provider</a>
+        <a class="dropdown-item">Scheduling</a>
+        <a class="dropdown-item">Invoicing</a>
     </div>
-    <a class="dschild cp tdn">Partners</a>
-    <a class="dschild cp tdn">Access</a>
-    <a class="dschild cp tdn">Records</a>
+    <a class="dschild cp tdn"><i class="bi bi-caret-right me-1"></i>Partners</a>
+    <a class="dschild cp tdn"><i class="bi bi-caret-right me-1"></i>Access</a>
+    <a class="dschild cp tdn"><i class="bi bi-caret-right me-1"></i>Records</a>
 </div>
 <div class="admain">
 
     <section class="container1 mt-2">
-        
+
         <a id="c1" asp-area="" asp-controller="ADashboard" asp-action="DmainReq" asp-route-n="1" class=" card tdn cp d-card1">
             <div class="card-body">
                 <div class="card-p1 flex-column flex-md-row  flex-md-row   d-flex justify-content-start align-items-center">
@@ -165,27 +160,26 @@
 
         });
 
-                window.addEventListener("load", (event) => {
-                    function setActive() {
+        window.addEventListener("load", (event) => {
+            function setActive() {
 
-                        console.log("hii");
-                        // Remove 'active' class from all divs
-                        var divs = document.querySelectorAll('.card'); // Replace 'your-div-class' with the class name of your divs
-                        divs.forEach(function (div) {
-                            div.classList.remove('cactive');
-                        });
-
-                        // Add 'active' class to the clicked div
-                        var id = @ViewBag.cardid;
-                        if (id != null) {
-                            var clickedDiv = document.getElementById('id');
-                            if (clickedDiv) {
-                                clickedDiv.classList.add('cactive');
-                            }
-                        }
-
-                    }
+                // Remove 'active' class from all divs
+                var divs = document.querySelectorAll('.card'); // Replace 'your-div-class' with the class name of your divs
+                divs.forEach(function (div) {
+                    div.classList.remove('cactive');
                 });
+
+                // Add 'active' class to the clicked div
+                var id = @ViewBag.cardid;
+                if (id != null) {
+                    var clickedDiv = document.getElementById('id');
+                    if (clickedDiv) {
+                        clickedDiv.classList.add('cactive');
+                    }
+                }
+
+            }
+        });
     </script>
 }
 

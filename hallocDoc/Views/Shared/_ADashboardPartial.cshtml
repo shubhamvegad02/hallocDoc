@@ -18,7 +18,7 @@
             <div class="p-1 ">
                 <button class="btn1 px-2 py-1">
                     <i class="bi bi-pencil"></i>
-                    <a href="#">Create Request</a>
+                    <a asp-action="AdminSendReq" asp-controller="ADashboard">Create Request</a>
                 </button>
             </div>
             <div class="p-1 ">
@@ -32,17 +32,17 @@
                 </form>
             </div>
             <div class="p-1 ">
-                <a asp-asp-controller="ADashboard" asp-action="DownloadExcel" class="tdn btn1 d-flex align-items-center justify-content-evenly px-2 py-1">
+                <a asp-asp-controller="ADashboard" asp-action="ExportAllRequests" class="tdn btn1 d-flex align-items-center justify-content-evenly px-2 py-1">
                     <i class="bi bi-file-earmark-arrow-down-fill"></i>
                     <span class="d-none d-md-block">Exportall</span>
                 </a>
             </div>
-            <div class="p-1 ">
+            @*<div class="p-1 ">
                 <button class="btn1 px-2 py-1">
                     <i class="bi bi-person-fill-gear"></i>
                     <a href="#">Request DTYSupport</a>
                 </button>
-            </div>
+            </div>*@
         </div>
     </div>
     <div class="dasboardcontainer">
@@ -108,7 +108,7 @@
                     {
                         <th scope="col" class="px-2 py-1.5 th-notes">Notes</th>
                     }
-                    <th scope="col" class="px-2 py-1.5 th-chat">Chat With</th>
+                    @*<th scope="col" class="px-2 py-1.5 th-chat">Chat With</th>*@
                     <th scope="col" class="px-2 py-1.5 th-action">Action</th>
                 </tr>
             </thead>
@@ -152,57 +152,104 @@
                             {
                                 <td style="background-color: @bgcolor" class="px-2 py-1.5">Admin Transferred to Dr. AGOLA on 17/10/2023 at 3:07:19 AM:trse</td>
                             }
-                            <td style="background-color: @bgcolor" class="px-2 py-1.5">
-                                <span class="icone-Chome"><i class="fa-solid fa-user"></i>Provider</span>
-                            </td>
+                            @*<td style="background-color: @bgcolor" class="px-2 py-1.5">
+                    <span class="icone-Chome"><i class="fa-solid fa-user"></i>Provider</span>
+                    </td>*@
                             <td style="background-color: @bgcolor" class="px-2 py-1.5">
 
-                                <label class="dropdown">
-                                    <div class="dd-button">
+                                @*<label class="dropdown">
+                        <div class="dd-button">
+                        Action
+                        </div>
+                        <input type="checkbox" class="dd-input" id="test">
+                        <ul class="dd-menu">
+                        @if (ViewBag.n == 1)
+                        {
+                        <li><a data-bs-toggle="modal" data-bs-target="#assignreq-@item.rid" class="dropdown-item"><i class="fa-solid fa-suitcase" style="margin-right: 0.5rem;"></i><span>Assign Patient</span></a></li>
+                        <li>
+                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#cancelcase-@item.rid">
+                        <i class="fa-regular fa-rectangle-xmark" style="margin-right: 0.5rem;"></i>
+                        <span>Cancle Case</span>
+                        </a>
+                        </li>
+                        <li><a data-bs-toggle="modal" data-bs-target="#confirmblock-@item.rid" class="dropdown-item"><i class="fa-solid fa-ban" style="margin-right: 0.5rem;"></i><span>Block Patient</span></a></li>
+                        }
+
+                        <li><a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>View Case</span></a></li>
+                        <li><a asp-area="" asp-controller="ADashboard" asp-action="ViewNote" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-notes-medical" style="margin-right: 0.5rem;"></i><span>View  Notes</span></a></li>
+                        @if (ViewBag.n != 1)
+                        {
+                        <li><a asp-area="" asp-controller="ADashboard" asp-action="ViewUpload" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>View Upload</span></a></li>
+                        }
+                        @if (ViewBag.n == 2)
+                        {
+                        <li><a data-bs-toggle="modal" data-bs-target="#transferreq-@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Transfer</span></a></li>
+                        <li><a data-bs-toggle="modal" data-bs-target="#sendAgreement-@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>send agrrement</span></a></li>
+                        }
+                        @if (ViewBag.n == 2 || ViewBag.n == 5)
+                        {
+                        <li><a data-bs-toggle="modal" data-bs-target="#clearCase-@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Clear Case</span></a></li>
+                        }
+                        @if (ViewBag.n == 3 || ViewBag.n == 5 || ViewBag.n == 4)
+                        {
+                        <li><a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Doctor Notes</span></a></li>
+                        <li><a asp-area="" asp-controller="ADashboard" asp-action="Order" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Orders</span></a></li>
+                        <li><a asp-area="" asp-controller="ADashboard" asp-action="Encounter" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Encounter</span></a></li>
+                        }
+                        @if (ViewBag.n == 5)
+                        {
+                        <li><a asp-area="" asp-controller="ADashboard" asp-action="closeCase" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Close Case</span></a></li>
+                        }
+
+                        </ul>
+                        </label>*@
+                                <div class="dropdown ">
+                                    <a class="nav-link dropdown-toggle tdn cp" id="navbarDropdownMenuLink" style="border: 1px solid black;border-radius: 6px; color: black;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Action
-                                    </div>
-                                    <input type="checkbox" class="dd-input" id="test">
-                                    <ul class="dd-menu">
+                                    </a>
+                                    <div class="dropdown-menu" style="background-color:white; right:0px !important; height:fit-content !important;" aria-labelledby="navbarDropdownMenuLink">
                                         @if (ViewBag.n == 1)
                                         {
-                                            <li><a data-bs-toggle="modal" data-bs-target="#assignreq-@item.rid" class="dropdown-item"><i class="fa-solid fa-suitcase" style="margin-right: 0.5rem;"></i><span>Assign Patient</span></a></li>
-                                            <li>
-                                                <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#cancelcase-@item.rid">
-                                                    <i class="fa-regular fa-rectangle-xmark" style="margin-right: 0.5rem;"></i>
-                                                    <span>Cancle Case</span>
-                                                </a>
-                                            </li>
-                                            <li><a data-bs-toggle="modal" data-bs-target="#confirmblock-@item.rid" class="dropdown-item"><i class="fa-solid fa-ban" style="margin-right: 0.5rem;"></i><span>Block Patient</span></a></li>
+                                            <a data-bs-toggle="modal" data-bs-target="#assignreq-@item.rid" class="dropdown-item mb-1 cp"><i class="fa-solid fa-suitcase" style="margin-right: 0.5rem;"></i><span>Assign Patient</span></a>
+
+                                            <a class="dropdown-item mb-1 cp" data-bs-toggle="modal" data-bs-target="#cancelcase-@item.rid">
+                                                <i class="fa-regular fa-rectangle-xmark" style="margin-right: 0.5rem;"></i>
+                                                <span>Cancle Case</span>
+                                            </a>
+
+                                            <a data-bs-toggle="modal" data-bs-target="#confirmblock-@item.rid" class="dropdown-item mb-1 cp"><i class="fa-solid fa-ban" style="margin-right: 0.5rem;"></i><span>Block Patient</span></a>
                                         }
 
-                                        <li><a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>View Case</span></a></li>
-                                        <li><a asp-area="" asp-controller="ADashboard" asp-action="ViewNote" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-notes-medical" style="margin-right: 0.5rem;"></i><span>View  Notes</span></a></li>
+                                        <a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="dropdown-item mb-1 cp"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>View Case</span></a>
+                                        <a asp-area="" asp-controller="ADashboard" asp-action="ViewNote" asp-route-rid="@item.rid" class="dropdown-item mb-1 cp"><i class="fa-solid fa-notes-medical" style="margin-right: 0.5rem;"></i><span>View  Notes</span></a>
                                         @if (ViewBag.n != 1)
                                         {
-                                            <li><a asp-area="" asp-controller="ADashboard" asp-action="ViewUpload" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>View Upload</span></a></li>
+                                            <a asp-area="" asp-controller="ADashboard" asp-action="ViewUpload" asp-route-rid="@item.rid" class="dropdown-item mb-1 cp">
+                                                <i class="bi bi-cloud-plus" style="margin-right: 0.5rem;"></i>
+                                                <span>View Upload</span>
+                                            </a>
                                         }
                                         @if (ViewBag.n == 2)
                                         {
-                                            <li><a data-bs-toggle="modal" data-bs-target="#transferreq-@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Transfer</span></a></li>
-                                            <li><a data-bs-toggle="modal" data-bs-target="#sendAgreement-@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>send agrrement</span></a></li>
+                                            <a data-bs-toggle="modal" data-bs-target="#transferreq-@item.rid" class="dropdown-item mb-1 cp"><i class="bi bi-arrow-repeat" style="margin-right: 0.5rem;"></i><span>Transfer</span></a>
+                                            <a data-bs-toggle="modal" data-bs-target="#sendAgreement-@item.rid" class="dropdown-item mb-1 cp"><i class="bi bi-send-check" style="margin-right: 0.5rem;"></i><span>send agrrement</span></a>
                                         }
                                         @if (ViewBag.n == 2 || ViewBag.n == 5)
                                         {
-                                            <li><a data-bs-toggle="modal" data-bs-target="#clearCase-@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Clear Case</span></a></li>
+                                            <a data-bs-toggle="modal" data-bs-target="#clearCase-@item.rid" class="dropdown-item mb-1 cp"><i class="bi bi-x-circle" style="margin-right: 0.5rem;"></i><span>Clear Case</span></a>
                                         }
                                         @if (ViewBag.n == 3 || ViewBag.n == 5 || ViewBag.n == 4)
                                         {
-                                            <li><a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Doctor Notes</span></a></li>
-                                            <li><a asp-area="" asp-controller="ADashboard" asp-action="Order" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Orders</span></a></li>
-                                            <li><a asp-area="" asp-controller="ADashboard" asp-action="Encounter" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Encounter</span></a></li>
+                                            <a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="dropdown-item mb-1 cp"><i class="bi bi-file-earmark-diff" style="margin-right: 0.5rem;"></i><span>Doctor Notes</span></a>
+                                            <a asp-area="" asp-controller="ADashboard" asp-action="Order" asp-route-rid="@item.rid" class="dropdown-item mb-1 cp"><i class="bi bi-cart-plus" style="margin-right: 0.5rem;"></i><span>Orders</span></a>
+                                            <a asp-area="" asp-controller="ADashboard" asp-action="Encounter" asp-route-rid="@item.rid" class="dropdown-item mb-1 cp"><i class="bi bi-opencollective" style="margin-right: 0.5rem;"></i><span>Encounter</span></a>
                                         }
                                         @if (ViewBag.n == 5)
                                         {
-                                            <li><a asp-area="" asp-controller="ADashboard" asp-action="closeCase" asp-route-rid="@item.rid" class="dropdown-item"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Close Case</span></a></li>
+                                            <a asp-area="" asp-controller="ADashboard" asp-action="closeCase" asp-route-rid="@item.rid" class="dropdown-item mb-1 cp"><i class="bi bi-backspace-reverse" style="margin-right: 0.5rem;"></i><span>Close Case</span></a>
                                         }
-
-                                    </ul>
-                                </label>
+                                    </div>
+                                </div>
 
                             </td>
                         </tr>
@@ -435,9 +482,9 @@
             @foreach (var item in ViewBag.tableData)
             {
                 var bgcolor = @GetBackgroundColor(@item.relation);
-                <div class="accordion-item border-bottom-2">
+                <div class="accordion-item border-bottom-2 mt-1">
                     <h2 class="accordion-header" id="headingOne">
-                        <button style="background-color:white !important; border:none !important; border-bottom:2px solid gray;" class="accordion-button border-dark border-2" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.guid" aria-expanded="true" aria-controls="flush-@item.guid">
+                        <button style=" border:none !important; border-bottom:2px solid gray; color:black;" class="accordion-button border-dark border-2" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.guid" aria-expanded="true" aria-controls="flush-@item.guid">
                             <div class="d-flex flex-row justify-content-between w-100 pe-2 align-items-center">
                                 <div class="abchild1">
                                     <h4>@item.name</h4>
@@ -455,7 +502,7 @@
                         </button>
                     </h2>
                     <div id="flush-@item.guid" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                        <div class="accordion-body" style="background-color:#cbe5faa3">
+                        <div class="accordion-body" style="background-color:#cbe5faa3; border-top:1px solid;">
                             <div class="p-1 d-flex align-items-start flex-column">
                                 <div class="d-none" id="acrregion">@item.region</div>
                                 <div class="mb-2"><i class="bi bi-cake2 border border-1 border-info rounded-circle p-1 pe-2 ps-2 me-1"></i><span class="fw-bold">Date Of Birth : </span><span>@item.dob</span></div>
@@ -536,9 +583,9 @@
             case "business":
                 return "#f5d7db";
             case "family":
-                return "#f2f254b8";
+                return "#ffff9791";
             case "concierge":
-                return "#d454d6a6";
+                return "#fd90ff8c";
             // Add more cases if needed
             default:
                 return "white"; // Default background color

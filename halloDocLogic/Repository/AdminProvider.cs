@@ -36,6 +36,8 @@ namespace halloDocLogic.Repository
             if (dbphysician != null)
             {
                 dbphysician.Isdeleted = true;
+                _context.Physicians.Update(dbphysician);
+                _context.SaveChanges();
             }
 
             return true;
@@ -268,7 +270,7 @@ namespace halloDocLogic.Repository
                              from region in regionGroup.DefaultIfEmpty()
                              join role in _context.Roles on physician.RoleId equals role.RoleId into roleGroup
                              from role in roleGroup.DefaultIfEmpty()
-                             where (physician.Isdeleted == false || physician.Isdeleted == null)
+                             where (physician.Isdeleted != true)
                              select new
                              {
                                  Physician = physician,

@@ -193,7 +193,7 @@
 }
 
 table {
-    font-size: 0.9rem;
+    /*font-size: 0.9rem;*/
     font-weight: 500;
     /*min-width: 93.52vw;*/
     width: 100% !important;
@@ -398,6 +398,22 @@ a {
     background-color: var(--blue) !important;
     border-color:var(--blue) !important;
 }
+.nav-link:focus, .nav-link:hover {
+    color: var(--blue) !important;
+}
+
+.dropdown-item:focus, .dropdown-item:hover {
+    color: var(--blue) !important;
+    background-color: #d5f7ff !important;
+}
+#navbarDropdownMenuLink:hover{
+    color: black !important;
+}
+.accordion-button:focus{
+    box-shadow:none !important;
+    border-bottom: 1px solid var(--blue) !important;
+}
+
 
 @media screen and (max-width : 1200px) {
     .tableparent {

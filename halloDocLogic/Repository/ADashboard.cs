@@ -40,6 +40,13 @@ namespace halloDocLogic.Repository
         }
 
 
+
+        public List<Request> ReqData()
+        {
+            List<Request> reqData = new List<Request>();
+            reqData = _context.Requests.ToList();
+            return reqData;
+        }
         public async Task<bool> TransferCase(int rid, ADashTable adt)
         {
             var dbreq = _context.Requests.FirstOrDefault(m => m.RequestId == rid);

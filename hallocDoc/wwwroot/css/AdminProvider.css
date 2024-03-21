@@ -49,3 +49,11 @@ thead .th-provideraction {
 .tdchild{
     text-align:center;
 }
+.OnboardingChild{
+    width:50%;
+}
+@media screen and (max-width : 768px) {
+    .OnboardingChild{
+        width:100%;
+    }
+}

@@ -20,30 +20,70 @@ namespace hallocDoc.Controllers
         public IActionResult DeleteProvider(int PhysicianId, EditPhysicianData epd)
         {
             bool check = _adminProvider.DeleteProvider(PhysicianId);
+            if (check)
+            {
+                TempData["SuccessMessage"] = "Data Updated Successfully..";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Data is not updated";
+            }
             return RedirectToAction("Provider", "AdminProvider");
         }
 
         public IActionResult EditProviderForm4(int PhysicianId, EditPhysicianData epd)
         {
             bool check = _adminProvider.EditProviderForm4(PhysicianId, epd);
+            if (check)
+            {
+                TempData["SuccessMessage"] = "Data Updated Successfully..";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Data is not updated";
+            }
             return RedirectToAction("EditProvider", "AdminProvider", new { physicianId = PhysicianId });
         }
 
         public IActionResult EditProviderForm3(int PhysicianId, EditPhysicianData epd)
         {
             bool check = _adminProvider.EditProviderForm3(PhysicianId, epd);
+            if (check)
+            {
+                TempData["SuccessMessage"] = "Data Updated Successfully..";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Data is not updated";
+            }
             return RedirectToAction("EditProvider", "AdminProvider", new { physicianId = PhysicianId });
         }
 
         public IActionResult EditProviderForm2(int PhysicianId, EditPhysicianData epd)
         {
             bool check = _adminProvider.EditProviderForm2(PhysicianId, epd);
+            if (check)
+            {
+                TempData["SuccessMessage"] = "Data Updated Successfully..";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Data is not updated";
+            }
             return RedirectToAction("EditProvider", "AdminProvider", new { physicianId = PhysicianId });
         }
 
         public IActionResult EditProviderForm1(int PhysicianId, EditPhysicianData epd)
         {
             bool check = _adminProvider.EditProviderForm1(PhysicianId, epd);
+            if (check)
+            {
+                TempData["SuccessMessage"] = "Data Updated Successfully..";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Data is not updated";
+            }
             return RedirectToAction("EditProvider", "AdminProvider", new {physicianId = PhysicianId});
         }
 
@@ -63,6 +103,14 @@ namespace hallocDoc.Controllers
                 string subject = "Message From HalloDoc Admin";
                 string[] s = new string[0];
                 var check = _aDashboard.sendMail(email, subject, message, s);
+                if (check)
+                {
+                    TempData["SuccessMessage"] = "Message sent Successfully..";
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Message not sent..";
+                }
             }
             if (flexRadioDefault == "SMS" || flexRadioDefault == "Both")
             {

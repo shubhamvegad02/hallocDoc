@@ -15,6 +15,7 @@ using Org.BouncyCastle.Ocsp;
 using Microsoft.CodeAnalysis.Elfie.Serialization;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using halloDocLogic.Repository;
+using OfficeOpenXml;
 
 namespace hallocDoc.Controllers
 {
@@ -25,13 +26,15 @@ namespace hallocDoc.Controllers
         private readonly IPDashboard _pDashboard;
         private readonly IHostingEnvironment _hostEnvironment;
         private readonly IJwtService _jwtService;
+        private readonly IFormRequest _iformReq;
 
-        public ADashboardController(IADashboard dashboard, IPDashboard pDashboard, IHostingEnvironment hostingEnvironment, IJwtService jwtService)
+        public ADashboardController(IADashboard dashboard, IPDashboard pDashboard, IHostingEnvironment hostingEnvironment, IJwtService jwtService, IFormRequest formRequest)
         {
             _iadash = dashboard;
             _pDashboard = pDashboard;
             _hostEnvironment = hostingEnvironment;
             _jwtService = jwtService;
+            _iformReq = formRequest;
         }
 
 
@@ -42,6 +45,10 @@ namespace hallocDoc.Controllers
             {
                 TempData["SuccessMessage"] = "Data Updated Successfully..";
             }
+            else
+            {
+                TempData["ErrorMessage"] = "Data is not updated";
+            }
             return RedirectToAction("MyProfile", "ADashboard", new { Aid = Aid });
         }
 
@@ -50,14 +57,13 @@ namespace hallocDoc.Controllers
             bool check = _iadash.ProfilePasswordSubmit(Aid, ap);
             if (check)
             {
-                TempData["SuccessMessage"] = "Data Updated Successfully..";
+                TempData["SuccessMessage"] = "Password Updated Successfully..";
             }
             return RedirectToAction("MyProfile", "ADashboard", new { Aid = Aid });
         }
 
         public async Task<IActionResult> MyProfile(int? Aid)
         {
-                TempData["SuccessMessage"] = "Data Updated Successfully..";
             int aid = 0;
             if (Aid == null)
             {
@@ -88,6 +94,7 @@ namespace hallocDoc.Controllers
             string message = "Please Check Attached Files for your Request From HalloDoc..";
             List<string> files = new List<string>();
             var check = _iadash.sendMail(email, subject, message, filenames);
+            TempData["SuccessMessage"] = "Mail Sent Successfully..";
             return RedirectToAction("ViewUpload", "ADashboard", new { rid = rid });
         }
 
@@ -96,7 +103,7 @@ namespace hallocDoc.Controllers
         public async Task<IActionResult> Encounter(int rid, EncounterData ed, string? s)
         {
             int status = await _iadash.EncounterPost(rid, ed);
-
+            TempData["SuccessMessage"] = "Data Updated Successfully..";
             return RedirectToAction("Dmain", "ADashboard", new { id = status });
         }
 
@@ -110,6 +117,7 @@ namespace hallocDoc.Controllers
         public async Task<IActionResult> closeCasefinal(int rid)
         {
             int status = await _iadash.closeCasefinal(rid);
+            TempData["SuccessMessage"] = "Case Closed..";
             return RedirectToAction("Dmain", "ADashboard", new { id = status });
         }
 
@@ -133,6 +141,7 @@ namespace hallocDoc.Controllers
         public IActionResult sendAgreement(int rid)
         {
             int status = _iadash.sendAgreement(rid);
+            TempData["SuccessMessage"] = "Aggrement sent..";
             return RedirectToAction("Dmain", "ADashboard", new { id = status });
         }
 
@@ -140,6 +149,7 @@ namespace hallocDoc.Controllers
         public IActionResult ClearCase(int id)
         {
             int status = _iadash.ClearCase(id);
+            TempData["SuccessMessage"] = "Case Cleared";
             return RedirectToAction("Dmain", "ADashboard", new { id = status });
         }
 
@@ -154,6 +164,7 @@ namespace hallocDoc.Controllers
         public async Task<IActionResult> TransferCase(int rid, ADashTable adt)
         {
             bool check = await _iadash.TransferCase(rid, adt);
+            TempData["SuccessMessage"] = "Case Transfered Successfully..";
             return RedirectToAction("Dmain", "ADashboard", new { id = 2 });
         }
         public async Task<IActionResult> Logout()
@@ -193,6 +204,7 @@ namespace hallocDoc.Controllers
 
             bool check = _iadash.OrderPost(nrid, so);
 
+            TempData["SuccessMessage"] = "Order placed Successfully..";
             ModelState.AddModelError("ordersuccess", "Order placed Successfully..");
             return RedirectToAction("Dmain", "ADashboard", new { id = status });
         }
@@ -200,6 +212,7 @@ namespace hallocDoc.Controllers
         {
             if (await _pDashboard.uploadtoid(h, reqid))
             {
+                TempData["SuccessMessage"] = "File Uploaded Successfully..";
                 return RedirectToAction("ViewUpload", "ADashboard", new { rid = reqid });
             }
             return RedirectToAction("ViewUpload", "ADashboard", new { rid = reqid });
@@ -216,7 +229,7 @@ namespace hallocDoc.Controllers
 
                 x = await _iadash.DeleteFile(item);
             }
-
+            TempData["SuccessMessage"] = "File deleted Successfully..";
             return RedirectToAction("ViewUpload", "ADashboard", new { rid = x });
 
         }
@@ -225,6 +238,7 @@ namespace hallocDoc.Controllers
             string fileName = _iadash.fileNameFromId(fileId);
             int x = await _iadash.DeleteFile(fileName);
             ModelState.AddModelError("deleted", "File Deleted Successfully..");
+            TempData["SuccessMessage"] = "File deleted Successfully..";
             return RedirectToAction("ViewUpload", "ADashboard", new { rid = x });
         }
 
@@ -246,11 +260,19 @@ namespace hallocDoc.Controllers
         {
 
             int status1 = await _iadash.BlockCase(rid, dt);
+            if (status1 != null)
+            {
+                TempData["SuccessMessage"] = "Data Updated Successfully..";
+            }
             return RedirectToAction("Dmain", "ADashboard", new { id = status1 });
         }
         public async Task<IActionResult> CancelCase(int rid, ADashTable dt)
         {
             int status1 = await _iadash.CancelCase(rid, dt);
+            if (status1 != null)
+            {
+                TempData["SuccessMessage"] = "Data Updated Successfully..";
+            }
 
             return RedirectToAction("Dmain", "ADashboard", new { id = status1 });
         }
@@ -262,8 +284,6 @@ namespace hallocDoc.Controllers
         public async Task<IActionResult> ViewNote(int rid, AViewNoteCase vnc)
         {
             var result = _iadash.VNData(rid, vnc);
-
-
             return View(result);
         }
         [HttpPost]
@@ -271,11 +291,14 @@ namespace hallocDoc.Controllers
         {
 
             var check = await _iadash.VNDatapost(vnc);
-            /*if(check)
+            if (check)
             {
-                ModelState.AddModelError("success", "Note Updated Successfully...");
-            }*/
-            ModelState.AddModelError("success", "Note Updated Successfully...");
+                TempData["SuccessMessage"] = "Data Updated Successfully..";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Data is not updated";
+            }
             return View(vnc);
         }
 
@@ -291,9 +314,37 @@ namespace hallocDoc.Controllers
             var result = _iadash.VCDataPost(vnc);
             if (await result)
             {
-                ModelState.AddModelError("success", "Data Updated Successfully...");
+                TempData["SuccessMessage"] = "Data Updated Successfully..";
             }
             return View(vnc);
+        }
+
+        public IActionResult AdminSendReq()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> AdminSendReq(patientReq pr)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var filename = _iformReq.uploadfile(pr.myfile);
+
+                var result = _iformReq.Patient(filename, pr);
+                if (await result == "first")
+                {
+                    TempData["SuccessMessage"] = "Request Generated Successfully..";
+                    return RedirectToAction("Dmain", "ADashboard");
+                }
+                else if (await result == "")
+                {
+                    return View(pr);
+                }
+
+            }
+
+            return RedirectToAction("Dmain", "ADashboard");
         }
 
         [HttpPost]
@@ -387,6 +438,56 @@ namespace hallocDoc.Controllers
 
                 memoryStream.Position = 0;
                 return File(memoryStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "TableData.xlsx");
+            }
+        }
+
+        public IActionResult ExportAllRequests()
+        {
+
+            List<Request> requests = _iadash.ReqData();
+
+            if (requests == null || requests.Count == 0)
+            {
+                return NotFound("No requests found to export.");
+            }
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Requests");
+
+                worksheet.Cells[1, 1].Value = "RequestId";
+                worksheet.Cells[1, 2].Value = "UserId";
+                worksheet.Cells[1, 3].Value = "FirstName";
+                worksheet.Cells[1, 4].Value = "LastName";
+                worksheet.Cells[1, 5].Value = "PhoneNumber";
+                worksheet.Cells[1, 6].Value = "Email";
+                worksheet.Cells[1, 7].Value = "Status";
+                worksheet.Cells[1, 8].Value = "PhysicianId";
+                worksheet.Cells[1, 9].Value = "ConfirmationNumber";
+                worksheet.Cells[1, 10].Value = "CreatedDate";
+                worksheet.Cells[1, 11].Value = "RelationName";
+
+                int row = 2;
+                foreach (var request in requests)
+                {
+                    worksheet.Cells[row, 1].Value = request.RequestId;
+                    worksheet.Cells[row, 2].Value = request.UserId;
+                    worksheet.Cells[row, 3].Value = request.FirstName;
+                    worksheet.Cells[row, 4].Value = request.LastName;
+                    worksheet.Cells[row, 5].Value = request.PhoneNumber;
+                    worksheet.Cells[row, 6].Value = request.Email;
+                    worksheet.Cells[row, 7].Value = request.Status;
+                    worksheet.Cells[row, 8].Value = request.PhysicianId;
+                    worksheet.Cells[row, 9].Value = request.ConfirmationNumber;
+                    worksheet.Cells[row, 10].Value = request.CreatedDate;
+                    worksheet.Cells[row, 11].Value = request.RelationName;
+                    row++;
+                }
+                worksheet.Cells[worksheet.Dimension.Start.Row, 1].AutoFitColumns();
+                byte[] excelData = package.GetAsByteArray();
+
+                return File(excelData, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "requests.xlsx");
             }
         }
 

@@ -308,7 +308,7 @@
         }
 
         .navchild {
-            width: 37%;
+            width: 50%;
         }
 
         .logout {
@@ -358,7 +358,7 @@
             z-index: 100;
             /*border: 1px solid red;*/
             height: 93vh;
-            width: 45%;
+            width: 55%;
             padding: 1%;
             flex-direction: column;
             justify-content: flex-start;
@@ -368,22 +368,23 @@
         }
 
         .dschild {
-            border: 2px solid var(--blue);
-            margin-top: 10px;
-            height: 54px;
-            width: 88%;
+            margin-top: 5px;
+            height: 45px;
+            width: 100%;
             margin-inline: auto;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: start;
             color: var(--blue);
             border-radius: 5px;
             font-weight: 500;
+            padding-left: 10px;
+            font-size: 17px;
         }
 
         .dschildactive {
-            color: white;
-            border-color: var(--blue);
-            background-color: var(--blue);
+            color: var(--blue);
+            border-color: #c2f4ff;
+            background-color: #c2f4ff;
         }
     }
