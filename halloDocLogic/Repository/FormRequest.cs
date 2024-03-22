@@ -492,7 +492,7 @@ namespace halloDocLogic.Repository
             // Ensure request count is padded with leading zeros
             var paddedCount = requestCount.ToString("D2"); // Format with two digits (leading zeros)
 
-            return $"{abr.ToUpper()}{yearMonth}{LastName.Substring(0, 2).ToUpper()}{FirstName.Substring(0, 2).ToUpper()}{paddedCount}";
+            return $"{abr?.ToUpper()}{yearMonth}{LastName?.Substring(0, 2).ToUpper()}{FirstName?.Substring(0, 2).ToUpper()}{paddedCount}";
         }
     }
 }

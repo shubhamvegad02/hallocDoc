@@ -10,20 +10,20 @@
         </div>
         <div class="d-flex align-items-center d-right">
             <div class="p-1 ">
-                <button class="btn1 px-2 py-1">
+                <button class="btn1 px-2 py-1 dashfnbtn">
                     <i class="bi bi-send"></i>
-                    <a href="#">Send Link</a>
+                    <a data-bs-toggle="modal" data-bs-target="#sendLink">Send Link</a>
                 </button>
             </div>
             <div class="p-1 ">
-                <button class="btn1 px-2 py-1">
+                <button class="btn1 px-2 py-1 dashfnbtn">
                     <i class="bi bi-pencil"></i>
                     <a asp-action="AdminSendReq" asp-controller="ADashboard">Create Request</a>
                 </button>
             </div>
             <div class="p-1 ">
                 <form asp-action="Export" asp-controller="ADashboard" method="post">
-                    <button type="submit" id="btnSubmit" class="btn1 d-flex align-items-center justify-content-evenly px-2 py-1">
+                    <button type="submit" id="btnSubmit" class="btn1 dashfnbtn d-flex align-items-center justify-content-evenly px-2 py-1">
                         <i class="bi bi-file-earmark-arrow-down"></i>
                         <input type="hidden" name="GridHtml" />
                         <span class="d-none d-md-block">Export</span>
@@ -32,19 +32,46 @@
                 </form>
             </div>
             <div class="p-1 ">
-                <a asp-asp-controller="ADashboard" asp-action="ExportAllRequests" class="tdn btn1 d-flex align-items-center justify-content-evenly px-2 py-1">
+                <a asp-asp-controller="ADashboard" asp-action="ExportAllRequests" class="tdn dashfnbtn btn1 d-flex align-items-center justify-content-evenly px-2 py-1">
                     <i class="bi bi-file-earmark-arrow-down-fill"></i>
                     <span class="d-none d-md-block">Exportall</span>
                 </a>
             </div>
             @*<div class="p-1 ">
-                <button class="btn1 px-2 py-1">
-                    <i class="bi bi-person-fill-gear"></i>
-                    <a href="#">Request DTYSupport</a>
-                </button>
+            <button class="btn1 px-2 py-1">
+            <i class="bi bi-person-fill-gear"></i>
+            <a href="#">Request DTYSupport</a>
+            </button>
             </div>*@
         </div>
     </div>
+
+    @*send link modal*@
+    <div class="modal fade" id="sendLink" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Send Link</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-2">
+                    <form asp-area="" asp-controller="ADashboard" asp-action="SendLinkPost" class="row g-2 mt-3">
+                        <div class="form-floating col-12 mb-2">
+                            <input asp-for="email" type="text" class="form-control" id="floatingInput1" placeholder="Provide additional notes..">
+                            <label class="mylable" for="floatingInput1">Enter Email Address</label>
+                            <span asp-validation-for="email" class="text-danger"></span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" style="" class="btn" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-danger">Send</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="dasboardcontainer">
         <div class="middleSearch d-flex align-items-center">
             <div class="MS-left py-2 d-flex flex-row" style="width: 33%;margin-inline: 0;">
@@ -240,7 +267,7 @@
                                         }
                                         @if (ViewBag.n == 3 || ViewBag.n == 5 || ViewBag.n == 4)
                                         {
-                                            <a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="dropdown-item mb-1 cp"><i class="bi bi-file-earmark-diff" style="margin-right: 0.5rem;"></i><span>Doctor Notes</span></a>
+                                            @*<a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="dropdown-item mb-1 cp"><i class="bi bi-file-earmark-diff" style="margin-right: 0.5rem;"></i><span>Doctor Notes</span></a>*@
                                             <a asp-area="" asp-controller="ADashboard" asp-action="Order" asp-route-rid="@item.rid" class="dropdown-item mb-1 cp"><i class="bi bi-cart-plus" style="margin-right: 0.5rem;"></i><span>Orders</span></a>
                                             <a asp-area="" asp-controller="ADashboard" asp-action="Encounter" asp-route-rid="@item.rid" class="dropdown-item mb-1 cp"><i class="bi bi-opencollective" style="margin-right: 0.5rem;"></i><span>Encounter</span></a>
                                         }
@@ -319,14 +346,13 @@
 
                                                 }
                                             </select>
-                                            <select asp-for="phyId" class="form-select d-searchbar form-control mb-2">
+                                            <select id="ACphysiciandrop" asp-for="phyId" class="form-select d-searchbar form-control mb-2">
                                                 <option value="" selected>select physician</option>
                                                 @foreach (var pitem in ViewBag.plist)
                                                 {
                                                     <option class="ACRoption" data-region-id="@pitem.RegionId" value="@pitem.PhysicianId">@pitem.FirstName</option>
 
                                                 }
-
                                             </select>
 
                                             <div class="form-floating col-12 mb-2">
@@ -425,11 +451,12 @@
                                             <div class="form-floating col-12 mb-2">
                                                 <input asp-for="mobile" type="text" class="form-control" id="floatingInput1" value="@item.mobile">
                                                 <label class="mylable" for="floatingInput1">Mobile No.</label>
-
+                                                <span asp-validation-for="mobile" class="text-danger"></span>
                                             </div>
                                             <div class="form-floating col-12 mb-2">
                                                 <input asp-for="email" type="text" class="form-control" id="floatingInput10" value="@item.email">
                                                 <label class="mylable" for="floatingInput10">Email</label>
+                                                <span asp-validation-for="email" class="text-danger"></span>
 
                                             </div>
                                             <div class="modal-footer">
@@ -545,7 +572,7 @@
                                 }
                                 @if (ViewBag.n == 3 || ViewBag.n == 5 || ViewBag.n == 4)
                                 {
-                                    <a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="btnbadge badge rounded-pill bg-success"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Doctor Notes</span></a>
+                                    @*<a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="btnbadge badge rounded-pill bg-success"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Doctor Notes</span></a>*@
                                     <a asp-area="" asp-controller="ADashboard" asp-action="ViewCase" asp-route-rid="@item.rid" class="btnbadge badge rounded-pill bg-warning"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Orders</span></a>
                                     <a asp-area="" asp-controller="ADashboard" asp-action="Encounter" asp-route-rid="@item.rid" class="btnbadge badge rounded-pill bg-warning"><i class="fa-solid fa-eye" style="margin-right: 0.5rem;"></i><span>Encounter</span></a>
                                 }

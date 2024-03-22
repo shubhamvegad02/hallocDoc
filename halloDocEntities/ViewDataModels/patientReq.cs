@@ -12,10 +12,7 @@ namespace halloDocEntities.ViewDataModels
     public class patientReq
     {
 
-        /*[Required]
-        *//*[StringLength(8)]*//*
-        [DataType(DataType.Password)]
-        public string password { get; set; }*/
+        public IFormFile? patientFile { get; set; }
 
         [StringLength(500)]
         [Required]
@@ -23,7 +20,7 @@ namespace halloDocEntities.ViewDataModels
 
         [Required]
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
-        public string FirstName { get; set; }
+        public  string? FirstName { get; set; }
 
 
 
@@ -33,19 +30,15 @@ namespace halloDocEntities.ViewDataModels
         public DateTime CreatedDate { get; set; }
 
         [EmailAddress]
-        [Required]
-        public string Email { get; set; } = null!;
+        [RegularExpression(@"^([^\s@]+@[^\s@]+\.[^\s@]{1,3})$", ErrorMessage = "Domain is not real..")]
+        public  string? Email { get; set; } = null!;
 
         [Phone]
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phone number")]
         [StringLength(10)]
         [Required(ErrorMessage = "Mobile Number is Required")]
         public string? Mobile { get; set; }
-        /*
-                [Column(TypeName = "character varying")]
-                [Required]
-                public string? PasswordHash { get; set; }*/
-
+        
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         public string? Street { get; set; }
 
@@ -58,7 +51,7 @@ namespace halloDocEntities.ViewDataModels
         
         public string? ZipCode { get; set; }
 
-        public IFormFile myfile { get; set; }
+        public IFormFile? myfile { get; set; }
 
     }
 }

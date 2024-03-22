@@ -8,17 +8,17 @@ namespace halloDocEntities.ViewDataModels
 {
     public class ViewUploadedDoc
     {
-        public string patientName { get; set; }
+        public string? patientName { get; set; }
 
-        public string confirmation { get; set; }
+        public string? confirmation { get; set; }
 
-        public DateTime uploadDate { get; set; }
+        public DateTime? uploadDate { get; set; }
 
-        public string fileName { get; set; }
+        public string? fileName { get; set; }
 
-        public int fileId { get; set; }
+        public int? fileId { get; set; }
 
-        public int rid { get; set; }
+        public int? rid { get; set; }
 
 
     }

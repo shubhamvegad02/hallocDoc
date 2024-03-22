@@ -36,6 +36,8 @@
             <div class="form-floating col-12 col-md-6">
                 <input asp-for="FirstName" type="text" class="form-control" id="floatingInput1" placeholder="name@example.com">
                 <label class="mylable ms-2 " for="floatingInput1">First Name</label>
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+
             </div>
 
             <div class="form-floating col-12 col-md-6">
@@ -67,13 +69,14 @@
                         <option value="3">+216</option>
                     </select>
                     <input asp-for="Mobile" type="tel" id="phone" class="form-control" placeholder="Mobile Number" />
+                    <span asp-validation-for="Mobile" class="text-danger"></span>
                 </div>
             </div>
 
             <div class="form-floating col-12 col-md-6">
                 <input asp-for="Email" type="email" class="form-control" id="floatingInput2" placeholder="name@example.com">
                 <label class="mylable ms-2 " for="floatingInput2">Email</label>
-                @*<span asp-validation-for="FEmail" class="text-danger"></span>*@
+                <span asp-validation-for="Email" class="text-danger"></span>
             </div>
 
             <div class=" form-floating col-12 col-md-6">

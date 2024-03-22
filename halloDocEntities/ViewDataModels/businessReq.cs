@@ -20,11 +20,13 @@ namespace halloDocEntities.ViewDataModels
         [Required(ErrorMessage = "Mobile Number is Required")]
         public string? BMobile { get; set; }
 
-        [EmailAddress(ErrorMessage = "Not a valid Email Address")]
         [Required(ErrorMessage = "Email is Required")]
+        [EmailAddress(ErrorMessage = "Not a valid Email Address")]
+        [RegularExpression(@"^([^\s@]+@[^\s@]+\.[^\s@]{1,3})$", ErrorMessage = "Domain is not real..")]
         public string? BEmail { get; set; }
 
         [StringLength(50)]
+
         public string? BusinessName { get; set; }
 
         [StringLength(50)]
@@ -44,8 +46,9 @@ namespace halloDocEntities.ViewDataModels
 
         public DateTime CreatedDate { get; set; }
 
-        [EmailAddress]
-        [Required]
+        [Required(ErrorMessage = "Email is Required")]
+        [EmailAddress(ErrorMessage = "Not a valid Email Address")]
+        [RegularExpression(@"^([^\s@]+@[^\s@]+\.[^\s@]{1,3})$", ErrorMessage = "Domain is not real..")]
         public string Email { get; set; } = null!;
 
         [Phone]

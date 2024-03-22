@@ -80,6 +80,7 @@
 
                 <input style="width:80%;" type="tel" asp-for="mobile" id="phonebox" class="form-control" placeholder="Mobile Number" disabled readonly />
                 <label class="mylable" for="phone">Mobile No.</label>
+                <span asp-validation-for="mobile" class="text-danger"></span>
                 <div class="border-2 border rounded border-info d-flex justify-content-center align-items-center cp" style="width:15%; height:100%;">
                     <h3><i class="bi bi-telephone" style="color: #00c4ff;"></i></h3>
                 </div>
@@ -87,6 +88,7 @@
             <div class="form-floating col-12 col-md-6">
                 <input asp-for="email" type="email" class="form-control" id="emailbox" placeholder="name@example.com" disabled readonly>
                 <label class="mylable" for="emailbox">Email address</label>
+                <span asp-validation-for="email" class="text-danger"></span>
 
             </div>
             <div class="form-floating col-2 border-1 border-info">

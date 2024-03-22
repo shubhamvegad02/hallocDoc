@@ -6,7 +6,7 @@ namespace halloDocEntities.ViewDataModels
     public class createPatient
     {
         [EmailAddress]
-        [Required]
+        [RegularExpression(@"^([^\s@]+@[^\s@]+\.[^\s@]{1,3})$", ErrorMessage = "Domain is not real..")]
         public string Email { get; set; } = null!;
 
         [Required]

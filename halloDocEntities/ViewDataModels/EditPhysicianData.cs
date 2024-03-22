@@ -17,6 +17,8 @@ namespace halloDocEntities.ViewDataModels
 
         public int? PId { get; set; }
 
+        [EmailAddress]
+        [RegularExpression(@"^([^\s@]+@[^\s@]+\.[^\s@]{1,3})$", ErrorMessage = "Domain is not real..")]
         public string? username { get; set; }
 
         
@@ -34,12 +36,14 @@ namespace halloDocEntities.ViewDataModels
         public List<Role>? roleList { get; set; }
 
         [Required]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Name can only contain letters and spaces.")]
         public string? firstname { get; set; }
 
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Name can only contain letters and spaces.")]
         public string? lastname { get; set; }
 
         [EmailAddress]
-        [Required]
+        [RegularExpression(@"^([^\s@]+@[^\s@]+\.[^\s@]{1,3})$", ErrorMessage = "Domain is not real..")]
         public string? email { get; set; }
 
         [Phone]
@@ -52,6 +56,8 @@ namespace halloDocEntities.ViewDataModels
 
         public string? npinumber { get; set; }
 
+        [EmailAddress]
+        [RegularExpression(@"^([^\s@]+@[^\s@]+\.[^\s@]{1,3})$", ErrorMessage = "Domain is not real..")]
         public string? semail { get; set; }
 
         public List<string>? ProviderStateList { get; set; }
@@ -68,9 +74,11 @@ namespace halloDocEntities.ViewDataModels
 
         public string? zipcode { get; set; }
 
+        [Phone]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phone number")]
+        [StringLength(10)]
+        [Required(ErrorMessage = "Mobile Number is Required")]
         public string? billingMobile { get; set; }
-
-        /*public List<Region>? regionList { get; set; }*/
 
         public string? businessname { get; set; }
 

@@ -38,6 +38,17 @@ namespace hallocDoc.Controllers
         }
 
 
+        public IActionResult SendLinkPost(ADashTable adt)
+        {
+            string subject = "Greetings From HalloDoc";
+            string message = "For submit your request follow this link" + "http://localhost:5011/";
+            string email = adt.email;
+            string[] s = new string[0];
+            var check = _iadash.sendMail(email, subject, message, s);
+            TempData["SuccessMessage"] = "Email Sent Successfully..";
+            return RedirectToAction("Dmain", "ADashboard");
+        }
+
         public IActionResult MyProfilePost(int Aid, AdminProfile ap)
         {
             bool check = _iadash.MyProfilePost(Aid, ap);
@@ -88,7 +99,8 @@ namespace hallocDoc.Controllers
 
         public async Task<IActionResult> SendFilesInMail(int rid, [FromBody] string[] filenames)
         {
-
+            try
+            {
             string email = _iadash.EmailFromRid(rid);
             string subject = "HalloDoc Attachement";
             string message = "Please Check Attached Files for your Request From HalloDoc..";
@@ -96,6 +108,11 @@ namespace hallocDoc.Controllers
             var check = _iadash.sendMail(email, subject, message, filenames);
             TempData["SuccessMessage"] = "Mail Sent Successfully..";
             return RedirectToAction("ViewUpload", "ADashboard", new { rid = rid });
+            }
+            catch(Exception ex)
+            {
+                return RedirectToAction("first", "Home");
+            }
         }
 
 
@@ -281,15 +298,16 @@ namespace hallocDoc.Controllers
             return RedirectToAction("Dmain");
         }
         [HttpGet]
-        public async Task<IActionResult> ViewNote(int rid, AViewNoteCase vnc)
+        public async Task<IActionResult> ViewNote(int rid, AViewNoteCase? vnc)
         {
+            TempData["id"] = rid;
             var result = _iadash.VNData(rid, vnc);
             return View(result);
         }
         [HttpPost]
         public async Task<IActionResult> ViewNote(AViewNoteCase vnc)
         {
-
+            int? rid = TempData["id"] as int?;
             var check = await _iadash.VNDatapost(vnc);
             if (check)
             {
@@ -299,7 +317,7 @@ namespace hallocDoc.Controllers
             {
                 TempData["ErrorMessage"] = "Data is not updated";
             }
-            return View(vnc);
+            return RedirectToAction("ViewNote", "ADashboard", new {rid = rid});
         }
 
         public async Task<IActionResult> ViewCase(int rid)
@@ -335,6 +353,7 @@ namespace hallocDoc.Controllers
                 if (await result == "first")
                 {
                     TempData["SuccessMessage"] = "Request Generated Successfully..";
+
                     return RedirectToAction("Dmain", "ADashboard");
                 }
                 else if (await result == "")
@@ -343,7 +362,7 @@ namespace hallocDoc.Controllers
                 }
 
             }
-
+            TempData["SuccessMessage"] = "Request Generated Successfully..";
             return RedirectToAction("Dmain", "ADashboard");
         }
 

@@ -101,7 +101,8 @@
 @section OrderScript{
     <script>
         $('#profdropdown').change(function () {
-            
+            var selectPhysiciandrop = $('#business');
+            selectPhysiciandrop.val("");
             var selectedprofessionId = $(this).val(); // Get the selected region ID
 
             $('.businessOption').each(function () {

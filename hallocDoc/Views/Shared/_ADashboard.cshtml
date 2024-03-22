@@ -94,6 +94,8 @@
 
         $('.ACregiondrop').change(function () {
             console.log("new");
+            var selectPhysiciandrop = $('#ACphysiciandrop');
+            selectPhysiciandrop.val("");
             var selectedRegionId = $(this).val(); // Get the selected region ID
 
             $('.ACRoption').each(function () {

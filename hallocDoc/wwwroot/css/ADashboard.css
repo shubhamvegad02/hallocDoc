@@ -193,7 +193,7 @@
 }
 
 table {
-    /*font-size: 0.9rem;*/
+    font-size: 0.9rem;
     font-weight: 500;
     /*min-width: 93.52vw;*/
     width: 100% !important;
@@ -412,6 +412,9 @@ a {
 .accordion-button:focus{
     box-shadow:none !important;
     border-bottom: 1px solid var(--blue) !important;
+}
+.dashfnbtn:hover{
+    color:black !important;
 }
 
 

@@ -19,10 +19,10 @@
     </div>
 </div>
 
-<div class="main">
+<div class="main mt-4">
     <form asp-controller="ADashboard" asp-action="AdminSendReq" enctype="multipart/form-data" class="row g-2 g-md-3">
         <div class="formhead">Patient Information</div>
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
 
 
 
@@ -99,7 +99,7 @@
 
         <div class="formhead">(Optional) Upload Photo or Document</div>
         <div class="upbtncon">
-            <input asp-for="myfile" class="form-control" id="actual-btn" hidden />
+            <input asp-for="patientFile" class="form-control" id="actual-btn" hidden />
 
             <label class="mylable uploadbtn d-flex align-items-center justify-content-evenly" for="actual-btn">
                 <span class="w-25">
@@ -109,12 +109,12 @@
             </label>
 
             <!-- name of file chosen -->
-            <span id="file-chosen" class="upbtntext"></span>
+            <label id="file-chosen" class="upbtntext" for="actual-btn"></label>
         </div>
 
         <div class="btnline">
             <button type="submit" class="btn btn-outline-primary active blbtn">Submit</button>
-            <button type="button" asp-area="" asp-controller="ReqForm" asp-action="Patient" class="btn btn-outline-primary blbtn">Cancel</button>
+            <a asp-area="" asp-controller="ADashboard" asp-action="Dmain" type="button" class="btn btnoutline">Cancel</a>
         </div>
         @Html.ValidationMessage("enterPass", null, new { @class = "text-danger fw-bold" })
         @Html.ValidationMessage("block", null, new { @class = "text-danger fw-bold" })
@@ -123,6 +123,15 @@
     </form>
 
 </div>
+
+
+@section Scripts{
+    <script>
+        function hideinfo() {
+            document.getElementById('infocon').style.display = "none";
+        }
+    </script>
+}
 
 @*@section darkAdd {
     const main = document.querySelector(".main");

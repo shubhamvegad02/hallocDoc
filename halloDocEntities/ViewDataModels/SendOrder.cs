@@ -10,31 +10,30 @@ namespace halloDocEntities.ViewDataModels
 {
     public class SendOrder
     {
-        public string profession { get; set; }
+        public  string? profession { get; set; }
 
-        public string business { get; set; }
+        public  string? business { get; set; }
 
         [Phone]
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phone number")]
         [StringLength(10)]
         [Required(ErrorMessage = "Mobile Number is Required")]
-        public string Contact { get; set; }
+        public  string? Contact { get; set; }
 
-        [EmailAddress(ErrorMessage = "Not a valid Email Address")]
-        [Required(ErrorMessage = "Email is Required")]
-        [StringLength(50)]
-        public string email { get; set; }
+        [EmailAddress]
+        [RegularExpression(@"^([^\s@]+@[^\s@]+\.[^\s@]{1,3})$", ErrorMessage = "Domain is not real..")]
+        public  string? email { get; set; }
 
         [Phone]
         [RegularExpression(@"^\+?[0-9. \-]+$", ErrorMessage = "Invalid fax number format")]
-        public string fax { get; set; }
+        public  string? fax { get; set; }
 
-        public string orderDetail { get; set; }
+        public  string? orderDetail { get; set; }
 
         public int refill { get; set; }
 
-        public List<Healthprofessionaltype>  professionList { get; set; }
+        public List<Healthprofessionaltype>?  professionList { get; set; }
 
-        public List<Healthprofessional> businessList { get; set; }
+        public List<Healthprofessional>? businessList { get; set; }
     }
 }

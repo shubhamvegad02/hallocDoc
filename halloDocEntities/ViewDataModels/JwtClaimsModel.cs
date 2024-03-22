@@ -8,8 +8,8 @@ namespace halloDocEntities.ViewDataModels
 {
     public class JwtClaimsModel
     {
-        public string Email { get; set; }
-        public string Role { get; set; }
-        public string AspId { get; set; }
+        public string? Email { get; set; }
+        public string? Role { get; set; }
+        public string? AspId { get; set; }
     }
 }

@@ -24,17 +24,18 @@ namespace halloDocEntities.ViewDataModels
 
         public string? role { get; set; }
 
-        public List<string> statusList { get; set; }
+        public List<string>? statusList { get; set; }
 
-        public List<string> roleList { get; set; }
+        public List<string>? roleList { get; set; }
 
         [Required]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Name can only contain letters and spaces.")]
         public string? firstname { get; set; }
 
         public string? lastname { get; set; }
 
         [EmailAddress]
-        [Required]
+        [RegularExpression(@"^([^\s@]+@[^\s@]+\.[^\s@]{1,3})$", ErrorMessage = "Domain is not real..")]
         public string? email { get; set; }
 
         [Required]

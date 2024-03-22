@@ -5,7 +5,7 @@ namespace halloDocEntities.ViewDataModels
     public class uploadFile
     {
 
-        public IFormFile myfile { get; set; }
+        public IFormFile? myfile { get; set; }
 
     }
 }

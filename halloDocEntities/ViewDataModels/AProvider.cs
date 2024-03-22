@@ -1,6 +1,7 @@
 ﻿using halloDocEntities.DataModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,8 @@ namespace halloDocEntities.ViewDataModels
     {
         public List<string>? regionList { get; set; }
 
+
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Name can only contain letters and spaces.")]
         public string? name { get; set; }
 
         public string? role { get; set; }
@@ -27,6 +30,8 @@ namespace halloDocEntities.ViewDataModels
 
         public int physicianId { get; set; }
 
-        public string email { get; set; }
+        [EmailAddress]
+        [RegularExpression(@"^([^\s@]+@[^\s@]+\.[^\s@]{1,3})$", ErrorMessage = "Domain is not real..")]
+        public string? email { get; set; }
     }
 }

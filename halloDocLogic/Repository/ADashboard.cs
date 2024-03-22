@@ -22,6 +22,7 @@ using Humanizer;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using System.Security.Cryptography.X509Certificates;
 using System.Globalization;
+using Elasticsearch.Net;
 /*using Nest;*/
 
 namespace halloDocLogic.Repository
@@ -95,9 +96,9 @@ namespace halloDocLogic.Repository
         public async Task<int> statusFromRid(int rid)
         {
             var dbReq = await _context.Requests.FirstOrDefaultAsync(m => m.RequestId == rid);
-            if(dbReq != null)
+            if (dbReq != null)
             {
-                return  dbReq?.Status??1;
+                return dbReq?.Status ?? 1;
             }
             return 0;
         }
@@ -704,44 +705,64 @@ namespace halloDocLogic.Repository
 
             return status1;
         }
-        public AViewNoteCase VNData(int rid, AViewNoteCase vnc)
+        public AViewNoteCase VNData(int rid, AViewNoteCase? vnc)
         {
-            /*var dbdata = from r in _context.Requests
-                         join rn in _context.Requestnotes on r.RequestId equals rn.RequestId
-                         where r.RequestId == rid
-                         select new { r, rn };*/
-            var dbnotedata = from rl in _context.Requeststatuslogs
-                             join rn in _context.Requestnotes on rl.RequestId equals rn.RequestId
-                             where rn.RequestId == rid
-                             select new { rl, rn };
-            var dbreq = _context.Requests.FirstOrDefault(m => m.RequestId == rid);
-            if (dbreq != null)
+            try
             {
-                vnc.status = dbreq.Status;
-            }
-            else
-            {
-                vnc.status = 1;
-            }
+                var dbnotedata = from rn in _context.Requestnotes.DefaultIfEmpty()
+                                 join rl in _context.Requeststatuslogs on rn.RequestId equals rl.RequestId into temp
+                                 where rn.RequestId == rid
+                                 select new { rl = temp.FirstOrDefault(), rn };
 
-            foreach (var item in dbnotedata)
-            {
-                vnc.Tnotes = item.rl.Notes;
-                vnc.Pnotes = item.rn.PhysicianNotes;
-                vnc.Anotes = item.rn.AdminNotes;
-                vnc.rid = rid;
+                /*var dbreq = _context.Requests.FirstOrDefault(m => m.RequestId == 5000);
+                vnc.status = dbreq.Status;*/
+
+                var dbreq = _context.Requests.FirstOrDefault(m => m.RequestId == rid);
+                if (dbreq != null)
+                {
+                    vnc.status = dbreq.Status;
+                }
+                else
+                {
+                    vnc.status = 1;
+                }
+
+                foreach (var item in dbnotedata)
+                {
+                    vnc.Tnotes = item?.rl?.Notes;
+                    vnc.Pnotes = item?.rn?.PhysicianNotes;
+                    vnc.Anotes = item?.rn?.AdminNotes;
+                    vnc.rid = rid;
+                }
+                return vnc;
+
             }
-            return vnc;
+            catch (Exception ex)
+            {
+                return new AViewNoteCase();
+            }
         }
         public async Task<bool> VNDatapost(AViewNoteCase vnc)
         {
             int rid = vnc.rid;
-            vnc.Anotes = vnc.TempAnotes;
             var dbreqnotes = await _context.Requestnotes.FirstOrDefaultAsync(m => m.RequestId == rid);
-            dbreqnotes.AdminNotes = vnc?.Anotes;
-            _context.Requestnotes.Update(dbreqnotes);
-            _context.SaveChanges();
-            vnc.TempAnotes = null;
+            if (dbreqnotes != null)
+            {
+                dbreqnotes.AdminNotes = vnc.TempAnotes;
+                _context.Requestnotes.Update(dbreqnotes);
+                _context.SaveChanges();
+            }
+            else
+            {
+                Requestnote rn = new Requestnote();
+                rn.AdminNotes = vnc.TempAnotes;
+                rn.RequestId = rid;
+                rn.CreatedBy = "admin";
+                rn.CreatedDate = DateTime.Now;
+                _context.Requestnotes.Update(rn);
+                _context.SaveChanges();
+            }
+            vnc.TempAnotes = "";
 
             return true;
         }
@@ -807,7 +828,7 @@ namespace halloDocLogic.Repository
         }
 
 
-            public List<Region> getRegiondata()
+        public List<Region> getRegiondata()
         {
             List<Region> rlist = new List<Region>();
             var dbregion = _context.Regions;

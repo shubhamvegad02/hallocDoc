@@ -13,8 +13,13 @@ namespace halloDocEntities.ViewDataModels
     {
 
         public int rid { get; set; }
+
+
         [Required]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Name can only contain letters and spaces.")]
         public string FirstName { get; set; } = null!;
+
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Name can only contain letters and spaces.")]
         public string? LastName { get; set; }
 
         [EmailAddress(ErrorMessage = "Not a valid Email Address")]

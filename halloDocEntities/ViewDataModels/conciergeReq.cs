@@ -21,8 +21,9 @@ namespace halloDocEntities.ViewDataModels
         [Required(ErrorMessage = "Mobile Number is Required")]
         public string? CMobile { get; set; }
 
-        [EmailAddress(ErrorMessage = "Not a valid Email Address")]
         [Required(ErrorMessage = "Email is Required")]
+        [EmailAddress(ErrorMessage = "Not a valid Email Address")]
+        [RegularExpression(@"^([^\s@]+@[^\s@]+\.[^\s@]{1,3})$", ErrorMessage = "Domain is not real..")]
         public string? CMail { get; set; }
 
         [Required]
@@ -54,8 +55,9 @@ namespace halloDocEntities.ViewDataModels
 
         public DateTime CreatedDate { get; set; }
 
+        [Required(ErrorMessage = "Email is Required")]
         [EmailAddress(ErrorMessage = "Not a valid Email Address")]
-        [Required]
+        [RegularExpression(@"^([^\s@]+@[^\s@]+\.[^\s@]{1,3})$", ErrorMessage = "Domain is not real..")]
         public string Email { get; set; } = null!;
 
         [Phone]
