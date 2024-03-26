@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "G:\\Projects\\halloDocEntities\\halloDocEntities.csproj": {}
+    "C:\\Users\\rajku\\Desktop\\shubhamTatva\\halloDoc\\halloDocEntities\\halloDocEntities.csproj": {}
   },
   "projects": {
-    "G:\\Projects\\halloDocEntities\\halloDocEntities.csproj": {
+    "C:\\Users\\rajku\\Desktop\\shubhamTatva\\halloDoc\\halloDocEntities\\halloDocEntities.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\Projects\\halloDocEntities\\halloDocEntities.csproj",
+        "projectUniqueName": "C:\\Users\\rajku\\Desktop\\shubhamTatva\\halloDoc\\halloDocEntities\\halloDocEntities.csproj",
         "projectName": "halloDocEntities",
-        "projectPath": "G:\\Projects\\halloDocEntities\\halloDocEntities.csproj",
-        "packagesPath": "C:\\Users\\pci214\\.nuget\\packages\\",
-        "outputPath": "G:\\Projects\\halloDocEntities\\obj\\",
+        "projectPath": "C:\\Users\\rajku\\Desktop\\shubhamTatva\\halloDoc\\halloDocEntities\\halloDocEntities.csproj",
+        "packagesPath": "C:\\Users\\rajku\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\rajku\\Desktop\\shubhamTatva\\halloDoc\\halloDocEntities\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\pci214\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\rajku\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -34,6 +38,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -97,7 +106,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files (x86)\\dotnet\\sdk\\8.0.200\\RuntimeIdentifierGraph.json"
         }
       }
     }

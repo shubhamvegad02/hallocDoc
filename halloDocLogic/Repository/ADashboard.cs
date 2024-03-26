@@ -842,20 +842,17 @@ namespace halloDocLogic.Repository
             return rlist;
         }
 
-        public async Task<List<ADashTable>> ADashTableData(int n)
-
+        public async Task<PagedList<ADashTable>> ADashTableData(int n, int pageNumber = 1)
         {
-            var dbdata1 = from r in _context.Requests
+            int pageSize = 5;
+            var dbdata = (from r in _context.Requests
                           join rc in _context.Requestclients on r.RequestId equals rc.RequestId
+                          join p in _context.Physicians on r.PhysicianId equals p.PhysicianId into gj
+                          from p in gj.DefaultIfEmpty() // Left outer join
                           where r.Status == n
-                          select new { r, rc };
-
-            var dbdata = from r in _context.Requests
-                         join rc in _context.Requestclients on r.RequestId equals rc.RequestId
-                         join p in _context.Physicians on r.PhysicianId equals p.PhysicianId into gj
-                         from p in gj.DefaultIfEmpty() // Left outer join
-                         where r.Status == n
-                         select new { r, rc, p };
+                          select new { r, rc, p })
+                         .Skip((pageNumber - 1) * pageSize)
+                         .Take(pageSize);
 
             List<ADashTable> dtable = new List<ADashTable>();
             foreach (var item in dbdata)
@@ -886,11 +883,62 @@ namespace halloDocLogic.Repository
                 dt.relation = item.r.RelationName;
 
                 dtable.Add(dt);
+            }
+
+            var totalCount = await _context.Requests.Where(x => x.Status == n).CountAsync(); // Separate query for total count
+            var Items = dtable;
+            return new PagedList<ADashTable>(Items, totalCount, pageNumber, pageSize);
+        }
+
+        /*public async Task<List<ADashTable>> ADashTableData(int n)
+
+        {
+            var dbdata1 = from r in _context.Requests
+                          join rc in _context.Requestclients on r.RequestId equals rc.RequestId
+                          where r.Status == n
+                          select new { r, rc };
+
+            var dbdata = from r in _context.Requests
+                         join rc in _context.Requestclients on r.RequestId equals rc.RequestId
+                         join p in _context.Physicians on r.PhysicianId equals p.PhysicianId into gj
+                         from p in gj.DefaultIfEmpty() // Left outer join
+                         where r.Status == n
+                         select new { r, rc, p };
+
+            List<ADashTable> dtable = new List<ADashTable>();
+            foreach (var item in dbdata)
+            {
+                var dt = new ADashTable();
+
+                dt.status = n;
+                dt.guid = Guid.NewGuid().ToString();
+                dt.rid = item.r.RequestId;
+                dt.name = string.Concat(item.rc.FirstName, " ", item.rc.LastName);
+                dt.email = item.rc.Email;
+                *//*dt.dob = new DateTime(item.rc.IntYear.Value, int.Parse(item.rc.StrMonth), item.rc.IntDate.Value);*//*
+                dt.dob = item.r.CreatedDate.Date;
+                dt.requstor = item.r?.RelationName;
+                dt.reqDate = item.r.CreatedDate.Date;
+                dt.mobile = item.rc.PhoneNumber;
+                dt.address = string.Concat(item.rc.Street, " ", item.rc.City, " ", item.rc.State);
+                dt.notes = "";
+                if (item.p != null)
+                {
+                    dt.PhysicianName = string.Concat(item.p.FirstName, " ", item.p.LastName);
+                }
+                else
+                {
+                    dt.PhysicianName = "Physician";
+                }
+                dt.region = item.rc.RegionId.ToString();
+                dt.relation = item.r.RelationName;
+
+                dtable.Add(dt);
 
 
             }
             return dtable;
-        }
+        }*/
         public ARequestCount ReqCount()
         {
             ARequestCount reqc = new ARequestCount();

@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
+
+    <link rel="stylesheet" href="~/css/AdminAccess.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/AdminProvider.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/ADashboard.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/ReqForm.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pDashboard.css" asp-append-version="true" />
+</head>
+<body>
+    <nav class="rnav">
+        <button class="hambtn" onclick="hambtn()">
+            <img class="" style="height:60%; width:60%;" src="~/images/hamburger-svgrepo-com.svg" />
+        </button>
+
+        <a asp-area="" asp-controller="Home" asp-action="first" class="nlogo tdn"><img class="nlimg" src="/images/halloDoc img.png" alt=""></a>
+        <div class="navchild">
+            <div class="navwelcome">Hello Welcome @ViewBag.username</div>
+            <a asp-area="" asp-controller="ADashboard" asp-action="Logout" class="logout loglg tdn">Logout</a>
+            <a asp-area="" asp-controller="ADashboard" asp-action="Logout" class="logout logsm tdn">
+                <img class="smimg" src="/images/logout-svgrepo1-com.svg" alt="">
+            </a>
+            <button class="moonbtn" id="moonbtn" onclick="darkfunction()">
+                <img class="moon cp" src="/images/nightmode-svgrepo-com (2).svg" alt="">
+            </button>
+        </div>
+    </nav>
+
+    <div class="anav mt-2">
+        <a asp-area="" asp-controller="ADashboard" asp-action="Dmain" class="anavchild cp tdn">Dashboard</a>
+        <a class="anavchild cp tdn">Provider Location</a>
+        <a asp-area="" asp-controller="ADashboard" asp-action="MyProfile" class="anavchild cp tdn">My Profile</a>
+        <div class="dropdown">
+            <a class="nav-link dropdown-toggle anavchild cp tdn" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Provider
+            </a>
+            <div class="dropdown-menu" style="background-color:white;" aria-labelledby="navbarDropdownMenuLink">
+                <a asp-area="" asp-controller="AdminProvider" asp-action="Provider" class="dropdown-item">Provider</a>
+                <a class="dropdown-item">Scheduling</a>
+                <a class="dropdown-item">Invoicing</a>
+            </div>
+        </div>
+        <a class="anavchild cp tdn">Partners</a>
+        <a class="anavchild cp tdn ncactive">Access</a>
+        <a class="anavchild cp tdn">Records</a>
+    </div>
+    <div class="dashsidebar hideside" id="dashsidebar">
+        <div class="w-100 mt-2 pe-2 d-flex justify-content-end"><h2><i onclick="hambtn()" class="bi bi-x-square text-info"></i></h2></div>
+        <a asp-area="" asp-controller="ADashboard" asp-action="Dmain" class="dschild cp tdn "><i class="bi bi-caret-right me-1"></i>Dashboard</a>
+        <a class="dschild cp tdn"><i class="bi bi-caret-right me-1"></i>Provider Location</a>
+        <a asp-area="" asp-controller="ADashboard" asp-action="MyProfile" class="dschild cp tdn"><i class="bi bi-caret-right me-1"></i>My Profile</a>
+        <a class="dropdown-toggle dschild" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-caret-right me-1"></i>Provider
+        </a>
+        <div class="dropdown-menu" style="background-color:white; min-width: 9rem;" aria-labelledby="navbarDropdownMenuLink">
+            <a asp-area="" asp-controller="AdminProvider" asp-action="Provider" class="dropdown-item">Provider</a>
+            <a class="dropdown-item">Scheduling</a>
+            <a class="dropdown-item">Invoicing</a>
+        </div>
+        <a class="dschild cp tdn"><i class="bi bi-caret-right me-1"></i>Partners</a>
+        <a class="dschild cp tdn dschildactive"><i class="bi bi-caret-right me-1"></i>Access</a>
+        <a class="dschild cp tdn"><i class="bi bi-caret-right me-1"></i>Records</a>
+    </div>
+
+    <div>
+        @RenderBody()
+    </div>
+
+    <footer class="myfooter">
+        <span class="fele">Terms & Condition | Privacy Policy</span>
+    </footer>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/jquery-validate/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        function hambtn() {
+            var x = document.querySelector(".dashsidebar")
+            x.classList.toggle("hideside");
+            console.log("hiden");
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    @if (IsSectionDefined("Scripts"))
+    {
+        @RenderSection("Scripts", required: false)
+    }
+
+</body>
+</html>

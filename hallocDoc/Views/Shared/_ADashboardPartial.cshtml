@@ -346,12 +346,11 @@
 
                                                 }
                                             </select>
-                                            <select id="ACphysiciandrop" asp-for="phyId" class="form-select d-searchbar form-control mb-2">
+                                            <select id="physicianDropdown" asp-for="phyId" class="form-select d-searchbar form-control mb-2">
                                                 <option value="" selected>select physician</option>
                                                 @foreach (var pitem in ViewBag.plist)
                                                 {
                                                     <option class="ACRoption" data-region-id="@pitem.RegionId" value="@pitem.PhysicianId">@pitem.FirstName</option>
-
                                                 }
                                             </select>
 
@@ -501,6 +500,29 @@
                 }
             </tbody>
         </table>
+
+        <div class="pager-container w-50 d-flex flex-row justify-content-evenly" style="margin-inline:auto;">
+            @if (ViewBag.pageIndex > 1)
+            {
+                <a href="@Url.Action("Dmain", new { id = ViewBag.status, pageIndex = ViewBag.pageIndex - 1 })" class="btn btn-previous"><i class="bi bi-caret-left-fill me-1"></i>Previous</a>
+            }
+            else
+            {
+                <button disabled class="btn btn-previous"><i class="bi bi-caret-left-fill me-1"></i>Previous</button>
+            }
+
+            <span class="page-indicator">Page @ViewBag.pageIndex of @ViewBag.TotalPages</span>
+
+            @if (ViewBag.pageIndex < ViewBag.TotalPages)
+            {
+                <a href="@Url.Action("Dmain", new { id = ViewBag.status, pageIndex = ViewBag.pageIndex + 1 })" class="btn btn-next">Next<i class="bi bi-caret-right-fill ms-1"></i></a>
+            }
+            else
+            {
+                <button disabled class="btn btn-previous">Next<i class="bi bi-caret-right-fill ms-1"></i></button>
+            }
+        </div>
+
     </div>
 
     <div class="accordion d-block d-md-none" id="accordionExample">

@@ -1,0 +1,24 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* border: 1px solid #89ddcb; */
+}
+
+:root {
+    --blue: #68cbe1;
+    --nblue: #55b2bc;
+    --white: #ffffff;
+    --pdark: #362f47e6;
+    --sdark: #2A2438;
+    --darkpur: #310A5D;
+    --lightpur: #411E8F;
+    --clasicwhite: #d3d2d2;
+    --d1: #382c51e3;
+    --d2: #DAA520;
+    --d3: #B85CFF;
+}
+
+.tdn {
+    text-decoration: none;
+}

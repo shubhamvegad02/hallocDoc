@@ -16,6 +16,7 @@ using Microsoft.CodeAnalysis.Elfie.Serialization;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using halloDocLogic.Repository;
 using OfficeOpenXml;
+using System.Drawing.Printing;
 
 namespace hallocDoc.Controllers
 {
@@ -373,7 +374,7 @@ namespace hallocDoc.Controllers
         }
 
 
-        public async Task<IActionResult> Dmain(int id, ADashTable d)
+        public async Task<IActionResult> Dmain(int id, ADashTable d, int pageIndex = 1)
         {
             var n = id;
             if (n == 0)
@@ -396,8 +397,19 @@ namespace hallocDoc.Controllers
 
             ViewBag.heading = TempData["heading"];
 
-            var dtable = await _iadash.ADashTableData(n);
-            ViewBag.tableData = dtable;
+            /*var dtable = await _iadash.ADashTableData(n);
+            ViewBag.tableData = dtable;*/
+            
+            var dtable = await _iadash.ADashTableData(n,pageIndex);
+            ViewBag.tableData = dtable.Items;
+            ViewBag.totalCount = dtable.TotalCount;
+            ViewBag.pageIndex = dtable.PageIndex;
+            ViewBag.pageSize = dtable.PageSize;
+            ViewBag.status = n;
+            ViewBag.totalPages = (int)Math.Ceiling(dtable.TotalCount / (double)dtable.PageSize);
+
+
+
             string name = "c" + n.ToString();
             ViewBag.cardid = name;
             ViewBag.n = n;
@@ -431,7 +443,7 @@ namespace hallocDoc.Controllers
             return RedirectToAction("Dmain", "ADashboard", new { id = n });
         }
 
-        public async Task<IActionResult> DownloadExcel()
+        /*public async Task<IActionResult> DownloadExcel()
         {
             // Replace these with your actual data retrieval logic
             var n = 1;
@@ -458,7 +470,7 @@ namespace hallocDoc.Controllers
                 memoryStream.Position = 0;
                 return File(memoryStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "TableData.xlsx");
             }
-        }
+        }*/
 
         public IActionResult ExportAllRequests()
         {

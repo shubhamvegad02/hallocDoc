@@ -1,0 +1,88 @@
+﻿@using halloDocEntities.DataModels
+@{
+    ViewData["Title"] = "AccountAccess";
+    Layout = "~/Views/Shared/_AdminAccess.cshtml";
+    List<Role> roleList = ViewData["roleList"] as List<Role>;
+}
+
+<div class="docMain mt-2">
+    <div class="dmboxbar">
+        <h2 m-0>Account Access</h2>
+    </div>
+
+    <div class="dmbox">
+        <div class="d-flex justify-content-end">
+            <a asp-area="" asp-controller="AdminAccess" asp-action="CreateRole" class="btn btnoutline">Create Access</a>
+        </div>
+
+        <table class="table table-hover mt-3" style="border: 1px solid rgba(201, 201, 201, 0.878);">
+            <thead>
+                <tr>
+                    <th scope="col" class="thchild px-2 py-1 th-pn">Name</th>
+                    <th scope="col" class="thchild px-2 py-1 th-role">Account Type</th>
+                    <th scope="col" class="thchild px-0 py-1 th-provideraction">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (roleList != null)
+                {
+                    @foreach (var role in roleList)
+                    {
+                        <tr class="ptr text-center">
+                            <td class="tdregion">@role.Name</td>
+                            @if (role.AccountType == 1)
+                            {
+                                <td class="tdregion">Admin</td>
+                            }
+                            else if (role.AccountType == 2)
+                            {
+                                <td class="tdregion">Patient</td>
+                            }
+                            else
+                            {
+                                <td class="tdregion">Clinic</td>
+                            }
+                            <td class="tdchild px-0">
+                                <button class="btn btnoutline btn-outline-info">Edit</button>
+                                <button type="button" class="btn btnoutline" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color: #ff5353">
+                                        <h5 class="modal-title">Are You Sure you want to delete this Role?</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <a href="@Url.Action("DeleteRole", "AdminAccess", new { roleId = role.RoleId })" type="button" class="btn" style="background-color:#ff5353 !important; border:1px solid #ff5353 !important; color:white !important;">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts{
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <script>
+            toastr.success("@TempData["SuccessMessage"]");
+        </script>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <script>
+            toastr.error("@TempData["ErrorMessage"]");
+        </script>
+    }
+}
