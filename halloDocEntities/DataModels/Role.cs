@@ -15,8 +15,6 @@ public partial class Role
     [StringLength(50)]
     public string Name { get; set; } = null!;
 
-    public short AccountType { get; set; }
-
     [StringLength(128)]
     public string CreatedBy { get; set; } = null!;
 
@@ -34,6 +32,8 @@ public partial class Role
     public string? Ip { get; set; }
 
     public bool? IsDeleted { get; set; }
+
+    public short AccountType { get; set; }
 
     [InverseProperty("Role")]
     public virtual ICollection<Rolemenu> Rolemenus { get; set; } = new List<Rolemenu>();

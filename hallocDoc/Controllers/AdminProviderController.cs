@@ -17,6 +17,25 @@ namespace hallocDoc.Controllers
         }
 
 
+        public IActionResult CreateProviderPost(EditPhysicianData edt)
+        {
+            bool check = _adminProvider.CreateProviderPost(edt);
+            if (check)
+            {
+                TempData["SuccessMessage"] = "Provider Created Successfully..";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Data is not updated";
+            }
+            return RedirectToAction("Provider");
+        }
+        public IActionResult CreteProvider()
+        {
+            EditPhysicianData edt = _adminProvider.CreteProvider();
+            return View(edt);
+        }
+
         public IActionResult DeleteProvider(int PhysicianId, EditPhysicianData epd)
         {
             bool check = _adminProvider.DeleteProvider(PhysicianId);

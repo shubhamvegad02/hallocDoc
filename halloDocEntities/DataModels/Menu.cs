@@ -15,9 +15,10 @@ public partial class Menu
     [StringLength(50)]
     public string Name { get; set; } = null!;
 
-    public short AccountType { get; set; }
-
     public int? SortOrder { get; set; }
+
+    [StringLength(50)]
+    public string? AccountType { get; set; }
 
     [InverseProperty("Menu")]
     public virtual ICollection<Rolemenu> Rolemenus { get; set; } = new List<Rolemenu>();

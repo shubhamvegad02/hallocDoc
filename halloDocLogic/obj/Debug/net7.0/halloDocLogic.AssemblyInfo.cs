@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("halloDocLogic")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+53872ebb065c59513aca74ca4a7709a1d7bbe87e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("halloDocLogic")]
 [assembly: System.Reflection.AssemblyTitleAttribute("halloDocLogic")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

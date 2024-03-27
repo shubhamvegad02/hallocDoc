@@ -17,18 +17,21 @@ namespace halloDocEntities.ViewDataModels
 
         public int? PId { get; set; }
 
+        [Required]
         [EmailAddress]
-        [RegularExpression(@"^([^\s@]+@[^\s@]+\.[^\s@]{1,3})$", ErrorMessage = "Domain is not real..")]
+        [RegularExpression(@"^([^\s@]+@[^\s@]+\.[^\s@]{1,4})$", ErrorMessage = "Domain is not real..")]
         public string? username { get; set; }
 
-        
+        [Required]
         [StringLength(10, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [RegularExpression(@"^((?=.*[a-z])(?=.*[A-Z])(?=.*\d)).+$", ErrorMessage = "Password must contain Alphanumeric and Special characters")]
         [DataType(DataType.Password)]
         public string? password { get; set; }
 
+        [Required]
         public int? status { get; set; }
 
+        [Required]
         public string? role { get; set; }
 
         public List<string>? statusList { get; set; }
@@ -42,9 +45,15 @@ namespace halloDocEntities.ViewDataModels
         [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Name can only contain letters and spaces.")]
         public string? lastname { get; set; }
 
+        [Required]
         [EmailAddress]
-        [RegularExpression(@"^([^\s@]+@[^\s@]+\.[^\s@]{1,3})$", ErrorMessage = "Domain is not real..")]
+        [RegularExpression(@"^([^\s@]+@[^\s@]+\.[^\s@]{1,4})$", ErrorMessage = "Domain is not real..")]
         public string? email { get; set; }
+
+        [Required]
+        [Display(Name = "Confirm Email")]
+        [Compare("email", ErrorMessage = "Confirm Email doesn't match, Type again !")]
+        public string? confirmEmail { get; set; }
 
         [Phone]
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phone number")]
@@ -57,7 +66,7 @@ namespace halloDocEntities.ViewDataModels
         public string? npinumber { get; set; }
 
         [EmailAddress]
-        [RegularExpression(@"^([^\s@]+@[^\s@]+\.[^\s@]{1,3})$", ErrorMessage = "Domain is not real..")]
+        [RegularExpression(@"^([^\s@]+@[^\s@]+\.[^\s@]{1,4})$", ErrorMessage = "Domain is not real..")]
         public string? semail { get; set; }
 
         public List<string>? ProviderStateList { get; set; }
@@ -68,8 +77,10 @@ namespace halloDocEntities.ViewDataModels
 
         public string? address2 { get; set; }
 
+        [Required]
         public string? city { get; set; }
 
+        [Required]
         public string? state { get; set; }
 
         public string? zipcode { get; set; }

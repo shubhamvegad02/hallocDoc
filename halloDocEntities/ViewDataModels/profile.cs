@@ -16,7 +16,7 @@ namespace halloDocEntities.ViewDataModels
         public DateTime CreatedDate { get; set; }
 
         [EmailAddress]
-        [RegularExpression(@"^([^\s@]+@[^\s@]+\.[^\s@]{1,3})$", ErrorMessage = "Domain is not real..")]
+        [RegularExpression(@"^([^\s@]+@[^\s@]+\.[^\s@]{1,4})$", ErrorMessage = "Domain is not real..")]
         public string Email { get; set; } = null!;
 
         [Phone]

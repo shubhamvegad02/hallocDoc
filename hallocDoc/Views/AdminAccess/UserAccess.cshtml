@@ -1,0 +1,53 @@
+﻿@using halloDocEntities.DataModels
+@{
+    ViewData["Title"] = "UserAccess";
+    Layout = "~/Views/Shared/_AdminAccess.cshtml";
+}
+
+<div class="docMain mt-2">
+    <div class="dmboxbar">
+        <h2 m-0>User Access</h2>
+    </div>
+
+    <div class="dmbox pb-5">
+        <div class="w-100 d-flex justify-content-between align-items-center">
+                <select style="width:300px;" id="regiondrop" class="form-select d-searchbar form-control m-2" aria-label="Default select example">
+                    <option value="" selected>&#128269; All Regions</option>
+                    <option value="1">Gujarat</option>
+                    <option value="2">Maharashtra</option>
+                    <option value="3">Punjab</option>
+                </select>
+            <a asp-area="" asp-controller="AdminAccess" asp-action="CreateAdmin" class="btn">Create New Admin</a>
+        </div>
+
+        <table class="table table-hover mt-3" style="border: 1px solid rgba(201, 201, 201, 0.878);">
+            <thead>
+                <tr>
+                    <th scope="col" class="thchild px-2 py-1 th-sn">Account Type</th>
+                    <th scope="col" class="thchild px-2 py-1 th-pn">Account POC</th>
+                    <th scope="col" class="thchild px-2 py-1 th-role">Phone</th>
+                    <th scope="col" class="thchild px-2 py-1 th-oncall">Status</th>
+                    <th scope="col" class="thchild px-2 py-1 th-status">Open Request</th>
+                    <th scope="col" class="thchild px-0 py-1 th-provideraction">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @*@foreach (var item in ViewBag.APData)
+                {
+                    <tr class="ptr">
+                        <td class="tdregion" hidden>@item.region</td>
+                        <td class="tdchild tdcheckbox"><input type="checkbox" /></td>
+                        <td class="tdchild">@item.name</td>
+                        <td class="tdchild">@item.role</td>
+                        <td class="tdchild">@item.onCall</td>
+                        <td class="tdchild">@item.status</td>
+                        <td class="tdchild px-0">
+                            <button class="btn btnoutline btn-outline-info" data-bs-toggle="modal" data-bs-target="#contactprovider-@item.physicianId">Contact</button>
+                            <a asp-area="" asp-controller="AdminProvider" asp-action="EditProvider" asp-route-physicianId="@item.physicianId" class="btn btnoutline btn-outline-info">Edit</a>
+                        </td>
+                    </tr>
+                }*@
+            </tbody>
+        </table>
+    </div>
+</div>

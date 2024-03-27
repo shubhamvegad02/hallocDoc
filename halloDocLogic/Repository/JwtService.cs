@@ -52,7 +52,7 @@ namespace halloDocLogic.Repository
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expires = DateTime.UtcNow.AddHours(6);
+            var expires = DateTime.UtcNow.AddHours(8);
             var token = new JwtSecurityToken(
                 Convert.ToString(_configuration["Jwt:Issuer"]),
                 Convert.ToString(_configuration["Jwt:Audience"]),

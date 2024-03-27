@@ -30,6 +30,85 @@ namespace halloDocLogic.Repository
         }
 
 
+        public bool CreateProviderPost(EditPhysicianData edt)
+        {
+            Aspnetuser asp = new Aspnetuser();
+            asp.Id = Guid.NewGuid().ToString();
+            asp.UserName = edt.username;
+            asp.Email = edt.email;
+            asp.PasswordHash = _jwtService.encry(edt.password);
+            asp.PhoneNumber = edt.mobile;
+            asp.CreatedDate = DateTime.Now;
+            _context.Aspnetusers.Add(asp);
+            _context.SaveChanges();
+
+            string photofile = "";
+            if (edt?.photo != null)
+            {
+                photofile = _formRequest.uploadfile(edt?.photo);
+            }
+
+            Physician ph = new Physician();
+            ph.AspNetUserId = asp.Id;
+            ph.FirstName = edt.firstname;
+            ph.LastName = edt.lastname;
+            ph.Email = edt.email;
+            ph.Mobile = edt.mobile;
+            ph.CreatedDate = DateTime.Now;
+            ph.Photo = photofile;
+            ph.AdminNotes = edt.adminNotes;
+            ph.Address1 = edt.address1;
+            ph.Address2 = edt.address2;
+            ph.City = edt.city;
+            ph.RegionId = int.Parse(edt?.state);
+            ph.Zip = edt.zipcode;
+            ph.AltPhone = edt.billingMobile;
+            /*ph.CreatedBy = "admin";*/
+            ph.BusinessName = edt.businessname;
+            ph.BusinessWebsite = edt.businesssite;
+            ph.RoleId = int.Parse(edt.role);
+            ph.MedicalLicense = edt.medicallicence;
+            ph.Npinumber = edt.npinumber;
+            _context.Physicians.Add(ph);
+            _context.SaveChanges();
+
+            var dbphysician = _context.Physicians.FirstOrDefault(m => m.AspNetUserId == ph.AspNetUserId);
+            if (dbphysician != null)
+            {
+                int physicianId = dbphysician.PhysicianId;
+                foreach (var row in edt.ProviderStateList)
+                {
+                    Physicianregion pr = new Physicianregion();
+                    pr.PhysicianId = physicianId;
+                    pr.RegionId = int.Parse(row);
+                    _context.Physicianregions.Add(pr);
+                }
+                    _context.SaveChanges();
+            }
+
+            return true;
+        }
+
+        public EditPhysicianData CreteProvider()
+        {
+            EditPhysicianData epd = new EditPhysicianData();
+            var dbrole = _context.Roles.Where(m => m.AccountType == 3);
+            List<Role> roleList = new List<Role>();
+            foreach (var i in dbrole)
+            {
+                roleList.Add(i);
+            }
+
+            var dbregion = _context.Regions;
+            List<halloDocEntities.DataModels.Region> regions = new List<halloDocEntities.DataModels.Region>();
+            foreach (var i in dbregion)
+            {
+                regions.Add(i);
+            }
+            epd.roleList = roleList;
+            epd.stateList = regions;
+            return epd;
+        }
         public bool DeleteProvider(int physicianId)
         {
             var dbphysician = _context.Physicians.FirstOrDefault(m => m.PhysicianId == physicianId);

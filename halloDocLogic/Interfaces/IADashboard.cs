@@ -10,8 +10,6 @@ namespace halloDocLogic.Interfaces
 {
     public interface IADashboard
     {
-        /*Task<List<ADashTable>> ADashTableData(int n);*/
-
         Task<PagedList<ADashTable>> ADashTableData(int n, int pageNumber = 1);
 
         public ARequestCount ReqCount();

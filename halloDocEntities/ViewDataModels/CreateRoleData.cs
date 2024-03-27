@@ -15,8 +15,12 @@ namespace halloDocEntities.ViewDataModels
 
         public List<string>? menuItem { get; set; }
 
+        public List<int>? selectedMenuItem { get; set; }
+
         public List<Aspnetrole>? accountTypeList { get; set; }
 
         public List<Menu>? menuList { get; set; }
+
+        public int? roleId { get; set; }
     }
 }

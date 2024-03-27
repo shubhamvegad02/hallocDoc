@@ -10,7 +10,7 @@
         <h2 m-0>Account Access</h2>
     </div>
 
-    <div class="dmbox">
+    <div class="dmbox pb-5">
         <div class="d-flex justify-content-end">
             <a asp-area="" asp-controller="AdminAccess" asp-action="CreateRole" class="btn btnoutline">Create Access</a>
         </div>
@@ -40,10 +40,10 @@
                             }
                             else
                             {
-                                <td class="tdregion">Clinic</td>
+                                <td class="tdregion">Physician</td>
                             }
                             <td class="tdchild px-0">
-                                <button class="btn btnoutline btn-outline-info">Edit</button>
+                                <a asp-area="" asp-controller="AdminAccess" asp-action="CreateRole" asp-route-roleId="@role.RoleId" class="btn btnoutline btn-outline-info">Edit</a>
                                 <button type="button" class="btn btnoutline" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                     Delete
                                 </button>

@@ -24,5 +24,9 @@ namespace halloDocLogic.Interfaces
         bool EditProviderForm4(int physicianId, EditPhysicianData edt);
 
         bool DeleteProvider(int physicianId);
+
+        EditPhysicianData CreteProvider();
+
+        bool CreateProviderPost(EditPhysicianData edt);
     }
 }

@@ -17,5 +17,13 @@ namespace halloDocLogic.Interfaces
         public CreateRoleData CreateRole();
 
         bool CreateRolePost(CreateRoleData crd);
+
+        CreateRoleData EditRole(int? roleId);
+
+        bool EditRolePost(CreateRoleData crd);
+
+        EditPhysicianData CreateAdmin();
+
+        bool CreateAdminPost(EditPhysicianData edt);
     }
 }

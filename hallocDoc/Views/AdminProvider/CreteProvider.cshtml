@@ -1,0 +1,231 @@
+﻿@model halloDocEntities.ViewDataModels.EditPhysicianData;
+@{
+    ViewData["Title"] = "CreateProvider";
+    Layout = "~/Views/Shared/_AdminProvider.cshtml";
+}
+<div class="docMain mt-2">
+    <div class="dmboxbar">
+        <h3 m-0>Create Physician Account</h3>
+        <a asp-area="" asp-controller="AdminProvider" asp-action="Provider" class="logout tdn dmnewreq mb-3">Back</a>
+    </div>
+
+    <div class="dmbox">
+
+        <form asp-controller="AdminProvider" asp-action="CreateProviderPost" enctype="multipart/form-data" class="row g-2 g-md-3">
+            <h4 class="mt-2 ms-1">Account Information</h4>
+
+            <div class="form-floating col-12 col-md-4">
+                <input asp-for="username" type="text" class="form-control form1" id="fdate2" placeholder="Password" value="@Model?.username">
+                <label class="mylable" for="fdate2">UserName</label>
+                <span asp-validation-for="username" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating col-12 col-md-4">
+                <input asp-for="password" type="password" class="form-control form1" id="Password" placeholder="Password" value="">
+                <label class="mylable" for="Password">Password</label>
+                <span asp-validation-for="password" class="text-danger"></span>
+            </div>
+            <div class="form-floating col-12 col-md-4 d-flex justify-content-center align-items-center">
+                <select asp-for="role" class="form-select pt-0 pb-0 form1">
+                    @foreach (var item in Model?.roleList)
+                    {
+                        @if (item.Name == Model.state)
+                        {
+                            <option value="@item.RoleId" selected>@item.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@item.RoleId">@item.Name</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="role" class="text-danger"></span>
+            </div>
+
+            <h4 class=" m-2 ms-1 mt-4 mb-0">Physician Information</h4>
+
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="firstname" type="text" class="form2 form-control" id="floatingInput2" placeholder="name@example.com">
+                <label class="mylable" for="floatingInput2">First Name</label>
+                <span asp-validation-for="firstname" class="text-danger"></span>
+
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="lastname" type="text" class="form2 form-control" id="floatingPassword" placeholder="Password">
+                <label class="mylable" for="floatingPassword">Last Name</label>
+                <span asp-validation-for="lastname" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="email" type="email" class="form2 form-control" id="floatingInput5" placeholder="name@example.com">
+                <label class="mylable" for="floatingInput5">Email address</label>
+                <span asp-validation-for="email" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input type="tel" asp-for="mobile" id="phone23" class=" form2 form-control" placeholder="Mobile Number" />
+                <label class="mylable" for="phone23">Mobile No.</label>
+                <span asp-validation-for="mobile" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="medicallicence" type="text" class="form2 form-control" id="medicallicence" placeholder="name@example.com">
+                <label class="mylable" for="medicallicence">Medical License</label>
+                <span asp-validation-for="medicallicence" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="npinumber" type="text" class="form2 form-control" id="npinumber" placeholder="name@example.com">
+                <label class="mylable" for="npinumber">NPI Number</label>
+                <span asp-validation-for="npinumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating col-12 col-md-6 border-1">
+                <div class="row">
+                    <div class="col">
+                        @if (Model?.stateList?.Count != 0)
+                        {
+                            @foreach (var state in Model?.stateList)
+                            {
+                                <div class="form-check form-check-inline">
+                                    <input name="ProviderStateList" class="form2 form-check-input text-info" type="checkbox" id="checkbox-@state.Name" value="@state.RegionId">
+                                    <label for="checkbox-@state.Name" class="form-check-label">@state.Name</label>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <h4 class=" m-2 ms-1 mt-4 mb-0">Mailing & Billing Information</h4>
+
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="address1" type="text" class="form3 form-control" id="address1" placeholder="address1">
+                <label class="mylable" for="address1">Address 1</label>
+            </div>
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="address2" type="text" class="form3 form-control" id="address2" placeholder="address1">
+                <label class="mylable" for="address1">Address 2</label>
+            </div>
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="city" type="text" class="form3 form-control" id="City" placeholder="address1">
+                <label class="mylable" for="City">City</label>
+            </div>
+            <div class="form-floating col-12 col-md-6 d-flex justify-content-center align-items-center">
+                <select id="profdropdown" asp-for="state" class="form3 form-select pt-0 pb-0">
+                    <option value="" selected>Select State</option>
+                    @foreach (var item in Model?.stateList)
+                    {
+                        <option value="@item.RegionId">@item.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="role" class="text-danger"></span>
+            </div>
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="zipcode" type="text" class="form3 form-control" id="Zipcode" placeholder="address1">
+                <label class="mylable" for="Zipcode">Zipcode</label>
+            </div>
+            <div class="form-floating col-12 col-md-6">
+                <input type="tel" asp-for="billingMobile" id="phone2" class="form3 form-control" placeholder="Mobile Number" />
+                <label class="mylable" for="phone2">Mobile No.</label>
+                <span asp-validation-for="billingMobile" class="text-danger"></span>
+            </div>
+
+            <h4 class=" m-2 ms-1 mt-4 mb-0">Provider Profile</h4>
+
+
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="businessname" type="text" class="form4 form-control" id="businessname" placeholder="address1">
+                <label class="mylable" for="businessname">Business Name</label>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <input asp-for="businesssite" type="text" class="form4 form-control" id="businesssite" placeholder="address1">
+                <label class="mylable" for="businesssite">Business Site</label>
+            </div>
+
+            <div class="form-floating col-12 col-md-6">
+                <div class="input-group">
+                    <input asp-for="photo" type="file" multiple class="form4 form-control px-3 py-2 file-upload d-none" id="Files">
+                    <label class="input-group-text w-100 d-flex justify-content-between p-0 rounded-3 upload-label" for="Files">
+                        <span class="px-3 py-2" id="file">Select Photo</span>
+                        <div class="btn btn-info p-3 text-white fw-bold rounded-0">
+                            <i class="bi bi-cloud-arrow-up me-1"></i>Upload
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div class=" form-floating col-12 mb-2">
+                <textarea asp-for="adminNotes" class=" form-control h-100" id="floatingInput1" rows="3"
+                          placeholder="Enter symptoms details in detail(optional)"></textarea>
+                <label class="mylable" for="floatingInput1">Admin Notes</label>
+            </div>
+
+            <h4 class=" m-2 ms-1 mt-4 mb-0">Onboardig</h4>
+
+            <div style="min-height:fit-content;">
+                <div class="OnboardingChild d-flex mt-2 justify-content-start align-items-center flex-row">
+                    <span class="ms-3 w-50">Independent Contractor Agreement</span>
+                    <button class="btn ms-3">Upload</button>
+                </div>
+
+                <div class="OnboardingChild d-flex mt-2 justify-content-start align-items-center flex-row">
+                    <span class="ms-3 w-50">Background Check</span>
+                    <button class="btn ms-3">Upload</button>
+                </div>
+
+                <div class="OnboardingChild d-flex mt-2 justify-content-start align-items-center flex-row">
+                    <span class="ms-3 w-50">HIPAA Compliance</span>
+                    <button class="btn ms-3">Upload</button>
+                </div>
+
+                <div class="OnboardingChild d-flex mt-2 justify-content-start align-items-center flex-row">
+                    <span class="ms-3 w-50">NonDisclosuer Agreement</span>
+                    <button class="btn ms-3">Upload</button>
+                </div>
+
+                <div class="OnboardingChild d-flex mt-2 justify-content-start align-items-center flex-row">
+                    <span class="ms-3 w-50">License Document</span>
+                    <button class="btn ms-3">Upload</button>
+                </div>
+            </div>
+
+            <div class="btnline mt-3">
+                <button type="submit" style="color:white !important; border-color:forestgreen !important; background-color:forestgreen !important;" class=" me-2 pt-2 btn d-flex align-items-center">Create Account</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+@section Scripts{
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <script>
+            toastr.success("@TempData["SuccessMessage"]");
+        </script>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <script>
+            toastr.error("@TempData["ErrorMessage"]");
+        </script>
+    }
+    <script>
+
+        const actualBtn1 = document.querySelector('#Files');
+        const fileChosen1 = document.querySelector('#file');
+        actualBtn1.addEventListener('change', function () {
+            fileChosen1.textContent = '';
+            for (var i = 0; i < this.files.length; i++) {
+                fileChosen1.textContent += this.files[i].name + ', ';
+            }
+            fileChosen1.textContent = fileChosen1.textContent.slice(0, fileChosen1.textContent.length - 2);
+        })
+
+
+    </script>
+}

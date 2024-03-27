@@ -22,7 +22,7 @@ namespace halloDocEntities.ViewDataModels
 
         [Required(ErrorMessage = "Email is Required")]
         [EmailAddress(ErrorMessage = "Not a valid Email Address")]
-        [RegularExpression(@"^([^\s@]+@[^\s@]+\.[^\s@]{1,3})$", ErrorMessage = "Domain is not real..")]
+        [RegularExpression(@"^([^\s@]+@[^\s@]+\.[^\s@]{1,4})$", ErrorMessage = "Domain is not real..")]
         public string? FEmail { get; set; }
 
         [StringLength(100)]
@@ -46,7 +46,7 @@ namespace halloDocEntities.ViewDataModels
 
         [Required(ErrorMessage = "Email is Required")]
         [EmailAddress(ErrorMessage = "Not a valid Email Address")]
-        [RegularExpression(@"^([^\s@]+@[^\s@]+\.[^\s@]{1,3})$", ErrorMessage = "Domain is not real..")]
+        [RegularExpression(@"^([^\s@]+@[^\s@]+\.[^\s@]{1,4})$", ErrorMessage = "Domain is not real..")]
         public string Email { get; set; } = null!;
 
         [Phone]

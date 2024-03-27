@@ -168,11 +168,12 @@
     width: 70%;
     margin-inline: auto;
     height: fit-content;
+    min-height:72vh;
 }
 
 .dmbox {
     height: fit-content;
-    min-height: 70vh;
+    /*min-height: 70vh;*/
     padding: 1%;
     background-color: #f1f1f1a3;
     border-radius: 10px;
