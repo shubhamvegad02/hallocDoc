@@ -107,7 +107,7 @@
             {
                 @foreach (var item in ViewBag.APData)
                 {
-                    <div class="accordion-item border-bottom-2 mt-2">
+                    <div class="accordion-item border-bottom-2 mt-2" region="@item.region">
                         <h2 class="accordion-header" id="headingOne">
                             <button style=" border:none !important; border-bottom:2px solid gray; color:black;" class="accordion-button border-dark border-2" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.physicianId" aria-expanded="true" aria-controls="flush-@item.physicianId">
                                 <div class="d-flex flex-column justify-content-center w-100 pe-2 align-items-start">
@@ -180,8 +180,18 @@
         $('.tdcheckbox').click(function () {
             var saveButton = $('#providersavebtn');
             saveButton.show(); // Show the button using jQuery's show() method
+        });
 
-
+        $('#providerregiondrop').change(function () {
+            var selectedRegion = $(this).val();
+            $('.accordion-item').each(function () {
+                var region = $(this).attr("region");
+                if (selectedRegion === '' || region === selectedRegion) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
         });
     </script>
 }

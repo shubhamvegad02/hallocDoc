@@ -56,7 +56,7 @@ namespace halloDocEntities.ViewDataModels
         public string? confirmEmail { get; set; }
 
         [Phone]
-        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phone number")]
+        [RegularExpression(@"^[6789]\d{9}$", ErrorMessage = "Not a valid phone number")]
         [StringLength(10)]
         [Required(ErrorMessage = "Mobile Number is Required")]
         public string? mobile { get; set; }
@@ -86,13 +86,16 @@ namespace halloDocEntities.ViewDataModels
         public string? zipcode { get; set; }
 
         [Phone]
-        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phone number")]
+        [RegularExpression(@"^[6789]\d{9}$", ErrorMessage = "Not a valid phone number")]
         [StringLength(10)]
         [Required(ErrorMessage = "Mobile Number is Required")]
         public string? billingMobile { get; set; }
 
         public string? businessname { get; set; }
 
+
+        [EmailAddress]
+        [RegularExpression(@"^([^\s@]+@[^\s@]+\.[^\s@]{1,4})$", ErrorMessage = "Domain is not real..")]
         public string? businesssite { get; set; }
 
         public IFormFile photo { get; set; }
@@ -121,5 +124,15 @@ namespace halloDocEntities.ViewDataModels
         public bool? LD { get; set; }
 
         public string? LDDoc { get; set; }
+
+        public IFormFile? ICAfile { get; set; }
+
+        public IFormFile? BCfile { get; set; }
+
+        public IFormFile? HCfile { get; set; }
+
+        public IFormFile? NAfile { get; set; }
+
+        public IFormFile? LDfile { get; set; }
     }
 }

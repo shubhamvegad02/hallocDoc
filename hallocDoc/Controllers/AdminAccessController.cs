@@ -15,6 +15,13 @@ namespace hallocDoc.Controllers
         }
 
 
+        public IActionResult UserAccess()
+        {
+            ViewBag.data = _adminaccess.UserAccess();
+            return View();
+        }
+
+
         public IActionResult CreateAdminPost(EditPhysicianData edt)
         {
             bool check = _adminaccess.CreateAdminPost(edt);
@@ -28,11 +35,6 @@ namespace hallocDoc.Controllers
         {
             EditPhysicianData edt = _adminaccess.CreateAdmin();
             return View(edt);
-        }
-
-        public IActionResult UserAccess()
-        {
-            return View();
         }
 
         public IActionResult EditRolePost(CreateRoleData crd)

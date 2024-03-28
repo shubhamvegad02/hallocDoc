@@ -2,9 +2,13 @@
 using halloDocEntities.DataModels;
 using halloDocEntities.ViewDataModels;
 using halloDocLogic.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
+using Nest;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,12 +29,66 @@ namespace halloDocLogic.Repository
         }
 
 
+        public List<UserAccessData> UserAccess()
+        {
+            List<UserAccessData> list = new List<UserAccessData>();
+
+            var dbdataadmin = from admin in _context.Admins
+                              join asp in _context.Aspnetuserroles on admin.AspNetUserId equals asp.UserId into roles
+                              from asp in roles.DefaultIfEmpty()
+                              select new
+                              {
+                                  admin,
+                                  asp
+                              };
+
+            int adminopenReq = _context.Requests.Where(m => m.Status == 1).Count();
+
+            foreach (var item in dbdataadmin)
+            {
+                UserAccessData uad = new UserAccessData();
+                uad.accountType = int.Parse(item.asp.RoleId);
+                uad.aspId = item.asp.UserId;
+                uad.name = string.Concat(item.admin.FirstName + " " + item.admin.LastName);
+                uad.mobile = item.admin.Mobile;
+                uad.status = item.admin.Status;
+                uad.openReq = adminopenReq;
+                list.Add(uad);
+            }
+
+            var dbdataphysician = from phy in _context.Physicians
+                                  join asp in _context.Aspnetuserroles on phy.AspNetUserId equals asp.UserId into roles
+                                  from asp in roles.DefaultIfEmpty()
+                                  select new
+                                  {
+                                      phy,
+                                      asp,
+                                      openReqCount = (from request in _context.Requests
+                                                      where request.PhysicianId == phy.PhysicianId
+                                                      select request).Count()
+                                  };
+
+            foreach (var item in dbdataphysician)
+            {
+                UserAccessData uad = new UserAccessData();
+                uad.accountType = int.Parse(item.asp.RoleId);
+                uad.aspId = item.asp.UserId;
+                uad.name = string.Concat(item.phy.FirstName + " " + item.phy.LastName);
+                uad.mobile = item.phy.Mobile;
+                uad.status = item.phy.Status.ToString();
+                uad.openReq = item.openReqCount;
+                list.Add(uad);
+            }
+
+            return list;
+        }
 
         public bool CreateAdminPost(EditPhysicianData edt)
         {
             if (edt != null)
             {
                 Aspnetuser asp = new Aspnetuser();
+                asp.Id = Guid.NewGuid().ToString();
                 asp.UserName = edt.email;
                 asp.Email = edt.email;
                 asp.PasswordHash = _jwtService.encry(edt.password);
@@ -56,12 +114,18 @@ namespace halloDocLogic.Repository
                     admin.RegionId = int.Parse(edt?.state);
                     admin.Zip = edt.zipcode;
                     admin.AltPhone = edt.billingMobile;
-                    /*admin.CreatedBy = ""*/
+                    admin.CreatedBy = aspid;
                     admin.CreatedDate = DateTime.Now;
                     admin.Status = "active";
                     _context.Admins.Add(admin);
                     _context.SaveChanges();
                 }
+
+                Aspnetuserrole aspnetuserrole = new Aspnetuserrole();
+                aspnetuserrole.UserId = aspid;
+                aspnetuserrole.RoleId = "1";
+                _context.Aspnetuserroles.Add(aspnetuserrole);
+                _context.SaveChanges();
 
                 var dbadmin = _context.Admins.FirstOrDefault(m => m.AspNetUserId == aspid);
                 if (dbadmin != null)
@@ -76,6 +140,7 @@ namespace halloDocLogic.Repository
                     }
                     _context.SaveChanges();
                 }
+
 
                 return true;
             }

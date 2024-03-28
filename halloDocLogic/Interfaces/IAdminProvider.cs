@@ -28,5 +28,7 @@ namespace halloDocLogic.Interfaces
         EditPhysicianData CreteProvider();
 
         bool CreateProviderPost(EditPhysicianData edt);
+
+        bool EditProviderFormFiles(int physicianId, EditPhysicianData edt);
     }
 }

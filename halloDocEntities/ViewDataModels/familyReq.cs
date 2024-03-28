@@ -15,7 +15,7 @@ namespace halloDocEntities.ViewDataModels
         public string? FLastName { get; set; }
 
         [Phone]
-        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phone number")]
+        [RegularExpression(@"^[6789]\d{9}$", ErrorMessage = "Not a valid phone number")]
         [StringLength(10)]
         [Required(ErrorMessage = "Mobile Number is Required")]
         public string? FPhoneNumber { get; set; }
@@ -50,7 +50,7 @@ namespace halloDocEntities.ViewDataModels
         public string Email { get; set; } = null!;
 
         [Phone]
-        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phone number")]
+        [RegularExpression(@"^[6789]\d{9}$", ErrorMessage = "Not a valid phone number")]
         [StringLength(10)]
         [Required(ErrorMessage = "Mobile Number is Required")]
         public string? Mobile { get; set; }

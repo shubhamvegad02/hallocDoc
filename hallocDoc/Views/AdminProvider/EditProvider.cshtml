@@ -28,7 +28,7 @@
 
             <div class="form-floating col-12 col-md-6 d-flex justify-content-center align-items-center">
                 <select disabled asp-for="status" class="form-select pt-0 pb-0 form1">
-                    
+
                     @if (Model?.status == 1)
                     {
                         <option value="1" selected>Active</option>
@@ -258,64 +258,95 @@
 
         <h3 class="m-2 ms-1">Onboardig</h3>
 
-        <div class="OnboardingChild d-flex mt-2 justify-content-start align-items-center flex-row">
-            <input disabled class="form1 form-check-input text-info ms-3" type="checkbox" @(Model.ICA != null ? "checked" : "")>
-            <span class="ms-3 w-50">Independent Contractor Agreement</span>
-            <button class="btn ms-3">Upload</button>
-            <button class="btn ms-3" @(Model.ICA == null ? "hidden" : "")>View</button>
-        </div>
+        <form asp-controller="AdminProvider" asp-action="EditProviderFormFiles" asp-route-PhysicianId="@Model.PId" enctype="multipart/form-data" class="row g-2 g-md-3">
+
+            <div class="OnboardingChild d-flex mt-2 justify-content-start align-items-center flex-row">
+                <input disabled class="form1 form-check-input text-info ms-3" type="checkbox" @(Model.ICADoc != "" ? "checked" : "")>
+                <span class="ms-3 w-50">Independent Contractor Agreement</span>
+                <div class="input-group" style="width:100px;">
+                    <input asp-for="ICAfile" type="file" multiple class="form4 form-control px-3 py-2 file-upload d-none" id="Files2">
+                    <label class="input-group-text btn" for="Files2">
+                        Upload
+                    </label>
+                </div>
+                <button class="btn ms-3" @(Model.ICADoc == null ? "hidden" : "")>View</button>
+            </div>
+            <button type="submit" id="form2btn" style="width:80px; border:none; color:white;" class="btn btn-danger me-2">Save</button>
+        </form>
 
         <div class="OnboardingChild d-flex mt-2 justify-content-start align-items-center flex-row">
-            <input disabled class="form1 form-check-input text-info ms-3" type="checkbox" @(Model.BC != null ? "checked" : "")>
+            <input disabled class="form1 form-check-input text-info ms-3" type="checkbox" @(Model.BCDoc != "" ? "checked" : "")>
             <span class="ms-3 w-50">Background Check</span>
-            <button class="btn ms-3">Upload</button>
-            <button class="btn ms-3" @(Model.BC == null ? "hidden" : "")>View</button>
+            <div class="input-group" style="width:100px;">
+                <input asp-for="BCfile" type="file" multiple class="form4 form-control px-3 py-2 file-upload d-none" id="Files2">
+                <label class="input-group-text btn" for="Files2" ">
+                    Upload
+                </label>
+            </div>
+            <button class="btn ms-3" @(Model.BCDoc == null ? "hidden" : "")>View</button>
         </div>
 
         <div class="OnboardingChild d-flex mt-2 justify-content-start align-items-center flex-row">
-            <input disabled class="form1 form-check-input text-info ms-3" type="checkbox" @(Model.HC != null ? "checked" : "")>
+            <input disabled class="form1 form-check-input text-info ms-3" type="checkbox" @(Model.HCDoc != "" ? "checked" : "")>
             <span class="ms-3 w-50">HIPAA Compliance</span>
-            <button class="btn ms-3">Upload</button>
-            <button class="btn ms-3" @(Model.HC == null ? "hidden" : "")>View</button>
+            <div class="input-group" style="width:100px;">
+                <input asp-for="" type="file" multiple class="form4 form-control px-3 py-2 file-upload d-none" id="Files2">
+                <label class="input-group-text btn" for="Files2">
+                    Upload
+                </label>
+            </div>
+            <button class="btn ms-3" @(Model.HCDoc == null ? "hidden" : "")>View</button>
         </div>
 
         <div class="OnboardingChild d-flex mt-2 justify-content-start align-items-center flex-row">
-            <input disabled class="form1 form-check-input text-info ms-3" type="checkbox" @(Model.NDA != null ? "checked" : "")>
+            <input disabled class="form1 form-check-input text-info ms-3" type="checkbox" @(Model.NDADoc != "" ? "checked" : "")>
             <span class="ms-3 w-50">NonDisclosuer Agreement</span>
-            <button class="btn ms-3">Upload</button>
-            <button class="btn ms-3" @(Model.NDA == null ? "hidden" : "")>View</button>
+            <div class="input-group" style="width:100px;">
+                <input asp-for="" type="file" multiple class="form4 form-control px-3 py-2 file-upload d-none" id="Files2">
+                <label class="input-group-text btn" for="Files2">
+                    Upload
+                </label>
+            </div>
+            <button class="btn ms-3" @(Model.NDADoc == null ? "hidden" : "")>View</button>
         </div>
 
         <div class="OnboardingChild d-flex mt-2 justify-content-start align-items-center flex-row">
-            <input disabled class="form1 form-check-input text-info ms-3" type="checkbox" @(Model.LD != null ? "checked" : "")>
+            <input disabled class="form1 form-check-input text-info ms-3" type="checkbox" @(Model.LDDoc != "" ? "checked" : "")>
             <span class="ms-3 w-50">License Document</span>
-            <button class="btn ms-3">Upload</button>
-            <button class="btn ms-3" @(Model.LD == null ? "hidden" : "")>View</button>
+            <div class="input-group" style="width:100px;">
+                <input asp-for="BCfile" type="file" multiple class="form4 form-control px-3 py-2 file-upload d-none" id="Files2">
+                <label class="input-group-text btn" for="Files2">
+                    Upload
+                </label>
+            </div>
+            <button class="btn ms-3" @(Model.LDDoc == null ? "hidden" : "")>View</button>
         </div>
 
         <div class="btnline mt-3">
-            <button id="form2btn" style="width:80px; border:none; color:white;" class="btn btn-danger me-2">Save</button>
+            <button type="submit" id="form2btn" style="width:80px; border:none; color:white;" class="btn btn-danger me-2">Save</button>
             <a asp-area="" asp-controller="AdminProvider" asp-action="DeleteProvider" asp-route-physicianId="@Model.PId" id="cancelbtn2" style="color:white !important; border-color:#ff4343 !important; background-color:#ff4343 !important;" class=" me-2 pt-2 btn d-flex align-items-center">Delete Account</a>
         </div>
+
+
 
 
     </div>
 </div>
 
-@section Scripts{
-        @if (TempData["SuccessMessage"] != null)
-        {
+                @section Scripts{
+                    @if (TempData["SuccessMessage"] != null)
+                    {
         <script>
             toastr.success("@TempData["SuccessMessage"]");
         </script>
-        }
+                    }
 
-        @if (TempData["ErrorMessage"] != null)
-        {
+                    @if (TempData["ErrorMessage"] != null)
+                    {
         <script>
             toastr.error("@TempData["ErrorMessage"]");
         </script>
-        }
+                    }
     <script>
 
         const actualBtn = document.querySelector('#MultipleFiles');

@@ -1,4 +1,4 @@
-﻿@using halloDocEntities.DataModels
+﻿@model halloDocEntities.ViewDataModels.UserAccessData;
 @{
     ViewData["Title"] = "UserAccess";
     Layout = "~/Views/Shared/_AdminAccess.cshtml";
@@ -9,18 +9,20 @@
         <h2 m-0>User Access</h2>
     </div>
 
-    <div class="dmbox pb-5">
-        <div class="w-100 d-flex justify-content-between align-items-center">
-                <select style="width:300px;" id="regiondrop" class="form-select d-searchbar form-control m-2" aria-label="Default select example">
-                    <option value="" selected>&#128269; All Regions</option>
-                    <option value="1">Gujarat</option>
-                    <option value="2">Maharashtra</option>
-                    <option value="3">Punjab</option>
-                </select>
-            <a asp-area="" asp-controller="AdminAccess" asp-action="CreateAdmin" class="btn">Create New Admin</a>
+    <div class="dmbox pb-5 shadow">
+        <div class="w-100 d-flex flex-column flex-md-row justify-content-between align-items-center">
+            <select style="width:300px;" id="roledropdown" class="form-select d-searchbar form-control m-2" aria-label="Default select example">
+                <option value="" selected>&#128269; Select Role</option>
+                <option value="1">Admin</option>
+                <option value="3">Physician</option>
+            </select>
+            <div class="text-center">
+                <a id="createadminbtn" asp-area="" asp-controller="AdminAccess" asp-action="CreateAdmin" class="btn mt-1">Create New Admin</a>
+                <a id="createphysicianbtn" asp-area="" asp-controller="AdminProvider" asp-action="CreteProvider" class="btn mt-1">Create New Physician</a>
+            </div>
         </div>
 
-        <table class="table table-hover mt-3" style="border: 1px solid rgba(201, 201, 201, 0.878);">
+        <table class="table table-hover mt-3" style="border: 1px solid rgba(201, 201, 201, 0.878); font-size:16px;">
             <thead>
                 <tr>
                     <th scope="col" class="thchild px-2 py-1 th-sn">Account Type</th>
@@ -32,22 +34,142 @@
                 </tr>
             </thead>
             <tbody>
-                @*@foreach (var item in ViewBag.APData)
+                @if (ViewBag.data != null)
                 {
-                    <tr class="ptr">
-                        <td class="tdregion" hidden>@item.region</td>
-                        <td class="tdchild tdcheckbox"><input type="checkbox" /></td>
-                        <td class="tdchild">@item.name</td>
-                        <td class="tdchild">@item.role</td>
-                        <td class="tdchild">@item.onCall</td>
-                        <td class="tdchild">@item.status</td>
-                        <td class="tdchild px-0">
-                            <button class="btn btnoutline btn-outline-info" data-bs-toggle="modal" data-bs-target="#contactprovider-@item.physicianId">Contact</button>
-                            <a asp-area="" asp-controller="AdminProvider" asp-action="EditProvider" asp-route-physicianId="@item.physicianId" class="btn btnoutline btn-outline-info">Edit</a>
-                        </td>
-                    </tr>
-                }*@
+                    @foreach (var item in ViewBag.data)
+                    {
+                        <tr class="ptr" accountType="@item.accountType">
+                            <td class="" hidden>@item.aspId</td>
+                            <td class=" tdchild">
+                                @((item.accountType == 1) ? "Admin" : (item.accountType == 3) ? "Physician" : "User")
+                            </td>
+                            <td class="tdchild">@item.name</td>
+                            <td class="tdchild">@item.mobile</td>
+                            <td class="tdchild">
+                                @if (item.status.Length == 1)
+                                {
+                                    @((item.status == "1") ? "active" : (item.status == "2") ? "pending" : "not active")
+                                }
+                                else
+                                {
+                                    @item.status
+                                }
+                            </td>
+                            <td class="tdchild">@item.openReq</td>
+                            <td class="tdchild px-0">
+                                <a asp-area="" asp-controller="AdminProvider" asp-action="EditProvider" asp-route-physicianId="physicianId" class="btn btnoutline btn-outline-info">Edit</a>
+                            </td>
+                        </tr>
+                    }
+                }
             </tbody>
         </table>
+
+        <div class="accordion d-block d-md-none mt-3" id="accordionExample">
+            @if (ViewBag.data != null)
+            {
+                @foreach (var item in ViewBag.data)
+                {
+                    <div class="accordion-item border-bottom-2 mt-2" accountType="@item.accountType">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button style=" border:none !important; border-bottom:2px solid gray; color:black;" class="accordion-button border-dark border-2" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.aspId" aria-expanded="true" aria-controls="flush-@item.aspId">
+                                <div class="d-flex flex-column justify-content-center w-100 pe-2 align-items-start">
+                                    <div class="abchild1 fw-bold mb-2">
+                                        @item.name
+                                    </div>
+                                    <div class=" mb-2">
+                                        <span>Account Type : </span><span class="fw-bold">@((item.accountType == 1) ? "Admin" : (item.accountType == 3) ? "Physician" : "User")</span>
+                                    </div>
+                                </div>
+                            </button>
+                        </h2>
+                        <div id="flush-@item.aspId" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                            <div class="accordion-body" style="background-color:#cbe5faa3; border-top:1px solid;">
+                                <div class="p-1 d-flex align-items-start flex-column">
+                                    <div>
+                                        <span class=""></span><span class="ms-1">Phone : </span><span class="fw-bold">@item.mobile</span>
+                                    </div>
+                                    <div>
+                                        <span class=""></span><span class="ms-1">Status : </span><span class="fw-bold">
+                                            @if (item.status.Length == 1)
+                                            {
+                                                @((item.status == "1") ? "active" : (item.status == "2") ? "pending" : "not active")
+                                            }
+                                            else
+                                            {
+                                                @item.status
+                                            }
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span class=""></span><span class="ms-1">Open Request : </span><span class="fw-bold">@item.openReq</span>
+                                    </div>
+                                    <div class="d-flex justify-content-end flex-row w-100">
+                                        <a asp-area="" asp-controller="AdminProvider" asp-action="EditProvider" asp-route-physicianId="physicianId" class="btn btnoutline btn-outline-info">Edit</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
     </div>
 </div>
+
+@section Scripts {
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <script>
+            toastr.success("@TempData["SuccessMessage"]");
+        </script>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <script>
+            toastr.error("@TempData["ErrorMessage"]");
+        </script>
+    }
+    <script>
+        
+            $('#roledropdown').change(function () {
+                var selectedRole = $(this).val();
+                $('tbody tr').each(function () {
+                    var role = $(this).attr("accountType");
+                    if (selectedRole === '' || role === selectedRole) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+
+                var adminBtn = $("#createadminbtn");
+                var physicianBtn = $("#createphysicianbtn");
+                if (selectedRole === "1") {
+                    adminBtn.show();
+                    physicianBtn.hide();
+                } else if (selectedRole === "3") {
+                    adminBtn.hide();
+                    physicianBtn.show();
+                } else {
+                    adminBtn.show();
+                    physicianBtn.show();
+                }
+
+            });
+
+        $('#roledropdown').change(function () {
+            var selectedRole = $(this).val();
+                $('.accordion-item').each(function () {
+                var role = $(this).attr("accountType");
+                if (selectedRole === '' || role === selectedRole) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            });
+    </script>
+}

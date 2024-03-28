@@ -25,13 +25,14 @@
                 <label class="mylable" for="Password">Password</label>
                 <span asp-validation-for="password" class="text-danger"></span>
             </div>
-            <div class="form-floating col-12 col-md-4 d-flex justify-content-center align-items-center">
+            <div class="form-floating col-12 col-md-4 d-flex flex-column justify-content-center align-items-center">
                 <select asp-for="role" class="form-select pt-0 pb-0 form1">
+                    <option value="" selected>Select Role</option>
                     @foreach (var item in Model?.roleList)
                     {
                         @if (item.Name == Model.state)
                         {
-                            <option value="@item.RoleId" selected>@item.Name</option>
+                            <option value="@item.RoleId">@item.Name</option>
                         }
                         else
                         {
@@ -39,7 +40,7 @@
                         }
                     }
                 </select>
-                <span asp-validation-for="role" class="text-danger"></span>
+            <span asp-validation-for="role" class="text-danger"></span>
             </div>
 
             <h4 class=" m-2 ms-1 mt-4 mb-0">Physician Information</h4>
@@ -112,7 +113,7 @@
                 <input asp-for="city" type="text" class="form3 form-control" id="City" placeholder="address1">
                 <label class="mylable" for="City">City</label>
             </div>
-            <div class="form-floating col-12 col-md-6 d-flex justify-content-center align-items-center">
+            <div class="form-floating col-12 col-md-6 d-flex flex-column justify-content-center align-items-center">
                 <select id="profdropdown" asp-for="state" class="form3 form-select pt-0 pb-0">
                     <option value="" selected>Select State</option>
                     @foreach (var item in Model?.stateList)
@@ -143,6 +144,8 @@
             <div class="form-floating col-12 col-md-6">
                 <input asp-for="businesssite" type="text" class="form4 form-control" id="businesssite" placeholder="address1">
                 <label class="mylable" for="businesssite">Business Site</label>
+                <span asp-validation-for="businesssite" class="text-danger"></span>
+
             </div>
 
             <div class="form-floating col-12 col-md-6">
@@ -168,27 +171,53 @@
             <div style="min-height:fit-content;">
                 <div class="OnboardingChild d-flex mt-2 justify-content-start align-items-center flex-row">
                     <span class="ms-3 w-50">Independent Contractor Agreement</span>
-                    <button class="btn ms-3">Upload</button>
+                    <div class="input-group" style="width:100px;">
+                        <input asp-for="ICAfile" type="file" multiple class="form4 form-control px-3 py-2 file-upload d-none" id="Files1">
+                        <label class="input-group-text btn" for="Files1">
+                            Upload
+                        </label>
+                    </div>
                 </div>
 
                 <div class="OnboardingChild d-flex mt-2 justify-content-start align-items-center flex-row">
                     <span class="ms-3 w-50">Background Check</span>
-                    <button class="btn ms-3">Upload</button>
+                    <div class="input-group" style="width:100px;">
+                        <input asp-for="BCfile" type="file" multiple class="form4 form-control px-3 py-2 file-upload d-none" id="Files2">
+                        <label class="input-group-text btn" for="Files2">
+                            Upload
+                        </label>
+                    </div>
+                    @*<button class="btn ms-3">Upload</button>*@
                 </div>
 
                 <div class="OnboardingChild d-flex mt-2 justify-content-start align-items-center flex-row">
                     <span class="ms-3 w-50">HIPAA Compliance</span>
-                    <button class="btn ms-3">Upload</button>
+                    <div class="input-group" style="width:100px;">
+                        <input asp-for="HCfile" type="file" multiple class="form4 form-control px-3 py-2 file-upload d-none" id="Files3">
+                        <label class="input-group-text btn" for="Files3">
+                            Upload
+                        </label>
+                    </div>
                 </div>
 
                 <div class="OnboardingChild d-flex mt-2 justify-content-start align-items-center flex-row">
                     <span class="ms-3 w-50">NonDisclosuer Agreement</span>
-                    <button class="btn ms-3">Upload</button>
+                    <div class="input-group" style="width:100px;">
+                        <input asp-for="NAfile" type="file" multiple class="form4 form-control px-3 py-2 file-upload d-none" id="Files4">
+                        <label class="input-group-text btn" for="Files4">
+                            Upload
+                        </label>
+                    </div>
                 </div>
 
                 <div class="OnboardingChild d-flex mt-2 justify-content-start align-items-center flex-row">
                     <span class="ms-3 w-50">License Document</span>
-                    <button class="btn ms-3">Upload</button>
+                    <div class="input-group" style="width:100px;">
+                        <input asp-for="LDfile" type="file" multiple class="form4 form-control px-3 py-2 file-upload d-none" id="Files5">
+                        <label class="input-group-text btn" for="Files5">
+                            Upload
+                        </label>
+                    </div>
                 </div>
             </div>
 

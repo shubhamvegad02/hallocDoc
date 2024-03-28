@@ -85,29 +85,32 @@ public partial class Physician
     [StringLength(50)]
     public string? SyncEmailAddress { get; set; }
 
-    [Column("isagreementdoc")]
-    public bool? Isagreementdoc { get; set; }
-
-    [Column("isbackgrounddoc")]
-    public bool? Isbackgrounddoc { get; set; }
-
     [Column("istrainingdoc")]
     public bool? Istrainingdoc { get; set; }
 
-    [Column("isnondisclosuredoc")]
-    public bool? Isnondisclosuredoc { get; set; }
-
     [Column("isdeleted")]
     public bool? Isdeleted { get; set; }
-
-    [Column("islicensedoc")]
-    public bool? Islicensedoc { get; set; }
 
     [Column("iscredentialdoc")]
     public bool? Iscredentialdoc { get; set; }
 
     [Column("istokengenerate")]
     public bool? Istokengenerate { get; set; }
+
+    [StringLength(100)]
+    public string? IsAgreementDoc { get; set; }
+
+    [StringLength(100)]
+    public string? IsBackgroundDoc { get; set; }
+
+    [StringLength(100)]
+    public string? IsNonDisclosureDoc { get; set; }
+
+    [StringLength(100)]
+    public string? IsLicenseDoc { get; set; }
+
+    [StringLength(100)]
+    public string? IsHippaDoc { get; set; }
 
     [ForeignKey("AspNetUserId")]
     [InverseProperty("PhysicianAspNetUsers")]

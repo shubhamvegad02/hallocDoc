@@ -50,6 +50,20 @@ namespace hallocDoc.Controllers
             return RedirectToAction("Provider", "AdminProvider");
         }
 
+        public IActionResult EditProviderFormFiles(int PhysicianId, EditPhysicianData epd)
+        {
+            bool check = _adminProvider.EditProviderFormFiles(PhysicianId, epd);
+            if (check)
+            {
+                TempData["SuccessMessage"] = "Data Updated Successfully..";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Data is not updated";
+            }
+            return RedirectToAction("EditProvider", "AdminProvider", new { physicianId = PhysicianId });
+        }
+
         public IActionResult EditProviderForm4(int PhysicianId, EditPhysicianData epd)
         {
             bool check = _adminProvider.EditProviderForm4(PhysicianId, epd);
@@ -103,7 +117,7 @@ namespace hallocDoc.Controllers
             {
                 TempData["ErrorMessage"] = "Data is not updated";
             }
-            return RedirectToAction("EditProvider", "AdminProvider", new {physicianId = PhysicianId});
+            return RedirectToAction("EditProvider", "AdminProvider", new { physicianId = PhysicianId });
         }
 
         public async Task<IActionResult> EditProvider(int physicianId)

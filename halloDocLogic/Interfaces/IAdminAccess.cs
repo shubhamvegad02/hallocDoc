@@ -25,5 +25,7 @@ namespace halloDocLogic.Interfaces
         EditPhysicianData CreateAdmin();
 
         bool CreateAdminPost(EditPhysicianData edt);
+
+        List<UserAccessData> UserAccess();
     }
 }

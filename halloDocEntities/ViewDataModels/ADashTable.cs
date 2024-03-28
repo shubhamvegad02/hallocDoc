@@ -26,7 +26,7 @@ namespace halloDocEntities.ViewDataModels
 
         [Required(ErrorMessage = "Mobile Number is Required")]
         [Phone]
-        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phone number")]
+        [RegularExpression(@"^[6789]\d{9}$", ErrorMessage = "Not a valid phone number")]
         [StringLength(10)]
         public string? mobile { get; set; }
 

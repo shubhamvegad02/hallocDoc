@@ -14,6 +14,7 @@ using Twilio;
 using Twilio.Types;
 using Twilio.Rest.Api.V2010.Account;
 using Org.BouncyCastle.Ocsp;
+using Nest;
 
 namespace halloDocLogic.Repository
 {
@@ -30,6 +31,7 @@ namespace halloDocLogic.Repository
         }
 
 
+
         public bool CreateProviderPost(EditPhysicianData edt)
         {
             Aspnetuser asp = new Aspnetuser();
@@ -43,10 +45,41 @@ namespace halloDocLogic.Repository
             _context.SaveChanges();
 
             string photofile = "";
+            string ICA = "";
+            string BC = "";
+            string HC = "";
+            string NA = "";
+            string LD = "";
             if (edt?.photo != null)
             {
                 photofile = _formRequest.uploadfile(edt?.photo);
             }
+            if (edt?.ICAfile != null)
+            {
+                ICA = _formRequest.uploadfile(edt?.ICAfile);
+            }
+            if (edt?.BCfile != null)
+            {
+                BC = _formRequest.uploadfile(edt?.BCfile);
+            }
+            if (edt?.HCfile != null)
+            {
+                HC = _formRequest.uploadfile(edt?.HCfile);
+            }
+            if (edt?.NAfile != null)
+            {
+                NA = _formRequest.uploadfile(edt?.NAfile);
+            }
+            if (edt?.LDfile != null)
+            {
+                LD = _formRequest.uploadfile(edt?.LDfile);
+            }
+
+            Aspnetuserrole aspnetuserrole = new Aspnetuserrole();
+            aspnetuserrole.UserId = asp.Id;
+            aspnetuserrole.RoleId = "3";
+            _context.Aspnetuserroles.Add(aspnetuserrole);
+            _context.SaveChanges();
 
             Physician ph = new Physician();
             ph.AspNetUserId = asp.Id;
@@ -69,6 +102,11 @@ namespace halloDocLogic.Repository
             ph.RoleId = int.Parse(edt.role);
             ph.MedicalLicense = edt.medicallicence;
             ph.Npinumber = edt.npinumber;
+            ph.IsAgreementDoc = ICA;
+            ph.IsBackgroundDoc = BC;
+            ph.IsHippaDoc = HC;
+            ph.IsNonDisclosureDoc = NA;
+            ph.IsLicenseDoc = LD;
             _context.Physicians.Add(ph);
             _context.SaveChanges();
 
@@ -83,7 +121,7 @@ namespace halloDocLogic.Repository
                     pr.RegionId = int.Parse(row);
                     _context.Physicianregions.Add(pr);
                 }
-                    _context.SaveChanges();
+                _context.SaveChanges();
             }
 
             return true;
@@ -120,6 +158,64 @@ namespace halloDocLogic.Repository
             }
 
             return true;
+        }
+
+        public bool EditProviderFormFiles(int physicianId, EditPhysicianData edt)
+        {
+            string ICA = "";
+            string BC = "";
+            string HC = "";
+            string NA = "";
+            string LD = "";
+
+            if (edt?.ICAfile != null)
+            {
+                ICA = _formRequest.uploadfile(edt?.ICAfile);
+            }
+            if (edt?.BCfile != null)
+            {
+                BC = _formRequest.uploadfile(edt?.BCfile);
+            }
+            if (edt?.HCfile != null)
+            {
+                HC = _formRequest.uploadfile(edt?.HCfile);
+            }
+            if (edt?.NAfile != null)
+            {
+                NA = _formRequest.uploadfile(edt?.NAfile);
+            }
+            if (edt?.LDfile != null)
+            {
+                LD = _formRequest.uploadfile(edt?.LDfile);
+            }
+            var dbphysician = _context.Physicians.FirstOrDefault(m => m.PhysicianId == physicianId);
+            if (dbphysician != null)
+            {
+                if (ICA != "")
+                {
+                    dbphysician.IsAgreementDoc = ICA;
+                }
+                if (BC != "")
+                {
+                    dbphysician.IsBackgroundDoc = BC;
+                }
+                if (HC != "")
+                {
+                    dbphysician.IsHippaDoc = HC;
+                }
+                if (LD != "")
+                {
+                    dbphysician.IsLicenseDoc = LD;
+                }
+                if (NA != "")
+                {
+                    dbphysician.IsNonDisclosureDoc = NA;
+                }
+                _context.Physicians.Update(dbphysician);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
         }
 
         public bool EditProviderForm4(int physicianId, EditPhysicianData edt)
@@ -313,9 +409,11 @@ namespace halloDocLogic.Repository
                 epd.businessname = item.physicianData.BusinessName;
                 epd.businesssite = item.physicianData.BusinessWebsite;
                 epd.adminNotes = item.physicianData.AdminNotes;
-                epd.BC = item.physicianData.Isbackgrounddoc;
-                epd.NDA = item.physicianData.Isnondisclosuredoc;
-                epd.LD = item.physicianData.Islicensedoc;
+                epd.BCDoc = item.physicianData.IsBackgroundDoc;
+                epd.NDADoc = item.physicianData.IsNonDisclosureDoc;
+                epd.LDDoc = item.physicianData.IsLicenseDoc;
+                epd.ICADoc = item.physicianData.IsAgreementDoc;
+                epd.HCDoc = item.physicianData.IsHippaDoc;
                 return epd;
             }
             return null;
